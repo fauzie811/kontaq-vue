@@ -10,7 +10,7 @@
           <ul role="list" class="-mx-2 space-y-1">
             <li v-for="item in navigation" :key="item.name">
               <router-link :to="{ name: item.route }"
-                :class="[$route.name == item.route ? 'bg-green-700 text-white' : 'text-green-200 hover:text-white hover:bg-green-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium']">
+                :class="[$route.name.startsWith(item.route) ? 'bg-green-700 text-white' : 'text-green-200 hover:text-white hover:bg-green-700', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium']">
                 <component :is="item.icon"
                   :class="[$route.name == item.route ? 'text-white' : 'text-green-200 group-hover:text-white', 'h-6 w-6 shrink-0']"
                   aria-hidden="true" />

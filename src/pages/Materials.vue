@@ -27,38 +27,9 @@
           </div>
         </div>
         <div class="flex items-center flex-none gap-x-4">
-          <a :href="project.href"
-            class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">View
-            project<span class="sr-only">, {{ project.name }}</span></a>
-          <Menu as="div" class="relative flex-none">
-            <MenuButton class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
-              <span class="sr-only">Open options</span>
-              <EllipsisVerticalIcon class="w-5 h-5" aria-hidden="true" />
-            </MenuButton>
-            <transition enter-active-class="transition duration-100 ease-out"
-              enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0">
-              <MenuItems
-                class="absolute right-0 z-10 w-32 py-2 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                <MenuItem v-slot="{ active }">
-                <a href="#"
-                  :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Edit<span
-                    class="sr-only">, {{ project.name }}</span></a>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                <a href="#"
-                  :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Move<span
-                    class="sr-only">, {{ project.name }}</span></a>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                <a href="#"
-                  :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Delete<span
-                    class="sr-only">, {{ project.name }}</span></a>
-                </MenuItem>
-              </MenuItems>
-            </transition>
-          </Menu>
+          <router-link :to="{ name: 'materials.show', params: { id: project.id } }"
+            class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">Lihat
+            materi<span class="sr-only">, {{ project.name }}</span></router-link>
         </div>
       </li>
     </ul>

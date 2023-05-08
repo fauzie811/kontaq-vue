@@ -19,6 +19,12 @@ const routes = [
         meta: { layout: MainLayout },
     },
     {
+        path: '/materials/:id',
+        component: () => import('./pages/Materials/Show.vue'),
+        name: 'materials.show',
+        meta: { layout: MainLayout },
+    },
+    {
         path: '/quizzes',
         component: () => import('./pages/Quizzes.vue'),
         name: 'quizzes',
