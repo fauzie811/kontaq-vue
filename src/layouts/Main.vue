@@ -68,9 +68,18 @@
             <Menu as="div" class="relative">
               <MenuButton class="-m-1.5 flex items-center p-1.5">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full bg-gray-50" src="https://i.pravatar.cc/128?img=68" alt="" />
+                <img class="w-8 h-8 rounded-full bg-gray-50"
+                  :src="'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (authStore.user ? authStore.user.name : '')"
+                  alt="" />
                 <span class="hidden lg:flex lg:items-center">
-                  <span class="ml-4 text-sm font-medium leading-6 text-gray-900" aria-hidden="true">Muhammad Fulan</span>
+                  <span class="flex flex-col items-start justify-center ml-4">
+                    <span class="text-sm font-medium text-gray-900" aria-hidden="true">{{ authStore.user ?
+                      authStore.user.name : '...'
+                    }}</span>
+                    <span class="text-xs text-gray-500" aria-hidden="true">{{ authStore.user ?
+                      authStore.user.username : ''
+                    }}</span>
+                  </span>
                   <ChevronDownIcon class="w-5 h-5 ml-2 text-gray-400" aria-hidden="true" />
                 </span>
               </MenuButton>
@@ -120,6 +129,8 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import authStore from '@/store/auth';
+import { getUser } from '@/api';
 import Sidebar from '../components/Sidebar.vue'
 
 const userNavigation = [
@@ -129,4 +140,8 @@ const userNavigation = [
 ]
 
 const sidebarOpen = ref(false)
+
+if (authStore.isLoggedIn && !authStore.user) {
+  getUser();
+}
 </script>

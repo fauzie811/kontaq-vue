@@ -7,18 +7,21 @@
           <div class="sm:flex sm:items-center sm:justify-between">
             <div class="sm:flex sm:space-x-5">
               <div class="flex-shrink-0">
-                <img class="w-20 h-20 mx-auto rounded-full" :src="user.imageUrl" alt="" />
+                <img class="w-20 h-20 mx-auto rounded-full"
+                  :src="'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (authStore.user ? authStore.user.name : '')"
+                  alt="" />
               </div>
               <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                <p class="text-sm font-medium text-gray-600">Welcome back,</p>
-                <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ user.name }}</p>
-                <p class="text-sm font-medium text-gray-600">{{ user.role }}</p>
+                <p class="text-sm font-medium text-gray-600">Assalamu'alaikum,</p>
+                <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ authStore.user ? authStore.user.name : '...' }}
+                </p>
+                <p class="text-sm font-medium text-gray-500">{{ authStore.user ? authStore.user.username : '' }}</p>
               </div>
             </div>
             <div class="flex justify-center mt-5 sm:mt-0">
               <a href="#"
-                class="flex items-center justify-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">View
-                profile</a>
+                class="flex items-center justify-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Lihat
+                profil</a>
             </div>
           </div>
         </div>
@@ -145,14 +148,9 @@
 </template>
 
 <script setup>
-import { BanknotesIcon } from '@heroicons/vue/24/solid'
-const user = {
-  name: 'Chelsea Hagon',
-  email: 'chelsea.hagon@example.com',
-  role: 'Human Resources Manager',
-  imageUrl:
-    'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
+import { BanknotesIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
+import authStore from '@/store/auth';
+
 const stats = [
   { label: 'Vacation days left', value: 12 },
   { label: 'Sick days left', value: 4 },

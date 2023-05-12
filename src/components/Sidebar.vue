@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-green-600 grow gap-y-5">
+  <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-gradient-to-r from-[#7bc060] to-[#33a44b] grow gap-y-5">
     <div class="flex items-center h-16 shrink-0">
       <!-- <img class="w-auto h-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" /> -->
       <img class="w-auto h-12 brightness-0 invert" src="../assets/logo.png" alt="Your Company" />

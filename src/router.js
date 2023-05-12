@@ -1,11 +1,20 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+import authStore from './store/auth';
+import BlankLayout from './layouts/Blank.vue';
 import MainLayout from './layouts/Main.vue';
 import QuizLayout from './layouts/Quiz.vue';
+import Login from './pages/Auth/Login.vue';
 import Home from './pages/Home.vue';
 
 /** @type {import('vue-router').RouteRecordRaw[]} */
 const routes = [
+    {
+        path: '/login',
+        component: Login,
+        name: 'login',
+        meta: { layout: BlankLayout },
+    },
     {
         path: '/',
         component: Home,
@@ -62,7 +71,15 @@ const routes = [
     },
 ];
 
-export default createRouter({
+const router = createRouter({
     history: createWebHashHistory(),
     routes,
 });
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'login' && !authStore.isLoggedIn) next({ name: 'login' });
+    else if (to.name === 'login' && authStore.isLoggedIn)
+        next({ name: 'home ' });
+    else next();
+});
+
+export default router;
