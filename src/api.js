@@ -92,3 +92,21 @@ export const getMaterial = async (id) => {
         throw e;
     }
 };
+
+export const listQuizzes = async () => {
+    try {
+        const { data } = await axios.get('quizzes');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const getQuiz = async (id) => {
+    try {
+        const { data } = await axios.get(`quizzes/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
