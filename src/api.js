@@ -74,3 +74,21 @@ export const getUser = async () => {
         throw e;
     }
 };
+
+export const listMaterials = async () => {
+    try {
+        const { data } = await axios.get('materials');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const getMaterial = async (id) => {
+    try {
+        const { data } = await axios.get(`materials/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
