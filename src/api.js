@@ -93,18 +93,45 @@ export const getMaterial = async (id) => {
     }
 };
 
-export const listQuizzes = async () => {
+export const listAnnouncements = async () => {
     try {
-        const { data } = await axios.get('quizzes');
+        const { data } = await axios.get('announcements');
         return data;
     } catch (e) {
         throw e;
     }
 };
 
-export const getQuiz = async (id) => {
+export const getAnnouncement = async (id) => {
     try {
-        const { data } = await axios.get(`quizzes/${id}`);
+        const { data } = await axios.get(`announcements/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const listMyQuizzes = async () => {
+    try {
+        const { data } = await axios.get('me/quizzes');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const getMyQuiz = async (id) => {
+    try {
+        const { data } = await axios.get(`me/quizzes/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const updateMyQuiz = async (id, answers) => {
+    try {
+        const { data } = await axios.put(`me/quizzes/${id}`, { answers });
         return data;
     } catch (e) {
         throw e;

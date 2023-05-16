@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader page-title="Materi Tadabbur">
       <!-- <button type="button"
         class="inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Edit</button>
@@ -41,7 +42,11 @@ import { ref } from 'vue';
 import { listMaterials } from '@/api';
 import { shortDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 
+const breadcrumbs = ref([
+  { name: 'Materi Tadabbur', route: { name: 'materials' }, current: true },
+]);
 const materials = ref({ data: [] });
 
 async function loadData() {

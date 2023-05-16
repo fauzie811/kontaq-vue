@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader page-title="Kuis" />
 
     <ul role="list" class="mt-8 divide-y divide-gray-100">
@@ -19,7 +20,7 @@
         </div>
         <div class="flex items-center flex-none gap-x-4">
           <router-link :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
-            class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">Mulai</router-link>
+            class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Mulai</router-link>
         </div>
       </li>
     </ul>
@@ -28,13 +29,17 @@
 
 <script setup>
 import { ref } from 'vue';
-import { listQuizzes } from '@/api';
+import { listMyQuizzes } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 
+const breadcrumbs = ref([
+  { name: 'Kuis', route: '/quizzes', current: true },
+]);
 const quizzes = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listQuizzes();
+  const { data } = await listMyQuizzes();
   quizzes.value = data;
 }
 loadData();
@@ -44,41 +49,4 @@ const statuses = {
   'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
   Archived: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
 }
-const projects = [
-  {
-    id: 1,
-    name: 'GraphQL API',
-    href: '#',
-    status: 'Complete',
-    duration: 60,
-  },
-  {
-    id: 2,
-    name: 'New benefits plan',
-    href: '#',
-    status: 'In progress',
-    duration: 60,
-  },
-  {
-    id: 3,
-    name: 'Onboarding emails',
-    href: '#',
-    status: 'In progress',
-    duration: 60,
-  },
-  {
-    id: 4,
-    name: 'iOS app',
-    href: '#',
-    status: 'In progress',
-    duration: 60,
-  },
-  {
-    id: 5,
-    name: 'Marketing site redesign',
-    href: '#',
-    status: 'Archived',
-    duration: 60,
-  },
-]
 </script>

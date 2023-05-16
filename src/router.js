@@ -69,6 +69,12 @@ const routes = [
         name: 'announcements',
         meta: { layout: MainLayout },
     },
+    {
+        path: '/announcements/:id',
+        component: () => import('./pages/Announcements/Show.vue'),
+        name: 'announcements.show',
+        meta: { layout: MainLayout },
+    },
 ];
 
 const router = createRouter({
