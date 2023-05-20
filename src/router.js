@@ -5,6 +5,7 @@ import BlankLayout from './layouts/Blank.vue';
 import MainLayout from './layouts/Main.vue';
 import QuizLayout from './layouts/Quiz.vue';
 import Login from './pages/Auth/Login.vue';
+import Logout from '@/pages/Auth/Logout.vue';
 import Home from './pages/Home.vue';
 
 /** @type {import('vue-router').RouteRecordRaw[]} */
@@ -14,6 +15,11 @@ const routes = [
         component: Login,
         name: 'login',
         meta: { layout: BlankLayout },
+    },
+    {
+        path: '/logout',
+        component: Logout,
+        name: 'logout',
     },
     {
         path: '/',
@@ -73,6 +79,12 @@ const routes = [
         path: '/announcements/:id',
         component: () => import('./pages/Announcements/Show.vue'),
         name: 'announcements.show',
+        meta: { layout: MainLayout },
+    },
+    {
+        path: '/profile',
+        component: () => import('./pages/Profile.vue'),
+        name: 'profile',
         meta: { layout: MainLayout },
     },
 ];

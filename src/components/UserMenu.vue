@@ -25,9 +25,9 @@
         class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
         <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
         <div v-if="item.separator" class="w-full h-px my-1 bg-gray-200"></div>
-        <a v-else :href="item.href"
+        <router-link v-else :to="item.route"
           :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">{{ item.name
-          }}</a>
+          }}</router-link>
         </MenuItem>
       </MenuItems>
     </transition>
@@ -45,8 +45,8 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import authStore from '@/store/auth';
 
 const userNavigation = [
-  { name: 'Profil saya', href: '#' },
+  { name: 'Profil saya', route: '/profile' },
   { separator: true },
-  { name: 'Keluar', href: '#' },
+  { name: 'Keluar', route: '/logout' },
 ]
 </script>
