@@ -4,7 +4,7 @@
       <Breadcrumbs :pages="breadcrumbs" />
       <div v-if="quiz" class="mt-4 space-y-5">
         <PageHeader :page-title="quiz.title" />
-        <template v-if="quiz">
+        <template v-if="quiz && !userQuiz.finished_at">
           <div v-for="question in quiz.questions" :key="question.id" class="overflow-hidden bg-white rounded-lg shadow">
             <div class="px-4 py-5 sm:p-6">
               <div class="prose" v-html="question.content"></div>
@@ -72,16 +72,30 @@
             </div>
           </div>
         </template>
+        <div v-if="userQuiz.finished_at" class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
+          <div class="px-4 py-5 space-y-5 sm:p-6">
+            <p>Sudah selesai.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id tempore quia, recusandae veniam adipisci quo
+              neque voluptatibus maxime minima facilis. Recusandae, distinctio est? Voluptate nam ullam est! Vitae,
+              accusantium doloribus?</p>
+          </div>
+          <div class="px-4 py-4 sm:px-6">
+            <router-link to="/quizzes"
+              class="inline-flex rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Kembali</router-link>
+          </div>
+        </div>
       </div>
     </div>
     <div>
-      <div class="space-y-5 md:sticky md:top-0">
+      <div v-if="quiz && !userQuiz.finished_at" class="space-y-5 md:sticky md:top-0">
         <div class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
           <div class="px-4 py-5 sm:px-6">
             <h3 class="text-center">Sisa Waktu</h3>
           </div>
           <div class="px-4 py-5 sm:p-6">
-            <p class="text-lg font-semibold text-center">00:00</p>
+            <p class="text-lg font-semibold text-center">
+              <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" />
+            </p>
           </div>
         </div>
 
@@ -96,14 +110,18 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router';
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
+import parseISO from 'date-fns/parseISO';
+
 import { getMyQuiz, updateMyQuiz } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import Countdown from '@/components/Countdown.vue';
 
 const route = useRoute();
 
 const selected = ref({})
 const quiz = ref();
+const userQuiz = ref();
 const breadcrumbs = ref([
   { name: 'Kuis', route: { name: 'quizzes' }, current: false },
 ]);
@@ -111,6 +129,7 @@ const breadcrumbs = ref([
 async function loadData() {
   const data = await getMyQuiz(route.params.id);
   quiz.value = data.data.quiz;
+  userQuiz.value = data.data.user_quiz;
   breadcrumbs.value = [
     ...breadcrumbs.value,
     { name: quiz.value.title, route: { name: 'quizzes.show', params: { id: quiz.value.id } }, current: true },
@@ -121,6 +140,11 @@ loadData();
 async function submitAnswers() {
   const data = await updateMyQuiz(route.params.id, selected.value);
   console.log(data);
+}
+
+const forceFinish = () => {
+  alert('Waktu habis!');
+  submitAnswers();
 }
 
 /*
