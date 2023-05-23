@@ -137,3 +137,30 @@ export const updateMyQuiz = async (id, answers) => {
         throw e;
     }
 };
+
+export const listMyEvaluations = async () => {
+    try {
+        const { data } = await axios.get('me/evaluations');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const getMyEvaluation = async (id) => {
+    try {
+        const { data } = await axios.get(`me/evaluations/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const updateMyEvaluation = async (id, answers) => {
+    try {
+        const { data } = await axios.put(`me/evaluations/${id}`, { answers });
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};

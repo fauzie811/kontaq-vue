@@ -58,6 +58,12 @@ const routes = [
         meta: { layout: MainLayout },
     },
     {
+        path: '/evaluations/:id',
+        component: () => import('./pages/Evaluations/Show.vue'),
+        name: 'evaluations.show',
+        meta: { layout: QuizLayout },
+    },
+    {
         path: '/reports',
         component: () => import('./pages/Reports.vue'),
         name: 'reports',

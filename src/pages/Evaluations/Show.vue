@@ -2,10 +2,11 @@
   <div class="grid gap-5 md:grid-cols-3 lg:grid-cols-4">
     <div class="md:col-span-2 lg:col-span-3">
       <Breadcrumbs :pages="breadcrumbs" />
-      <div v-if="quiz" class="mt-4 space-y-5">
-        <PageHeader :page-title="quiz.title" />
-        <template v-if="quiz && !userQuiz.finished_at">
-          <div v-for="question in quiz.questions" :key="question.id" class="overflow-hidden bg-white rounded-lg shadow">
+      <div v-if="evaluation" class="mt-4 space-y-5">
+        <PageHeader :page-title="evaluation.title" />
+        <template v-if="evaluation && !userEvaluation.finished_at">
+          <div v-for="question in evaluation.questions" :key="question.id"
+            class="overflow-hidden bg-white rounded-lg shadow">
             <div class="px-4 py-5 sm:p-6">
               <div class="prose" v-html="question.content"></div>
 
@@ -72,7 +73,8 @@
             </div>
           </div>
         </template>
-        <div v-if="userQuiz.finished_at" class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
+        <div v-if="userEvaluation.finished_at"
+          class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
           <div class="px-4 py-5 space-y-5 sm:p-6">
             <p>Sudah selesai.</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id tempore quia, recusandae veniam adipisci quo
@@ -80,21 +82,22 @@
               accusantium doloribus?</p>
           </div>
           <div class="px-4 py-4 sm:px-6">
-            <router-link to="/quizzes"
+            <router-link to="/evaluations"
               class="inline-flex rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Kembali</router-link>
           </div>
         </div>
       </div>
     </div>
     <div>
-      <div v-if="quiz && !userQuiz.finished_at" class="space-y-5 md:sticky md:top-0">
+      <div v-if="evaluation && !userEvaluation.finished_at" class="space-y-5 md:sticky md:top-0">
         <div class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
           <div class="px-4 py-5 sm:px-6">
             <h3 class="text-center">Sisa Waktu</h3>
           </div>
           <div class="px-4 py-5 sm:p-6">
             <p class="text-lg font-semibold text-center">
-              <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" />
+              <Countdown :start-time="parseISO(userEvaluation.created_at)" :duration="evaluation.duration"
+                @finished="forceFinish" />
             </p>
           </div>
         </div>
@@ -112,7 +115,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import parseISO from 'date-fns/parseISO';
 
-import { getMyQuiz, updateMyQuiz } from '@/api';
+import { getMyEvaluation, updateMyEvaluation } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Countdown from '@/components/Countdown.vue';
@@ -121,25 +124,25 @@ const route = useRoute();
 const router = useRouter();
 
 const selected = ref({})
-const quiz = ref();
-const userQuiz = ref();
+const evaluation = ref();
+const userEvaluation = ref();
 const breadcrumbs = ref([
-  { name: 'Kuis', route: { name: 'quizzes' }, current: false },
+  { name: 'Kuis', route: { name: 'evaluations' }, current: false },
 ]);
 
 async function loadData() {
-  const data = await getMyQuiz(route.params.id);
-  quiz.value = data.data.quiz;
-  userQuiz.value = data.data.user_quiz;
+  const data = await getMyEvaluation(route.params.id);
+  evaluation.value = data.data.evaluation;
+  userEvaluation.value = data.data.user_evaluation;
   breadcrumbs.value = [
     ...breadcrumbs.value,
-    { name: quiz.value.title, route: { name: 'quizzes.show', params: { id: quiz.value.id } }, current: true },
+    { name: evaluation.value.title, route: { name: 'evaluations.show', params: { id: evaluation.value.id } }, current: true },
   ]
 }
 loadData();
 
 async function submitAnswers() {
-  const data = await updateMyQuiz(route.params.id, selected.value);
+  const data = await updateMyEvaluation(route.params.id, selected.value);
   router.push('/evaluations');
 }
 
@@ -147,32 +150,4 @@ const forceFinish = () => {
   alert('Waktu habis!');
   submitAnswers();
 }
-
-/*
-const questions = [
-  {
-    id: 1,
-    question: 'Rasul-rasul sebelum Nabi Muhammad juga didustakan oleh ummatnya, hal ini dijelaskan pada ayat ...',
-    option_a: '7',
-    option_b: '6',
-    option_c: '5',
-    option_d: '4',
-  },
-  {
-    id: 2,
-    question: 'Di bawah ini adalah peringatan-peringatan Allah yang bermanfaat buat umat sesuai surah Fatir 4-11, kecuali ...',
-    option_a: 'Jangan mau diperdaya dunia, sesungguhnya janji Allah adalah benar.',
-    option_b: 'Setan adalah musuh bagi manusia, maka perlakukanlah ia sebagai musuhmu.',
-    option_c: 'Orang kafir akan mendapat azab yang sangat pedih.',
-    option_d: 'Apa saja rahmat Allah yang dianugerahkan kepada manusia, maka tidak ada yang bisa menahannya, dan apa saja yang Allah tahan, maka tidak ada yang bisa melepaskan.',
-  },
-  {
-    id: 3,
-    question: 'Perhatikan pernyataan di bawah ini, yang tidak sesuai dengan no. ayatnya adalah ...',
-    option_a: 'Umur seseorang telah ditetapkan dan ditulis dalam kitab Lauh Mahfuz; ayat 11.',
-    option_b: 'Kemuliaan adalah milik Allah. Allah akan menerima perkataan-perkataan baik dan amal shaleh; ayat 10.',
-    option_c: 'Allah akan menyesatkan dan memberi petunjuk bagi siapa yang dikehendakiNya; ayat 9',
-    option_d: 'Sesungguhnya Allah Maha Tahu apa yang manusia perbuat; ayat 8.',
-  },
-]*/
 </script>
