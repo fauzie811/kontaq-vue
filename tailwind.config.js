@@ -10,7 +10,11 @@ export default {
                 primary2: '#33a44b',
             },
             fontFamily: {
-                sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+                sans: [
+                    'Inter var',
+                    'Scheherazade New',
+                    ...defaultTheme.fontFamily.sans,
+                ],
             },
         },
     },
