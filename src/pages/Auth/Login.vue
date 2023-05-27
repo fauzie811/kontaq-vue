@@ -8,16 +8,12 @@
           <p class="mt-2 text-sm leading-6 text-gray-500">
             Silakan login terlebih dahulu.
           </p>
-          <!-- <p class="mt-2 text-sm leading-6 text-gray-500">
-            Belum punya akun?
-            {{ ' ' }}
-            <a href="#" class="font-semibold text-green-600 hover:text-green-500">Daftar sekarang</a>
-          </p> -->
         </div>
 
         <div class="mt-10">
           <div>
-            <form v-on:submit.prevent="doLogin" class="space-y-6">
+            <form v-on:submit.prevent="doLogin"
+              :class="['space-y-6', isLogginIn ? 'opacity-50 pointer-events-none' : '']">
               <div>
                 <label for="username" class="block text-sm font-medium leading-6 text-gray-900">ID Anggota</label>
                 <div class="mt-2">
@@ -35,17 +31,19 @@
                 </div>
               </div>
 
-              <div class="flex items-center justify-between">
+              <!-- <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                  <!-- <input id="remember-me" name="remember-me" type="checkbox"
+                  <input id="remember-me" name="remember-me" type="checkbox"
                     class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
-                  <label for="remember-me" class="block ml-3 text-sm leading-6 text-gray-700">Remember me</label> -->
+                  <label for="remember-me" class="block ml-3 text-sm leading-6 text-gray-700">Remember me</label>
                 </div>
 
                 <div class="text-sm leading-6">
                   <a href="#" class="font-semibold text-green-600 hover:text-green-500">Forgot password?</a>
                 </div>
-              </div>
+              </div> -->
+
+              <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
 
               <div>
                 <button type="submit"
@@ -54,6 +52,13 @@
             </form>
           </div>
         </div>
+
+        <p class="mt-4 text-sm leading-6 text-center text-gray-500">
+          Belum punya akun?
+          {{ ' ' }}
+          <router-link to="/register" class="font-semibold text-green-600 hover:text-green-500">Daftar
+            sekarang</router-link>
+        </p>
       </div>
     </div>
     <div class="relative flex-1 hidden w-0 lg:block">
@@ -72,10 +77,14 @@ import { login } from '@/api';
 
 const router = useRouter();
 
+const isLogginIn = ref(false);
 const username = ref();
 const password = ref();
+const error = ref();
 
 const doLogin = async () => {
+  error.value = null;
+  isLogginIn.value = true;
   try {
     await login({
       login: username.value,
@@ -83,7 +92,9 @@ const doLogin = async () => {
     });
     router.replace({ name: 'home' });
   } catch (e) {
-    console.error(e);
+    // console.error(e);
+    error.value = e;
   }
+  isLogginIn.value = false;
 }
 </script>

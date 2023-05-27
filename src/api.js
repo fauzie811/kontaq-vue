@@ -48,6 +48,15 @@ axios.interceptors.response.use(
     }
 );
 
+export const register = async (data) => {
+    try {
+        const res = await axios.post('auth/register', data);
+        authStore.setToken(res.data.token);
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const login = async ({ login, password }) => {
     try {
         const res = await axios.post('auth/login', { login, password });

@@ -140,7 +140,7 @@ loadData();
 
 async function submitAnswers() {
   const data = await updateMyQuiz(route.params.id, selected.value);
-  router.push('/evaluations');
+  router.push('/quizzes');
 }
 
 const forceFinish = () => {
