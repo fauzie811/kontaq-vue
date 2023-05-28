@@ -15,6 +15,7 @@ export default reactive({
     clearToken() {
         localStorage.removeItem('token');
         this.token = null;
+        this.user = null;
         this.isLoggedIn = false;
     },
 });
