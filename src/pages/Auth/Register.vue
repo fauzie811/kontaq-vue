@@ -13,110 +13,81 @@
         <div class="mt-10">
           <div>
             <form v-on:submit.prevent="doRegister"
-              :class="['space-y-4', isRegistering ? 'opacity-50 pointer-events-none' : '']">
-              <div class="md:flex md:gap-4">
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-2/3">
-                  <label for="name" class="block text-xs font-medium text-gray-900">Nama Lengkap</label>
-                  <input v-model="userData.name" id="name" name="name" type="text" autocomplete="name" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              :class="['grid grid-cols-1 gap-4 sm:grid-cols-6', isRegistering ? 'opacity-50 pointer-events-none' : '']">
+              <InputFrame class="sm:col-span-4" label="Nama Lengkap">
+                <input v-model="userData.name" id="name" name="name" type="text" autocomplete="name" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
+
+              <InputFrame class="sm:col-span-2" label="Panggilan">
+                <input v-model="userData.nickname" id="nickname" name="nickname" type="text" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
+
+              <RadioGroup
+                class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 sm:col-span-4"
+                v-model="userData.gender">
+                <RadioGroupLabel class="block text-xs font-medium text-gray-900">Jenis Kelamin</RadioGroupLabel>
+                <div class="grid grid-cols-2 gap-2">
+                  <RadioGroupOption as="template" value="m" v-slot="{ active, checked }">
+                    <div
+                      :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-green-600 ring-offset-2' : '', checked ? 'bg-green-600 text-white hover:bg-green-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
+                      <RadioGroupLabel as="span">Laki-laki</RadioGroupLabel>
+                    </div>
+                  </RadioGroupOption>
+                  <RadioGroupOption as="template" value="f" v-slot="{ active, checked }">
+                    <div
+                      :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-green-600 ring-offset-2' : '', checked ? 'bg-green-600 text-white hover:bg-green-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
+                      <RadioGroupLabel as="span">Perempuan</RadioGroupLabel>
+                    </div>
+                  </RadioGroupOption>
                 </div>
+              </RadioGroup>
 
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-1/3">
-                  <label for="nickname" class="block text-xs font-medium text-gray-900">Panggilan</label>
-                  <input v-model="userData.nickname" id="nickname" name="nickname" type="text" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
+              <InputFrame class="sm:col-span-2" label="Usia">
+                <input v-model="userData.age" id="age" name="age" type="number" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
 
-              <div class="md:flex md:gap-4">
-                <RadioGroup
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-2/3"
-                  v-model="userData.gender">
-                  <RadioGroupLabel class="block text-xs font-medium text-gray-900">Jenis Kelamin</RadioGroupLabel>
-                  <div class="grid grid-cols-2 gap-2">
-                    <RadioGroupOption as="template" value="m" v-slot="{ active, checked }">
-                      <div
-                        :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-green-600 ring-offset-2' : '', checked ? 'bg-green-600 text-white hover:bg-green-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
-                        <RadioGroupLabel as="span">Laki-laki</RadioGroupLabel>
-                      </div>
-                    </RadioGroupOption>
-                    <RadioGroupOption as="template" value="f" v-slot="{ active, checked }">
-                      <div
-                        :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-green-600 ring-offset-2' : '', checked ? 'bg-green-600 text-white hover:bg-green-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
-                        <RadioGroupLabel as="span">Perempuan</RadioGroupLabel>
-                      </div>
-                    </RadioGroupOption>
-                  </div>
-                </RadioGroup>
-
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-1/3">
-                  <label for="age" class="block text-xs font-medium text-gray-900">Usia (tahun)</label>
-                  <input v-model="userData.age" id="age" name="age" type="number" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
-
-              <div
-                class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600">
-                <label for="address" class="block text-xs font-medium text-gray-900">Alamat</label>
+              <InputFrame class="col-span-full" label="Alamat">
                 <input v-model="userData.address" id="address" name="address" type="text" required
                   class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-              </div>
+              </InputFrame>
 
-              <div
-                class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600">
-                <label for="occupation" class="block text-xs font-medium text-gray-900">Pekerjaan</label>
+              <InputFrame class="col-span-full" label="Pekerjaan">
                 <input v-model="userData.occupation" id="occupation" name="occupation" type="text" required
                   class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-              </div>
+              </InputFrame>
 
-              <div class="md:flex md:gap-4">
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-1/2">
-                  <label for="phone" class="block text-xs font-medium text-gray-900">Nomor HP</label>
-                  <input v-model="userData.phone" id="phone" name="phone" type="tel" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                </div>
+              <InputFrame class="sm:col-span-3" label="Nomor HP">
+                <input v-model="userData.phone" id="phone" name="phone" type="tel" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
 
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-1/2">
-                  <label for="email" class="block text-xs font-medium text-gray-900">Email</label>
-                  <input v-model="userData.email" id="email" name="email" type="email" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
+              <InputFrame class="sm:col-span-3" label="Email">
+                <input v-model="userData.email" id="email" name="email" type="email" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
 
-              <div
-                class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600">
-                <label for="motivation" class="block text-xs font-medium text-gray-900">Motivasi Ikut KontaQ</label>
+              <InputFrame class="col-span-full" label="Motivasi Ikut KontaQ">
                 <input v-model="userData.motivation" id="motivation" name="motivation" type="text" required
                   class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-              </div>
+              </InputFrame>
 
-              <div class="md:flex md:gap-4">
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-1/2">
-                  <label for="password" class="block text-xs font-medium text-gray-900">Password</label>
-                  <input v-model="userData.password" id="password" name="password" type="password" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                </div>
+              <InputFrame class="sm:col-span-3" label="Password">
+                <input v-model="userData.password" id="password" name="password" type="password" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
 
-                <div
-                  class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 md:w-1/2">
-                  <label for="password_confirmation" class="block text-xs font-medium text-gray-900">Konfirmasi
-                    Password</label>
-                  <input v-model="userData.password_confirmation" id="password_confirmation" name="password_confirmation"
-                    type="password" required
-                    class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                </div>
-              </div>
+              <InputFrame class="sm:col-span-3" label="Konfirmasi Password">
+                <input v-model="userData.password_confirmation" id="password_confirmation" name="password_confirmation"
+                  type="password" required
+                  class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+              </InputFrame>
 
-              <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
+              <p v-if="error" class="text-sm text-red-600 col-span-full">{{ error }}</p>
 
-              <div>
+              <div class="col-span-full">
                 <button type="submit"
                   class="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Mendaftar</button>
               </div>
@@ -146,6 +117,7 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue';
 
 import { useRouter } from 'vue-router';
 import { register } from '@/api';
+import InputFrame from '@/components/forms/InputFrame.vue';
 
 const router = useRouter();
 

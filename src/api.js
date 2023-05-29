@@ -84,6 +84,24 @@ export const getUser = async () => {
     }
 };
 
+export const getProfile = async () => {
+    try {
+        const { data } = await axios.get('me/profile');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const updateProfile = async (profile) => {
+    try {
+        const { data } = await axios.put('me/profile', profile);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const listMaterials = async () => {
     try {
         const { data } = await axios.get('materials');

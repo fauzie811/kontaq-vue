@@ -21,9 +21,9 @@
                 </div>
               </div>
               <div class="flex justify-center mt-5 sm:mt-0">
-                <a href="#"
+                <router-link to="/profile"
                   class="flex items-center justify-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Lihat
-                  profil</a>
+                  profil</router-link>
               </div>
             </div>
           </div>
@@ -49,8 +49,8 @@ import authStore from '@/store/auth';
 import Announcements from '@/widgets/Announcements.vue';
 
 const stats = [
-  { label: 'Vacation days left', value: 12 },
-  { label: 'Sick days left', value: 4 },
-  { label: 'Personal days left', value: 2 },
+  // { label: 'Vacation days left', value: 12 },
+  // { label: 'Sick days left', value: 4 },
+  // { label: 'Personal days left', value: 2 },
 ]
 </script>
