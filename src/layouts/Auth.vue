@@ -15,8 +15,7 @@
           <div class="px-6 py-3 bg-white rounded-full">
             <img class="w-auto h-20" src="@/assets/logo-kontaq.png" alt="Komunitas Tadabbur Al-Qur'an" />
           </div>
-          <p class="mt-4 text-xl font-medium">Komunitas Tadabbur Al-Qur'an</p>
-          <p class="text-sm font-medium">Raih Keberkahan Hidup Bersama Al-Qur'an</p>
+          <img class="w-auto h-12 mt-5" src="@/assets/tagline.png" alt="Komunitas Tadabbur Al-Qur'an" />
         </div>
       </div>
     </div>

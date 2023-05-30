@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-gradient-to-r from-[#7bc060] to-[#33a44b] grow gap-y-5">
-    <div class="flex flex-col items-center py-4 text-center border-b border-white shrink-0">
+    <div class="flex flex-col items-center py-4 text-center shrink-0">
       <div class="px-6 py-3 bg-white rounded-full">
         <img class="w-auto h-14" src="@/assets/logo-kontaq.png" alt="Komunitas Tadabbur Al-Qur'an" />
       </div>
-      <p class="mt-3 text-sm font-medium text-white">Komunitas Tadabbur Al-Qur'an</p>
-      <p class="text-xs font-medium text-white">Raih Keberkahan Hidup Bersama Al-Qur'an</p>
+      <img class="w-auto h-8 mt-3 invert brightness-0" src="@/assets/tagline.png" alt="Komunitas Tadabbur Al-Qur'an" />
     </div>
+    <div class="-mx-6 -mt-4 border-b border-white"></div>
     <nav class="flex flex-col flex-1">
       <ul role="list" class="flex flex-col flex-1 gap-y-7">
         <li>

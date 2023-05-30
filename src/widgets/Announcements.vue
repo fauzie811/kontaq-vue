@@ -1,9 +1,9 @@
 <template>
   <div class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
-    <div class="px-4 py-5 sm:px-6">
+    <div class="px-4 py-4 sm:px-6">
       Pengumuman
     </div>
-    <div class="px-4 py-5 sm:p-6">
+    <div class="px-4 sm:px-6">
       <div role="list" class="divide-y divide-gray-100">
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
           :key="announcement.id" class="block py-5">
