@@ -5,10 +5,13 @@
       <div v-if="evaluation" class="mt-4 space-y-5">
         <PageHeader :page-title="evaluation.title" />
         <template v-if="evaluation && !userEvaluation.finished_at">
-          <div v-for="question in evaluation.questions" :key="question.id"
+          <div v-for="question, index in evaluation.questions" :key="question.id"
             class="overflow-hidden bg-white rounded-lg shadow">
             <div class="px-4 py-5 sm:p-6">
-              <div class="prose" v-html="question.content"></div>
+              <div class="flex items-start gap-2">
+                <p class="flex-shrink-0 leading-7">{{ index + 1 }}.</p>
+                <div class="flex-1 prose" v-html="question.content"></div>
+              </div>
 
               <RadioGroup class="mt-5" v-model="selected[question.id]">
                 <div class="relative -space-y-px bg-white rounded-md">
@@ -76,10 +79,28 @@
         <div v-if="userEvaluation.finished_at"
           class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
           <div class="px-4 py-5 space-y-5 sm:p-6">
-            <p>Sudah selesai.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id tempore quia, recusandae veniam adipisci quo
-              neque voluptatibus maxime minima facilis. Recusandae, distinctio est? Voluptate nam ullam est! Vitae,
-              accusantium doloribus?</p>
+            <p>Jazaakumullah khayran katsiran.</p>
+            <p>Nilai Anda <strong>{{ userEvaluation.score }}</strong></p>
+
+            <div v-for="question, index in evaluation.questions" :key="question.id"
+              class="overflow-hidden border border-gray-200 rounded-lg shadow-sm">
+              <div class="px-4 py-3">
+                <div class="flex items-start gap-2">
+                  <p class="flex-shrink-0 leading-7">{{ index + 1 }}.</p>
+                  <div class="flex-1 prose" v-html="question.content"></div>
+                </div>
+
+                <div class="mt-3 text-sm text-gray-700">
+                  <div v-for="option in ['a', 'b', 'c', 'd']" class="flex items-center gap-2 px-2 py-1.5 rounded"
+                    :class="[userEvaluation.answers[question.id] == option ? 'bg-gray-100' : '']">
+                    <CheckIcon class="flex-shrink-0 w-5 h-5 text-green-600"
+                      :class="[question.answer == option ? '' : 'opacity-0']" />
+                    <p class="flex-shrink-0">{{ option }}.</p>
+                    <p>{{ question.details[`option_${option}`] }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="px-4 py-4 sm:px-6">
             <router-link to="/evaluations"
@@ -127,7 +148,7 @@ const selected = ref({})
 const evaluation = ref();
 const userEvaluation = ref();
 const breadcrumbs = ref([
-  { name: 'Kuis', route: { name: 'evaluations' }, current: false },
+  { name: 'Evaluasi', route: { name: 'evaluations' }, current: false },
 ]);
 
 async function loadData() {
