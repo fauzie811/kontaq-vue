@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import authStore from './store/auth';
+import AuthLayout from './layouts/Auth.vue';
 import BlankLayout from './layouts/Blank.vue';
 import MainLayout from './layouts/Main.vue';
 import QuizLayout from './layouts/Quiz.vue';
@@ -15,13 +16,13 @@ const routes = [
         path: '/login',
         component: Login,
         name: 'login',
-        meta: { layout: BlankLayout },
+        meta: { layout: AuthLayout },
     },
     {
         path: '/register',
         component: Register,
         name: 'register',
-        meta: { layout: BlankLayout },
+        meta: { layout: AuthLayout },
     },
     {
         path: '/logout',

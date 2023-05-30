@@ -1,6 +1,6 @@
 <template>
   <div class="grid gap-5 lg:grid-cols-3">
-    <div class="lg:col-span-2">
+    <div class="col-span-full">
       <section aria-labelledby="profile-overview-title">
         <div class="overflow-hidden bg-white rounded-lg shadow-sm ring-1 ring-gray-900/5">
           <h2 class="sr-only" id="profile-overview-title">Profile Overview</h2>
@@ -38,7 +38,7 @@
         </div>
       </section>
     </div>
-    <div>
+    <div class="col-span-full">
       <Announcements />
     </div>
   </div>

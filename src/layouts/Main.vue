@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="min-h-full bg-gray-100">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog as="div" class="relative z-50 lg:hidden" @close="sidebarOpen = false">
         <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"

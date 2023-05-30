@@ -33,7 +33,7 @@
             </InputFrame>
 
             <RadioGroup
-              class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 sm:col-span-4"
+              class="bg-white rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 sm:col-span-4"
               v-model="profile.gender">
               <RadioGroupLabel class="block text-xs font-medium text-gray-900">Jenis Kelamin</RadioGroupLabel>
               <div class="grid grid-cols-2 gap-2">
