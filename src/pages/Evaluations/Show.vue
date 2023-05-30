@@ -133,7 +133,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
-import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
+import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue';
+import { CheckIcon } from '@heroicons/vue/24/outline';
 import parseISO from 'date-fns/parseISO';
 
 import { getMyEvaluation, updateMyEvaluation } from '@/api';
