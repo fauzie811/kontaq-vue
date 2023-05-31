@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col overflow-y-auto bg-gradient-to-r from-[#7bc060] to-[#33a44b] grow">
+  <div class="flex flex-col overflow-y-auto bg-gradient-to-r from-primary-1 to-primary-2 grow">
     <div class="flex flex-col items-center py-4 text-center border-b border-white shadow-md shrink-0">
       <div class="px-6 py-3 bg-white rounded-full">
         <img class="w-auto h-14" src="@/assets/logo-kontaq.png" alt="Komunitas Tadabbur Al-Qur'an" />
