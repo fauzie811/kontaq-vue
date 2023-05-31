@@ -26,6 +26,8 @@
         </div>
       </li>
     </ul>
+
+    <Pagination class="mt-5" :meta="evaluations" v-on:change="changePage" />
   </div>
 </template>
 
@@ -34,17 +36,24 @@ import { ref } from 'vue';
 import { listMyEvaluations } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import Pagination from '@/components/Pagination.vue';
 
 const breadcrumbs = ref([
   { name: 'Evaluasi', route: '/evaluations', current: true },
 ]);
+const page = ref(1);
 const evaluations = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyEvaluations();
+  const { data } = await listMyEvaluations(page.value);
   evaluations.value = data;
 }
 loadData();
+
+function changePage(p) {
+  page.value = p;
+  loadData();
+}
 
 function getStatus(evaluation) {
   if (evaluation.finished_at) return 'Selesai';

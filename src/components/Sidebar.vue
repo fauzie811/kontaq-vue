@@ -1,13 +1,12 @@
 <template>
-  <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-gradient-to-r from-[#7bc060] to-[#33a44b] grow gap-y-5">
-    <div class="flex flex-col items-center py-4 text-center shrink-0">
+  <div class="flex flex-col overflow-y-auto bg-gradient-to-r from-[#7bc060] to-[#33a44b] grow">
+    <div class="flex flex-col items-center py-4 text-center border-b border-white shadow-md shrink-0">
       <div class="px-6 py-3 bg-white rounded-full">
         <img class="w-auto h-14" src="@/assets/logo-kontaq.png" alt="Komunitas Tadabbur Al-Qur'an" />
       </div>
       <img class="w-auto h-8 mt-3 invert brightness-0" src="@/assets/tagline.png" alt="Komunitas Tadabbur Al-Qur'an" />
     </div>
-    <div class="-mx-6 -mt-4 border-b border-white"></div>
-    <nav class="flex flex-col flex-1">
+    <nav class="flex flex-col flex-1 px-6 py-4">
       <ul role="list" class="flex flex-col flex-1 gap-y-7">
         <li>
           <ul role="list" class="-mx-2 space-y-1">
@@ -22,13 +21,13 @@
             </li>
           </ul>
         </li>
-        <li class="mt-auto">
+        <!-- <li class="mt-auto">
           <a href="#"
             class="flex p-2 -mx-2 text-sm font-medium leading-6 text-green-200 rounded-md group gap-x-3 hover:bg-green-700 hover:text-white">
             <Cog6ToothIcon class="w-6 h-6 text-green-200 shrink-0 group-hover:text-white" aria-hidden="true" />
             Settings
           </a>
-        </li>
+        </li> -->
       </ul>
     </nav>
   </div>

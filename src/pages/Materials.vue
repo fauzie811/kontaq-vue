@@ -34,6 +34,8 @@
         </div>
       </li>
     </ul>
+
+    <Pagination class="mt-5" :meta="materials.meta" v-on:change="changePage" />
   </div>
 </template>
 
@@ -43,17 +45,24 @@ import { listMaterials } from '@/api';
 import { shortDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import Pagination from '@/components/Pagination.vue';
 
 const breadcrumbs = ref([
   { name: 'Materi Tadabbur', route: { name: 'materials' }, current: true },
 ]);
+const page = ref(1);
 const materials = ref({ data: [] });
 
 async function loadData() {
-  const data = await listMaterials();
+  const data = await listMaterials(page.value);
   materials.value = data;
 }
 loadData();
+
+function changePage(p) {
+  page.value = p;
+  loadData();
+}
 
 const statuses = {
   Complete: 'text-green-700 bg-green-50 ring-green-600/20',

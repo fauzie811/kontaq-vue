@@ -102,9 +102,9 @@ export const updateProfile = async (profile) => {
     }
 };
 
-export const listMaterials = async () => {
+export const listMaterials = async (page = 1) => {
     try {
-        const { data } = await axios.get('materials');
+        const { data } = await axios.get('materials', { params: { page } });
         return data;
     } catch (e) {
         throw e;
@@ -120,9 +120,9 @@ export const getMaterial = async (id) => {
     }
 };
 
-export const listAnnouncements = async () => {
+export const listAnnouncements = async (page = 1) => {
     try {
-        const { data } = await axios.get('announcements');
+        const { data } = await axios.get('announcements', { params: { page } });
         return data;
     } catch (e) {
         throw e;
@@ -138,9 +138,9 @@ export const getAnnouncement = async (id) => {
     }
 };
 
-export const listMyQuizzes = async () => {
+export const listMyQuizzes = async (page = 1) => {
     try {
-        const { data } = await axios.get('me/quizzes');
+        const { data } = await axios.get('me/quizzes', { params: { page } });
         return data;
     } catch (e) {
         throw e;
@@ -165,9 +165,11 @@ export const updateMyQuiz = async (id, answers) => {
     }
 };
 
-export const listMyEvaluations = async () => {
+export const listMyEvaluations = async (page = 1) => {
     try {
-        const { data } = await axios.get('me/evaluations');
+        const { data } = await axios.get('me/evaluations', {
+            params: { page },
+        });
         return data;
     } catch (e) {
         throw e;

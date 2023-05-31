@@ -25,6 +25,8 @@
         </div>
       </li>
     </ul>
+
+    <Pagination class="mt-5" :meta="quizzes" v-on:change="changePage" />
   </div>
 </template>
 
@@ -33,17 +35,24 @@ import { ref } from 'vue';
 import { listMyQuizzes } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import Pagination from '@/components/Pagination.vue';
 
 const breadcrumbs = ref([
   { name: 'Kuis', route: '/quizzes', current: true },
 ]);
+const page = ref(1);
 const quizzes = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyQuizzes();
+  const { data } = await listMyQuizzes(page.value);
   quizzes.value = data;
 }
 loadData();
+
+function changePage(p) {
+  page.value = p;
+  loadData();
+}
 
 function getStatus(quiz) {
   if (quiz.finished_at) return 'Selesai';

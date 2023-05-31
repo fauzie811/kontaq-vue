@@ -42,6 +42,8 @@
         </dl> -->
       </li>
     </ul>
+
+    <Pagination class="mt-5" :meta="announcements" v-on:change="changePage" />
   </div>
 </template>
 
@@ -52,15 +54,22 @@ import { shortDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import { ChatBubbleLeftIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import Pagination from '@/components/Pagination.vue';
 
 const breadcrumbs = ref([
   { name: 'Pengumuman', route: '/announcements', current: true },
 ]);
+const page = ref(1);
 const announcements = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listAnnouncements();
+  const { data } = await listAnnouncements(page.value);
   announcements.value = data;
 }
 loadData();
+
+function changePage(p) {
+  page.value = p;
+  loadData();
+}
 </script>
