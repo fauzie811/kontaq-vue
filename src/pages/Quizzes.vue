@@ -67,7 +67,7 @@ function getButtonLabel(quiz) {
 
 const statuses = {
   Selesai: 'text-green-700 bg-green-50 ring-green-600/20',
-  'Sedang dikerjakan': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  'Belum dikerjakan': 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+  'Sedang dikerjakan': 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+  'Belum dikerjakan': 'text-gray-600 bg-gray-50 ring-gray-500/10',
 }
 </script>

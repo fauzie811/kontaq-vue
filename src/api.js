@@ -120,6 +120,33 @@ export const getMaterial = async (id) => {
     }
 };
 
+export const listMyMaterials = async (page = 1) => {
+    try {
+        const { data } = await axios.get('me/materials', { params: { page } });
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const getMyMaterial = async (id) => {
+    try {
+        const { data } = await axios.get(`me/materials/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const updateMyMaterial = async (id) => {
+    try {
+        const { data } = await axios.put(`me/materials/${id}`);
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const listAnnouncements = async (page = 1) => {
     try {
         const { data } = await axios.get('announcements', { params: { page } });

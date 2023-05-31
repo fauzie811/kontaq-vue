@@ -13,9 +13,9 @@
         <div class="min-w-0">
           <div class="flex items-start gap-x-3">
             <p class="text-sm font-semibold leading-6 text-gray-900">{{ material.title }}</p>
-            <!-- <p
-              :class="[statuses[material.status], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
-              {{ material.status }}</p> -->
+            <p
+              :class="[statuses[getStatus(material)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
+              {{ getStatus(material) }}</p>
           </div>
           <div class="flex items-center mt-1 text-xs leading-5 text-gray-500 gap-x-2">
             <p class="whitespace-nowrap">
@@ -35,13 +35,13 @@
       </li>
     </ul>
 
-    <Pagination class="mt-5" :meta="materials.meta" v-on:change="changePage" />
+    <Pagination class="mt-5" :meta="materials" v-on:change="changePage" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { listMaterials } from '@/api';
+import { listMyMaterials } from '@/api';
 import { shortDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
@@ -54,7 +54,7 @@ const page = ref(1);
 const materials = ref({ data: [] });
 
 async function loadData() {
-  const data = await listMaterials(page.value);
+  const { data } = await listMyMaterials(page.value);
   materials.value = data;
 }
 loadData();
@@ -64,9 +64,14 @@ function changePage(p) {
   loadData();
 }
 
-const statuses = {
-  Complete: 'text-green-700 bg-green-50 ring-green-600/20',
-  'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  Archived: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+function getStatus(quiz) {
+  if (quiz.read_at) return 'Selesai';
+  return 'Belum dibaca';
 }
+
+const statuses = {
+  Selesai: 'text-green-700 bg-green-50 ring-green-600/20',
+  'Belum dibaca': 'text-gray-600 bg-gray-50 ring-gray-500/10',
+}
+
 </script>
