@@ -58,7 +58,7 @@ const routes = [
         path: '/quizzes/:id',
         component: () => import('./pages/Quizzes/Show.vue'),
         name: 'quizzes.show',
-        meta: { needsAuth: true, layout: QuizLayout },
+        meta: { needsAuth: true, layout: MainLayout },
     },
     {
         path: '/evaluations',
@@ -70,7 +70,7 @@ const routes = [
         path: '/evaluations/:id',
         component: () => import('./pages/Evaluations/Show.vue'),
         name: 'evaluations.show',
-        meta: { needsAuth: true, layout: QuizLayout },
+        meta: { needsAuth: true, layout: MainLayout },
     },
     {
         path: '/reports',
