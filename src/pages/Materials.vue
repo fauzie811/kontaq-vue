@@ -18,13 +18,13 @@
               {{ getStatus(material) }}</p>
           </div>
           <div class="flex items-center mt-1 text-xs leading-5 text-gray-500 gap-x-2">
+            <p v-if="material.category" class="truncate">{{ material.category.name }}</p>
+            <svg v-if="material.category" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+              <circle cx="1" cy="1" r="1" />
+            </svg>
             <p class="whitespace-nowrap">
               Tanggal <time :datetime="material.created_at">{{ shortDate(material.created_at) }}</time>
             </p>
-            <!-- <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
-              <circle cx="1" cy="1" r="1" />
-            </svg>
-            <p class="truncate">Created by {{ material.createdBy }}</p> -->
           </div>
         </div>
         <div class="flex items-center flex-none gap-x-4">
