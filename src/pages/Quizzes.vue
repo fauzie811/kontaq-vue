@@ -19,7 +19,10 @@
           </div>
         </div>
         <div class="flex items-center flex-none gap-x-4">
-          <router-link :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
+          <button v-if="!quiz.material_read" v-on:click.prevent="showAlert(quiz.material_id)"
+            class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
+              getButtonLabel(quiz) }}</button>
+          <router-link v-else :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
             class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
               getButtonLabel(quiz) }}</router-link>
         </div>
@@ -32,11 +35,14 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { listMyQuizzes } from '@/api';
+import { swConfirm } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 
+const router = useRouter();
 const breadcrumbs = ref([
   { name: 'Kuis', route: '/quizzes', current: true },
 ]);
@@ -63,6 +69,17 @@ function getButtonLabel(quiz) {
   if (quiz.finished_at) return 'Lihat hasil';
   if (quiz.started_at) return 'Lanjukan';
   return 'Mulai';
+}
+
+async function showAlert(id) {
+  const res = await swConfirm({
+    icon: 'warning',
+    title: 'Mohon Maaf',
+    text: 'Anda harus menyelesaikan materi terkait untuk mengerjakan kuis ini.',
+    confirmButtonText: 'Baca Materi',
+    cancelButtonText: 'Tutup',
+  });
+  if (res.isConfirmed && id) router.push(`/materials/${id}`);
 }
 
 const statuses = {
