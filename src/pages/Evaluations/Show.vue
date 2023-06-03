@@ -161,7 +161,7 @@ async function loadData() {
     ...breadcrumbs.value,
     { name: evaluation.value.title, route: { name: 'evaluations.show', params: { id: evaluation.value.id } }, current: true },
   ];
-  if (data.error) return showAlert();
+  if (!data.success) return showAlert();
 }
 loadData();
 
