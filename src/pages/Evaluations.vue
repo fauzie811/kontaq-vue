@@ -20,10 +20,7 @@
           </div>
         </div>
         <div class="flex items-center flex-none gap-x-4">
-          <button v-if="evaluation.quizzes_count < 5" v-on:click.prevent="showAlert"
-            class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
-              getButtonLabel(evaluation) }}</button>
-          <router-link v-else :to="{ name: 'evaluations.show', params: { id: evaluation.id } }"
+          <router-link :to="{ name: 'evaluations.show', params: { id: evaluation.id } }"
             class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
               getButtonLabel(evaluation) }}</router-link>
         </div>
@@ -40,7 +37,6 @@ import { listMyEvaluations } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
-import { swAlert } from '@/utils';
 
 const breadcrumbs = ref([
   { name: 'Evaluasi', route: '/evaluations', current: true },
@@ -68,14 +64,6 @@ function getButtonLabel(evaluation) {
   if (evaluation.finished_at) return 'Lihat hasil';
   if (evaluation.started_at) return 'Lanjukan';
   return 'Mulai';
-}
-
-function showAlert() {
-  swAlert({
-    icon: 'warning',
-    title: 'Mohon Maaf',
-    text: 'Anda harus menyelesaikan 5 kuis terkait untuk mengerjakan evaluasi ini.'
-  })
 }
 
 const statuses = {

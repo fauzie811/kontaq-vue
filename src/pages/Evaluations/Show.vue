@@ -4,8 +4,8 @@
       <Breadcrumbs :pages="breadcrumbs" />
       <div v-if="evaluation" class="mt-4 space-y-5">
         <PageHeader :page-title="evaluation.title" />
-        <template v-if="evaluation && !userEvaluation.finished_at">
-          <div v-for="question, index in evaluation.questions" :key="question.id"
+        <template v-if="(evaluation && userEvaluation) && !userEvaluation.finished_at">
+          <div v-for=" question, index  in  evaluation.questions " :key="question.id"
             class="overflow-hidden bg-white rounded-lg shadow">
             <div class="px-4 py-5 sm:p-6">
               <div class="flex items-start gap-2">
@@ -76,13 +76,13 @@
             </div>
           </div>
         </template>
-        <div v-if="userEvaluation.finished_at"
+        <div v-if="userEvaluation && userEvaluation.finished_at"
           class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
           <div class="px-4 py-5 space-y-5 sm:p-6">
             <p>Jazaakumullah khayran katsiran.</p>
             <p>Nilai Anda <strong>{{ userEvaluation.score }}</strong></p>
 
-            <div v-for="question, index in evaluation.questions" :key="question.id"
+            <div v-for=" question, index  in  evaluation.questions " :key="question.id"
               class="overflow-hidden border border-gray-200 rounded-lg shadow-sm">
               <div class="px-4 py-3">
                 <div class="flex items-start gap-2">
@@ -91,12 +91,12 @@
                 </div>
 
                 <div class="mt-3 text-sm text-gray-700">
-                  <div v-for="option in ['a', 'b', 'c', 'd']" class="flex items-center gap-2 px-2 py-1.5 rounded"
+                  <div v-for=" option  in  ['a', 'b', 'c', 'd'] " class="flex items-center gap-2 px-2 py-1.5 rounded"
                     :class="[userEvaluation.answers[question.id] == option ? 'bg-gray-100' : '']">
                     <CheckIcon class="flex-shrink-0 w-5 h-5 text-green-600"
                       :class="[question.answer == option ? '' : 'opacity-0']" />
                     <p class="flex-shrink-0">{{ option }}.</p>
-                    <p>{{ question.details[`option_${option}`] }}</p>
+                    <p>{{ question.details[`option_${option} `] }}</p>
                   </div>
                 </div>
               </div>
@@ -110,7 +110,7 @@
       </div>
     </div>
     <div>
-      <div v-if="evaluation && !userEvaluation.finished_at" class="space-y-5 md:sticky md:top-0">
+      <div v-if="(evaluation && userEvaluation) && !userEvaluation.finished_at" class="space-y-5 md:sticky md:top-0">
         <div class="overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
           <div class="px-4 py-5 sm:px-6">
             <h3 class="text-center">Sisa Waktu</h3>
@@ -137,6 +137,7 @@ import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } 
 import { CheckIcon } from '@heroicons/vue/24/outline';
 import parseISO from 'date-fns/parseISO';
 
+import { swAlert } from '@/utils';
 import { getMyEvaluation, updateMyEvaluation } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
@@ -159,9 +160,20 @@ async function loadData() {
   breadcrumbs.value = [
     ...breadcrumbs.value,
     { name: evaluation.value.title, route: { name: 'evaluations.show', params: { id: evaluation.value.id } }, current: true },
-  ]
+  ];
+  if (data.error) return showAlert();
 }
 loadData();
+
+async function showAlert() {
+  await swAlert({
+    icon: 'warning',
+    title: 'Mohon Maaf',
+    text: 'Anda harus menyelesaikan semua kuis terkait untuk mengerjakan evaluasi ini.',
+    buttonText: 'Kembali',
+  });
+  router.back();
+}
 
 async function submitAnswers() {
   const data = await updateMyEvaluation(route.params.id, selected.value);
