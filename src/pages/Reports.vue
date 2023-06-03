@@ -7,10 +7,10 @@
         <thead class="bg-gray-50">
           <tr>
             <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Nama Peserta</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" v-for="quiz, index in reports.quizzes"
-              :key="quiz.id">Kuis {{ index }}</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" v-for="(quiz, index) in reports.quizzes"
+              :key="quiz.id">Kuis {{ index + 1 }}</th>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              v-for="evaluation, index in reports.evaluations" :key="evaluation.id">Evaluasi {{ index }}</th>
+              v-for="(evaluation, index) in reports.evaluations" :key="evaluation.id">Evaluasi {{ index + 1 }}</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
