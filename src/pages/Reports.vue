@@ -3,8 +3,12 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Rapor" />
 
-    <div class="flex justify-end mb-4">
-      <CategoryPicker root-only class="w-full sm:w-64" v-model="category" @update:modelValue="loadData" />
+    <div class="mb-4 sm:flex">
+      <InputFrame class="w-full sm:w-64" label="Grup">
+        <p v-if="authStore.user && authStore.user.group">{{ authStore.user.group.name }}</p>
+        <TextPlaceholder v-else class="block w-32" />
+      </InputFrame>
+      <CategoryPicker root-only class="w-full ml-auto sm:w-64" v-model="category" @update:modelValue="loadData" />
     </div>
 
     <div v-if="reports" class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
@@ -20,7 +24,10 @@
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="item in reports.items">
-            <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">{{ item.name }}</td>
+            <td class="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+              <p class="text-xs text-gray-500">{{ item.username }}</p>
+              <p class="text-sm font-medium text-gray-900 ">{{ item.name }}</p>
+            </td>
             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
               {{ item.scores ? item.scores[`quiz_${quiz.id}`] || '-' : ''
               }}</td>
@@ -37,9 +44,12 @@
 <script setup>
 import { ref } from 'vue';
 import { getReports } from '@/api';
+import authStore from '@/store/auth';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
+import InputFrame from '@/components/forms/InputFrame.vue';
+import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
 
 const breadcrumbs = ref([
   { name: 'Rapor', route: '/reports', current: true },
@@ -48,9 +58,11 @@ const category = ref();
 const reports = ref();
 
 async function loadData() {
-  const data = await getReports(category.value ? category.value.id : null);
-  reports.value = data.data;
-  console.log(data);
+  if (category.value) {
+    const data = await getReports(category.value ? category.value.id : null);
+    reports.value = data.data;
+    console.log(data);
+  }
 }
 loadData();
 </script>
