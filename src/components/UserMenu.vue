@@ -8,12 +8,8 @@
         alt="" />
       <span class="hidden lg:flex lg:items-center">
         <span v-if="authStore.user" class="flex flex-col items-start justify-center ml-4">
-          <span class="text-sm font-medium text-gray-900" aria-hidden="true">{{ authStore.user ?
-            authStore.user.name : '...'
-          }}</span>
-          <span class="text-xs text-gray-500" aria-hidden="true">{{ authStore.user ?
-            authStore.user.username : ''
-          }}</span>
+          <span class="text-sm font-medium text-gray-900" aria-hidden="true">{{ authStore.user.name }}</span>
+          <span class="text-xs text-gray-500" aria-hidden="true">{{ authStore.user.username }}</span>
         </span>
         <span v-else class="flex flex-col items-start justify-center ml-4">
           <TextPlaceholder class="w-20 text-sm" />

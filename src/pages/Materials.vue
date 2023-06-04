@@ -5,7 +5,7 @@
       <!-- <button type="button"
         class="inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Edit</button>
       <button type="button"
-        class="inline-flex items-center px-3 py-2 ml-3 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Publish</button> -->
+        class="inline-flex items-center px-3 py-2 ml-3 text-sm font-semibold text-white bg-green-600 rounded-md shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Publish</button> -->
     </PageHeader>
 
     <div class="flex justify-end mb-4">

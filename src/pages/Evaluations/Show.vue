@@ -17,57 +17,57 @@
                 <div class="relative -space-y-px bg-white rounded-md">
                   <RadioGroupOption :key="question.id + '_a'" value="a" v-slot="{ checked, active }">
                     <div
-                      :class="['rounded-tl-md rounded-tr-md', checked ? 'z-10 border-indigo-200 bg-indigo-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
+                      :class="['rounded-tl-md rounded-tr-md', checked ? 'z-10 border-green-200 bg-green-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
                       <span
-                        :class="[checked ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-indigo-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
+                        :class="[checked ? 'bg-green-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-green-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
                         aria-hidden="true">
                         <span class="rounded-full bg-white w-1.5 h-1.5" />
                       </span>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         a.</RadioGroupLabel>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         {{ question.details.option_a }}</RadioGroupLabel>
                     </div>
                   </RadioGroupOption>
                   <RadioGroupOption :key="question.id + '_b'" value="b" v-slot="{ checked, active }">
                     <div
-                      :class="[checked ? 'z-10 border-indigo-200 bg-indigo-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
+                      :class="[checked ? 'z-10 border-green-200 bg-green-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
                       <span
-                        :class="[checked ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-indigo-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
+                        :class="[checked ? 'bg-green-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-green-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
                         aria-hidden="true">
                         <span class="rounded-full bg-white w-1.5 h-1.5" />
                       </span>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         b.</RadioGroupLabel>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         {{ question.details.option_b }}</RadioGroupLabel>
                     </div>
                   </RadioGroupOption>
                   <RadioGroupOption :key="question.id + '_c'" value="c" v-slot="{ checked, active }">
                     <div
-                      :class="[checked ? 'z-10 border-indigo-200 bg-indigo-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
+                      :class="[checked ? 'z-10 border-green-200 bg-green-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
                       <span
-                        :class="[checked ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-indigo-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
+                        :class="[checked ? 'bg-green-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-green-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
                         aria-hidden="true">
                         <span class="rounded-full bg-white w-1.5 h-1.5" />
                       </span>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         c.</RadioGroupLabel>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         {{ question.details.option_c }}</RadioGroupLabel>
                     </div>
                   </RadioGroupOption>
                   <RadioGroupOption :key="question.id + '_d'" value="d" v-slot="{ checked, active }">
                     <div
-                      :class="['rounded-bl-md rounded-br-md', checked ? 'z-10 border-indigo-200 bg-indigo-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
+                      :class="['rounded-bl-md rounded-br-md', checked ? 'z-10 border-green-200 bg-green-50' : 'border-gray-200', 'relative cursor-pointer border p-4 flex items-center text-sm focus:outline-none md:pl-4 md:pr-6']">
                       <span
-                        :class="[checked ? 'bg-indigo-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-indigo-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
+                        :class="[checked ? 'bg-green-600 border-transparent' : 'bg-white border-gray-300', active ? 'ring-2 ring-offset-2 ring-green-600' : '', 'h-4 w-4 rounded-full border flex items-center justify-center']"
                         aria-hidden="true">
                         <span class="rounded-full bg-white w-1.5 h-1.5" />
                       </span>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         d.</RadioGroupLabel>
-                      <RadioGroupLabel as="span" :class="[checked ? 'text-indigo-900' : 'text-gray-900', 'ml-3']">
+                      <RadioGroupLabel as="span" :class="[checked ? 'text-green-900' : 'text-gray-900', 'ml-3']">
                         {{ question.details.option_d }}</RadioGroupLabel>
                     </div>
                   </RadioGroupOption>
@@ -124,7 +124,7 @@
         </div>
 
         <button @click="submitAnswers" type="button"
-          class="w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Selesai</button>
+          class="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Selesai</button>
       </div>
     </div>
   </div>
