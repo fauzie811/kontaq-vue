@@ -102,27 +102,22 @@ export const updateProfile = async (profile) => {
     }
 };
 
-export const listMaterials = async (page = 1) => {
+export const listCategories = async (rootOnly = false) => {
     try {
-        const { data } = await axios.get('materials', { params: { page } });
+        const { data } = await axios.get('categories', {
+            params: { rootOnly: rootOnly ? 1 : 0 },
+        });
         return data;
     } catch (e) {
         throw e;
     }
 };
 
-export const getMaterial = async (id) => {
+export const listMyMaterials = async ({ page = 1, category = null }) => {
     try {
-        const { data } = await axios.get(`materials/${id}`);
-        return data;
-    } catch (e) {
-        throw e;
-    }
-};
-
-export const listMyMaterials = async (page = 1) => {
-    try {
-        const { data } = await axios.get('me/materials', { params: { page } });
+        const { data } = await axios.get('me/materials', {
+            params: { page, category },
+        });
         return data;
     } catch (e) {
         throw e;

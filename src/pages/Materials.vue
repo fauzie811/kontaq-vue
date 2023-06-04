@@ -1,14 +1,18 @@
 <template>
   <div>
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
-    <PageHeader page-title="Materi Tadabbur">
+    <PageHeader class="mb-8" page-title="Materi Tadabbur">
       <!-- <button type="button"
         class="inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Edit</button>
       <button type="button"
         class="inline-flex items-center px-3 py-2 ml-3 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Publish</button> -->
     </PageHeader>
 
-    <ul role="list" class="mt-8 divide-y divide-gray-100">
+    <div class="flex justify-end">
+      <CategoryPicker class="w-full mb-4 sm:w-64" v-model="category" @update:modelValue="loadData" />
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
       <li v-for="material in materials.data" :key="material.id" class="flex items-center justify-between py-5 gap-x-6">
         <div class="min-w-0">
           <div class="flex items-start gap-x-3">
@@ -46,15 +50,17 @@ import { shortDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
+import CategoryPicker from '@/components/CategoryPicker.vue';
 
 const breadcrumbs = ref([
   { name: 'Materi Tadabbur', route: { name: 'materials' }, current: true },
 ]);
 const page = ref(1);
+const category = ref();
 const materials = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyMaterials(page.value);
+  const { data } = await listMyMaterials({ page: page.value, category: category.value ? category.value.id : null });
   materials.value = data;
 }
 loadData();
