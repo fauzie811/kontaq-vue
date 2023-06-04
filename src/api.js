@@ -169,9 +169,11 @@ export const getAnnouncement = async (id) => {
     }
 };
 
-export const listMyQuizzes = async (page = 1) => {
+export const listMyQuizzes = async ({ page = 1, category = null }) => {
     try {
-        const { data } = await axios.get('me/quizzes', { params: { page } });
+        const { data } = await axios.get('me/quizzes', {
+            params: { page, category },
+        });
         return data;
     } catch (e) {
         throw e;

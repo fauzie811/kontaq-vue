@@ -8,8 +8,8 @@
         class="inline-flex items-center px-3 py-2 ml-3 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Publish</button> -->
     </PageHeader>
 
-    <div class="flex justify-end">
-      <CategoryPicker show-all-option class="w-full mb-4 sm:w-64" v-model="category" @update:modelValue="loadData" />
+    <div class="flex justify-end mb-4">
+      <CategoryPicker show-all-option class="w-full sm:w-64" v-model="category" @update:modelValue="loadData" />
     </div>
 
     <div class="overflow-hidden bg-white rounded-md shadow">

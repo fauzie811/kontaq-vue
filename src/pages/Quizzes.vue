@@ -3,6 +3,10 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Kuis" />
 
+    <div class="flex justify-end mb-4">
+      <CategoryPicker show-all-option class="w-full sm:w-64" v-model="category" @update:modelValue="loadData" />
+    </div>
+
     <div class="overflow-hidden bg-white rounded-md shadow">
       <ul role="list" class="divide-y divide-gray-200">
         <li v-for="quiz in quizzes.data" :key="quiz.id" class="flex items-center justify-between px-6 py-4 gap-x-6">
@@ -42,16 +46,18 @@ import { swConfirm } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
+import CategoryPicker from '@/components/CategoryPicker.vue';
 
 const router = useRouter();
 const breadcrumbs = ref([
   { name: 'Kuis', route: '/quizzes', current: true },
 ]);
 const page = ref(1);
+const category = ref();
 const quizzes = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyQuizzes(page.value);
+  const { data } = await listMyQuizzes({ page: page.value, category: category.value ? category.value.id : null });
   quizzes.value = data;
 }
 loadData();
