@@ -9,37 +9,39 @@
     </PageHeader>
 
     <div class="flex justify-end">
-      <CategoryPicker class="w-full mb-4 sm:w-64" v-model="category" @update:modelValue="loadData" />
+      <CategoryPicker show-all-option class="w-full mb-4 sm:w-64" v-model="category" @update:modelValue="loadData" />
     </div>
 
-    <ul role="list" class="divide-y divide-gray-100">
-      <li v-for="material in materials.data" :key="material.id" class="flex items-center justify-between py-5 gap-x-6">
-        <div class="min-w-0">
-          <div class="flex items-start gap-x-3">
-            <p class="text-sm font-semibold leading-6 text-gray-900">{{ material.title }}</p>
-            <p
-              :class="[statuses[getStatus(material)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
-              {{ getStatus(material) }}</p>
+    <div class="overflow-hidden bg-white rounded-md shadow">
+      <ul role="list" class="divide-y divide-gray-200">
+        <li v-for="material in materials.data" :key="material.id"
+          class="flex items-center justify-between px-6 py-4 gap-x-6">
+          <div class="min-w-0">
+            <div class="flex items-start gap-x-3">
+              <p class="text-sm font-semibold leading-6 text-gray-900">{{ material.title }}</p>
+              <p
+                :class="[statuses[getStatus(material)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
+                {{ getStatus(material) }}</p>
+            </div>
+            <div class="flex items-center mt-1 text-xs leading-5 text-gray-500 gap-x-2">
+              <p v-if="material.category" class="truncate">{{ material.category.name }}</p>
+              <svg v-if="material.category" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                <circle cx="1" cy="1" r="1" />
+              </svg>
+              <p class="whitespace-nowrap">
+                Tanggal <time :datetime="material.created_at">{{ shortDate(material.created_at) }}</time>
+              </p>
+            </div>
           </div>
-          <div class="flex items-center mt-1 text-xs leading-5 text-gray-500 gap-x-2">
-            <p v-if="material.category" class="truncate">{{ material.category.name }}</p>
-            <svg v-if="material.category" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
-              <circle cx="1" cy="1" r="1" />
-            </svg>
-            <p class="whitespace-nowrap">
-              Tanggal <time :datetime="material.created_at">{{ shortDate(material.created_at) }}</time>
-            </p>
+          <div class="flex items-center flex-none gap-x-4">
+            <router-link :to="{ name: 'materials.show', params: { id: material.id } }"
+              class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">Lihat
+              materi<span class="sr-only">, {{ material.name }}</span></router-link>
           </div>
-        </div>
-        <div class="flex items-center flex-none gap-x-4">
-          <router-link :to="{ name: 'materials.show', params: { id: material.id } }"
-            class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">Lihat
-            materi<span class="sr-only">, {{ material.name }}</span></router-link>
-        </div>
-      </li>
-    </ul>
-
-    <Pagination class="mt-5" :meta="materials" v-on:change="changePage" />
+        </li>
+      </ul>
+      <Pagination :meta="materials" v-on:change="changePage" />
+    </div>
   </div>
 </template>
 

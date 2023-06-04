@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Rapor" />
 
     <div v-if="reports" class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
@@ -33,7 +34,11 @@
 import { ref } from 'vue';
 import { getReports } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 
+const breadcrumbs = ref([
+  { name: 'Rapor', route: '/reports', current: true },
+]);
 const reports = ref();
 
 async function loadData() {

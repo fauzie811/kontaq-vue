@@ -1,6 +1,5 @@
 <template>
-  <div v-if="meta && meta.from"
-    class="flex items-center justify-between px-4 py-3 bg-white border border-gray-200 rounded-lg shadow-sm sm:px-6">
+  <div v-if="meta && meta.from" class="flex items-center justify-between px-4 py-3 border-t border-gray-200 sm:px-6">
     <div class="flex justify-between flex-1 sm:hidden">
       <button :disabled="meta.current_page == 1" v-on:click="changePage(meta.current_page - 1)"
         class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>
