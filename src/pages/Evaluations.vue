@@ -3,6 +3,11 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Evaluasi" />
 
+    <div class="flex justify-end mb-4">
+      <CategoryPicker show-all-option root-only class="w-full sm:w-64" v-model="category"
+        @update:modelValue="() => changePage(1)" />
+    </div>
+
     <div class="overflow-hidden bg-white rounded-md shadow">
       <ul role="list" class="divide-y divide-gray-200">
         <li v-for="evaluation in evaluations.data" :key="evaluation.id"
@@ -38,15 +43,17 @@ import { listMyEvaluations } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
+import CategoryPicker from '@/components/CategoryPicker.vue';
 
 const breadcrumbs = ref([
   { name: 'Evaluasi', route: '/evaluations', current: true },
 ]);
 const page = ref(1);
+const category = ref();
 const evaluations = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyEvaluations(page.value);
+  const { data } = await listMyEvaluations({ page: page.value, category: category.value ? category.value.id : null });
   evaluations.value = data;
 }
 loadData();

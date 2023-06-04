@@ -198,10 +198,10 @@ export const updateMyQuiz = async (id, answers) => {
     }
 };
 
-export const listMyEvaluations = async (page = 1) => {
+export const listMyEvaluations = async ({ page = 1, category = null }) => {
     try {
         const { data } = await axios.get('me/evaluations', {
-            params: { page },
+            params: { page, category },
         });
         return data;
     } catch (e) {

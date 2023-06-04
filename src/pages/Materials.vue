@@ -9,7 +9,8 @@
     </PageHeader>
 
     <div class="flex justify-end mb-4">
-      <CategoryPicker show-all-option class="w-full sm:w-64" v-model="category" @update:modelValue="loadData" />
+      <CategoryPicker show-all-option class="w-full sm:w-64" v-model="category"
+        @update:modelValue="() => changePage(1)" />
     </div>
 
     <div class="overflow-hidden bg-white rounded-md shadow">
