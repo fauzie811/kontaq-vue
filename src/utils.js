@@ -3,7 +3,6 @@ import parseJSON from 'date-fns/parseJSON';
 import format from 'date-fns/format';
 import formatRelative from 'date-fns/formatRelative';
 import id from 'date-fns/locale/id';
-import { CheckIcon } from '@heroicons/vue/24/outline';
 
 export const shortDate = (date) =>
     format(parseJSON(date), 'd MMM yyyy', { locale: id });

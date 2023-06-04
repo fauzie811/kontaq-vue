@@ -16,9 +16,9 @@
         <thead class="bg-gray-50">
           <tr>
             <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Nama Peserta</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" v-for="(quiz, index) in reports.quizzes"
-              :key="quiz.id">Kuis {{ index + 1 }}</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+              v-for="(quiz, index) in reports.quizzes" :key="quiz.id">Kuis {{ index + 1 }}</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
               v-for="(evaluation, index) in reports.evaluations" :key="evaluation.id">Evaluasi {{ index + 1 }}</th>
           </tr>
         </thead>
@@ -29,11 +29,12 @@
               <p class="text-sm font-medium text-gray-900 ">{{ item.name }}</p>
             </td>
             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
-              {{ item.scores ? item.scores[`quiz_${quiz.id}`] || '-' : ''
-              }}</td>
+              <QuizScore :score="item.scores ? item.scores[`quiz_${quiz.id}`] : undefined" />
+            </td>
             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="evaluation in reports.evaluations"
-              :key="evaluation.id">{{
-                item.scores ? item.scores[`evaluation_${evaluation.id}`] || '-' : '' }}</td>
+              :key="evaluation.id">
+              <EvaluationScore :score="item.scores ? item.scores[`evaluation_${evaluation.id}`] : undefined" />
+            </td>
           </tr>
         </tbody>
       </table>
@@ -50,6 +51,8 @@ import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
 import InputFrame from '@/components/forms/InputFrame.vue';
 import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
+import EvaluationScore from '@/components/EvaluationScore.vue';
+import QuizScore from '@/components/QuizScore.vue';
 
 const breadcrumbs = ref([
   { name: 'Rapor', route: '/reports', current: true },
