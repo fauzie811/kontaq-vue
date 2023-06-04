@@ -142,9 +142,9 @@ export const updateMyMaterial = async (id) => {
     }
 };
 
-export const getReports = async (category_id = 1) => {
+export const getReports = async (category) => {
     try {
-        const { data } = await axios.post('me/group/report/', { category_id });
+        const { data } = await axios.post('me/group/report', { category });
         return data;
     } catch (e) {
         throw e;

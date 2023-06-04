@@ -3,6 +3,10 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Rapor" />
 
+    <div class="flex justify-end mb-4">
+      <CategoryPicker root-only class="w-full sm:w-64" v-model="category" @update:modelValue="loadData" />
+    </div>
+
     <div v-if="reports" class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
       <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
@@ -35,14 +39,16 @@ import { ref } from 'vue';
 import { getReports } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import CategoryPicker from '@/components/CategoryPicker.vue';
 
 const breadcrumbs = ref([
   { name: 'Rapor', route: '/reports', current: true },
 ]);
+const category = ref();
 const reports = ref();
 
 async function loadData() {
-  const data = await getReports(1);
+  const data = await getReports(category.value ? category.value.id : null);
   reports.value = data.data;
   console.log(data);
 }
