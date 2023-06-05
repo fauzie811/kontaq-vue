@@ -2,12 +2,12 @@
   <div class="flex items-center justify-center">
     <span v-if="score === undefined"></span>
     <span v-else-if="score === null"></span>
-    <TrophyIcon class="w-5 h-5 text-green-600" v-else />
+    <AcademicCapIcon class="w-6 h-6 text-green-600" v-else />
   </div>
 </template>
 
 <script setup>
-import { TrophyIcon } from '@heroicons/vue/20/solid';
+import { AcademicCapIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({ score: undefined });
 </script>
