@@ -103,7 +103,6 @@
                         <br />
                       </span>
                       💯 {{ reports.quizzes.map(q => totals[`quiz_${q.id}`]).join('-') }}<br />
-                      💯 20-19-18-20-19<br />
                       <br />
                       ➖➖➖➖➖➖➖➖➖<br />
                       <br />
