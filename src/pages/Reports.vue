@@ -54,12 +54,90 @@
         </tfoot>
       </table>
     </div>
+
+    <div v-if="reports" class="flex justify-end mt-4">
+      <button @click="shareDialog = true" type="button"
+        class="px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-md shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Bagikan</button>
+    </div>
+
+    <TransitionRoot as="template" :show="shareDialog">
+      <Dialog as="div" class="relative z-50" @close="shareDialog = false">
+        <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
+          leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
+          <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+          <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
+            <TransitionChild as="template" enter="ease-out duration-300"
+              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
+              leave-from="opacity-100 translate-y-0 sm:scale-100"
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+              <DialogPanel
+                class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                <div>
+                  <div class="mt-3 sm:mt-5">
+                    <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">Rekap KontaQ
+                    </DialogTitle>
+                    <div class="mt-2 text-sm" ref="shareContent">
+                      REKAP KONTAQ GRUP {{ authStore.user ? authStore.user.group.name : '-' }}<br />
+                      📡 {{ category ? category.name : '-' }}<br />
+                      ➖➖➖➖➖➖➖➖<br />
+                      Admin : {{ reports.items[0].name }}<br />
+                      Asmin : {{ reports.items[1].name }}<br />
+                      <br />
+                      📋 Kuis wajib dikerjakan<br />
+                      <br />
+                      🆔 1️⃣2️⃣3️⃣4️⃣5️⃣6⃣<br />
+                      <br />
+                      <span v-for="(item, idx) in reports.items">
+                        {{ `${idx + 1}`.padStart(2, '0') }}
+                        <span v-for="quiz in reports.quizzes" :key="quiz.id">
+                          {{ quizScoreEmoji(item.scores ? item.scores[`quiz_${quiz.id}`] : undefined) }}
+                        </span>
+                        <span v-for="evaluation in reports.evaluations" :key="evaluation.id">
+                          {{ evaluationScoreEmoji(item.scores ? item.scores[`evaluation_${evaluation.id}`] : undefined) }}
+                        </span>
+                        {{ item.name }}
+                        <br />
+                      </span>
+                      💯 {{ reports.quizzes.map(q => totals[`quiz_${q.id}`]).join('-') }}<br />
+                      💯 20-19-18-20-19<br />
+                      <br />
+                      ➖➖➖➖➖➖➖➖➖<br />
+                      <br />
+                      📝 Keterangan :<br />
+                      💯 = Kholas tadabbur harian<br />
+                      🎓 = Kholas Evaluasi<br />
+                      ✖️ = Tidak ada kabar<br />
+                      ℹ️ = Izin / Sakit<br />
+                      🏆 = Peringkat 10 besar<br />
+                      🆕 = SK baru bergabung<br />
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                  <button type="button"
+                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-md shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                    @click="shareDialog = false">Tutup</button>
+                  <button type="button"
+                    class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                    @click="copyShare">Salin</button>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { getReports, updateReport } from '@/api';
 import authStore from '@/store/auth';
 import PageHeader from '../components/PageHeader.vue';
@@ -77,6 +155,7 @@ const breadcrumbs = ref([
 const category = ref();
 const reports = ref();
 const totals = ref({});
+const shareDialog = ref(false);
 
 async function loadData() {
   if (category.value) {
@@ -120,5 +199,22 @@ const calculateTotals = () => {
     });
   }
   totals.value = totalsTemp;
+};
+
+const quizScoreEmoji = (score) => {
+  if (score === null || score === undefined) return '✖️';
+  if (score == 'i') return 'ℹ️';
+  if (score == 'n') return '🆕';
+  return '💯';
+}
+
+const evaluationScoreEmoji = (score) => {
+  if (score === null || score === undefined) return '✖️';
+  return '🎓';
+}
+
+const shareContent = ref();
+const copyShare = () => {
+  navigator.clipboard.writeText(shareContent.value.innerText);
 }
 </script>
