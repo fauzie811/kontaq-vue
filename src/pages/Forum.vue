@@ -47,11 +47,12 @@
               :src="'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (forumPost.user ? forumPost.user.name : '')"
               alt="" />
           </div>
-          <div>
-            <p class="text-sm font-semibold">{{ forumPost.user ? forumPost.user.name : '[user dihapus]' }}</p>
-            <div class="mt-1 text-sm prose">
-              <p>{{ forumPost.message }}</p>
+          <div class="flex-1">
+            <div class="flex items-center">
+              <p class="text-sm font-semibold">{{ forumPost.user ? forumPost.user.name : '[user dihapus]' }}</p>
+              <p class="ml-auto text-sm text-gray-500">{{ relativeDate(forumPost.created_at) }}</p>
             </div>
+            <div class="mt-1 text-sm prose" v-html="marked.parse(forumPost.message)"></div>
           </div>
         </li>
       </ul>
@@ -62,9 +63,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import { marked } from 'marked';
 import authStore from '@/store/auth';
 import { listForumPosts, storeForumPost } from '@/api';
-import { shortDate } from '@/utils';
+import { relativeDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
