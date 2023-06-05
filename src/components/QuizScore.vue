@@ -3,8 +3,10 @@
     <Menu v-if="score === undefined || score === null || score === 'i' || score === 'n'" as="div"
       class="relative inline-block text-left">
       <div>
-        <MenuButton class="flex items-center text-red-600">
-          <XMarkIcon class="w-6 h-6" aria-hidden="true" />
+        <MenuButton class="flex items-center">
+          <InformationCircleIcon title="Izin" v-if="score === 'i'" class="w-6 h-6 text-blue-600" aria-hidden="true" />
+          <SparklesIcon title="SK Baru" v-else-if="score === 'n'" class="w-6 h-6 text-yellow-600" aria-hidden="true" />
+          <XMarkIcon title="Tidak ada kabar" v-else class="w-6 h-6 text-red-600" aria-hidden="true" />
         </MenuButton>
       </div>
 
@@ -15,16 +17,18 @@
           class="absolute right-0 z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div class="py-1">
             <MenuItem v-if="score !== undefined && score !== null" v-slot="{ active }">
-            <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Tidak
-              ada kabar</a>
+            <button @click="() => emit('update-score', null)"
+              :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block w-full text-left px-4 py-2 text-sm']">Tidak
+              ada kabar</button>
             </MenuItem>
-            <MenuItem v-slot="{ active }">
-            <a href="#"
-              :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Izin</a>
+            <MenuItem v-if="score != 'i'" v-slot="{ active }">
+            <button @click="() => emit('update-score', 'i')"
+              :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block w-full text-left px-4 py-2 text-sm']">Izin</button>
             </MenuItem>
-            <MenuItem v-slot="{ active }">
-            <a href="#" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">SK
-              Baru</a>
+            <MenuItem v-if="score != 'n'" v-slot="{ active }" @click="() => emit('update-score', 'n')">
+            <button
+              :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block w-full text-left px-4 py-2 text-sm']">SK
+              Baru</button>
             </MenuItem>
           </div>
         </MenuItems>
@@ -36,7 +40,8 @@
 
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { XMarkIcon, InformationCircleIcon, SparklesIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({ score: undefined });
+const emit = defineEmits(['update-score']);
 </script>

@@ -33,7 +33,8 @@
               <p class="text-sm font-medium text-gray-900 ">{{ item.name }}</p>
             </td>
             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
-              <QuizScore :score="item.scores ? item.scores[`quiz_${quiz.id}`] : undefined" />
+              <QuizScore :score="item.scores ? item.scores[`quiz_${quiz.id}`] : undefined"
+                @update-score="score => updateScore(item.id, `quiz_${quiz.id}`, score)" />
             </td>
             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="evaluation in reports.evaluations"
               :key="evaluation.id">
@@ -59,7 +60,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { getReports } from '@/api';
+import { getReports, updateReport } from '@/api';
 import authStore from '@/store/auth';
 import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
@@ -86,6 +87,25 @@ async function loadData() {
   }
 }
 loadData();
+
+const updateScore = async (userId, key, value) => {
+  const data = await updateReport({ user_id: userId, category_id: category.value.id, scores: { [key]: value } });
+  const items = reports.value.items;
+  items.forEach(i => {
+    if (i.id == userId) {
+      i.scores = {
+        ...i.scores,
+        [key]: value,
+      };
+    }
+  });
+  reports.value = {
+    ...reports.value,
+    items: [
+      ...items,
+    ],
+  };
+}
 
 const calculateTotals = () => {
   let totalsTemp = {};

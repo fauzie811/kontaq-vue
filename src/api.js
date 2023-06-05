@@ -171,6 +171,19 @@ export const getReports = async (category) => {
     }
 };
 
+export const updateReport = async ({ user_id, category_id, scores }) => {
+    try {
+        const { data } = await axios.post('me/group/update-report', {
+            user_id,
+            category_id,
+            scores,
+        });
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const listAnnouncements = async (page = 1) => {
     try {
         const { data } = await axios.get('announcements', { params: { page } });
