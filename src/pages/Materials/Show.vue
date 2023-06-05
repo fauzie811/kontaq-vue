@@ -1,9 +1,13 @@
 <template>
   <div>
-    <Breadcrumbs :pages="breadcrumbs" />
-    <PageHeader class="mt-4" :page-title="material ? material.title : '...'" />
+    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
+    <PageHeader class="mb-8" :page-title="material ? material.title : '...'" />
 
-    <div class="mt-8 prose" v-html="material ? material.content : ''"></div>
+    <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="prose" v-html="material ? material.content : ''"></div>
+      </div>
+    </div>
 
     <button @click="finishRead" type="button"
       class="mt-8 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Selesai</button>

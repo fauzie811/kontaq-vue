@@ -15,16 +15,20 @@
       <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
           <tr>
-            <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Nama Peserta</th>
+            <th class="py-3.5 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">#</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nama Peserta</th>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
               v-for="(quiz, index) in reports.quizzes" :key="quiz.id">Kuis {{ index + 1 }}</th>
             <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
-              v-for="(evaluation, index) in reports.evaluations" :key="evaluation.id">Evaluasi {{ index + 1 }}</th>
+              v-for="evaluation in reports.evaluations" :key="evaluation.id">Evaluasi</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="item in reports.items">
-            <td class="py-4 pl-4 pr-3 whitespace-nowrap sm:pl-6">
+          <tr v-for="(item, idx) in reports.items">
+            <td class="py-4 pl-4 whitespace-nowrap sm:pl-6">
+              {{ idx + 1 }}
+            </td>
+            <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
               <p class="text-xs text-gray-500">{{ item.username }}</p>
               <p class="text-sm font-medium text-gray-900 ">{{ item.name }}</p>
             </td>
@@ -37,6 +41,16 @@
             </td>
           </tr>
         </tbody>
+        <tfoot class="bg-gray-50">
+          <tr>
+            <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"></th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+              v-for="quiz in reports.quizzes" :key="quiz.id">{{ totals[`quiz_${quiz.id}`] }}</th>
+            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+              v-for="evaluation in reports.evaluations" :key="evaluation.id"></th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -59,13 +73,30 @@ const breadcrumbs = ref([
 ]);
 const category = ref();
 const reports = ref();
+const totals = ref({});
 
 async function loadData() {
   if (category.value) {
     const data = await getReports(category.value ? category.value.id : null);
     reports.value = data.data;
+    calculateTotals();
     console.log(data);
   }
 }
 loadData();
+
+const calculateTotals = () => {
+  let totalsTemp = {};
+  if (reports.value) {
+    reports.value.quizzes.forEach(quiz => {
+      totalsTemp[`quiz_${quiz.id}`] = 0;
+    });
+    reports.value.items.forEach(item => {
+      Object.keys(totalsTemp).forEach(q => {
+        if (item.scores != null && item.scores[q] == 100) totalsTemp[q]++;
+      });
+    });
+  }
+  totals.value = totalsTemp;
+}
 </script>
