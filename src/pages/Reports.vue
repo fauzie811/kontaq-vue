@@ -58,6 +58,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { getReports } from '@/api';
 import authStore from '@/store/auth';
 import PageHeader from '../components/PageHeader.vue';
@@ -68,6 +69,7 @@ import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
 import EvaluationScore from '@/components/EvaluationScore.vue';
 import QuizScore from '@/components/QuizScore.vue';
 
+const route = useRoute();
 const breadcrumbs = ref([
   { name: 'Rapor', route: '/reports', current: true },
 ]);

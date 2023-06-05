@@ -113,6 +113,26 @@ export const listCategories = async (rootOnly = false) => {
     }
 };
 
+export const listForumPosts = async ({ page = 1 }) => {
+    try {
+        const { data } = await axios.get('forum-posts', {
+            params: { page },
+        });
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const storeForumPost = async ({ message }) => {
+    try {
+        const { data } = await axios.post('forum-posts', { message });
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const listMyMaterials = async ({ page = 1, category = null }) => {
     try {
         const { data } = await axios.get('me/materials', {

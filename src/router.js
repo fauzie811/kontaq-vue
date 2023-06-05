@@ -37,6 +37,12 @@ const routes = [
         meta: { needsAuth: true, layout: MainLayout },
     },
     {
+        path: '/forum',
+        component: () => import('./pages/Forum.vue'),
+        name: 'forum',
+        meta: { needsAuth: true, layout: MainLayout },
+    },
+    {
         path: '/materials',
         component: () => import('./pages/Materials.vue'),
         name: 'materials',
