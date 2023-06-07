@@ -23,19 +23,19 @@
           </InputFrame>
 
           <RadioGroup
-            class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-green-600 sm:col-span-4"
+            class="rounded-md px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-lime-600 sm:col-span-4"
             v-model="userData.gender">
             <RadioGroupLabel class="block text-xs font-medium text-gray-900">Jenis Kelamin</RadioGroupLabel>
             <div class="grid grid-cols-2 gap-2">
               <RadioGroupOption as="template" value="m" v-slot="{ active, checked }">
                 <div
-                  :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-green-600 ring-offset-2' : '', checked ? 'bg-green-600 text-white hover:bg-green-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
+                  :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-lime-600 ring-offset-2' : '', checked ? 'bg-lime-600 text-white hover:bg-lime-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
                   <RadioGroupLabel as="span">Laki-laki</RadioGroupLabel>
                 </div>
               </RadioGroupOption>
               <RadioGroupOption as="template" value="f" v-slot="{ active, checked }">
                 <div
-                  :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-green-600 ring-offset-2' : '', checked ? 'bg-green-600 text-white hover:bg-green-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
+                  :class="['cursor-pointer focus:outline-none', active ? 'ring-2 ring-lime-600 ring-offset-2' : '', checked ? 'bg-lime-600 text-white hover:bg-lime-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50', 'flex items-center justify-center rounded-md py-1 px-3 text-xs sm:flex-1']">
                   <RadioGroupLabel as="span">Perempuan</RadioGroupLabel>
                 </div>
               </RadioGroupOption>
@@ -87,7 +87,7 @@
 
           <div class="col-span-full">
             <button type="submit"
-              class="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Mendaftar</button>
+              class="flex w-full justify-center rounded-md bg-lime-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Mendaftar</button>
           </div>
         </form>
       </div>
@@ -96,7 +96,7 @@
     <p class="mt-4 text-sm leading-6 text-center text-gray-500">
       Sudah punya akun?
       {{ ' ' }}
-      <router-link to="/login" class="font-semibold text-green-600 hover:text-green-500">Login</router-link>
+      <router-link to="/login" class="font-semibold text-lime-600 hover:text-lime-500">Login</router-link>
     </p>
   </div>
 </template>

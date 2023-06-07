@@ -15,7 +15,7 @@
             <label for="username" class="block text-sm font-medium leading-6 text-gray-900">ID KontaQ</label>
             <div class="mt-2">
               <input v-model="username" id="username" name="username" type="text" autocomplete="username" required
-                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
+                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
@@ -24,19 +24,19 @@
             <div class="mt-2">
               <input v-model="password" id="password" name="password" type="password" autocomplete="current-password"
                 required
-                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
+                class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600 sm:text-sm sm:leading-6" />
             </div>
           </div>
 
           <!-- <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <input id="remember-me" name="remember-me" type="checkbox"
-                    class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-600" />
+                    class="w-4 h-4 text-lime-600 border-gray-300 rounded focus:ring-lime-600" />
                   <label for="remember-me" class="block ml-3 text-sm leading-6 text-gray-700">Remember me</label>
                 </div>
 
                 <div class="text-sm leading-6">
-                  <a href="#" class="font-semibold text-green-600 hover:text-green-500">Forgot password?</a>
+                  <a href="#" class="font-semibold text-lime-600 hover:text-lime-500">Forgot password?</a>
                 </div>
               </div> -->
 
@@ -44,7 +44,7 @@
 
           <div>
             <button type="submit"
-              class="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Masuk</button>
+              class="flex w-full justify-center rounded-md bg-lime-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Masuk</button>
           </div>
         </form>
       </div>
@@ -53,7 +53,7 @@
     <p class="mt-4 text-sm leading-6 text-center text-gray-500">
       Belum punya akun?
       {{ ' ' }}
-      <router-link to="/register" class="font-semibold text-green-600 hover:text-green-500">Daftar
+      <router-link to="/register" class="font-semibold text-lime-600 hover:text-lime-500">Daftar
         sekarang</router-link>
     </p>
   </div>

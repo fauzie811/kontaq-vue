@@ -5,8 +5,8 @@
       <div>
         <MenuButton class="flex items-center">
           <InformationCircleIcon title="Izin" v-if="score === 'i'" class="w-6 h-6 text-blue-600" aria-hidden="true" />
-          <SparklesIcon title="SK Baru" v-else-if="score === 'n'" class="w-6 h-6 text-yellow-600" aria-hidden="true" />
-          <XMarkIcon title="Tidak ada kabar" v-else class="w-6 h-6 text-red-600" aria-hidden="true" />
+          <SparklesIcon title="SK Baru" v-else-if="score === 'n'" class="w-6 h-6 text-warning-600" aria-hidden="true" />
+          <XMarkIcon title="Tidak ada kabar" v-else class="w-6 h-6 text-danger-600" aria-hidden="true" />
         </MenuButton>
       </div>
 

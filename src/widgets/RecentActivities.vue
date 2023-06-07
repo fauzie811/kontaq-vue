@@ -14,7 +14,7 @@
                 <span class="flex flex-col text-sm text-gray-500 truncate">
                   <span class="truncate">{{ transaction.name }}</span>
                   <span><span class="font-medium text-gray-900">{{ transaction.amount }}</span> {{ transaction.currency
-                  }}</span>
+                                      }}</span>
                   <time :datetime="transaction.datetime">{{ transaction.date }}</time>
                 </span>
               </span>
@@ -69,7 +69,7 @@
                   <td class="hidden px-6 py-4 text-sm text-gray-500 whitespace-nowrap md:block">
                     <span
                       :class="[statusStyles[transaction.status], 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize']">{{
-                        transaction.status }}</span>
+                                            transaction.status }}</span>
                   </td>
                   <td class="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                     <time :datetime="transaction.datetime">{{ transaction.date }}</time>
@@ -128,7 +128,7 @@ const transactions = [
   // More transactions...
 ]
 const statusStyles = {
-  success: 'bg-green-100 text-green-800',
+  success: 'bg-lime-100 text-lime-800',
   processing: 'bg-yellow-100 text-yellow-800',
   failed: 'bg-gray-100 text-gray-800',
 }

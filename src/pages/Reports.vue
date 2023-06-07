@@ -57,7 +57,7 @@
 
     <div v-if="reports" class="flex justify-end mt-4">
       <button @click="shareDialog = true" type="button"
-        class="px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-md shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Bagikan</button>
+        class="px-3 py-2 text-sm font-semibold text-white bg-lime-600 rounded-md shadow-sm hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Bagikan</button>
     </div>
 
     <TransitionRoot as="template" :show="shareDialog">
@@ -118,7 +118,7 @@
                 </div>
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button type="button"
-                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-green-600 rounded-md shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:col-start-2"
+                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-lime-600 rounded-md shadow-sm hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600 sm:col-start-2"
                     @click="shareDialog = false">Tutup</button>
                   <button type="button"
                     class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"

@@ -75,8 +75,8 @@ function getButtonLabel(evaluation) {
 }
 
 const statuses = {
-  Selesai: 'text-green-700 bg-green-50 ring-green-600/20',
-  'Sedang dikerjakan': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  'Belum dikerjakan': 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+  Selesai: 'text-success-700 bg-success-50 ring-success-600/20',
+  'Sedang dikerjakan': 'text-warning-600 bg-warning-50 ring-warning-500/10',
+  'Belum dikerjakan': 'text-gray-800 bg-gray-50 ring-gray-600/20',
 }
 </script>
