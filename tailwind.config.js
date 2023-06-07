@@ -1,5 +1,4 @@
 const colors = require('tailwindcss/colors');
-const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -16,9 +15,10 @@ export default {
             },
             fontFamily: {
                 sans: [
-                    'Inter var',
-                    'Scheherazade New',
-                    ...defaultTheme.fontFamily.sans,
+                    "'Inter var', 'Scheherazade New', sans-serif",
+                    {
+                        fontFeatureSettings: "'cv03', 'cv04', 'cv11'",
+                    },
                 ],
             },
         },
