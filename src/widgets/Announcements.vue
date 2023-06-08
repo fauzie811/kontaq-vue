@@ -4,7 +4,7 @@
       Pengumuman
     </div>
     <div class="px-4 sm:px-6">
-      <div role="list" class="divide-y divide-gray-100">
+      <div role="list" class="divide-y divide-gray-200">
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
           :key="announcement.id" class="block py-5">
           <div class="flex items-baseline justify-between gap-x-4">

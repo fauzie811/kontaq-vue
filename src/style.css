@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
+button,
+input,
+textarea,
+select {
     font-feature-settings: inherit;
 }
