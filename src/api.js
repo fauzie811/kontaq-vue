@@ -133,10 +133,15 @@ export const storeForumPost = async ({ message }) => {
     }
 };
 
-export const listMyMaterials = async ({ page = 1, category = null }) => {
+export const listMyMaterials = async ({
+    page = 1,
+    category = null,
+    part_number = null,
+    chapter_number = null,
+}) => {
     try {
         const { data } = await axios.get('me/materials', {
-            params: { page, category },
+            params: { page, category, part_number, chapter_number },
         });
         return data;
     } catch (e) {

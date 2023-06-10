@@ -4,7 +4,7 @@
     <PageHeader class="mb-8" page-title="Evaluasi" />
 
     <div class="flex justify-end mb-4">
-      <CategoryPicker show-all-option root-only class="w-full sm:w-64" v-model="category"
+      <CategoryPicker show-all-option root-only class="w-full sm:w-56" v-model="category"
         @update:modelValue="() => changePage(1)" />
     </div>
 

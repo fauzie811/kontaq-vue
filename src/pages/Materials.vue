@@ -8,8 +8,9 @@
         class="inline-flex items-center px-3 py-2 ml-3 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-600 hover:bg-lime-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Publish</button> -->
     </PageHeader>
 
-    <div class="flex justify-end mb-4">
-      <CategoryPicker show-all-option class="w-full sm:w-64" v-model="category"
+    <div class="flex justify-end gap-4 mb-4">
+      <PartPicker class="w-full sm:w-40" v-model="part_number" @update:modelValue="() => changePage(1)" />
+      <CategoryPicker show-all-option class="w-full sm:w-56" v-model="category"
         @update:modelValue="() => changePage(1)" />
     </div>
 
@@ -29,9 +30,14 @@
               <svg v-if="material.category" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
                 <circle cx="1" cy="1" r="1" />
               </svg>
-              <p class="whitespace-nowrap">
+              <p v-if="material.part_number" class="truncate">Juz {{ material.part_number }}</p>
+              <svg v-if="material.part_number" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                <circle cx="1" cy="1" r="1" />
+              </svg>
+              <p v-if="material.chapter" class="truncate">Surah {{ material.chapter }}</p>
+              <!-- <p class="whitespace-nowrap">
                 Tanggal <time :datetime="material.created_at">{{ shortDate(material.created_at) }}</time>
-              </p>
+              </p> -->
             </div>
           </div>
           <div class="flex items-center flex-none gap-x-4">
@@ -54,16 +60,18 @@ import PageHeader from '../components/PageHeader.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
+import PartPicker from '@/components/PartPicker.vue';
 
 const breadcrumbs = ref([
   { name: 'Materi Tadabbur', route: { name: 'materials' }, current: true },
 ]);
 const page = ref(1);
-const category = ref();
+const category = ref(null);
+const part_number = ref(null);
 const materials = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyMaterials({ page: page.value, category: category.value ? category.value.id : null });
+  const { data } = await listMyMaterials({ page: page.value, category: category.value ? category.value.id : null, part_number: part_number.value });
   materials.value = data;
 }
 loadData();
@@ -73,8 +81,8 @@ function changePage(p) {
   loadData();
 }
 
-function getStatus(quiz) {
-  if (quiz.read_at) return 'Selesai';
+function getStatus(material) {
+  if (material.read_at) return 'Selesai';
   return 'Belum dibaca';
 }
 

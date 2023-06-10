@@ -8,7 +8,7 @@
         <p v-if="authStore.user && authStore.user.group">{{ authStore.user.group.name }}</p>
         <TextPlaceholder v-else class="block w-32" />
       </InputFrame>
-      <CategoryPicker root-only class="w-full ml-auto sm:w-64" v-model="category" @update:modelValue="loadData" />
+      <CategoryPicker root-only class="w-full ml-auto sm:w-56" v-model="category" @update:modelValue="loadData" />
     </div>
 
     <div v-if="reports" class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
