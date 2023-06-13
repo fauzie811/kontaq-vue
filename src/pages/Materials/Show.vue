@@ -1,11 +1,22 @@
 <template>
   <div>
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
-    <PageHeader class="mb-8" :page-title="material ? material.title : '...'" />
+    <PageHeader class="mb-8" :page-title="material ? material.title : null" />
 
     <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow">
       <div class="px-4 py-5 sm:p-6">
-        <div class="prose" v-html="material ? material.content : ''"></div>
+        <div v-if="material" class="prose" v-html="material.content"></div>
+        <div v-else class="prose">
+          <p>
+            <TextPlaceholder class="block" />
+          </p>
+          <p>
+            <TextPlaceholder class="block" />
+          </p>
+          <p>
+            <TextPlaceholder class="block w-96" />
+          </p>
+        </div>
       </div>
     </div>
 
@@ -20,6 +31,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { getMyMaterial, updateMyMaterial } from '@/api';
 import Breadcrumbs from '../../components/Breadcrumbs.vue';
 import PageHeader from '../../components/PageHeader.vue';
+import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
 
 const route = useRoute();
 const router = useRouter();
