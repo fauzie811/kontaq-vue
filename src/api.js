@@ -93,6 +93,15 @@ export const getProfile = async () => {
     }
 };
 
+export const getMyCertificate = async () => {
+    try {
+        const { data } = await axios.get('me/certificate');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const updateProfile = async (profile) => {
     try {
         const { data } = await axios.put('me/profile', profile);

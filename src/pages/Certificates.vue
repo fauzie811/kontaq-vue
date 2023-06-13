@@ -3,9 +3,13 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Sertifikat" />
 
-    <div class="overflow-hidden bg-white rounded-lg shadow">
+    <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow">
       <div class="px-4 py-5 sm:p-6">
-        <div class="text-center">
+        <div v-if="certificate">
+          <object class="w-full aspect-[2/3]" :data="certificate.url + '?_token=' + authStore.token"
+            type="application/pdf"></object>
+        </div>
+        <div v-else class="text-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
             class="w-12 h-12 mx-auto text-gray-400">
             <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"
@@ -30,11 +34,19 @@
 <script setup>
 import { ref } from 'vue';
 import { PlusIcon } from '@heroicons/vue/20/solid';
+import authStore from '@/store/auth';
+import { getMyCertificate } from '@/api';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import PageHeader from '../components/PageHeader.vue';
 
 const breadcrumbs = ref([
   { name: 'Sertifikat', route: '/certificates', current: true },
 ]);
+const certificate = ref(null);
 
+const loadData = async () => {
+  const data = await getMyCertificate();
+  certificate.value = data.data;
+}
+loadData();
 </script>
