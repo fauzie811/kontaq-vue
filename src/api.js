@@ -75,6 +75,15 @@ export const logout = async () => {
     }
 };
 
+export const getOnlineStatus = async () => {
+    try {
+        const { data } = await axios.get('online-status');
+        return data;
+    } catch (e) {
+        throw e;
+    }
+};
+
 export const getUser = async () => {
     try {
         const { data } = await axios.get('me');

@@ -61,6 +61,8 @@
               <BellIcon class="w-6 h-6" aria-hidden="true" />
             </button>
 
+            <OnlineStatus />
+
             <!-- Separator -->
             <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" aria-hidden="true" />
 
@@ -96,6 +98,7 @@ import authStore from '@/store/auth';
 import { getUser } from '@/api';
 import Sidebar from '../components/Sidebar.vue'
 import UserMenu from '@/components/UserMenu.vue';
+import OnlineStatus from '@/components/OnlineStatus.vue';
 
 const sidebarOpen = ref(false)
 
