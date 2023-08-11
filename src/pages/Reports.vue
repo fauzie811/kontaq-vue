@@ -55,10 +55,10 @@
       </table>
     </div>
 
-    <div v-if="reports" class="flex justify-end mt-4">
+    <!-- <div v-if="reports" class="flex justify-end mt-4">
       <button @click="shareDialog = true" type="button"
         class="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-600 hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Bagikan</button>
-    </div>
+    </div> -->
 
     <TransitionRoot as="template" :show="shareDialog">
       <Dialog as="div" class="relative z-50" @close="shareDialog = false">
