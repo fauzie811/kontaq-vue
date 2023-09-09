@@ -54,7 +54,7 @@ import {
 
 const navigation = [
   { name: 'Beranda', route: 'home', icon: HomeIcon },
-  { name: 'Forum Perkenalan', route: 'forum', icon: ChatBubbleLeftRightIcon },
+  { name: 'Forum Ukhuwah', route: 'forum', icon: ChatBubbleLeftRightIcon },
   { name: 'Materi Tadabbur', route: 'materials', icon: FolderIcon },
   { name: 'Kuis', route: 'quizzes', icon: QuestionMarkCircleIcon },
   { name: 'Evaluasi', route: 'evaluations', icon: ClipboardDocumentCheckIcon },

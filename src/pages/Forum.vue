@@ -1,7 +1,7 @@
 <template>
   <div>
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
-    <PageHeader class="mb-8" page-title="Forum Perkenalan" />
+    <PageHeader class="mb-8" page-title="Forum Ukhuwah" />
 
     <div class="max-w-2xl">
       <div class="mb-4 overflow-hidden bg-white rounded-lg shadow">
@@ -74,7 +74,7 @@ import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 
 const breadcrumbs = ref([
-  { name: 'Forum Perkenalan', route: '/forum', current: true },
+  { name: 'Forum Ukhuwah', route: '/forum', current: true },
 ]);
 const page = ref(1);
 const forumPosts = ref({ data: [] });

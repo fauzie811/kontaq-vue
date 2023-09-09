@@ -6,7 +6,10 @@
     <div class="overflow-hidden bg-white rounded-md shadow">
       <div role="list" class="divide-y divide-gray-200">
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
-          :key="announcement.id" class="block px-6 py-4">
+          :key="announcement.id" :class="[
+            'block px-6 py-4',
+            announcement.is_sticky ? 'bg-warning-100' : '',
+          ]">
           <div class="flex items-baseline justify-between gap-x-4">
             <p class="text-sm font-semibold leading-6 text-gray-900">{{ announcement.title }}</p>
             <p class="flex-none text-xs text-gray-600">
