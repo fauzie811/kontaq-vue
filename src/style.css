@@ -2,9 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'lpmq';
+    src: url('./assets/fonts/lpmq.woff2') format('woff2'),
+        url('./assets/fonts/lpmq.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 button,
 input,
 textarea,
 select {
     font-feature-settings: inherit;
+}
+
+.prose [style*='text-align: right'],
+.prose [style*='text-align: end'],
+.prose [dir='rtl'],
+.prose [lang='ar-sa'] {
+    font-family: lpmq, sans-serif;
+    font-size: 1.5rem;
+    line-height: 2em !important;
 }

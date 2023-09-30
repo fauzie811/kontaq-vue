@@ -3,7 +3,7 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Pengumuman" />
 
-    <div class="overflow-hidden bg-white rounded-md shadow">
+    <div class="max-w-3xl overflow-hidden bg-white rounded-md shadow">
       <div role="list" class="divide-y divide-gray-200">
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
           :key="announcement.id" :class="[

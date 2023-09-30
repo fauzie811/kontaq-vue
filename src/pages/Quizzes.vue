@@ -3,38 +3,40 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Kuis" />
 
-    <div class="flex justify-end mb-4">
-      <CategoryPicker show-all-option class="w-full sm:w-56" v-model="category"
-        @update:modelValue="() => changePage(1)" />
-    </div>
+    <div class="max-w-3xl">
+      <div class="flex justify-end mb-4">
+        <CategoryPicker show-all-option class="w-full sm:w-56" v-model="category"
+          @update:modelValue="() => changePage(1)" />
+      </div>
 
-    <div class="overflow-hidden bg-white rounded-md shadow">
-      <ul role="list" class="divide-y divide-gray-200">
-        <li v-for="quiz in quizzes.data" :key="quiz.id" class="flex items-center justify-between px-6 py-4 gap-x-6">
-          <div class="min-w-0">
-            <div class="flex items-start gap-x-3">
-              <p class="text-sm font-semibold leading-6 text-gray-900">{{ quiz.title }}</p>
-              <p
-                :class="[statuses[getStatus(quiz)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
-                {{ getStatus(quiz) }}</p>
+      <div class="overflow-hidden bg-white rounded-md shadow">
+        <ul role="list" class="divide-y divide-gray-200">
+          <li v-for="quiz in quizzes.data" :key="quiz.id" class="flex items-center justify-between px-6 py-4 gap-x-6">
+            <div class="min-w-0">
+              <div class="flex items-start gap-x-3">
+                <p class="text-sm font-semibold leading-6 text-gray-900">{{ quiz.title }}</p>
+                <p
+                  :class="[statuses[getStatus(quiz)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
+                  {{ getStatus(quiz) }}</p>
+              </div>
+              <div class="flex items-center text-xs leading-5 text-gray-500 gap-x-2">
+                <p class="whitespace-nowrap">
+                  {{ quiz.duration }} menit
+                </p>
+              </div>
             </div>
-            <div class="flex items-center text-xs leading-5 text-gray-500 gap-x-2">
-              <p class="whitespace-nowrap">
-                {{ quiz.duration }} menit
-              </p>
+            <div class="flex items-center flex-none gap-x-4">
+              <button v-if="!quiz.material_read" v-on:click.prevent="showAlert(quiz.material_id)"
+                class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
+                  getButtonLabel(quiz) }}</button>
+              <router-link v-else :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
+                class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
+                  getButtonLabel(quiz) }}</router-link>
             </div>
-          </div>
-          <div class="flex items-center flex-none gap-x-4">
-            <button v-if="!quiz.material_read" v-on:click.prevent="showAlert(quiz.material_id)"
-              class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
-                getButtonLabel(quiz) }}</button>
-            <router-link v-else :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
-              class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
-                getButtonLabel(quiz) }}</router-link>
-          </div>
-        </li>
-      </ul>
-      <Pagination :meta="quizzes" v-on:change="changePage" />
+          </li>
+        </ul>
+        <Pagination :meta="quizzes" v-on:change="changePage" />
+      </div>
     </div>
   </div>
 </template>

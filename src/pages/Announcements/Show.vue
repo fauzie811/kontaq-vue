@@ -3,9 +3,9 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" :page-title="announcement ? announcement.title : '...'" />
 
-    <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow">
+    <div class="max-w-3xl overflow-hidden bg-white rounded-lg shadow">
       <div class="px-4 py-5 sm:p-6">
-        <div class="prose" v-html="announcement ? announcement.content : ''"></div>
+        <div class="prose max-w-none" v-html="announcement ? announcement.content : ''"></div>
       </div>
     </div>
   </div>

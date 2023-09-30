@@ -3,16 +3,16 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" :page-title="material ? material.title : null" />
 
-    <div v-if="material && material.prologue" class="max-w-2xl mb-6 overflow-hidden bg-white rounded-lg shadow">
+    <div v-if="material && material.prologue" class="max-w-3xl mb-6 overflow-hidden bg-white rounded-lg shadow">
       <div class="px-4 py-5 sm:p-6">
-        <div class="prose" v-html="'<h3>Prolog</h3>' + material.prologue"></div>
+        <div class="prose max-w-none" v-html="'<h3>Prolog</h3>' + material.prologue"></div>
       </div>
     </div>
 
-    <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow">
+    <div class="max-w-3xl overflow-hidden bg-white rounded-lg shadow">
       <div class="px-4 py-5 sm:p-6">
-        <div v-if="material" class="prose" v-html="material.content"></div>
-        <div v-else class="prose">
+        <div v-if="material" class="prose max-w-none" v-html="material.content"></div>
+        <div v-else class="prose max-w-none">
           <p>
             <TextPlaceholder class="block" />
           </p>

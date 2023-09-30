@@ -4,6 +4,16 @@ const colors = require('tailwindcss/colors');
 export default {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     theme: {
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                sm: '2rem',
+                lg: '4rem',
+                xl: '5rem',
+                '2xl': '6rem',
+            },
+        },
         extend: {
             colors: {
                 'primary-1': '#9acd33', //'#7bc060',
@@ -14,12 +24,13 @@ export default {
                 warning: colors.yellow,
             },
             fontFamily: {
-                sans: [
-                    "'Inter var', 'Scheherazade New', sans-serif",
+                inter: [
+                    "'Inter var', sans-serif",
                     {
                         fontFeatureSettings: "'cv03', 'cv04', 'cv11'",
                     },
                 ],
+                sans: 'Raleway, sans-serif',
             },
         },
     },

@@ -3,7 +3,7 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Forum Ukhuwah" />
 
-    <div class="max-w-2xl">
+    <div class="max-w-3xl">
       <div class="mb-4 overflow-hidden bg-white rounded-lg shadow">
         <div class="flex items-start px-4 py-5 space-x-4 sm:p-6">
           <div class="flex-shrink-0">
