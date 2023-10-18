@@ -31,7 +31,7 @@
           <!-- <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <input id="remember-me" name="remember-me" type="checkbox"
-                    class="w-4 h-4 text-lime-600 border-gray-300 rounded focus:ring-lime-600" />
+                    class="w-4 h-4 border-gray-300 rounded text-lime-600 focus:ring-lime-600" />
                   <label for="remember-me" class="block ml-3 text-sm leading-6 text-gray-700">Remember me</label>
                 </div>
 

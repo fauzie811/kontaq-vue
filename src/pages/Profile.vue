@@ -5,7 +5,7 @@
       <div class="grid grid-cols-1 py-16 gap-x-8 gap-y-10 md:grid-cols-3">
         <div>
           <h2 class="text-base font-semibold leading-7">Informasi Pribadi</h2>
-          <p class="mt-1 text-sm leading-6 text-gray-500">Use a permanent address where you can receive mail.</p>
+          <!-- <p class="mt-1 text-sm leading-6 text-gray-500">Use a permanent address where you can receive mail.</p> -->
         </div>
 
         <form v-on:submit.prevent="saveProfile" class="md:col-span-2">
@@ -85,8 +85,33 @@
 
           <div class="flex mt-8">
             <button type="submit"
-              class="px-3 py-2 text-sm font-semibold text-white bg-lime-500 rounded-md shadow-sm hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Simpan</button>
+              class="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-500 hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Simpan</button>
           </div>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-1 py-16 gap-x-8 gap-y-10 md:grid-cols-3">
+        <div>
+          <h2 class="text-base font-semibold leading-7">Pengaturan</h2>
+          <!-- <p class="mt-1 text-sm leading-6 text-gray-500">Use a permanent address where you can receive mail.</p> -->
+        </div>
+
+        <form v-on:submit.prevent="savePrefs" class="md:col-span-2">
+          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+            <InputFrame class="sm:col-span-4" label="Font">
+              <select v-model="fontPref" id="font" name="font" required
+                class="block w-full p-0 text-gray-900 border-0 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                <option value="sans">Sans Serif</option>
+                <option value="arial">Arial</option>
+                <option value="times">Times New Roman</option>
+              </select>
+            </InputFrame>
+          </div>
+
+          <!-- <div class="flex mt-8">
+            <button type="submit"
+              class="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-500 hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Simpan</button>
+          </div> -->
         </form>
       </div>
 
@@ -125,7 +150,7 @@
 
           <div class="flex mt-8">
             <button type="submit"
-              class="px-3 py-2 text-sm font-semibold text-white bg-lime-500 rounded-md shadow-sm hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Save</button>
+              class="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-500 hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Save</button>
           </div>
         </form>
       </div> -->
@@ -151,7 +176,7 @@
 
           <div class="flex mt-8">
             <button type="submit"
-              class="px-3 py-2 text-sm font-semibold text-white bg-lime-500 rounded-md shadow-sm hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Log
+              class="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-500 hover:bg-lime-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">Log
               out other sessions</button>
           </div>
         </form>
@@ -179,11 +204,13 @@
 import { ref } from 'vue';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue';
 
+import useLocalStorage from '@/plugins/localStorage'
 import { getUser, getProfile, updateProfile } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 import InputFrame from '@/components/forms/InputFrame.vue';
 
 const profile = ref({});
+const fontPref = useLocalStorage('font-family', 'sans');
 
 async function loadProfile() {
   const data = await getProfile();

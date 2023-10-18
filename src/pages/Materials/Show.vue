@@ -3,13 +3,23 @@
     <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" :page-title="material ? material.title : null" />
 
-    <div v-if="material && material.prologue" class="max-w-3xl mb-6 overflow-hidden bg-white rounded-lg shadow">
+    <div v-if="material && material.prologue" :class="[
+      'max-w-3xl mb-6 overflow-hidden bg-white rounded-lg shadow',
+      font == 'sans' ? 'font-sans' : '',
+      font == 'arial' ? 'font-arial' : '',
+      font == 'times' ? 'font-times' : '',
+    ]">
       <div class="px-4 py-5 sm:p-6">
         <div class="prose max-w-none" v-html="'<h3>Prolog</h3>' + material.prologue"></div>
       </div>
     </div>
 
-    <div class="max-w-3xl overflow-hidden bg-white rounded-lg shadow">
+    <div :class="[
+      'max-w-3xl overflow-hidden bg-white rounded-lg shadow',
+      font == 'sans' ? 'font-sans' : '',
+      font == 'arial' ? 'font-arial' : '',
+      font == 'times' ? 'font-times' : '',
+    ]">
       <div class="px-4 py-5 sm:p-6">
         <div v-if="material" class="prose max-w-none" v-html="material.content"></div>
         <div v-else class="prose max-w-none">
@@ -34,6 +44,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import useLocalStorage from '@/plugins/localStorage';
 import { getMyMaterial, updateMyMaterial } from '@/api';
 import Breadcrumbs from '../../components/Breadcrumbs.vue';
 import PageHeader from '../../components/PageHeader.vue';
@@ -41,6 +52,7 @@ import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
 
 const route = useRoute();
 const router = useRouter();
+const font = useLocalStorage('font-family', 'sans');
 const material = ref();
 const breadcrumbs = ref([
   { name: 'Materi Tadabbur', route: { name: 'materials' }, current: false },
