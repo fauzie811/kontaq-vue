@@ -7,9 +7,7 @@
         </div>
       </div>
       <div class="relative flex-1 hidden w-0 lg:flex lg:items-center lg:justify-center">
-        <img class="absolute inset-0 object-cover w-full h-full"
-          src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
-          alt="" />
+        <img class="absolute inset-0 object-cover w-full h-full" src="@/assets/bg-auth.jpg" alt="" />
         <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-primary-1 to-primary-2 opacity-80"></div>
         <div class="relative flex flex-col items-center py-4">
           <div class="px-6 py-3 bg-white rounded-full">
