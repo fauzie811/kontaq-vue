@@ -79,7 +79,7 @@ const doLogin = handleSubmit(async (values) => {
           <FormMessage />
         </FormItem>
       </FormField>
-      <Button type="submit" class="w-full" :disabled="isLoading">
+      <Button type="submit" :disabled="isLoading">
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
         Masuk
       </Button>

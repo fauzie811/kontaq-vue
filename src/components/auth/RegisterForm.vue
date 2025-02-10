@@ -95,11 +95,11 @@ const doRegister = handleSubmit(async (values) => {
         </div>
 
         <div class="sm:col-span-4">
-          <FormField v-slot="{ field }" name="gender">
+          <FormField v-slot="{ componentField }" name="gender">
             <FormItem>
               <FormLabel>Jenis Kelamin</FormLabel>
               <FormControl>
-                <RadioGroup v-bind="field" class="grid grid-cols-2 gap-2">
+                <RadioGroup v-bind="componentField" class="grid grid-cols-2 gap-2" :disabled="isLoading">
                   <div class="flex items-center">
                     <RadioGroupItem value="m" id="gender-m" />
                     <label for="gender-m" class="ml-2">Laki-laki</label>
@@ -214,7 +214,7 @@ const doRegister = handleSubmit(async (values) => {
         </div>
       </div>
 
-      <Button type="submit" class="w-full" :disabled="isLoading">
+      <Button type="submit" :disabled="isLoading">
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
         Mendaftar
       </Button>
