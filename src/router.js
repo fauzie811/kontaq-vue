@@ -25,6 +25,18 @@ const routes = [
     meta: { layout: AuthLayout },
   },
   {
+    path: '/forgot-password',
+    component: () => import('./pages/Auth/ForgotPassword.vue'),
+    name: 'forgot-password',
+    meta: { layout: AuthLayout },
+  },
+  {
+    path: '/reset-password/:token',
+    component: () => import('./pages/Auth/ResetPassword.vue'),
+    name: 'reset-password',
+    meta: { layout: AuthLayout },
+  },
+  {
     path: '/logout',
     component: Logout,
     name: 'logout',

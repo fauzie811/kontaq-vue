@@ -1,0 +1,1 @@
+import{r,aa as p,ap as s}from"./index-BKFwgYGj.js";let u=Symbol("DescriptionContext");function c({slot:i=r({}),name:a="Description",props:l={}}={}){let e=r([]);function n(t){return e.value.push(t),()=>{let o=e.value.indexOf(t);o!==-1&&e.value.splice(o,1)}}return s(u,{register:n,slot:i,name:a,props:l}),p(()=>e.value.length>0?e.value.join(" "):void 0)}export{c as k};
