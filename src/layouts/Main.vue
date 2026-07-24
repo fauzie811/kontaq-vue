@@ -273,7 +273,7 @@
                       QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
                     </span>
                   </div>
-                  <p class="font-arabic text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
+                  <p class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
                     {{ verse.text }}
                   </p>
                   <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">

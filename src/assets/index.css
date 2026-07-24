@@ -82,6 +82,8 @@
   --font-sans: Raleway, sans-serif;
   --font-arial: Arial, Helvetica, sans-serif;
   --font-times: Times New Roman, Cambria, serif;
+  --font-quran: 'KFGQPC Hafs Uthmanic Script', 'lpmq', serif;
+  --font-arabic: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Dubai', serif;
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -210,6 +212,18 @@
 }
 
 @font-face {
+  font-family: 'KFGQPC Hafs Uthmanic Script';
+  src: local('KFGQPC Hafs Uthmanic Script'),
+    local('KFGQPC HAFS Uthmanic Script'),
+    local('UthmanicHafs'),
+    local('Uthmanic Hafs'),
+    url('./fonts/kfgqpc-hafs.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'lpmq';
   src: url('./fonts/lpmq.woff2') format('woff2'),
     url('./fonts/lpmq.woff') format('woff');
@@ -224,11 +238,19 @@ select {
   font-feature-settings: inherit;
 }
 
+.font-quran {
+  font-family: 'KFGQPC Hafs Uthmanic Script', 'lpmq', serif;
+}
+
+.font-arabic {
+  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Dubai', serif;
+}
+
 .prose [style*='text-align: right'],
 .prose [style*='text-align: end'],
 .prose [dir='rtl'],
 .prose [lang='ar-sa'] {
-  font-family: lpmq, sans-serif;
+  font-family: 'KFGQPC Hafs Uthmanic Script', 'lpmq', serif;
   font-size: 1.5rem;
   line-height: 2em !important;
 }

@@ -68,7 +68,7 @@
         v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
         class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-6 text-center mb-8 shadow-2xs"
       >
-        <p class="font-arabic text-3xl text-emerald-900 font-bold dir-rtl leading-relaxed">
+        <p class="font-quran text-3xl text-emerald-900 font-bold dir-rtl leading-relaxed">
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
         <p class="text-xs text-emerald-700 font-medium mt-2">
@@ -107,7 +107,7 @@
 
           <!-- Arabic Text -->
           <div class="py-2 text-right dir-rtl">
-            <p class="font-arabic text-2xl sm:text-3xl lg:text-4xl text-gray-900 leading-[2.2] tracking-wide font-bold">
+            <p class="font-quran text-2xl sm:text-3xl lg:text-4xl text-gray-900 leading-[2.2] tracking-wide font-bold">
               {{ verse.text }}
             </p>
           </div>
@@ -302,6 +302,9 @@ function copyVerse(verse) {
 </script>
 
 <style scoped>
+.font-quran {
+  font-family: 'KFGQPC Hafs Uthmanic Script', 'lpmq', serif;
+}
 .font-arabic {
   font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Dubai', serif;
 }
