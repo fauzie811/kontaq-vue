@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Evaluasi" />
 
     <div class="max-w-3xl">
@@ -43,13 +42,9 @@
 import { ref } from 'vue';
 import { listMyEvaluations } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
 
-const breadcrumbs = ref([
-  { name: 'Evaluasi', route: '/evaluations', current: true },
-]);
 const page = ref(1);
 const category = ref();
 const evaluations = ref({ data: [] });

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" :page-title="material ? material.title : null" />
 
     <div v-if="material && material.prologue" :class="[
@@ -42,34 +41,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import useLocalStorage from '@/plugins/localStorage';
 import { getMyMaterial, updateMyMaterial } from '@/api';
-import Breadcrumbs from '../../components/Breadcrumbs.vue';
 import PageHeader from '../../components/PageHeader.vue';
 import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
 
 const route = useRoute();
 const router = useRouter();
 const font = useLocalStorage('font-family', 'sans');
-const material = ref();
-const breadcrumbs = ref([
-  { name: 'Materi Tadabbur', route: { name: 'materials' }, current: false },
-]);
+const material = ref(null);
 
-async function loadData() {
-  const data = await getMyMaterial(route.params.id);
-  material.value = data.data;
-  breadcrumbs.value = [
-    ...breadcrumbs.value,
-    { name: material.value.title, route: { name: 'materials.show', params: { id: material.value.id } }, current: true },
-  ]
+async function loadData(id) {
+  if (!id) return;
+  try {
+    const data = await getMyMaterial(id);
+    material.value = data.data;
+  } catch (e) {
+    console.error('Failed to load material:', e);
+  }
 }
-loadData();
+
+watch(
+  () => route.params.id,
+  (newId) => {
+    if (newId) {
+      loadData(newId);
+    }
+  },
+  { immediate: true }
+);
 
 async function finishRead() {
-  const data = await updateMyMaterial(route.params.id);
+  await updateMyMaterial(route.params.id);
   router.push('/materials');
 }
 </script>

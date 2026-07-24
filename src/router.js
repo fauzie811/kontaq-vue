@@ -3,7 +3,8 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import authStore from './store/auth';
 import AuthLayout from './layouts/Auth.vue';
 import BlankLayout from './layouts/Blank.vue';
-import MainLayout from './layouts/NewMain.vue';
+import IntroLayout from './layouts/Intro.vue';
+import MainLayout from './layouts/Main.vue';
 import QuizLayout from './layouts/Quiz.vue';
 import Login from './pages/Auth/Login.vue';
 import Register from './pages/Auth/Register.vue';
@@ -46,6 +47,12 @@ const routes = [
     path: '/',
     component: Home,
     name: 'home',
+    meta: { needsAuth: true, layout: IntroLayout },
+  },
+  {
+    path: '/tadabbur',
+    component: () => import('./pages/Tadabbur.vue'),
+    name: 'tadabbur',
     meta: { needsAuth: true, layout: MainLayout },
   },
   {

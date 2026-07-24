@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" :page-title="announcement ? announcement.title : '...'" />
 
     <div class="max-w-3xl overflow-hidden bg-white rounded-lg shadow">
@@ -12,25 +11,31 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getAnnouncement } from '@/api';
-import Breadcrumbs from '../../components/Breadcrumbs.vue';
 import PageHeader from '../../components/PageHeader.vue';
 
 const route = useRoute();
-const announcement = ref();
-const breadcrumbs = ref([
-  { name: 'Pengumuman', route: '/announcements', current: false },
-]);
+const announcement = ref(null);
 
-async function loadData() {
-  const data = await getAnnouncement(route.params.id);
-  announcement.value = data.data;
-  breadcrumbs.value = [
-    ...breadcrumbs.value,
-    { name: announcement.value.title, route: `/announcements/${announcement.value.id}`, current: true },
-  ]
+async function loadData(id) {
+  if (!id) return;
+  try {
+    const data = await getAnnouncement(id);
+    announcement.value = data.data;
+  } catch (e) {
+    console.error('Failed to load announcement:', e);
+  }
 }
-loadData();
+
+watch(
+  () => route.params.id,
+  (newId) => {
+    if (newId) {
+      loadData(newId);
+    }
+  },
+  { immediate: true }
+);
 </script>

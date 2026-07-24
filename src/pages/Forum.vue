@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Forum Ukhuwah" />
 
     <div class="max-w-3xl">
@@ -70,12 +69,8 @@ import authStore from '@/store/auth';
 import { listForumPosts, storeForumPost } from '@/api';
 import { relativeDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 
-const breadcrumbs = ref([
-  { name: 'Forum Ukhuwah', route: '/forum', current: true },
-]);
 const page = ref(1);
 const forumPosts = ref({ data: [] });
 const newPost = ref({ message: null });

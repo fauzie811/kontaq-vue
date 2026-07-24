@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Kuis" />
 
     <div class="max-w-3xl">
@@ -47,14 +46,10 @@ import { useRouter } from 'vue-router';
 import { listMyQuizzes } from '@/api';
 import { swConfirm } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
 
 const router = useRouter();
-const breadcrumbs = ref([
-  { name: 'Kuis', route: '/quizzes', current: true },
-]);
 const page = ref(1);
 const category = ref();
 const quizzes = ref({ data: [] });

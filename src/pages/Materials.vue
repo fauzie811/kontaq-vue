@@ -1,11 +1,6 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Materi Tadabbur">
-      <!-- <button type="button"
-        class="inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Edit</button>
-      <button type="button"
-        class="inline-flex items-center px-3 py-2 ml-3 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-600 hover:bg-lime-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Publish</button> -->
     </PageHeader>
 
     <div class="max-w-3xl">
@@ -36,9 +31,6 @@
                   <circle cx="1" cy="1" r="1" />
                 </svg>
                 <p v-if="material.chapter" class="truncate">Surah {{ material.chapter }}</p>
-                <!-- <p class="whitespace-nowrap">
-                  Tanggal <time :datetime="material.created_at">{{ shortDate(material.created_at) }}</time>
-                </p> -->
               </div>
             </div>
             <div class="flex items-center flex-none gap-x-4">
@@ -57,16 +49,11 @@
 <script setup>
 import { ref } from 'vue';
 import { listMyMaterials } from '@/api';
-import { shortDate } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
 import PartPicker from '@/components/PartPicker.vue';
 
-const breadcrumbs = ref([
-  { name: 'Materi Tadabbur', route: { name: 'materials' }, current: true },
-]);
 const page = ref(1);
 const category = ref(null);
 const part_number = ref(null);
@@ -92,5 +79,4 @@ const statuses = {
   Selesai: 'text-success-700 bg-success-50 ring-success-600/20',
   'Belum dibaca': 'text-gray-600 bg-gray-50 ring-gray-500/10',
 }
-
 </script>

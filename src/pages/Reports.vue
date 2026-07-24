@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Rapor" />
 
     <div class="mb-4 sm:flex">
@@ -55,11 +54,6 @@
       </table>
     </div>
 
-    <!-- <div v-if="reports" class="flex justify-end mt-4">
-      <button @click="shareDialog = true" type="button"
-        class="px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-600 hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">Bagikan</button>
-    </div> -->
-
     <TransitionRoot as="template" :show="shareDialog">
       <Dialog as="div" class="relative z-50" @close="shareDialog = false">
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
@@ -82,14 +76,14 @@
                     </DialogTitle>
                     <div class="mt-2 text-sm" ref="shareContent">
                       REKAP KONTAQ GRUP {{ authStore.user ? authStore.user.group.name : '-' }}<br />
-                      📡 {{ category ? category.name : '-' }}<br />
+                      {{ category ? category.name : '-' }}<br />
                       ➖➖➖➖➖➖➖➖<br />
                       Admin : {{ reports.items[0].name }}<br />
                       Asmin : {{ reports.items[1].name }}<br />
                       <br />
-                      📋 Kuis wajib dikerjakan<br />
+                      Kuis wajib dikerjakan<br />
                       <br />
-                      🆔 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ <br />
+                      1 2 3 4 5 6 <br />
                       <br />
                       <span v-for="(item, idx) in reports.items">
                         {{ `${idx + 1}`.padStart(2, '0') }}
@@ -102,17 +96,17 @@
                         {{ item.name }}
                         <br />
                       </span>
-                      💯 {{ reports.quizzes.map(q => totals[`quiz_${q.id}`]).join('-') }}<br />
+                      Totals: {{ reports.quizzes.map(q => totals[`quiz_${q.id}`]).join('-') }}<br />
                       <br />
                       ➖➖➖➖➖➖➖➖➖<br />
                       <br />
-                      📝 Keterangan :<br />
-                      💯 = Kholas tadabbur harian<br />
-                      🎓 = Kholas Evaluasi<br />
-                      ✖️ = Tidak ada kabar<br />
-                      ℹ️ = Izin / Sakit<br />
-                      🏆 = Peringkat 10 besar<br />
-                      🆕 = SK baru bergabung<br />
+                      Keterangan :<br />
+                      Kholas tadabbur harian<br />
+                      Kholas Evaluasi<br />
+                      Tidak ada kabar<br />
+                      Izin / Sakit<br />
+                      Peringkat 10 besar<br />
+                      SK baru bergabung<br />
                     </div>
                   </div>
                 </div>
@@ -140,7 +134,6 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { getReports, updateReport } from '@/api';
 import authStore from '@/store/auth';
 import PageHeader from '../components/PageHeader.vue';
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import CategoryPicker from '@/components/CategoryPicker.vue';
 import InputFrame from '@/components/forms/InputFrame.vue';
 import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
@@ -148,9 +141,6 @@ import EvaluationScore from '@/components/EvaluationScore.vue';
 import QuizScore from '@/components/QuizScore.vue';
 
 const route = useRoute();
-const breadcrumbs = ref([
-  { name: 'Rapor', route: '/reports', current: true },
-]);
 const category = ref();
 const reports = ref();
 const totals = ref({});
@@ -201,16 +191,16 @@ const calculateTotals = () => {
 };
 
 const quizScoreEmoji = (score) => {
-  if (score === null || score === undefined) return '✖️ ';
-  if (score == 'i') return 'ℹ️ ';
-  if (score == 'n') return '🆕 ';
-  if (score == 100) return '💯 ';
+  if (score === null || score === undefined) return 'X ';
+  if (score == 'i') return 'I ';
+  if (score == 'n') return 'N ';
+  if (score == 100) return '100 ';
   return score + ' ';
 }
 
 const evaluationScoreEmoji = (score) => {
-  if (score === null || score === undefined) return '✖️';
-  return '🎓';
+  if (score === null || score === undefined) return 'X';
+  return 'OK';
 }
 
 const shareContent = ref();

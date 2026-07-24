@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Breadcrumbs class="mb-4" :pages="breadcrumbs" />
     <PageHeader class="mb-8" page-title="Pengumuman" />
 
     <div class="max-w-3xl overflow-hidden bg-white rounded-md shadow">
@@ -30,13 +29,8 @@ import { ref } from 'vue';
 import { listAnnouncements } from '@/api';
 import { relativeDate, stripTags } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
-import { ChatBubbleLeftIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
-import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import Pagination from '@/components/Pagination.vue';
 
-const breadcrumbs = ref([
-  { name: 'Pengumuman', route: '/announcements', current: true },
-]);
 const page = ref(1);
 const announcements = ref({ data: [] });
 
