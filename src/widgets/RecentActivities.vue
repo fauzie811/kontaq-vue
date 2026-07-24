@@ -10,7 +10,7 @@
           <a :href="transaction.href" class="block px-4 py-4 bg-white hover:bg-gray-50">
             <span class="flex items-center space-x-4">
               <span class="flex flex-1 space-x-2 truncate">
-                <BanknotesIcon class="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
+                <BanknotesIcon class="shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
                 <span class="flex flex-col text-sm text-gray-500 truncate">
                   <span class="truncate">{{ transaction.name }}</span>
                   <span><span class="font-medium text-gray-900">{{ transaction.amount }}</span> {{ transaction.currency
@@ -18,7 +18,7 @@
                   <time :datetime="transaction.datetime">{{ transaction.date }}</time>
                 </span>
               </span>
-              <ChevronRightIcon class="flex-shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
+              <ChevronRightIcon class="shrink-0 w-5 h-5 text-gray-400" aria-hidden="true" />
             </span>
           </a>
         </li>
@@ -56,7 +56,7 @@
                   <td class="w-full px-6 py-4 text-sm text-gray-900 max-w-0 whitespace-nowrap">
                     <div class="flex">
                       <a :href="transaction.href" class="inline-flex space-x-2 text-sm truncate group">
-                        <BanknotesIcon class="flex-shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
+                        <BanknotesIcon class="shrink-0 w-5 h-5 text-gray-400 group-hover:text-gray-500"
                           aria-hidden="true" />
                         <p class="text-gray-500 truncate group-hover:text-gray-900">{{ transaction.name }}</p>
                       </a>

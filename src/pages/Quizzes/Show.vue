@@ -29,7 +29,7 @@
           >
             <!-- Question Header -->
             <div class="bg-[#f0f2f1] flex items-stretch min-h-[52px] border-b border-gray-200/60">
-              <div class="bg-[#dcfce7] text-[#144227] w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl flex-shrink-0">
+              <div class="bg-[#dcfce7] text-[#144227] w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
                 {{ index + 1 }}
               </div>
               <div class="px-4 py-3 flex items-center text-gray-900 font-semibold text-base sm:text-lg flex-1 leading-snug">
@@ -48,7 +48,7 @@
                 ]"
               >
                 <CheckIcon
-                  class="flex-shrink-0 w-5 h-5 mr-3"
+                  class="shrink-0 w-5 h-5 mr-3"
                   :class="[question.answer === option ? 'text-emerald-700 font-bold' : 'opacity-0']"
                 />
                 <span class="mr-2 font-normal text-base">{{ option }}.</span>

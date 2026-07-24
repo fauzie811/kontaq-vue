@@ -35,7 +35,7 @@
 
     <div v-else-if="chapterDetails">
       <!-- Surah Header Banner -->
-      <div class="bg-gradient-to-br from-emerald-800 to-teal-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg mb-8 relative overflow-hidden">
+      <div class="bg-linear-to-br from-emerald-800 to-teal-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg mb-8 relative overflow-hidden">
         <div class="absolute -right-8 -bottom-8 opacity-10 font-arabic text-9xl select-none pointer-events-none">
           {{ chapterDetails.arabic }}
         </div>

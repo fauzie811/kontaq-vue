@@ -2,7 +2,7 @@
   <main class="grid min-h-svh lg:grid-cols-12">
     <div class="relative hidden lg:flex lg:col-span-7 lg:items-center lg:justify-center p-8">
       <img class="absolute inset-0 object-cover w-full h-full" src="@/assets/bg-auth.jpg" alt="" />
-      <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-primary-1 to-primary-2 opacity-80"></div>
+      <div class="absolute inset-0 w-full h-full bg-linear-to-br from-primary-1 to-primary-2 opacity-80"></div>
       <div class="relative flex flex-col items-center py-6 text-center">
         <div class="px-10 py-5 bg-white rounded-full shadow-lg">
           <img class="w-auto h-28 lg:h-32" src="@/assets/logo-kontaq.png" alt="Komunitas Tadabbur Al-Qur'an" />

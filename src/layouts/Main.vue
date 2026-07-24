@@ -59,7 +59,7 @@
                   @click="clickNotification(notif)"
                   class="p-3.5 hover:bg-emerald-50/50 transition cursor-pointer flex gap-3 items-start"
                 >
-                  <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                     <Pin v-if="notif.isSticky" class="w-4 h-4 text-emerald-700" />
                     <Bell v-else class="w-4 h-4 text-emerald-700" />
                   </div>
@@ -114,7 +114,7 @@
               'w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-1 shadow-sm group-hover:scale-105 transition-transform'
             ]"
           >
-            <component :is="item.icon" class="w-7 h-7 stroke-[2] text-amber-600" />
+            <component :is="item.icon" class="w-7 h-7 stroke-2 text-amber-600" />
           </div>
           <span class="font-bold text-sm sm:text-base">{{ item.name }}</span>
         </router-link>
@@ -165,7 +165,7 @@
         <!-- Search Input Header -->
         <div class="p-3.5 sm:p-4 border-b border-gray-100 flex items-center gap-3 bg-white">
           <div class="flex-1 flex items-center gap-3 bg-gray-50 border border-gray-200/80 rounded-2xl px-3.5 py-2.5 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-2xs">
-            <Search class="w-5 h-5 text-emerald-600 flex-shrink-0" />
+            <Search class="w-5 h-5 text-emerald-600 shrink-0" />
             <input
               v-model="searchQuery"
               ref="searchInputRef"
@@ -177,7 +177,7 @@
             <button
               v-if="searchQuery"
               @click="searchQuery = ''"
-              class="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 flex items-center justify-center text-xs transition-colors flex-shrink-0 cursor-pointer"
+              class="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
               title="Hapus kata kunci"
             >
               <X class="w-3 h-3 stroke-[2.5]" />
@@ -185,7 +185,7 @@
           </div>
           <button
             @click="isSearchOpen = false"
-            class="w-10 h-10 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 text-gray-500 flex items-center justify-center transition border border-gray-200/60 cursor-pointer flex-shrink-0 shadow-2xs"
+            class="w-10 h-10 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 text-gray-500 flex items-center justify-center transition border border-gray-200/60 cursor-pointer shrink-0 shadow-2xs"
             title="Tutup pencarian"
           >
             <X class="w-5 h-5 stroke-[2.2]" />
@@ -241,7 +241,7 @@
                   class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition flex items-center justify-between group"
                 >
                   <div class="flex items-center gap-3 min-w-0">
-                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center flex-shrink-0">
+                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">
                       {{ surah.number }}
                     </span>
                     <div class="min-w-0">
@@ -249,7 +249,7 @@
                       <p class="text-xs text-gray-500 truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
                     </div>
                   </div>
-                  <span class="font-arabic text-xl font-bold text-gray-800 ml-2 flex-shrink-0 dir-rtl">
+                  <span class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
                     {{ surah.arabic }}
                   </span>
                 </div>
@@ -303,7 +303,7 @@
                       {{ material.category ? material.category.name : 'Materi Tadabbur' }}
                     </p>
                   </div>
-                  <BookOpen class="w-4 h-4 text-emerald-600 flex-shrink-0 ml-3" />
+                  <BookOpen class="w-4 h-4 text-emerald-600 shrink-0 ml-3" />
                 </div>
               </div>
             </div>

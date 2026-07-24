@@ -5,7 +5,7 @@
     <div class="max-w-3xl overflow-hidden bg-white rounded-lg shadow">
       <div class="px-4 py-5 sm:p-6">
         <div v-if="certificate">
-          <object class="w-full aspect-[2/3]" :data="certificate.url + '?_token=' + authStore.token"
+          <object class="w-full aspect-2/3" :data="certificate.url + '?_token=' + authStore.token"
             type="application/pdf"></object>
         </div>
         <div v-else class="text-center">

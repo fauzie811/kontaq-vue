@@ -16,7 +16,7 @@
       >
         <!-- Left: Surah Number & Titles -->
         <div class="flex items-center gap-3.5 min-w-0">
-          <span class="text-emerald-800 bg-emerald-50 font-bold text-sm sm:text-base w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+          <span class="text-emerald-800 bg-emerald-50 font-bold text-sm sm:text-base w-8 h-8 rounded-full flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
             {{ surah.number }}
           </span>
 
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Right: Arabic Calligraphy -->
-        <div class="font-arabic text-2xl sm:text-3xl font-bold text-gray-800 flex-shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
+        <div class="font-arabic text-2xl sm:text-3xl font-bold text-gray-800 shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
           {{ surah.arabic }}
         </div>
       </div>

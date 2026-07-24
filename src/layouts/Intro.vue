@@ -4,12 +4,12 @@
     <div class="relative flex flex-col items-center justify-center p-8 lg:p-12 lg:col-span-7 bg-[#ebece8] overflow-hidden text-center min-h-[45vh] lg:min-h-svh">
       <!-- Background Image & Gradient Overlay -->
       <img class="absolute inset-0 object-cover w-full h-full" src="@/assets/bg-auth.jpg" alt="" />
-      <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-primary-1 to-primary-2 opacity-85"></div>
+      <div class="absolute inset-0 w-full h-full bg-linear-to-br from-primary-1 to-primary-2 opacity-85"></div>
 
       <!-- Profile & Verse Content -->
       <div class="relative z-10 flex flex-col items-center max-w-lg">
         <!-- Profile Avatar Circle -->
-        <div class="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/90 flex-shrink-0 group bg-gray-200 mb-6">
+        <div class="relative w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/90 shrink-0 group bg-gray-200 mb-6">
           <img
             :src="userAvatar"
             alt="Profile"

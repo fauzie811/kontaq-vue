@@ -10,7 +10,7 @@
       >
         <div class="flex items-center gap-4">
           <!-- Orange Sparkle Star Icon -->
-          <svg class="w-5 h-5 text-amber-500 fill-amber-500 flex-shrink-0" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 text-amber-500 fill-amber-500 shrink-0" viewBox="0 0 24 24">
             <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
           </svg>
           <span class="text-[#144227] font-bold text-lg sm:text-xl tracking-wide">

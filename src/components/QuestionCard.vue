@@ -3,7 +3,7 @@
     <!-- Question Header Bar -->
     <div class="bg-[#f0f2f1] flex items-stretch min-h-[52px] border-b border-gray-200/60">
       <!-- Question Number Badge -->
-      <div class="bg-[#dcfce7] text-[#144227] w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl flex-shrink-0">
+      <div class="bg-[#dcfce7] text-[#144227] w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
         {{ index + 1 }}
       </div>
 
@@ -33,7 +33,7 @@
               <span
                 :class="[
                   checked ? 'border-emerald-600 bg-emerald-600' : 'border-gray-300 bg-white',
-                  'w-5 h-5 rounded-full border flex items-center justify-center mr-3.5 flex-shrink-0 transition-colors'
+                  'w-5 h-5 rounded-full border flex items-center justify-center mr-3.5 shrink-0 transition-colors'
                 ]"
               >
                 <span v-if="checked" class="w-2 h-2 rounded-full bg-white"></span>
