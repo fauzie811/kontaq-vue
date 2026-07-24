@@ -238,6 +238,12 @@ select {
   font-feature-settings: inherit;
 }
 
+.dir-rtl {
+  direction: rtl;
+  unicode-bidi: isolate;
+  text-align: right;
+}
+
 .font-quran {
   font-family: 'KFGQPC Hafs Uthmanic Script', 'lpmq', serif;
 }

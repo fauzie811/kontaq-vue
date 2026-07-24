@@ -31,7 +31,7 @@
         </div>
 
         <!-- Right: Arabic Calligraphy -->
-        <div class="font-arabic text-2xl sm:text-3xl font-bold text-gray-800 shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
+        <div dir="rtl" class="font-arabic text-2xl sm:text-3xl font-bold text-gray-800 shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
           {{ surah.arabic }}
         </div>
       </div>

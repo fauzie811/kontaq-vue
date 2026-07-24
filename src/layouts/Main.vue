@@ -249,7 +249,7 @@
                       <p class="text-xs text-gray-500 truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
                     </div>
                   </div>
-                  <span class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
+                  <span dir="rtl" class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
                     {{ surah.arabic }}
                   </span>
                 </div>
@@ -273,7 +273,7 @@
                       QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
                     </span>
                   </div>
-                  <p class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
+                  <p dir="rtl" class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
                     {{ verse.text }}
                   </p>
                   <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">
