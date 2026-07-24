@@ -306,3 +306,58 @@ export const updateMyEvaluation = async (id, answers) => {
     throw e;
   }
 };
+
+let chaptersCache = null;
+
+export const listQuranChapters = async (forceRefresh = false) => {
+  if (!forceRefresh && chaptersCache) {
+    return chaptersCache;
+  }
+
+  if (!forceRefresh && typeof window !== 'undefined') {
+    try {
+      const stored = sessionStorage.getItem('quran_chapters_cache');
+      if (stored) {
+        chaptersCache = JSON.parse(stored);
+        return chaptersCache;
+      }
+    } catch (_) {}
+  }
+
+  try {
+    const { data } = await axios.get('quran');
+    if (data && data.success) {
+      chaptersCache = data;
+      try {
+        sessionStorage.setItem('quran_chapters_cache', JSON.stringify(data));
+      } catch (_) {}
+    }
+    return data;
+  } catch (e) {
+    if (chaptersCache) return chaptersCache;
+    throw e;
+  }
+};
+
+export const getQuranChapterVerses = async (chapter, page = 1) => {
+  try {
+    const { data } = await axios.get(`quran/${chapter}`, {
+      params: { page },
+    });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const searchQuran = async ({ q, page = 1 }) => {
+  try {
+    const { data } = await axios.get('quran/search', {
+      params: { q, page },
+    });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+

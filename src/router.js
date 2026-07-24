@@ -56,6 +56,12 @@ const routes = [
     meta: { needsAuth: true, layout: MainLayout },
   },
   {
+    path: '/quran/:chapter',
+    component: () => import('./pages/Quran/Show.vue'),
+    name: 'quran.show',
+    meta: { needsAuth: true, layout: MainLayout },
+  },
+  {
     path: '/forum',
     component: () => import('./pages/Forum.vue'),
     name: 'forum',
