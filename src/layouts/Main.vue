@@ -23,9 +23,9 @@
           </button>
 
           <!-- Notification Bell Button -->
-          <div class="relative">
+          <div ref="notificationMenuRef" class="relative">
             <button
-              @click="isNotificationOpen = !isNotificationOpen"
+              @click="toggleNotification"
               title="Notifikasi"
               class="w-10 h-10 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center justify-center transition shadow-sm border border-emerald-100 relative cursor-pointer"
             >
@@ -82,14 +82,50 @@
             </div>
           </div>
 
-          <!-- Profile Icon Button -->
-          <router-link
-            :to="{ name: 'profile' }"
-            title="Profil Saya"
-            class="w-10 h-10 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center justify-center transition shadow-sm border border-emerald-100"
-          >
-            <User class="w-5 h-5 stroke-[2.2]" />
-          </router-link>
+          <!-- User Menu Dropdown Button -->
+          <div ref="userMenuRef" class="relative">
+            <button
+              @click="toggleUserMenu"
+              title="Menu Pengguna"
+              class="w-10 h-10 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center justify-center transition shadow-sm border border-emerald-100 cursor-pointer"
+            >
+              <User class="w-5 h-5 stroke-[2.2]" />
+            </button>
+
+            <!-- User Menu Dropdown Panel -->
+            <div
+              v-if="isUserMenuOpen"
+              class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+            >
+              <!-- User Info Header -->
+              <div v-if="authStore.user" class="px-4 py-2 border-b border-gray-100 bg-gray-50/50">
+                <p class="font-bold text-gray-900 text-xs truncate">{{ authStore.user.name }}</p>
+                <p class="text-[11px] text-gray-500 truncate">{{ authStore.user.username || authStore.user.email }}</p>
+              </div>
+
+              <div class="py-1">
+                <router-link
+                  :to="{ name: 'profile' }"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition"
+                >
+                  <User class="w-4 h-4 text-emerald-600" />
+                  Profile
+                </router-link>
+
+                <div class="my-1 border-t border-gray-100"></div>
+
+                <router-link
+                  :to="{ name: 'logout' }"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition"
+                >
+                  <LogOut class="w-4 h-4 text-red-500" />
+                  Logout
+                </router-link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -249,7 +285,7 @@
                       <p class="text-xs text-gray-500 truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
                     </div>
                   </div>
-                  <span dir="rtl" class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
+                  <span class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
                     {{ surah.arabic }}
                   </span>
                 </div>
@@ -273,7 +309,7 @@
                       QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
                     </span>
                   </div>
-                  <p dir="rtl" class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
+                  <p class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
                     {{ verse.text }}
                   </p>
                   <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">
@@ -421,10 +457,13 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { onClickOutside } from '@vueuse/core';
 import {
   Search,
   Bell,
   User,
+  Settings,
+  LogOut,
   BookOpen,
   ClipboardList,
   ClipboardCheck,
@@ -446,6 +485,32 @@ if (authStore.isLoggedIn && !authStore.user) {
 
 const isSearchOpen = ref(false);
 const isNotificationOpen = ref(false);
+const isUserMenuOpen = ref(false);
+const notificationMenuRef = ref(null);
+const userMenuRef = ref(null);
+
+onClickOutside(userMenuRef, () => {
+  isUserMenuOpen.value = false;
+});
+
+onClickOutside(notificationMenuRef, () => {
+  isNotificationOpen.value = false;
+});
+
+function toggleUserMenu() {
+  isUserMenuOpen.value = !isUserMenuOpen.value;
+  if (isUserMenuOpen.value) {
+    isNotificationOpen.value = false;
+  }
+}
+
+function toggleNotification() {
+  isNotificationOpen.value = !isNotificationOpen.value;
+  if (isNotificationOpen.value) {
+    isUserMenuOpen.value = false;
+  }
+}
+
 const showInfaqModal = ref(false);
 const showQrisModal = ref(false);
 const searchQuery = ref('');
@@ -457,6 +522,8 @@ let searchDebounceTimer = null;
 
 watch(isSearchOpen, (open) => {
   if (open) {
+    isUserMenuOpen.value = false;
+    isNotificationOpen.value = false;
     nextTick(() => {
       if (searchInputRef.value) searchInputRef.value.focus();
     });

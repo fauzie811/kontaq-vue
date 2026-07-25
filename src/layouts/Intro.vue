@@ -26,7 +26,7 @@
         </div>
 
         <!-- Arabic Calligraphy Verse -->
-        <div class="mb-3 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wide text-[#ffd900] font-arabic leading-relaxed drop-shadow-md">
+        <div class="mb-3 text-3xl sm:text-4xl lg:text-5xl font-bold text-[#ffd900] font-arabic leading-relaxed drop-shadow-md">
           أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ
         </div>
 
@@ -75,9 +75,3 @@ const userAvatar = computed(() => {
   return authStore.user?.avatar || authStore.user?.photo || defaultAvatar;
 });
 </script>
-
-<style scoped>
-.font-arabic {
-  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Dubai', serif;
-}
-</style>

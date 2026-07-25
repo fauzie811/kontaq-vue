@@ -2,10 +2,12 @@
   <div class="flex flex-col items-center w-full py-4 text-center">
     <!-- Menu Navigation Items -->
     <div class="w-full flex flex-col gap-4">
-      <button
+      <component
         v-for="item in menuItems"
         :key="item.title"
-        @click="navigateMenu(item)"
+        :is="item.route ? 'router-link' : 'button'"
+        :to="item.route ? { name: item.route } : undefined"
+        @click="!item.route && navigateMenu(item)"
         class="group flex items-center justify-between w-full px-6 py-4 rounded-full border-2 border-[#1b4332] hover:border-[#0f291e] bg-white hover:bg-emerald-50/60 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-emerald-700/30 text-left"
       >
         <div class="flex items-center gap-4">
@@ -21,7 +23,7 @@
         <svg class="w-5 h-5 text-[#144227] group-hover:translate-x-1.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
-      </button>
+      </component>
     </div>
 
     <!-- Infaq Modal -->

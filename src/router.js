@@ -1,3 +1,4 @@
+import { nextTick } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import authStore from './store/auth';
@@ -139,11 +140,56 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
 router.beforeEach((to, from, next) => {
   if (to.name !== 'login' && to.meta.needsAuth && !authStore.isLoggedIn)
     next({ name: 'login' });
   else if (to.name === 'login' && authStore.isLoggedIn) next({ name: 'home' });
   else next();
+});
+
+let isBackNavigation = false;
+if (typeof window !== 'undefined') {
+  window.addEventListener('popstate', () => {
+    isBackNavigation = true;
+  });
+}
+
+router.beforeResolve((to, from) => {
+  if (
+    typeof document === 'undefined' ||
+    !document.startViewTransition ||
+    to.path === from.path
+  ) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  const direction = isBackNavigation ? 'backward' : 'forward';
+  isBackNavigation = false;
+
+  return new Promise((resolve) => {
+    try {
+      document.startViewTransition({
+        update: async () => {
+          resolve();
+          await nextTick();
+        },
+        types: [direction],
+      });
+    } catch (e) {
+      document.startViewTransition(async () => {
+        resolve();
+        await nextTick();
+      });
+    }
+  });
 });
 
 export default router;

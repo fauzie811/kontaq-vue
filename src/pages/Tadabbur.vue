@@ -31,7 +31,7 @@
         </div>
 
         <!-- Right: Arabic Calligraphy -->
-        <div dir="rtl" class="font-arabic text-2xl sm:text-3xl font-bold text-gray-800 shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
+        <div class="font-arabic text-2xl sm:text-3xl font-bold text-gray-800 shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
           {{ surah.arabic }}
         </div>
       </div>
@@ -68,9 +68,3 @@ function openSurah(surah) {
   router.push({ name: 'quran.show', params: { chapter: surah.number } });
 }
 </script>
-
-<style scoped>
-.font-arabic {
-  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Dubai', serif;
-}
-</style>

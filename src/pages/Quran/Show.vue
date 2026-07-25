@@ -57,7 +57,7 @@
             </p>
           </div>
 
-          <div dir="rtl" class="font-arabic text-4xl sm:text-5xl font-bold text-emerald-100 drop-shadow-md dir-rtl">
+          <div class="font-arabic text-4xl sm:text-5xl font-bold text-emerald-100 drop-shadow-md dir-rtl">
             {{ chapterDetails.arabic }}
           </div>
         </div>
@@ -68,8 +68,8 @@
         v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
         class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-6 text-center mb-8 shadow-2xs"
       >
-        <p dir="rtl" class="font-quran text-3xl text-emerald-900 font-bold dir-rtl leading-relaxed">
-          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-emerald-900 font-bold dir-rtl leading-relaxed">
+            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </p>
         <p class="text-xs text-emerald-700 font-medium mt-2">
           Dengan menyebut nama Allah Yang Maha Pengasih, lagi Maha Penyayang
@@ -106,8 +106,8 @@
           </div>
 
           <!-- Arabic Text -->
-          <div dir="rtl" class="py-2 text-right dir-rtl">
-            <p dir="rtl" class="font-quran text-2xl sm:text-3xl lg:text-4xl text-gray-900 leading-[2.2] tracking-wide font-bold">
+          <div class="py-2 text-right dir-rtl">
+            <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-gray-900 leading-[2.2] font-bold">
               {{ verse.text }}
             </p>
           </div>
@@ -300,12 +300,3 @@ function copyVerse(verse) {
   }, 2000);
 }
 </script>
-
-<style scoped>
-.font-quran {
-  font-family: 'Scheherazade New', 'KFGQPC Hafs Uthmanic Script', 'lpmq', serif;
-}
-.font-arabic {
-  font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', 'Dubai', serif;
-}
-</style>
