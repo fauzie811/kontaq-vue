@@ -51,6 +51,12 @@ const routes = [
     meta: { needsAuth: true, layout: IntroLayout },
   },
   {
+    path: '/infaq',
+    component: () => import('./pages/Infaq.vue'),
+    name: 'infaq',
+    meta: { needsAuth: true, layout: MainLayout },
+  },
+  {
     path: '/tadabbur',
     component: () => import('./pages/Tadabbur.vue'),
     name: 'tadabbur',

@@ -146,14 +146,12 @@ const menuItems = [
   { title: 'Kuis', route: 'quizzes' },
   { title: 'Evaluasi', route: 'evaluations' },
   { title: 'Rapor', route: 'reports' },
-  { title: 'Infaq', action: 'infaq' },
+  { title: 'Infaq', route: 'infaq' },
 ];
 
 function navigateMenu(item) {
   if (item.route) {
     router.push({ name: item.route });
-  } else if (item.action === 'infaq') {
-    showInfaqModal.value = true;
   }
 }
 </script>

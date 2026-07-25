@@ -131,7 +131,7 @@
     </header>
 
     <!-- Navigation Tabs Pill Container -->
-    <section class="max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
+    <section v-if="route.name !== 'infaq'" class="max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
       <div class="bg-[#ebeee8] rounded-3xl p-3 sm:p-4 shadow-inner flex items-center justify-around gap-2 sm:gap-4 border border-gray-200/60">
         <router-link
           v-for="item in navTabs"
@@ -162,33 +162,36 @@
       <slot />
     </main>
 
-    <!-- Bottom Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
-    <footer class="fixed bottom-0 inset-x-0 bg-[#dcfce7] border-t border-emerald-200/80 py-3.5 px-4 z-20 shadow-lg">
-      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+    <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
+    <footer
+      v-if="isBannerVisible"
+      class="fixed bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-[#bbf7d0] border border-emerald-300/90 rounded-full px-4 sm:px-8 py-2.5 sm:py-3 shadow-xl shadow-emerald-950/15 backdrop-blur-md transition-all duration-300"
+    >
+      <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
-        <span class="font-bold text-emerald-900 text-base sm:text-xl tracking-wide text-center sm:text-left">
+        <span class="font-bold text-[#144227] text-xs sm:text-base tracking-wide text-left truncate sm:whitespace-normal">
           DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
         </span>
 
-        <!-- Infaq Button & QR Code -->
-        <div class="flex items-center gap-4">
-          <button
-            @click="showInfaqModal = true"
-            class="bg-[#144227] hover:bg-[#0f321d] text-white px-7 py-2.5 rounded-full font-bold text-base shadow-md transition-transform hover:scale-105 flex items-center gap-2 cursor-pointer"
+        <!-- Infaq Button -->
+        <div class="flex items-center shrink-0">
+          <router-link
+            :to="{ name: 'infaq' }"
+            class="bg-[#144227] hover:bg-[#0f321d] text-white px-5 sm:px-7 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-transform hover:scale-105 flex items-center justify-center cursor-pointer"
           >
             <span>Infaq</span>
-          </button>
-
-          <!-- Small QR Code Icon / Box -->
-          <button
-            @click="showQrisModal = true"
-            title="Scan QRIS Infaq"
-            class="w-9 h-9 bg-white hover:bg-emerald-50 rounded-lg p-1 border border-emerald-300 shadow-sm flex items-center justify-center cursor-pointer transition-transform hover:scale-105"
-          >
-            <QrCode class="w-7 h-7 text-gray-800" />
-          </button>
+          </router-link>
         </div>
       </div>
+
+      <!-- Red Close X Button on top-right floating edge -->
+      <button
+        @click="isBannerVisible = false"
+        title="Tutup Banner"
+        class="absolute -top-1.5 -right-1.5 sm:-top-2 sm:-right-2 w-6 h-6 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-md transition-transform hover:scale-110 cursor-pointer z-50"
+      >
+        <X class="w-3.5 h-3.5 stroke-[3]" />
+      </button>
     </footer>
 
     <!-- Search Modal Popup -->
@@ -511,6 +514,7 @@ function toggleNotification() {
   }
 }
 
+const isBannerVisible = ref(true);
 const showInfaqModal = ref(false);
 const showQrisModal = ref(false);
 const searchQuery = ref('');
@@ -626,6 +630,7 @@ const notificationList = computed(() => {
     title: item.title,
     desc: stripTags(item.content || ''),
     time: item.created_at ? relativeDate(item.created_at) : 'Terbaru',
+    action: item.action,
     route: { name: 'announcements.show', params: { id: item.id } },
   }));
 });
@@ -633,7 +638,7 @@ const notificationList = computed(() => {
 function clickNotification(notif) {
   isNotificationOpen.value = false;
   if (notif.action === 'infaq') {
-    showInfaqModal.value = true;
+    router.push({ name: 'infaq' });
   } else if (notif.route) {
     router.push(notif.route);
   }
