@@ -2,40 +2,68 @@
   <div>
     <PageHeader class="mb-8" page-title="Kuis" />
 
-    <div class="max-w-3xl">
-      <div class="flex justify-end mb-4">
+    <div class="max-w-5xl">
+      <!-- Top Action Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-medium text-gray-500">
+            Menampilkan <strong class="text-gray-900">{{ quizzes.data?.length || 0 }}</strong> kuis
+          </span>
+        </div>
         <CategoryPicker show-all-option class="w-full sm:w-56" v-model="category"
           @update:modelValue="() => changePage(1)" />
       </div>
 
-      <div class="overflow-hidden bg-white rounded-md shadow">
-        <ul role="list" class="divide-y divide-gray-200">
-          <li v-for="quiz in quizzes.data" :key="quiz.id" class="flex items-center justify-between px-6 py-4 gap-x-6">
-            <div class="min-w-0">
-              <div class="flex items-start gap-x-3">
-                <p class="text-sm font-semibold leading-6 text-gray-900">{{ quiz.title }}</p>
-                <p
-                  :class="[statuses[getStatus(quiz)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
-                  {{ getStatus(quiz) }}</p>
+      <!-- Card Grid -->
+      <div v-if="quizzes.data && quizzes.data.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 mb-6">
+        <div v-for="quiz in quizzes.data" :key="quiz.id"
+          class="bg-white rounded-2xl border border-gray-200/80 shadow-xs hover:shadow-md hover:border-emerald-500/50 transition-all duration-200 p-5 flex flex-col justify-between group h-full">
+          <div>
+            <!-- Card Header: Duration & Status Badge -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100/80 text-gray-600 text-xs font-medium">
+                <Clock class="w-3.5 h-3.5 text-gray-500" />
+                <span>{{ quiz.duration }} menit</span>
               </div>
-              <div class="flex items-center text-xs leading-5 text-gray-500 gap-x-2">
-                <p class="whitespace-nowrap">
-                  {{ quiz.duration }} menit
-                </p>
+
+              <div :class="[statuses[getStatus(quiz)].wrapper, 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ring-1 ring-inset']">
+                <component :is="statuses[getStatus(quiz)].icon" class="w-3.5 h-3.5" />
+                <span>{{ getStatus(quiz) }}</span>
               </div>
             </div>
-            <div class="flex items-center flex-none gap-x-4">
-              <button v-if="!quiz.material_read" v-on:click.prevent="showAlert(quiz.material_id)"
-                class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
-                  getButtonLabel(quiz) }}</button>
-              <router-link v-else :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
-                class="block rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{
-                  getButtonLabel(quiz) }}</router-link>
-            </div>
-          </li>
-        </ul>
-        <Pagination :meta="quizzes" v-on:change="changePage" />
+
+            <!-- Card Content: Title -->
+            <h3 class="text-base font-bold text-gray-900 group-hover:text-[#144227] transition-colors line-clamp-2 mb-4 leading-snug">
+              {{ quiz.title }}
+            </h3>
+          </div>
+
+          <!-- Card Footer: Action Button -->
+          <div class="pt-2">
+            <button v-if="!quiz.material_read" @click.prevent="showAlert(quiz.material_id)"
+              class="w-full bg-[#144227] hover:bg-[#0f321d] text-white font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer">
+              <BookOpen class="w-4 h-4" />
+              <span>{{ getButtonLabel(quiz) }}</span>
+            </button>
+            <router-link v-else :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
+              class="w-full bg-[#144227] hover:bg-[#0f321d] text-white font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center">
+              <span>{{ getButtonLabel(quiz) }}</span>
+            </router-link>
+          </div>
+        </div>
       </div>
+
+      <!-- Empty State -->
+      <div v-else class="bg-white rounded-2xl border border-gray-200/80 p-12 text-center my-6">
+        <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3 text-gray-400">
+          <HelpCircle class="w-6 h-6" />
+        </div>
+        <h4 class="text-base font-semibold text-gray-900 mb-1">Belum Ada Kuis</h4>
+        <p class="text-sm text-gray-500">Kuis untuk kategori ini belum tersedia.</p>
+      </div>
+
+      <!-- Pagination -->
+      <Pagination :meta="quizzes" v-on:change="changePage" />
     </div>
   </div>
 </template>
@@ -43,6 +71,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Clock, CheckCircle2, PlayCircle, HelpCircle, Sparkles, BookOpen } from 'lucide-vue-next';
 import { listMyQuizzes } from '@/api';
 import { swConfirm } from '@/utils';
 import PageHeader from '../components/PageHeader.vue';
@@ -88,8 +117,17 @@ async function showAlert(id) {
 }
 
 const statuses = {
-  Selesai: 'text-success-700 bg-success-50 ring-success-600/20',
-  'Sedang dikerjakan': 'text-warning-800 bg-warning-50 ring-warning-600/20',
-  'Belum dikerjakan': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-}
+  Selesai: {
+    wrapper: 'text-emerald-700 bg-emerald-50 ring-emerald-600/20',
+    icon: CheckCircle2,
+  },
+  'Sedang dikerjakan': {
+    wrapper: 'text-amber-800 bg-amber-50 ring-amber-600/20',
+    icon: PlayCircle,
+  },
+  'Belum dikerjakan': {
+    wrapper: 'text-gray-600 bg-gray-50 ring-gray-500/10',
+    icon: Sparkles,
+  },
+};
 </script>
