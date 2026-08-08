@@ -180,162 +180,357 @@
       </router-link>
     </nav>
 
-    <!-- Search Modal Popup -->
-    <div
-      v-if="isSearchOpen"
-      class="fixed inset-0 z-50 flex items-end sm:items-start justify-center pt-4 sm:pt-20 pb-0 sm:pb-4 px-0 sm:px-4 bg-black/40 backdrop-blur-xs"
-      @click.self="isSearchOpen = false"
-    >
-      <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh] sm:max-h-[85vh]">
-        <!-- Search Input Header -->
-        <div class="p-3.5 sm:p-4 border-b border-gray-100 flex items-center gap-3 bg-white">
-          <div class="flex-1 flex items-center gap-3 bg-gray-50 border border-gray-200/80 rounded-2xl px-3.5 py-2.5 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-2xs">
-            <Search class="w-5 h-5 text-emerald-600 shrink-0" />
-            <input
-              v-model="searchQuery"
-              ref="searchInputRef"
-              type="text"
-              placeholder="Cari Surah, ayat, tadabbur (# surah, @ ayat, ? materi)..."
-              class="w-full text-base sm:text-lg border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-gray-900 placeholder-gray-400 bg-transparent font-medium p-0"
-              @keydown.esc="isSearchOpen = false"
-            />
+    <!-- Search Modal Popup & Mobile Bottom Sheet -->
+    <Teleport to="body">
+      <!-- Backdrop Backdrop Fade -->
+      <Transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div
+          v-if="isSearchOpen"
+          class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs"
+          @click="isSearchOpen = false"
+        ></div>
+      </Transition>
+
+      <!-- Mobile Bottom Sheet Slide Drawer (< sm breakpoint) -->
+      <Transition
+        enter-active-class="transition duration-300 ease-out transform"
+        enter-from-class="translate-y-full opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-active-class="transition duration-200 ease-in transform"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-full opacity-0"
+      >
+        <div
+          v-if="isSearchOpen"
+          class="sm:hidden fixed bottom-0 inset-x-0 bg-white rounded-t-3xl border-t border-gray-100 shadow-2xl z-50 max-h-[90vh] flex flex-col overflow-hidden"
+        >
+          <!-- Grab Handle -->
+          <div class="pt-3 pb-1 flex justify-center cursor-grab active:cursor-grabbing" @click="isSearchOpen = false">
+            <div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+          </div>
+
+          <!-- Search Input Header -->
+          <div class="p-3.5 border-b border-gray-100 flex items-center gap-2.5 bg-white">
+            <div class="flex-1 flex items-center gap-2.5 bg-gray-50 border border-gray-200/80 rounded-2xl px-3.5 py-2.5 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-2xs">
+              <Search class="w-5 h-5 text-emerald-600 shrink-0" />
+              <input
+                v-model="searchQuery"
+                ref="mobileSearchInputRef"
+                type="text"
+                placeholder="Cari Surah, ayat, tadabbur (#, @, ?)..."
+                class="w-full text-base border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-gray-900 placeholder-gray-400 bg-transparent font-medium p-0"
+                @keydown.esc="isSearchOpen = false"
+              />
+              <button
+                v-if="searchQuery"
+                @click="searchQuery = ''"
+                class="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
+                title="Hapus kata kunci"
+              >
+                <X class="w-3 h-3 stroke-[2.5]" />
+              </button>
+            </div>
             <button
-              v-if="searchQuery"
-              @click="searchQuery = ''"
-              class="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
-              title="Hapus kata kunci"
+              @click="isSearchOpen = false"
+              class="w-9 h-9 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 text-gray-500 flex items-center justify-center transition border border-gray-200/60 cursor-pointer shrink-0 shadow-2xs"
+              title="Tutup pencarian"
             >
-              <X class="w-3 h-3 stroke-[2.5]" />
+              <X class="w-4 h-4 stroke-[2.2]" />
             </button>
           </div>
-          <button
-            @click="isSearchOpen = false"
-            class="w-10 h-10 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 text-gray-500 flex items-center justify-center transition border border-gray-200/60 cursor-pointer shrink-0 shadow-2xs"
-            title="Tutup pencarian"
-          >
-            <X class="w-5 h-5 stroke-[2.2]" />
-          </button>
-        </div>
 
-        <!-- Filter Chips / Shortcuts -->
-        <div class="px-4 py-2.5 bg-gray-50 flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-gray-600 border-b border-gray-100">
-          <span class="font-medium text-gray-400">Pintasan:</span>
-          <button @click="setSearchPrefix('# ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
-            # Surah
-          </button>
-          <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
-            @ Ayat
-          </button>
-          <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
-            ? Tadabbur
-          </button>
-        </div>
-
-        <!-- Search Results Body -->
-        <div class="overflow-y-auto p-4 space-y-5 flex-1 divide-y divide-gray-100">
-          <!-- Loading Spinner -->
-          <div v-if="isSearching" class="text-center py-8 text-emerald-600 flex items-center justify-center gap-2">
-            <div class="animate-spin rounded-full h-5 w-5 border-2 border-emerald-600 border-t-transparent"></div>
-            <span class="text-xs font-medium text-gray-500">Mencari...</span>
+          <!-- Filter Chips / Shortcuts -->
+          <div class="px-4 py-2 bg-gray-50 flex items-center gap-1.5 text-xs text-gray-600 border-b border-gray-100 overflow-x-auto">
+            <span class="font-medium text-gray-400 shrink-0">Pintasan:</span>
+            <button @click="setSearchPrefix('# ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer shrink-0">
+              # Surah
+            </button>
+            <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer shrink-0">
+              @ Ayat
+            </button>
+            <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer shrink-0">
+              ? Tadabbur
+            </button>
           </div>
 
-          <!-- Empty Query Placeholder -->
-          <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-gray-400 text-xs sm:text-sm">
-            Ketik kata kunci untuk mencari Surah, Ayat, atau Materi Tadabbur.
-          </div>
+          <!-- Search Results Body -->
+          <div class="overflow-y-auto p-4 space-y-4 flex-1 divide-y divide-gray-100">
+            <!-- Loading Spinner -->
+            <div v-if="isSearching" class="text-center py-8 text-emerald-600 flex items-center justify-center gap-2">
+              <div class="animate-spin rounded-full h-5 w-5 border-2 border-emerald-600 border-t-transparent"></div>
+              <span class="text-xs font-medium text-gray-500">Mencari...</span>
+            </div>
 
-          <!-- No Results Found -->
-          <div
-            v-else-if="!hasSearchResults"
-            class="text-center py-10 text-gray-500 text-sm"
-          >
-            Tidak ada hasil ditemukan untuk "<span class="font-semibold text-gray-700">{{ searchQuery }}</span>".
-          </div>
+            <!-- Empty Query Placeholder -->
+            <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-gray-400 text-xs sm:text-sm">
+              Ketik kata kunci untuk mencari Surah, Ayat, atau Materi Tadabbur.
+            </div>
 
-          <template v-else>
-            <!-- 1. Surah Results -->
-            <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
-              <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
-                Surah ({{ searchResults.chapters.length }})
-              </h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div
-                  v-for="surah in searchResults.chapters"
-                  :key="surah.number"
-                  @click="selectSurah(surah)"
-                  class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition flex items-center justify-between group"
-                >
-                  <div class="flex items-center gap-3 min-w-0">
-                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">
-                      {{ surah.number }}
+            <!-- No Results Found -->
+            <div
+              v-else-if="!hasSearchResults"
+              class="text-center py-10 text-gray-500 text-sm"
+            >
+              Tidak ada hasil ditemukan untuk "<span class="font-semibold text-gray-700">{{ searchQuery }}</span>".
+            </div>
+
+            <template v-else>
+              <!-- 1. Surah Results -->
+              <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
+                <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
+                  Surah ({{ searchResults.chapters.length }})
+                </h4>
+                <div class="grid grid-cols-1 gap-2">
+                  <div
+                    v-for="surah in searchResults.chapters"
+                    :key="surah.number"
+                    @click="selectSurah(surah)"
+                    class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition flex items-center justify-between group"
+                  >
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">
+                        {{ surah.number }}
+                      </span>
+                      <div class="min-w-0">
+                        <p class="font-bold text-sm text-gray-900 truncate group-hover:text-emerald-700">{{ surah.latin }}</p>
+                        <p class="text-xs text-gray-500 truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
+                      </div>
+                    </div>
+                    <span class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
+                      {{ surah.arabic }}
                     </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Verse Results -->
+              <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
+                <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
+                  Ayat Al-Qur'an ({{ searchResults.verses.length }})
+                </h4>
+                <div class="space-y-2">
+                  <div
+                    v-for="verse in searchResults.verses"
+                    :key="verse.id"
+                    @click="selectVerse(verse)"
+                    class="p-3.5 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition space-y-1.5 group"
+                  >
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                        QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
+                      </span>
+                    </div>
+                    <p class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
+                      {{ verse.text }}
+                    </p>
+                    <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                      {{ verse.translation }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Material Results -->
+              <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
+                <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
+                  Materi Tadabbur ({{ searchResults.materials.length }})
+                </h4>
+                <div class="space-y-2">
+                  <div
+                    v-for="material in searchResults.materials"
+                    :key="material.id"
+                    @click="selectMaterial(material)"
+                    class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                  >
                     <div class="min-w-0">
-                      <p class="font-bold text-sm text-gray-900 truncate group-hover:text-emerald-700">{{ surah.latin }}</p>
-                      <p class="text-xs text-gray-500 truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
+                      <p class="font-bold text-sm text-gray-900 truncate group-hover:text-emerald-700">
+                        {{ material.title }}
+                      </p>
+                      <p class="text-xs text-gray-500 truncate mt-0.5">
+                        {{ material.category ? material.category.name : 'Materi Tadabbur' }}
+                      </p>
+                    </div>
+                    <BookOpen class="w-4 h-4 text-emerald-600 shrink-0 ml-3" />
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </Transition>
+
+      <!-- Desktop Search Modal Popup (>= sm breakpoint) -->
+      <Transition
+        enter-active-class="transition duration-200 ease-out transform"
+        enter-from-class="opacity-0 scale-95"
+        enter-to-class="opacity-100 scale-100"
+        leave-active-class="transition duration-150 ease-in transform"
+        leave-from-class="opacity-100 scale-100"
+        leave-to-class="opacity-0 scale-95"
+      >
+        <div
+          v-if="isSearchOpen"
+          class="hidden sm:flex fixed inset-0 z-50 items-start justify-center pt-20 px-4 pointer-events-none"
+        >
+          <div class="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-gray-100 flex flex-col max-h-[85vh] pointer-events-auto">
+            <!-- Search Input Header -->
+            <div class="p-4 border-b border-gray-100 flex items-center gap-3 bg-white">
+              <div class="flex-1 flex items-center gap-3 bg-gray-50 border border-gray-200/80 rounded-2xl px-3.5 py-2.5 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-2xs">
+                <Search class="w-5 h-5 text-emerald-600 shrink-0" />
+                <input
+                  v-model="searchQuery"
+                  ref="searchInputRef"
+                  type="text"
+                  placeholder="Cari Surah, ayat, tadabbur (# surah, @ ayat, ? materi)..."
+                  class="w-full text-lg border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-gray-900 placeholder-gray-400 bg-transparent font-medium p-0"
+                  @keydown.esc="isSearchOpen = false"
+                />
+                <button
+                  v-if="searchQuery"
+                  @click="searchQuery = ''"
+                  class="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
+                  title="Hapus kata kunci"
+                >
+                  <X class="w-3 h-3 stroke-[2.5]" />
+                </button>
+              </div>
+              <button
+                @click="isSearchOpen = false"
+                class="w-10 h-10 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 text-gray-500 flex items-center justify-center transition border border-gray-200/60 cursor-pointer shrink-0 shadow-2xs"
+                title="Tutup pencarian"
+              >
+                <X class="w-5 h-5 stroke-[2.2]" />
+              </button>
+            </div>
+
+            <!-- Filter Chips / Shortcuts -->
+            <div class="px-4 py-2.5 bg-gray-50 flex items-center gap-2 text-xs text-gray-600 border-b border-gray-100">
+              <span class="font-medium text-gray-400">Pintasan:</span>
+              <button @click="setSearchPrefix('# ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
+                # Surah
+              </button>
+              <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
+                @ Ayat
+              </button>
+              <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
+                ? Tadabbur
+              </button>
+            </div>
+
+            <!-- Search Results Body -->
+            <div class="overflow-y-auto p-4 space-y-5 flex-1 divide-y divide-gray-100">
+              <!-- Loading Spinner -->
+              <div v-if="isSearching" class="text-center py-8 text-emerald-600 flex items-center justify-center gap-2">
+                <div class="animate-spin rounded-full h-5 w-5 border-2 border-emerald-600 border-t-transparent"></div>
+                <span class="text-xs font-medium text-gray-500">Mencari...</span>
+              </div>
+
+              <!-- Empty Query Placeholder -->
+              <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-gray-400 text-sm">
+                Ketik kata kunci untuk mencari Surah, Ayat, atau Materi Tadabbur.
+              </div>
+
+              <!-- No Results Found -->
+              <div
+                v-else-if="!hasSearchResults"
+                class="text-center py-10 text-gray-500 text-sm"
+              >
+                Tidak ada hasil ditemukan untuk "<span class="font-semibold text-gray-700">{{ searchQuery }}</span>".
+              </div>
+
+              <template v-else>
+                <!-- 1. Surah Results -->
+                <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
+                  <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
+                    Surah ({{ searchResults.chapters.length }})
+                  </h4>
+                  <div class="grid grid-cols-2 gap-2">
+                    <div
+                      v-for="surah in searchResults.chapters"
+                      :key="surah.number"
+                      @click="selectSurah(surah)"
+                      class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition flex items-center justify-between group"
+                    >
+                      <div class="flex items-center gap-3 min-w-0">
+                        <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">
+                          {{ surah.number }}
+                        </span>
+                        <div class="min-w-0">
+                          <p class="font-bold text-sm text-gray-900 truncate group-hover:text-emerald-700">{{ surah.latin }}</p>
+                          <p class="text-xs text-gray-500 truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
+                        </div>
+                      </div>
+                      <span class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
+                        {{ surah.arabic }}
+                      </span>
                     </div>
                   </div>
-                  <span class="font-arabic text-xl font-bold text-gray-800 ml-2 shrink-0 dir-rtl">
-                    {{ surah.arabic }}
-                  </span>
                 </div>
-              </div>
-            </div>
 
-            <!-- 2. Verse Results -->
-            <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
-              <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
-                Ayat Al-Qur'an ({{ searchResults.verses.length }})
-              </h4>
-              <div class="space-y-2">
-                <div
-                  v-for="verse in searchResults.verses"
-                  :key="verse.id"
-                  @click="selectVerse(verse)"
-                  class="p-3.5 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition space-y-1.5 group"
-                >
-                  <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
-                      QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
-                    </span>
+                <!-- 2. Verse Results -->
+                <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
+                  <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
+                    Ayat Al-Qur'an ({{ searchResults.verses.length }})
+                  </h4>
+                  <div class="space-y-2">
+                    <div
+                      v-for="verse in searchResults.verses"
+                      :key="verse.id"
+                      @click="selectVerse(verse)"
+                      class="p-3.5 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition space-y-1.5 group"
+                    >
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                          QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
+                        </span>
+                      </div>
+                      <p class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
+                        {{ verse.text }}
+                      </p>
+                      <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                        {{ verse.translation }}
+                      </p>
+                    </div>
                   </div>
-                  <p class="font-quran text-lg text-gray-900 text-right dir-rtl font-bold leading-relaxed">
-                    {{ verse.text }}
-                  </p>
-                  <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">
-                    {{ verse.translation }}
-                  </p>
                 </div>
-              </div>
-            </div>
 
-            <!-- 3. Material Results -->
-            <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
-              <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
-                Materi Tadabbur ({{ searchResults.materials.length }})
-              </h4>
-              <div class="space-y-2">
-                <div
-                  v-for="material in searchResults.materials"
-                  :key="material.id"
-                  @click="selectMaterial(material)"
-                  class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition group flex items-center justify-between"
-                >
-                  <div class="min-w-0">
-                    <p class="font-bold text-sm text-gray-900 truncate group-hover:text-emerald-700">
-                      {{ material.title }}
-                    </p>
-                    <p class="text-xs text-gray-500 truncate mt-0.5">
-                      {{ material.category ? material.category.name : 'Materi Tadabbur' }}
-                    </p>
+                <!-- 3. Material Results -->
+                <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
+                  <h4 class="text-[11px] font-bold tracking-wider text-emerald-800 uppercase px-1">
+                    Materi Tadabbur ({{ searchResults.materials.length }})
+                  </h4>
+                  <div class="space-y-2">
+                    <div
+                      v-for="material in searchResults.materials"
+                      :key="material.id"
+                      @click="selectMaterial(material)"
+                      class="p-3 bg-gray-50/80 hover:bg-emerald-50/80 border border-gray-200/60 rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                    >
+                      <div class="min-w-0">
+                        <p class="font-bold text-sm text-gray-900 truncate group-hover:text-emerald-700">
+                          {{ material.title }}
+                        </p>
+                        <p class="text-xs text-gray-500 truncate mt-0.5">
+                          {{ material.category ? material.category.name : 'Materi Tadabbur' }}
+                        </p>
+                      </div>
+                      <BookOpen class="w-4 h-4 text-emerald-600 shrink-0 ml-3" />
+                    </div>
                   </div>
-                  <BookOpen class="w-4 h-4 text-emerald-600 shrink-0 ml-3" />
                 </div>
-              </div>
+              </template>
             </div>
-          </template>
+          </div>
         </div>
-      </div>
-    </div>
+      </Transition>
+    </Teleport>
 
     <!-- Infaq Modal -->
     <div
@@ -506,6 +701,7 @@ const showInfaqModal = ref(false);
 const showQrisModal = ref(false);
 const searchQuery = ref('');
 const searchInputRef = ref(null);
+const mobileSearchInputRef = ref(null);
 
 const isSearching = ref(false);
 const searchResults = ref({ chapters: [], verses: [], materials: [] });
@@ -515,9 +711,20 @@ watch(isSearchOpen, (open) => {
   if (open) {
     isUserMenuOpen.value = false;
     isNotificationOpen.value = false;
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      document.body.style.overflow = 'hidden';
+    }
     nextTick(() => {
-      if (searchInputRef.value) searchInputRef.value.focus();
+      if (typeof window !== 'undefined' && window.innerWidth < 640 && mobileSearchInputRef.value) {
+        mobileSearchInputRef.value.focus();
+      } else if (searchInputRef.value) {
+        searchInputRef.value.focus();
+      }
     });
+  } else {
+    if (typeof window !== 'undefined') {
+      document.body.style.overflow = '';
+    }
   }
 });
 
@@ -556,7 +763,9 @@ const hasSearchResults = computed(() => {
 
 function setSearchPrefix(prefix) {
   searchQuery.value = prefix;
-  if (searchInputRef.value) {
+  if (typeof window !== 'undefined' && window.innerWidth < 640 && mobileSearchInputRef.value) {
+    mobileSearchInputRef.value.focus();
+  } else if (searchInputRef.value) {
     searchInputRef.value.focus();
   }
 }
