@@ -33,53 +33,12 @@
               <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-white"></span>
             </button>
 
-            <!-- Notification Dropdown -->
-            <div
-              v-if="isNotificationOpen"
-              class="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-sm sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
-            >
-              <div class="px-4 py-2 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                <h4 class="font-bold text-gray-900 text-sm flex items-center gap-1.5">
-                  <Bell class="w-4 h-4 text-emerald-600" />
-                  Notifikasi & Pengumuman
-                </h4>
-                <span class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">
-                  {{ notificationList.length }} Baru
-                </span>
-              </div>
-
-              <!-- Notifications List -->
-              <div class="divide-y divide-gray-50 max-h-80 overflow-y-auto text-sm">
-                <div v-if="notificationList.length === 0" class="p-6 text-center text-xs text-gray-500">
-                  Tidak ada pengumuman baru.
-                </div>
-                <div
-                  v-for="(notif, idx) in notificationList"
-                  :key="idx"
-                  @click="clickNotification(notif)"
-                  class="p-3.5 hover:bg-emerald-50/50 transition cursor-pointer flex gap-3 items-start"
-                >
-                  <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                    <Pin v-if="notif.isSticky" class="w-4 h-4 text-emerald-700" />
-                    <Bell v-else class="w-4 h-4 text-emerald-700" />
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="font-semibold text-gray-800 text-xs sm:text-sm truncate">{{ notif.title }}</p>
-                    <p class="text-xs text-gray-500 mt-0.5 leading-snug line-clamp-2">{{ notif.desc }}</p>
-                    <span class="text-[10px] text-emerald-600 font-medium mt-1 block">{{ notif.time }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Footer Link to Announcements -->
-              <router-link
-                :to="{ name: 'announcements' }"
-                @click="isNotificationOpen = false"
-                class="block text-center py-2.5 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition border-t border-emerald-100"
-              >
-                Lihat Semua Pengumuman &rarr;
-              </router-link>
-            </div>
+            <NotificationDrawer
+              :is-open="isNotificationOpen"
+              :notifications="notificationList"
+              @close="isNotificationOpen = false"
+              @select="clickNotification"
+            />
           </div>
 
           <!-- User Menu Dropdown Button -->
@@ -502,6 +461,7 @@ import {
   Pin,
   X,
 } from 'lucide-vue-next';
+import NotificationDrawer from '@/components/NotificationDrawer.vue';
 import authStore from '@/store/auth';
 import { getUser, listAnnouncements, searchQuran } from '@/api';
 import { relativeDate, stripTags } from '@/utils';
