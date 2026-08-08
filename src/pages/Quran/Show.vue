@@ -81,7 +81,13 @@
         <div
           v-for="verse in verses"
           :key="verse.id"
-          class="bg-white rounded-3xl p-4 sm:p-7 border border-gray-200/80 shadow-xs hover:border-emerald-200 transition-all space-y-4"
+          :ref="(el) => setVerseRef(el, verse.verse)"
+          :class="[
+            'rounded-3xl p-4 sm:p-7 border transition-all space-y-4 shadow-xs',
+            isVerseActive(verse.verse)
+              ? 'border-emerald-500 bg-emerald-50/40 ring-2 ring-emerald-500/20'
+              : 'bg-white border-gray-200/80 hover:border-emerald-200'
+          ]"
         >
           <!-- Verse Header -->
           <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -94,15 +100,32 @@
               </span>
             </div>
 
-            <!-- Actions (Copy verse text) -->
-            <button
-              @click="copyVerse(verse)"
-              title="Salin Ayat"
-              class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center"
-            >
-              <Copy v-if="copiedId !== verse.id" class="w-4 h-4" />
-              <Check v-else class="w-4 h-4 text-emerald-600" />
-            </button>
+            <!-- Actions (Play Audio & Copy Verse) -->
+            <div class="flex items-center gap-1">
+              <button
+                @click="handlePlayVerse(verse)"
+                :title="isVerseActive(verse.verse) && quranAudio.isPlaying ? 'Jeda Audio' : 'Putar Audio'"
+                :class="[
+                  'p-2 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center',
+                  isVerseActive(verse.verse)
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-400 hover:text-emerald-700 hover:bg-emerald-50'
+                ]"
+              >
+                <Pause v-if="isVerseActive(verse.verse) && quranAudio.isPlaying" class="w-4 h-4 fill-white" />
+                <Play v-else-if="isVerseActive(verse.verse)" class="w-4 h-4 fill-white ml-0.5" />
+                <Volume2 v-else class="w-4 h-4" />
+              </button>
+
+              <button
+                @click="copyVerse(verse)"
+                title="Salin Ayat"
+                class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center"
+              >
+                <Copy v-if="copiedId !== verse.id" class="w-4 h-4" />
+                <Check v-else class="w-4 h-4 text-emerald-600" />
+              </button>
+            </div>
           </div>
 
           <!-- Arabic Text -->
@@ -155,14 +178,19 @@
         </div>
       </div>
     </div>
+
+    <!-- Bottom Audio Player -->
+    <QuranAudioPlayer :chapterName="chapterDetails?.latin" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ArrowLeft, Copy, Check } from 'lucide-vue-next';
+import { ArrowLeft, Copy, Check, Volume2, Play, Pause } from 'lucide-vue-next';
 import { getQuranChapterVerses } from '@/api';
+import { quranAudio } from '@/store/quranAudio';
+import QuranAudioPlayer from '@/components/QuranAudioPlayer.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -181,10 +209,45 @@ const hasMore = ref(false);
 
 const copiedId = ref(null);
 const sentinelRef = ref(null);
+const verseRefs = ref({});
 let observer = null;
+
+function setVerseRef(el, verseNum) {
+  if (el) {
+    verseRefs.value[verseNum] = el;
+  }
+}
+
+function isVerseActive(verseNum) {
+  return quranAudio.currentChapterNumber === chapterNumber.value && quranAudio.currentVerseNumber === verseNum;
+}
+
+function handlePlayVerse(verse) {
+  quranAudio.playVerse(verse, chapterNumber.value, verses.value, loadNextPage);
+}
+
+watch(verses, (newVerses) => {
+  if (quranAudio.currentChapterNumber === chapterNumber.value) {
+    quranAudio.versesList = newVerses;
+  }
+});
+
+watch(
+  () => quranAudio.currentVerseNumber,
+  async (newVerseNum) => {
+    if (newVerseNum && quranAudio.currentChapterNumber === chapterNumber.value) {
+      await nextTick();
+      const el = verseRefs.value[newVerseNum];
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+);
 
 async function resetAndFetch() {
   verses.value = [];
+  verseRefs.value = {};
   currentPage.value = 1;
   lastPage.value = 1;
   hasMore.value = false;
@@ -271,6 +334,7 @@ onUnmounted(() => {
   if (observer) {
     observer.disconnect();
   }
+  quranAudio.stop();
 });
 
 watch(chapterNumber, async (newVal) => {
