@@ -144,6 +144,30 @@ export const updateProfile = async (profile) => {
   }
 };
 
+export const uploadAvatar = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    const { data } = await axios.post('me/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const deleteAvatar = async () => {
+  try {
+    const { data } = await axios.delete('me/avatar');
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const listCategories = async (rootOnly = false) => {
   try {
     const { data } = await axios.get('categories', {
