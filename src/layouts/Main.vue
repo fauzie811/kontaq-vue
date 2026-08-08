@@ -639,7 +639,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, watch, nextTick, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onClickOutside } from '@vueuse/core';
 import {
@@ -669,6 +669,14 @@ if (authStore.isLoggedIn && !authStore.user) {
 }
 
 const isSearchOpen = ref(false);
+const isPushedState = ref(false);
+
+function onPopState() {
+  if (isSearchOpen.value) {
+    isPushedState.value = false;
+    isSearchOpen.value = false;
+  }
+}
 const isNotificationOpen = ref(false);
 const isUserMenuOpen = ref(false);
 const notificationMenuRef = ref(null);
@@ -711,8 +719,13 @@ watch(isSearchOpen, (open) => {
   if (open) {
     isUserMenuOpen.value = false;
     isNotificationOpen.value = false;
-    if (typeof window !== 'undefined' && window.innerWidth < 640) {
-      document.body.style.overflow = 'hidden';
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ searchModal: true }, '');
+      isPushedState.value = true;
+      window.addEventListener('popstate', onPopState);
+      if (window.innerWidth < 640) {
+        document.body.style.overflow = 'hidden';
+      }
     }
     nextTick(() => {
       if (typeof window !== 'undefined' && window.innerWidth < 640 && mobileSearchInputRef.value) {
@@ -724,6 +737,11 @@ watch(isSearchOpen, (open) => {
   } else {
     if (typeof window !== 'undefined') {
       document.body.style.overflow = '';
+      window.removeEventListener('popstate', onPopState);
+      if (isPushedState.value) {
+        isPushedState.value = false;
+        window.history.back();
+      }
     }
   }
 });
@@ -771,22 +789,31 @@ function setSearchPrefix(prefix) {
 }
 
 function selectSurah(surah) {
+  isPushedState.value = false;
   isSearchOpen.value = false;
   searchQuery.value = '';
   router.push({ name: 'quran.show', params: { chapter: surah.number } });
 }
 
 function selectVerse(verse) {
+  isPushedState.value = false;
   isSearchOpen.value = false;
   searchQuery.value = '';
   router.push({ name: 'quran.show', params: { chapter: verse.chapter } });
 }
 
 function selectMaterial(material) {
+  isPushedState.value = false;
   isSearchOpen.value = false;
   searchQuery.value = '';
   router.push({ name: 'materials.show', params: { id: material.id } });
 }
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('popstate', onPopState);
+  }
+});
 
 const navTabs = [
   { name: 'Tadabbur', route: 'tadabbur', icon: BookOpen },
