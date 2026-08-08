@@ -1,17 +1,18 @@
 import { reactive } from 'vue';
 
 export const RECITERS = [
-  { id: 'Mishary_Rashid_Alafasy_128kbps', name: 'Mishary Rashid Alafasy', folder: 'Mishary_Rashid_Alafasy_128kbps' },
+  { id: 'Alafasy_128kbps', name: 'Mishary Rashid Alafasy', folder: 'Alafasy_128kbps' },
   { id: 'Abdul_Basit_Murattal_192kbps', name: 'Abdul Basit (Murattal)', folder: 'Abdul_Basit_Murattal_192kbps' },
   { id: 'Abdul_Basit_Mujawwad_128kbps', name: 'Abdul Basit (Mujawwad)', folder: 'Abdul_Basit_Mujawwad_128kbps' },
   { id: 'Abdurrahmaan_As-Sudais_192kbps', name: 'Abdurrahmaan As-Sudais', folder: 'Abdurrahmaan_As-Sudais_192kbps' },
-  { id: 'Abu_Bakr_Shatri_128kbps', name: 'Abu Bakr Al-Shatri', folder: 'Abu_Bakr_Shatri_128kbps' },
-  { id: 'Mahmoud_Khaliyl_Al-Husary_128kbps', name: 'Mahmoud Khalil Al-Husary', folder: 'Mahmoud_Khaliyl_Al-Husary_128kbps' },
-  { id: 'Minshawy_Murattal_128kbps', name: 'Mohamed Siddiq El-Minshawi', folder: 'Minshawy_Murattal_128kbps' },
+  { id: 'Abu_Bakr_Ash-Shaatree_128kbps', name: 'Abu Bakr Al-Shatri', folder: 'Abu_Bakr_Ash-Shaatree_128kbps' },
+  { id: 'Husary_128kbps', name: 'Mahmoud Khalil Al-Husary', folder: 'Husary_128kbps' },
+  { id: 'Minshawy_Murattal_128kbps', name: 'Minshawi (Murattal)', folder: 'Minshawy_Murattal_128kbps' },
+  { id: 'Minshawy_Mujawwad_192kbps', name: 'Minshawi (Mujawwad)', folder: 'Minshawy_Mujawwad_192kbps' },
   { id: 'Saood_ash-Shuraym_64kbps', name: 'Saood ash-Shuraym', folder: 'Saood_ash-Shuraym_64kbps' },
   { id: 'Muhammad_Ayyoub_128kbps', name: 'Muhammad Ayyoub', folder: 'Muhammad_Ayyoub_128kbps' },
   { id: 'MaherAlMuaiqly128kbps', name: 'Maher Al Muaiqly', folder: 'MaherAlMuaiqly128kbps' },
-  { id: 'Ahmed_ibn_Ali_al-Ajamy_128kbps', name: 'Ahmed ibn Ali al-Ajamy', folder: 'Ahmed_ibn_Ali_al-Ajamy_128kbps' },
+  { id: 'Ghamadi_40kbps', name: 'Saad Al-Ghamadi', folder: 'Ghamadi_40kbps' },
   { id: 'Hani_Rifai_192kbps', name: 'Hani Ar-Rifai', folder: 'Hani_Rifai_192kbps' },
 ];
 
@@ -215,6 +216,12 @@ export const quranAudio = reactive({
       const currChapter = this.currentChapterNumber;
       if (wasPlaying) {
         this.playVerse(currVerse, currChapter, this.versesList, this.onLoadMore);
+      } else {
+        const audio = getAudioInstance();
+        if (audio) {
+          audio.src = this.getAudioUrl(currChapter, currVerse);
+          audio.load();
+        }
       }
     }
   },

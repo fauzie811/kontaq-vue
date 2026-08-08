@@ -112,7 +112,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { Play, Pause, SkipBack, SkipForward, X } from 'lucide-vue-next';
 import { quranAudio, RECITERS } from '@/store/quranAudio';
 
