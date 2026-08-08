@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-800 relative pb-24">
+  <div class="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-800 relative pb-32 sm:pb-24">
     <!-- Top Header -->
     <header class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30 px-4 py-3 sm:px-8">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
@@ -130,8 +130,8 @@
       </div>
     </header>
 
-    <!-- Navigation Tabs Pill Container -->
-    <section v-if="route.name !== 'infaq'" class="max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
+    <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
+    <section v-if="route.name !== 'infaq'" class="hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
       <div class="bg-[#ebeee8] rounded-3xl p-3 sm:p-4 shadow-inner flex items-center justify-around gap-2 sm:gap-4 border border-gray-200/60">
         <router-link
           v-for="item in navTabs"
@@ -165,7 +165,7 @@
     <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
     <footer
       v-if="isBannerVisible"
-      class="fixed bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-[#bbf7d0] border border-emerald-300/90 rounded-full px-4 sm:px-8 py-2.5 sm:py-3 shadow-xl shadow-emerald-950/15 backdrop-blur-md transition-all duration-300"
+      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-[#bbf7d0] border border-emerald-300/90 rounded-full px-4 sm:px-8 py-2.5 sm:py-3 shadow-xl shadow-emerald-950/15 backdrop-blur-md transition-all duration-300"
     >
       <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
@@ -193,6 +193,33 @@
         <X class="w-3.5 h-3.5 stroke-[3]" />
       </button>
     </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav
+      v-if="route.name !== 'infaq'"
+      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200/80 shadow-lg px-2 py-1.5 justify-around items-center"
+    >
+      <router-link
+        v-for="item in navTabs"
+        :key="item.name"
+        :to="{ name: item.route }"
+        :class="[
+          isTabActive(item)
+            ? 'text-emerald-700 font-bold'
+            : 'text-gray-500 hover:text-gray-700 font-medium',
+          'flex-1 flex flex-col items-center justify-center py-1 px-1 transition text-center'
+        ]"
+      >
+        <component
+          :is="item.icon"
+          :class="[
+            isTabActive(item) ? 'text-emerald-600 scale-110' : 'text-gray-400',
+            'w-5 h-5 transition-transform mb-0.5'
+          ]"
+        />
+        <span class="text-[11px] leading-tight">{{ item.name }}</span>
+      </router-link>
+    </nav>
 
     <!-- Search Modal Popup -->
     <div
