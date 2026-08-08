@@ -40,7 +40,7 @@
           {{ chapterDetails.arabic }}
         </div>
 
-        <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+        <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
           <div>
             <div class="inline-flex items-center gap-2 bg-emerald-700/60 backdrop-blur-xs px-3 py-1 rounded-full text-xs font-semibold text-emerald-100 mb-3 border border-emerald-500/30">
               <span>Surah #{{ chapterDetails.number }}</span>
@@ -57,7 +57,7 @@
             </p>
           </div>
 
-          <div class="font-arabic text-4xl sm:text-5xl font-bold text-emerald-100 drop-shadow-md dir-rtl">
+          <div class="font-arabic text-3xl sm:text-5xl font-bold text-emerald-100 drop-shadow-md dir-rtl">
             {{ chapterDetails.arabic }}
           </div>
         </div>
@@ -68,7 +68,7 @@
         v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
         class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-6 text-center mb-8 shadow-2xs"
       >
-        <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-emerald-900 font-bold dir-rtl leading-relaxed">
+        <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-emerald-900 dir-rtl leading-relaxed">
             بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </p>
         <p class="text-xs text-emerald-700 font-medium mt-2">
@@ -81,7 +81,7 @@
         <div
           v-for="verse in verses"
           :key="verse.id"
-          class="bg-white rounded-3xl p-5 sm:p-7 border border-gray-200/80 shadow-xs hover:border-emerald-200 transition-all space-y-4"
+          class="bg-white rounded-3xl p-4 sm:p-7 border border-gray-200/80 shadow-xs hover:border-emerald-200 transition-all space-y-4"
         >
           <!-- Verse Header -->
           <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -98,7 +98,7 @@
             <button
               @click="copyVerse(verse)"
               title="Salin Ayat"
-              class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
+              class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center"
             >
               <Copy v-if="copiedId !== verse.id" class="w-4 h-4" />
               <Check v-else class="w-4 h-4 text-emerald-600" />
@@ -107,7 +107,7 @@
 
           <!-- Arabic Text -->
           <div class="py-2 text-right dir-rtl">
-            <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-gray-900 leading-[2.2] font-bold">
+            <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-gray-900 leading-[2.2]">
               {{ verse.text }}
             </p>
           </div>
