@@ -72,6 +72,6 @@ onMounted(async () => {
 });
 
 const userAvatar = computed(() => {
-  return authStore.user?.avatar || authStore.user?.photo || defaultAvatar;
+  return authStore.user?.avatar_url || authStore.user?.avatar || authStore.user?.photo || defaultAvatar;
 });
 </script>

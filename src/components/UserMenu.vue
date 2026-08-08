@@ -3,9 +3,9 @@
   <Menu as="div" class="relative">
     <MenuButton class="-m-1.5 flex items-center p-1.5">
       <span class="sr-only">Open user menu</span>
-      <img class="w-8 h-8 rounded-full bg-gray-50"
-        :src="'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (authStore.user ? authStore.user.name : '')"
-        alt="" />
+      <img class="inline-block w-9 h-9 rounded-full object-cover ring-2 ring-lime-500/30"
+        :src="authStore.user?.avatar_url || defaultAvatar"
+        alt="User Avatar" />
       <span class="hidden lg:flex lg:items-center">
         <span v-if="authStore.user" class="flex flex-col items-start justify-center ml-4">
           <span class="text-sm font-medium text-gray-900" aria-hidden="true">{{ authStore.user.name }}</span>
@@ -44,6 +44,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import authStore from '@/store/auth';
 import TextPlaceholder from './placeholders/TextPlaceholder.vue';
+import defaultAvatar from '@/assets/images/default-avatar.jpg';
 
 const userNavigation = [
   { name: 'Profil saya', route: '/profile' },

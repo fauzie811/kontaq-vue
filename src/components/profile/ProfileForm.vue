@@ -6,6 +6,7 @@ import * as z from 'zod';
 import { LoaderCircle } from 'lucide-vue-next';
 import { toast } from 'vue-sonner'
 import { getUser, getProfile, updateProfile } from '@/api';
+import AvatarUpload from './AvatarUpload.vue';
 import { Button } from '@/components/ui/button';
 import {
   FormControl,
@@ -63,6 +64,7 @@ const doSubmit = handleSubmit(async (values) => {
 
 <template>
   <form @submit="doSubmit" class="space-y-6">
+    <AvatarUpload />
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-6">
       <div class="sm:col-span-4">
         <FormField v-slot="{ componentField }" name="name">

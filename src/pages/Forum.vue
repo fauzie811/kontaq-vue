@@ -6,9 +6,9 @@
       <div class="mb-4 overflow-hidden bg-white rounded-lg shadow">
         <div class="flex items-start px-4 py-5 space-x-4 sm:p-6">
           <div class="shrink-0">
-            <img class="inline-block w-10 h-10 rounded-full"
-              :src="'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (authStore.user ? authStore.user.name : '')"
-              alt="" />
+            <img class="inline-block w-10 h-10 rounded-full object-cover"
+              :src="authStore.user?.avatar_url || 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (authStore.user ? authStore.user.name : '')"
+              alt="User avatar" />
           </div>
           <div class="flex-1 min-w-0">
             <form @submit.prevent="sendPost" class="relative">
@@ -43,9 +43,9 @@
         <ul role="list" class="divide-y divide-gray-200">
           <li v-for="forumPost in forumPosts.data" :key="forumPost.id" class="flex px-6 py-4">
             <div class="shrink-0 mr-4">
-              <img class="block w-10 h-10 rounded-full"
-                :src="'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (forumPost.user ? forumPost.user.name : '')"
-                alt="" />
+              <img class="block w-10 h-10 rounded-full object-cover"
+                :src="forumPost.user?.avatar_url || 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' + (forumPost.user ? forumPost.user.name : '')"
+                alt="User avatar" />
             </div>
             <div class="flex-1">
               <div class="flex items-center">
