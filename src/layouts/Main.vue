@@ -36,7 +36,7 @@
             <!-- Notification Dropdown -->
             <div
               v-if="isNotificationOpen"
-              class="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+              class="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-sm sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
             >
               <div class="px-4 py-2 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
                 <h4 class="font-bold text-gray-900 text-sm flex items-center gap-1.5">
@@ -95,7 +95,7 @@
             <!-- User Menu Dropdown Panel -->
             <div
               v-if="isUserMenuOpen"
-              class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+              class="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
             >
               <!-- User Info Header -->
               <div v-if="authStore.user" class="px-4 py-2 border-b border-gray-100 bg-gray-50/50">
@@ -224,10 +224,10 @@
     <!-- Search Modal Popup -->
     <div
       v-if="isSearchOpen"
-      class="fixed inset-0 z-50 flex items-start justify-center pt-12 sm:pt-20 px-4 bg-black/40 backdrop-blur-xs"
+      class="fixed inset-0 z-50 flex items-end sm:items-start justify-center pt-4 sm:pt-20 pb-0 sm:pb-4 px-0 sm:px-4 bg-black/40 backdrop-blur-xs"
       @click.self="isSearchOpen = false"
     >
-      <div class="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[85vh]">
+      <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-gray-100 animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh] sm:max-h-[85vh]">
         <!-- Search Input Header -->
         <div class="p-3.5 sm:p-4 border-b border-gray-100 flex items-center gap-3 bg-white">
           <div class="flex-1 flex items-center gap-3 bg-gray-50 border border-gray-200/80 rounded-2xl px-3.5 py-2.5 focus-within:bg-white focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all shadow-2xs">
@@ -259,7 +259,7 @@
         </div>
 
         <!-- Filter Chips / Shortcuts -->
-        <div class="px-4 py-2.5 bg-gray-50 flex flex-wrap items-center gap-2 text-xs text-gray-600 border-b border-gray-100">
+        <div class="px-4 py-2.5 bg-gray-50 flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-gray-600 border-b border-gray-100">
           <span class="font-medium text-gray-400">Pintasan:</span>
           <button @click="setSearchPrefix('# ')" class="px-2 py-0.5 bg-white rounded border border-gray-200 font-mono font-bold text-emerald-700 hover:bg-emerald-50 cursor-pointer">
             # Surah
