@@ -10,32 +10,32 @@
       <CategoryPicker root-only class="w-full ml-auto sm:w-56" v-model="category" @update:modelValue="loadData" />
     </div>
 
-    <div v-if="reports" class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+    <div v-if="reports" class="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
       <table class="min-w-full divide-y divide-gray-300">
         <thead class="bg-gray-50">
           <tr>
-            <th class="py-3.5 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">#</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nama Peserta</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+            <th class="sticky left-0 z-10 bg-gray-50 w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900">#</th>
+            <th class="sticky left-10 z-10 bg-gray-50 border-r border-gray-200 shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900">Nama Peserta</th>
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
               v-for="(quiz, index) in reports.quizzes" :key="quiz.id">Kuis {{ index + 1 }}</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
               v-for="evaluation in reports.evaluations" :key="evaluation.id">Evaluasi</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(item, idx) in reports.items">
-            <td class="py-4 pl-4 whitespace-nowrap sm:pl-6">
+          <tr v-for="(item, idx) in reports.items" :key="item.id">
+            <td class="sticky left-0 z-10 bg-white w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm whitespace-nowrap text-gray-500">
               {{ idx + 1 }}
             </td>
-            <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+            <td class="sticky left-10 z-10 bg-white border-r border-gray-200 shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-gray-500 whitespace-nowrap">
               <p class="text-xs text-gray-500">{{ item.username }}</p>
-              <p class="text-sm font-medium text-gray-900 ">{{ item.name }}</p>
+              <p class="text-xs sm:text-sm font-medium text-gray-900">{{ item.name }}</p>
             </td>
-            <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
+            <td class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-gray-500 whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
               <QuizScore :score="item.scores ? item.scores[`quiz_${quiz.id}`] : undefined"
                 @update-score="score => updateScore(item.id, `quiz_${quiz.id}`, score)" />
             </td>
-            <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap" v-for="evaluation in reports.evaluations"
+            <td class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-gray-500 whitespace-nowrap" v-for="evaluation in reports.evaluations"
               :key="evaluation.id">
               <EvaluationScore :score="item.scores ? item.scores[`evaluation_${evaluation.id}`] : undefined" />
             </td>
@@ -43,11 +43,11 @@
         </tbody>
         <tfoot class="bg-gray-50">
           <tr>
-            <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"></th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+            <th class="sticky left-0 z-10 bg-gray-50 w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900"></th>
+            <th class="sticky left-10 z-10 bg-gray-50 border-r border-gray-200 shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900"></th>
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
               v-for="quiz in reports.quizzes" :key="quiz.id">{{ totals[`quiz_${quiz.id}`] }}</th>
-            <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 text-center"
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
               v-for="evaluation in reports.evaluations" :key="evaluation.id"></th>
           </tr>
         </tfoot>
