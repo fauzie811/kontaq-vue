@@ -678,6 +678,14 @@ function onPopState() {
   }
 }
 const isNotificationOpen = ref(false);
+const isNotificationPushedState = ref(false);
+
+function onNotificationPopState() {
+  if (isNotificationOpen.value) {
+    isNotificationPushedState.value = false;
+    isNotificationOpen.value = false;
+  }
+}
 const isUserMenuOpen = ref(false);
 const notificationMenuRef = ref(null);
 const userMenuRef = ref(null);
@@ -740,6 +748,25 @@ watch(isSearchOpen, (open) => {
       window.removeEventListener('popstate', onPopState);
       if (isPushedState.value) {
         isPushedState.value = false;
+        window.history.back();
+      }
+    }
+  }
+});
+
+watch(isNotificationOpen, (open) => {
+  if (open) {
+    isUserMenuOpen.value = false;
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ notificationModal: true }, '');
+      isNotificationPushedState.value = true;
+      window.addEventListener('popstate', onNotificationPopState);
+    }
+  } else {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('popstate', onNotificationPopState);
+      if (isNotificationPushedState.value) {
+        isNotificationPushedState.value = false;
         window.history.back();
       }
     }
@@ -812,6 +839,7 @@ function selectMaterial(material) {
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('popstate', onPopState);
+    window.removeEventListener('popstate', onNotificationPopState);
   }
 });
 
@@ -859,6 +887,7 @@ const notificationList = computed(() => {
 });
 
 function clickNotification(notif) {
+  isNotificationPushedState.value = false;
   isNotificationOpen.value = false;
   if (notif.action === 'infaq') {
     router.push({ name: 'infaq' });
