@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import { Camera, Trash2, LoaderCircle, Upload, Check, X } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import authStore from '@/store/auth';
@@ -18,6 +18,7 @@ const imageObj = ref(null);
 
 // Cropping canvas state
 const scale = ref(1);
+const minScale = ref(0.05);
 const offsetX = ref(0);
 const offsetY = ref(0);
 const isDragging = ref(false);
@@ -44,6 +45,11 @@ const onFileSelected = (event) => {
     return;
   }
 
+  if (file.size > 2 * 1024 * 1024) {
+    toast.error('Ukuran file maksimal 2MB');
+    return;
+  }
+
   const reader = new FileReader();
   reader.onload = (e) => {
     rawImageSrc.value = e.target.result;
@@ -52,11 +58,15 @@ const onFileSelected = (event) => {
       imageObj.value = img;
       // Initialize scale to fit image into 300x300 canvas
       const minDim = Math.min(img.width, img.height);
-      scale.value = 300 / minDim;
+      const initialScale = 300 / minDim;
+      scale.value = initialScale;
+      minScale.value = Math.min(0.05, initialScale / 2);
       offsetX.value = (300 - img.width * scale.value) / 2;
       offsetY.value = (300 - img.height * scale.value) / 2;
       showCropModal.value = true;
-      drawCanvas();
+      nextTick(() => {
+        drawCanvas();
+      });
     };
     img.src = e.target.result;
   };
@@ -276,9 +286,9 @@ const handleDelete = async () => {
           <label class="text-xs text-gray-500 font-medium">Perbesar / Perkecil</label>
           <input
             type="range"
-            min="0.2"
+            :min="minScale"
             max="3"
-            step="0.05"
+            step="0.01"
             :value="scale"
             @input="updateZoom"
             class="w-full accent-lime-600"
