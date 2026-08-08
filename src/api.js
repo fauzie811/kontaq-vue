@@ -13,7 +13,9 @@ axios.interceptors.request.use(
     if (authStore.token && config.url != '/login') {
       config.headers['Authorization'] = `Bearer ${authStore.token}`;
     }
-    config.headers['Content-Type'] = 'application/json';
+    if (!(config.data instanceof FormData)) {
+      config.headers['Content-Type'] = 'application/json';
+    }
     return config;
   },
   (error) => {
@@ -148,11 +150,7 @@ export const uploadAvatar = async (file) => {
   try {
     const formData = new FormData();
     formData.append('avatar', file);
-    const { data } = await axios.post('me/avatar', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const { data } = await axios.post('me/avatar', formData);
     return data;
   } catch (e) {
     throw e;
