@@ -90,7 +90,7 @@ export const quranAudio = reactive({
     return `https://everyayah.com/data/${this.reciter.folder}/${pad(chapterNumber)}${pad(verseNumber)}.mp3`;
   },
 
-  playVerse(verse, chapterNumber, versesList = [], onLoadMore = null) {
+  playVerse(verse, chapterNumber, versesList = [], onLoadMore = null, forcePlay = false) {
     this.initAudioListeners();
     const audio = getAudioInstance();
     if (!audio) return;
@@ -105,8 +105,8 @@ export const quranAudio = reactive({
     const verseNum = typeof verse === 'object' ? verse.verse : verse;
     const verseObj = typeof verse === 'object' ? verse : versesList.find(v => v.verse === verseNum);
 
-    // Toggle pause if clicking current playing verse
-    if (this.currentChapterNumber === chapterNumber && this.currentVerseNumber === verseNum && this.isPlaying) {
+    // Toggle pause if clicking current playing verse (unless forcePlay is true)
+    if (!forcePlay && this.currentChapterNumber === chapterNumber && this.currentVerseNumber === verseNum && this.isPlaying) {
       this.pause();
       return;
     }
@@ -212,14 +212,15 @@ export const quranAudio = reactive({
 
     if (this.currentChapterNumber && this.currentVerseNumber) {
       const wasPlaying = this.isPlaying;
-      const currVerse = this.currentVerseNumber;
+      const currVerse = this.currentVerseObj || this.currentVerseNumber;
       const currChapter = this.currentChapterNumber;
       if (wasPlaying) {
-        this.playVerse(currVerse, currChapter, this.versesList, this.onLoadMore);
+        this.playVerse(currVerse, currChapter, this.versesList, this.onLoadMore, true);
       } else {
         const audio = getAudioInstance();
         if (audio) {
-          audio.src = this.getAudioUrl(currChapter, currVerse);
+          const vNum = typeof currVerse === 'object' ? currVerse.verse : currVerse;
+          audio.src = this.getAudioUrl(currChapter, vNum);
           audio.load();
         }
       }
