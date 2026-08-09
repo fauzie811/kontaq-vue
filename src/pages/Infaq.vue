@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-5xl mx-auto px-2 sm:px-4 py-2 sm:py-6">
-    <!-- Navigation Tabs Pill Header -->
-    <div class="bg-[#e6e8e3] rounded-full p-2 flex items-center justify-between gap-2 shadow-inner border border-gray-200/60 max-w-3xl mx-auto mb-8 sm:mb-14">
+    <!-- Navigation Tabs Pill Header (Desktop) -->
+    <div class="hidden sm:flex bg-[#e6e8e3] rounded-full p-2 items-center justify-between gap-2 shadow-inner border border-gray-200/60 max-w-3xl mx-auto mb-8 sm:mb-14">
       <!-- Beranda Link -->
       <router-link
         :to="{ name: 'home' }"
@@ -45,6 +45,24 @@
             {{ cat.label }}
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Category Chips Bar (Mobile) -->
+    <div class="sm:hidden mb-6">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+        <button
+          v-for="cat in categories"
+          :key="cat.id"
+          @click="selectCategory(cat)"
+          :class="[
+            selectedCategory.id === cat.id
+              ? 'bg-[#144227] text-white font-bold shadow-md ring-2 ring-[#144227]/20 px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer'
+              : 'bg-white text-gray-700 font-medium hover:bg-gray-100 border border-gray-200/80 shadow-2xs px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer'
+          ]"
+        >
+          {{ cat.label }}
+        </button>
       </div>
     </div>
 
