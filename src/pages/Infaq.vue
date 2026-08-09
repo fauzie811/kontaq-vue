@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-5xl mx-auto px-2 sm:px-4 py-2 sm:py-6">
+  <div class="max-w-5xl mx-auto px-3 sm:px-4 py-2 sm:py-6">
     <!-- Navigation Tabs Pill Header (Desktop) -->
     <div class="hidden sm:flex bg-[#e6e8e3] rounded-full p-2 items-center justify-between gap-2 shadow-inner border border-gray-200/60 max-w-3xl mx-auto mb-8 sm:mb-14">
       <!-- Beranda Link -->
@@ -39,7 +39,7 @@
             @click="selectCategory(cat)"
             :class="[
               selectedCategory.id === cat.id ? 'text-[#144227] font-bold bg-emerald-50' : 'text-gray-700 hover:bg-gray-50',
-              'w-full text-left px-5 py-3 text-sm sm:text-base transition-colors cursor-pointer'
+              'w-full text-left px-5 py-3 text-sm sm:text-base transition-colors cursor-pointer min-h-[44px] flex items-center'
             ]"
           >
             {{ cat.label }}
@@ -57,8 +57,8 @@
           @click="selectCategory(cat)"
           :class="[
             selectedCategory.id === cat.id
-              ? 'bg-[#144227] text-white font-bold shadow-md ring-2 ring-[#144227]/20 px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer'
-              : 'bg-white text-gray-700 font-medium hover:bg-gray-100 border border-gray-200/80 shadow-2xs px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer'
+              ? 'bg-[#144227] text-white font-bold shadow-md ring-2 ring-[#144227]/20 px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer min-h-[44px] inline-flex items-center'
+              : 'bg-white text-gray-700 font-medium hover:bg-gray-100 border border-gray-200/80 shadow-2xs px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer min-h-[44px] inline-flex items-center'
           ]"
         >
           {{ cat.label }}
@@ -67,7 +67,7 @@
     </div>
 
     <!-- Main Content Section: Left Text + Right QRIS -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start max-w-4xl mx-auto">
       <!-- Left Column: Dynamic Text & Confirmation Info -->
       <div class="md:col-span-7 text-left space-y-6 sm:space-y-8">
         <!-- Text content for non-elearning categories -->
@@ -96,7 +96,7 @@
                   isCopied
                     ? 'bg-emerald-700 text-white'
                     : 'bg-white text-[#144227] hover:bg-emerald-50 border border-emerald-200/80',
-                  'px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all cursor-pointer min-h-[38px] sm:min-h-[44px]'
+                  'px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all cursor-pointer min-h-[44px]'
                 ]"
               >
                 <Check v-if="isCopied" class="w-4 h-4" />
@@ -132,7 +132,7 @@
           <a
             href="https://wa.me/6285345147157"
             target="_blank"
-            class="inline-flex items-center gap-3 text-gray-800 hover:text-emerald-800 font-medium text-base sm:text-lg transition-colors group"
+            class="inline-flex items-center gap-3 text-gray-800 hover:text-emerald-800 font-medium text-base sm:text-lg transition-colors group min-h-[44px] py-1"
           >
             <!-- Hand touching phone icon visual -->
             <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200/80 flex items-center justify-center text-amber-700 shadow-2xs group-hover:scale-105 transition-transform">
