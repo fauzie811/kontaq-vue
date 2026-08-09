@@ -18,50 +18,73 @@
         </span>
       </div>
 
-      <!-- Actions (Play Audio, Catatan Kaki, Copy Verse) -->
-      <div class="flex items-center gap-1.5">
-        <!-- Toggle Footnote Button -->
-        <button
-          v-if="verse.footnotes"
-          @click="showFootnotes = !showFootnotes"
-          :title="showFootnotes ? 'Sembunyikan Catatan Kaki' : 'Lihat Catatan Kaki'"
-          :class="[
-            'px-2.5 py-1 rounded-xl text-xs font-semibold transition cursor-pointer min-h-[36px] inline-flex items-center gap-1.5 border',
-            showFootnotes
-              ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-              : 'text-emerald-700 bg-emerald-50/90 hover:bg-emerald-100 border-emerald-200/80'
-          ]"
+      <!-- Actions Dropdown (3-dots) -->
+      <Menu as="div" class="relative">
+        <MenuButton
+          title="Opsi Ayat"
+          class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
         >
-          <FileText class="w-3.5 h-3.5" />
-          <span class="hidden sm:inline">Catatan</span>
-        </button>
+          <MoreVertical class="w-4 h-4" />
+        </MenuButton>
 
-        <!-- Play Audio Button -->
-        <button
-          @click="$emit('play-verse', verse)"
-          :title="isActive && isPlaying ? 'Jeda Audio' : 'Putar Audio'"
-          :class="[
-            'p-2 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center',
-            isActive
-              ? 'bg-emerald-600 text-white shadow-xs'
-              : 'text-gray-400 hover:text-emerald-700 hover:bg-emerald-50'
-          ]"
+        <transition
+          enter-active-class="transition duration-100 ease-out"
+          enter-from-class="transform scale-95 opacity-0"
+          enter-to-class="transform scale-100 opacity-100"
+          leave-active-class="transition duration-75 ease-in"
+          leave-from-class="transform scale-100 opacity-100"
+          leave-to-class="transform scale-95 opacity-0"
         >
-          <Pause v-if="isActive && isPlaying" class="w-4 h-4 fill-white" />
-          <Play v-else-if="isActive" class="w-4 h-4 fill-white ml-0.5" />
-          <Volume2 v-else class="w-4 h-4" />
-        </button>
+          <MenuItems
+            class="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-2xl bg-white p-1.5 shadow-xl ring-1 ring-gray-900/5 focus:outline-none space-y-0.5"
+          >
+            <!-- Play / Pause Audio -->
+            <MenuItem v-slot="{ active }">
+              <button
+                @click="$emit('play-verse', verse)"
+                :class="[
+                  active ? 'bg-emerald-50 text-emerald-900' : 'text-gray-700',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer'
+                ]"
+              >
+                <Pause v-if="isActive && isPlaying" class="w-4 h-4 text-emerald-600 fill-emerald-600" />
+                <Play v-else-if="isActive" class="w-4 h-4 text-emerald-600 fill-emerald-600 ml-0.5" />
+                <Volume2 v-else class="w-4 h-4 text-gray-500" />
+                <span>{{ isActive && isPlaying ? 'Jeda Audio' : 'Putar Audio' }}</span>
+              </button>
+            </MenuItem>
 
-        <!-- Copy Verse Button -->
-        <button
-          @click="$emit('copy-verse', verse)"
-          title="Salin Ayat"
-          class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center"
-        >
-          <Copy v-if="!isCopied" class="w-4 h-4" />
-          <Check v-else class="w-4 h-4 text-emerald-600" />
-        </button>
-      </div>
+            <!-- Toggle Footnote (If available) -->
+            <MenuItem v-if="verse.footnotes" v-slot="{ active }">
+              <button
+                @click="showFootnotes = !showFootnotes"
+                :class="[
+                  active ? 'bg-emerald-50 text-emerald-900' : 'text-gray-700',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer'
+                ]"
+              >
+                <FileText class="w-4 h-4 text-emerald-600" />
+                <span>{{ showFootnotes ? 'Sembunyikan Catatan' : 'Lihat Catatan Kaki' }}</span>
+              </button>
+            </MenuItem>
+
+            <!-- Copy Verse -->
+            <MenuItem v-slot="{ active }">
+              <button
+                @click="$emit('copy-verse', verse)"
+                :class="[
+                  active ? 'bg-emerald-50 text-emerald-900' : 'text-gray-700',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer'
+                ]"
+              >
+                <Check v-if="isCopied" class="w-4 h-4 text-emerald-600" />
+                <Copy v-else class="w-4 h-4 text-gray-500" />
+                <span>{{ isCopied ? 'Tersalin!' : 'Salin Ayat' }}</span>
+              </button>
+            </MenuItem>
+          </MenuItems>
+        </transition>
+      </Menu>
     </div>
 
     <!-- Arabic Text -->
@@ -101,7 +124,8 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { FileText, Volume2, Play, Pause, Copy, Check } from 'lucide-vue-next';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+import { FileText, Volume2, Play, Pause, Copy, Check, MoreVertical } from 'lucide-vue-next';
 
 const props = defineProps({
   verse: {
