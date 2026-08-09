@@ -8,19 +8,19 @@
         :is="item.route ? 'router-link' : 'button'"
         :to="item.route ? { name: item.route } : undefined"
         @click="!item.route && navigateMenu(item)"
-        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full border-2 border-[#1b4332] hover:border-[#0f291e] bg-white hover:bg-emerald-50/60 shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-emerald-700/30 text-left"
+        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border-2 border-border bg-card hover:bg-secondary/50 text-foreground hover:border-primary/40 rounded-full shadow-xs transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring text-left"
       >
         <div class="flex items-center gap-3 sm:gap-4">
           <!-- Color Accented Icon Container -->
           <div :class="['w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-110', item.iconBg]">
             <component :is="item.icon" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
           </div>
-          <span class="text-[#144227] font-bold text-base sm:text-lg tracking-wide">
+          <span class="text-foreground font-bold text-base sm:text-lg tracking-wide">
             {{ item.title }}
           </span>
         </div>
-        <!-- Dark Green Right Chevron -->
-        <ChevronRight class="w-5 h-5 text-[#144227] group-hover:translate-x-1 transition-transform duration-200 shrink-0" />
+        <!-- Right Chevron -->
+        <ChevronRight class="w-5 h-5 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-transform duration-200 shrink-0" />
       </component>
     </div>
 
@@ -30,31 +30,31 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       @click.self="showInfaqModal = false"
     >
-      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
-        <div class="w-14 h-14 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-          <QrCode class="w-7 h-7 text-emerald-700" />
+      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-95 duration-200">
+        <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+          <QrCode class="w-7 h-7 text-primary" />
         </div>
-        <h3 class="text-xl font-bold text-[#144227] mb-2">Infaq & Donasi KontaQ</h3>
-        <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+        <h3 class="text-xl font-bold text-foreground mb-2">Infaq & Donasi KontaQ</h3>
+        <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
           Salurkan infaq terbaik Anda untuk mendukung dakwah & kegiatan Komunitas Tadabbur Al-Qur'an (KontaQ).
         </p>
-        <div class="bg-emerald-50/80 p-4 rounded-2xl border border-emerald-200/80 mb-6 text-left space-y-2 text-sm text-[#144227]">
+        <div class="bg-muted/50 p-4 rounded-2xl border border-border mb-6 text-left space-y-2 text-sm text-foreground">
           <div class="flex justify-between items-center">
-            <span class="font-semibold">Bank Syariah Indonesia (BSI)</span>
+            <span class="font-semibold text-foreground">Bank Syariah Indonesia (BSI)</span>
           </div>
-          <p class="font-mono text-lg font-bold text-emerald-900 tracking-wider">777-888-9990</p>
-          <p class="text-xs text-gray-500">a.n. Komunitas Tadabbur Al-Qur'an</p>
+          <p class="font-mono text-lg font-bold text-primary tracking-wider">777-888-9990</p>
+          <p class="text-xs text-muted-foreground">a.n. Komunitas Tadabbur Al-Qur'an</p>
         </div>
         <div class="flex gap-2">
           <button
             @click="showInfaqModal = false; showQrisModal = true"
-            class="flex-1 py-2.5 px-4 bg-emerald-100 hover:bg-emerald-200 text-[#144227] font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
+            class="flex-1 py-2.5 px-4 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
           >
             Scan QRIS
           </button>
           <button
             @click="showInfaqModal = false"
-            class="flex-1 py-2.5 px-4 bg-[#144227] hover:bg-[#0f321d] text-white font-bold rounded-full shadow transition-all duration-150 cursor-pointer text-sm"
+            class="flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-xs transition-all duration-150 cursor-pointer text-sm"
           >
             Tutup
           </button>
@@ -68,21 +68,21 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       @click.self="showQrisModal = false"
     >
-      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-gray-100 animate-in fade-in zoom-in-95 duration-200 relative overflow-hidden">
+      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-95 duration-200 relative overflow-hidden">
         <!-- QRIS Brand Header -->
-        <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-gray-100">
+        <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border">
           <span class="font-extrabold tracking-widest text-red-600 text-xl font-mono">QRIS</span>
-          <span class="text-[10px] text-gray-400 font-semibold leading-tight text-left">
+          <span class="text-[10px] text-muted-foreground font-semibold leading-tight text-left">
             NATIONAL<br />STANDARD
           </span>
         </div>
 
         <!-- Merchant Info -->
-        <h3 class="text-base font-bold text-gray-900 mb-0.5">Komunitas Tadabbur Al-Qur'an</h3>
-        <p class="text-xs text-emerald-700 font-semibold mb-4">KontaQ Indonesia</p>
+        <h3 class="text-base font-bold text-foreground mb-0.5">Komunitas Tadabbur Al-Qur'an</h3>
+        <p class="text-xs text-primary font-semibold mb-4">KontaQ Indonesia</p>
 
         <!-- QR Code Visual Card -->
-        <div class="bg-white p-4 rounded-2xl border-2 border-gray-200 shadow-inner flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative">
+        <div class="bg-white p-4 rounded-2xl border-2 border-border shadow-inner flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative">
           <svg class="w-48 h-48 text-gray-900" viewBox="0 0 100 100" fill="currentColor">
             <rect x="5" y="5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="4" />
             <rect x="10" y="10" width="15" height="15" />
@@ -114,14 +114,14 @@
         </div>
 
         <!-- NMID & Instructions -->
-        <p class="text-[11px] font-mono text-gray-500 mb-1">NMID: ID1023948576201</p>
-        <p class="text-xs text-gray-500 mb-5 leading-relaxed">
+        <p class="text-[11px] font-mono text-muted-foreground mb-1">NMID: ID1023948576201</p>
+        <p class="text-xs text-muted-foreground mb-5 leading-relaxed">
           Dapat di-scan menggunakan seluruh aplikasi m-Banking & E-Wallet (BSI, BCA, Mandiri, GoPay, OVO, Dana, LinkAja, dll).
         </p>
 
         <button
           @click="showQrisModal = false"
-          class="w-full py-2.5 px-4 bg-[#144227] hover:bg-[#0f321d] text-white font-bold rounded-full shadow transition-all duration-150 cursor-pointer"
+          class="w-full py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-xs transition-all duration-150 cursor-pointer"
         >
           Tutup
         </button>
