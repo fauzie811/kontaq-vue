@@ -4,30 +4,30 @@
     <div class="mb-6 flex items-center justify-between">
       <button
         @click="goBack"
-        class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-emerald-50 text-gray-700 hover:text-emerald-800 font-semibold text-sm rounded-2xl border border-gray-200 shadow-2xs transition-all cursor-pointer"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-2xl border border-border shadow-2xs transition-all cursor-pointer"
       >
-        <ArrowLeft class="w-4 h-4 text-emerald-600" />
+        <ArrowLeft class="w-4 h-4 text-primary" />
         <span>Kembali ke Daftar Surah</span>
       </button>
 
-      <div v-if="chapterDetails" class="text-xs text-gray-500 font-medium">
+      <div v-if="chapterDetails" class="text-xs text-muted-foreground font-medium">
         Surah ke-{{ chapterDetails.number }} dari 114
       </div>
     </div>
 
     <!-- Initial Loading State -->
-    <div v-if="initialLoading" class="text-center py-20 bg-white rounded-3xl border border-gray-200/80 p-8 shadow-xs">
-      <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-emerald-600 border-t-transparent"></div>
-      <p class="text-gray-500 text-sm mt-3 font-medium">Memuat ayat-ayat surah...</p>
+    <div v-if="initialLoading" class="text-center py-20 bg-card text-card-foreground rounded-2xl border border-border p-6 shadow-xs">
+      <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
+      <p class="text-muted-foreground text-sm mt-3 font-medium">Memuat ayat-ayat surah...</p>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-3xl p-8 text-center text-red-700 my-6 shadow-xs">
+    <div v-else-if="error" class="bg-destructive/10 border border-destructive/30 rounded-2xl p-6 text-center text-destructive my-6 shadow-xs">
       <p class="font-bold text-lg mb-2">Terjadi Kesalahan</p>
       <p class="text-sm mb-4">{{ error }}</p>
       <button
         @click="resetAndFetch"
-        class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all cursor-pointer shadow-xs"
+        class="px-5 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold rounded-xl text-sm transition-all cursor-pointer shadow-xs"
       >
         Coba Lagi
       </button>
@@ -35,29 +35,29 @@
 
     <div v-else-if="chapterDetails">
       <!-- Surah Header Banner -->
-      <div class="bg-linear-to-br from-emerald-800 to-teal-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg mb-8 relative overflow-hidden">
-        <div class="absolute -right-8 -bottom-8 opacity-10 font-arabic text-9xl select-none pointer-events-none">
+      <div class="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm mb-8 relative overflow-hidden text-card-foreground">
+        <div class="absolute -right-8 -bottom-8 opacity-5 font-arabic text-9xl select-none pointer-events-none text-foreground">
           {{ chapterDetails.arabic }}
         </div>
 
         <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
           <div>
-            <div class="inline-flex items-center gap-2 bg-emerald-700/60 backdrop-blur-xs px-3 py-1 rounded-full text-xs font-semibold text-emerald-100 mb-3 border border-emerald-500/30">
+            <div class="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs font-semibold mb-3 border border-border">
               <span>Surah #{{ chapterDetails.number }}</span>
               <span>•</span>
               <span>{{ chapterDetails.revelation_type || 'Makkiyah' }}</span>
               <span>•</span>
               <span>{{ chapterDetails.ayat }} Ayat</span>
             </div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-1">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-1 text-foreground">
               {{ chapterDetails.latin }}
             </h1>
-            <p class="text-emerald-200 text-base sm:text-lg font-medium">
+            <p class="text-muted-foreground text-base sm:text-lg font-medium">
               "{{ chapterDetails.meaning }}"
             </p>
           </div>
 
-          <div class="font-arabic text-3xl sm:text-5xl font-bold text-emerald-100 drop-shadow-md dir-rtl">
+          <div class="font-arabic text-3xl sm:text-5xl font-bold text-primary drop-shadow-xs dir-rtl">
             {{ chapterDetails.arabic }}
           </div>
         </div>
@@ -66,12 +66,12 @@
       <!-- Bismillah Banner (Show if not Surah At-Tawbah #9) -->
       <div
         v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
-        class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-6 text-center mb-8 shadow-2xs"
+        class="bg-card border border-border rounded-2xl p-4 sm:p-6 text-center mb-8 shadow-2xs text-card-foreground"
       >
-        <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-emerald-900 dir-rtl leading-relaxed">
+        <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-foreground dir-rtl leading-relaxed">
             بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </p>
-        <p class="text-xs text-emerald-700 font-medium mt-2">
+        <p class="text-xs text-muted-foreground font-medium mt-2">
           Dengan menyebut nama Allah Yang Maha Pengasih, lagi Maha Penyayang
         </p>
       </div>
@@ -95,8 +95,8 @@
       <!-- Sentinel element for IntersectionObserver -->
       <div ref="sentinelRef" class="h-10 my-4 flex items-center justify-center">
         <!-- Loading More Indicator -->
-        <div v-if="loadingMore" class="flex items-center gap-2 text-emerald-700 text-sm font-medium py-4">
-          <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-emerald-600 border-t-transparent"></div>
+        <div v-if="loadingMore" class="flex items-center gap-2 text-primary text-sm font-medium py-4">
+          <div class="inline-block animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
           <span>Memuat ayat selanjutnya...</span>
         </div>
       </div>
@@ -105,15 +105,15 @@
       <div v-if="hasMore && !loadingMore" class="text-center my-4">
         <button
           @click="loadNextPage"
-          class="px-6 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-sm rounded-2xl border border-emerald-200 transition-all cursor-pointer"
+          class="px-6 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-sm rounded-2xl border border-border transition-all cursor-pointer"
         >
           Muat Lebih Banyak Ayat
         </button>
       </div>
 
       <!-- End of Surah Indicator -->
-      <div v-if="!hasMore && verses.length > 0" class="text-center py-10 my-6 border-t border-gray-200/80">
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-800 font-semibold text-xs rounded-full border border-emerald-200">
+      <div v-if="!hasMore && verses.length > 0" class="text-center py-10 my-6 border-t border-border">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground font-semibold text-xs rounded-full border border-border">
           <span>Akhir Surah {{ chapterDetails.latin }} ({{ chapterDetails.ayat }} Ayat)</span>
         </div>
       </div>

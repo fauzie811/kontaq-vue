@@ -9,31 +9,34 @@
   >
     <div
       v-if="quranAudio.currentVerseNumber"
-      class="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 rounded-2xl bg-white/95 backdrop-blur-md border border-emerald-100 shadow-xl overflow-hidden transition-all duration-300 ease-in-out"
+      :class="[
+        'fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border shadow-xl overflow-hidden transition-all duration-300 ease-in-out',
+        isExpanded ? 'rounded-2xl p-3 sm:p-4' : 'rounded-2xl sm:rounded-full p-3 sm:px-6'
+      ]"
     >
       <!-- Top Micro Progress Line (visible always) -->
-      <div class="w-full bg-emerald-100 h-1">
+      <div class="w-full bg-secondary h-1 rounded-full overflow-hidden mb-1">
         <div
-          class="bg-emerald-500 h-1 transition-all duration-200"
+          class="bg-primary h-1 transition-all duration-200"
           :style="{ width: progressPercentage + '%' }"
         ></div>
       </div>
 
       <!-- PERSISTENT MINI PLAYER BAR -->
-      <div class="p-3 flex items-center justify-between gap-3">
+      <div class="flex items-center justify-between gap-3">
         <!-- Title & Info (Clickable to Expand) -->
         <div
           @click="toggleExpanded"
           class="flex items-center gap-3 min-w-0 cursor-pointer flex-1 group"
         >
-          <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 group-hover:bg-emerald-200 transition">
+          <div class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground font-bold text-xs flex items-center justify-center shrink-0 group-hover:bg-accent transition">
             {{ quranAudio.currentVerseNumber }}
           </div>
           <div class="min-w-0">
-            <p class="text-xs font-bold text-emerald-900 truncate">
+            <p class="text-xs font-bold text-foreground truncate">
               QS {{ chapterName ? chapterName : `Surah #${quranAudio.currentChapterNumber}` }} : {{ quranAudio.currentVerseNumber }}
             </p>
-            <p class="text-[10px] text-gray-500 truncate">
+            <p class="text-[10px] text-muted-foreground truncate">
               {{ quranAudio.reciter.name }}
             </p>
           </div>
@@ -44,17 +47,17 @@
           <button
             @click="quranAudio.togglePlayPause()"
             title="Putar / Jeda"
-            class="p-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition cursor-pointer shadow-sm flex items-center justify-center w-8 h-8"
+            class="p-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer shadow-xs flex items-center justify-center w-8 h-8"
           >
-            <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-            <Pause v-else-if="quranAudio.isPlaying" class="w-4 h-4 fill-white" />
-            <Play v-else class="w-4 h-4 fill-white ml-0.5" />
+            <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent"></div>
+            <Pause v-else-if="quranAudio.isPlaying" class="w-4 h-4 fill-primary-foreground text-primary-foreground" />
+            <Play v-else class="w-4 h-4 fill-primary-foreground text-primary-foreground ml-0.5" />
           </button>
 
           <button
             @click="toggleExpanded"
             :title="isExpanded ? 'Kecilkan Player' : 'Perluas Player'"
-            class="p-1.5 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
+            class="p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
           >
             <ChevronDown v-if="isExpanded" class="w-5 h-5 transition-transform duration-300" />
             <ChevronUp v-else class="w-5 h-5 transition-transform duration-300" />
@@ -63,7 +66,7 @@
           <button
             @click="quranAudio.stop()"
             title="Tutup Player"
-            class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition cursor-pointer"
+            class="p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xl transition cursor-pointer"
           >
             <X class="w-4 h-4" />
           </button>
@@ -73,12 +76,12 @@
       <!-- SMOOTH EXPANDABLE DRAWER -->
       <div
         class="grid transition-all duration-300 ease-in-out"
-        :class="isExpanded ? 'grid-rows-[1fr] opacity-100 border-t border-gray-100' : 'grid-rows-[0fr] opacity-0 border-t-0'"
+        :class="isExpanded ? 'grid-rows-[1fr] opacity-100 border-t border-border mt-3' : 'grid-rows-[0fr] opacity-0 border-t-0'"
       >
         <div class="overflow-hidden">
-          <div class="p-4 pt-3 flex flex-col gap-3">
+          <div class="pt-3 flex flex-col gap-3">
             <!-- Full Seeker Slider -->
-            <div class="flex items-center gap-2.5 text-xs font-medium text-gray-500">
+            <div class="flex items-center gap-2.5 text-xs font-medium text-muted-foreground">
               <span class="w-8 text-right text-[11px]">{{ formatTime(quranAudio.currentTime) }}</span>
               <input
                 type="range"
@@ -86,7 +89,7 @@
                 :max="quranAudio.duration || 100"
                 :value="quranAudio.currentTime"
                 @input="onSeek"
-                class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                class="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
               />
               <span class="w-8 text-[11px]">{{ formatTime(quranAudio.duration) }}</span>
             </div>
@@ -97,7 +100,7 @@
               <button
                 @click="cycleSpeed"
                 title="Kecepatan Pemutaran"
-                class="px-2 py-1 text-xs font-bold text-emerald-700 hover:bg-emerald-50 rounded-lg border border-emerald-200 transition cursor-pointer min-w-[38px] text-center"
+                class="px-2 py-1 text-xs font-bold text-secondary-foreground hover:bg-secondary/80 bg-secondary rounded-lg border border-border transition cursor-pointer min-w-[38px] text-center"
               >
                 {{ quranAudio.playbackRate }}x
               </button>
@@ -106,7 +109,7 @@
               <button
                 @click="quranAudio.playPrev()"
                 title="Ayat Sebelumnya"
-                class="p-2 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
+                class="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
               >
                 <SkipBack class="w-5 h-5" />
               </button>
@@ -115,37 +118,38 @@
               <button
                 @click="quranAudio.togglePlayPause()"
                 title="Putar / Jeda"
-                class="p-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition cursor-pointer shadow-md flex items-center justify-center w-11 h-11"
+                class="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer shadow-md flex items-center justify-center w-11 h-11"
               >
-                <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                <Pause v-else-if="quranAudio.isPlaying" class="w-5 h-5 fill-white" />
-                <Play v-else class="w-5 h-5 fill-white ml-0.5" />
+                <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-5 w-5 border-2 border-primary-foreground border-t-transparent"></div>
+                <Pause v-else-if="quranAudio.isPlaying" class="w-5 h-5 fill-primary-foreground text-primary-foreground" />
+                <Play v-else class="w-5 h-5 fill-primary-foreground text-primary-foreground ml-0.5" />
               </button>
 
               <!-- Next -->
               <button
                 @click="quranAudio.playNext()"
                 title="Ayat Selanjutnya"
-                class="p-2 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
+                class="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
               >
                 <SkipForward class="w-5 h-5" />
               </button>
             </div>
 
             <!-- Reciter Selector Dropdown -->
-            <div class="relative pt-1 border-t border-gray-100">
-              <label class="block text-[10px] font-semibold text-emerald-800 uppercase tracking-wider mb-1 flex items-center gap-1">
-                <User class="w-3 h-3" /> Qori / Murottal
+            <div class="relative pt-2 border-t border-border">
+              <label class="block text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1">
+                <User class="w-3 h-3 text-primary" /> Qori / Murottal
               </label>
               <select
                 :value="quranAudio.reciter.id"
                 @change="onReciterChange"
-                class="w-full text-xs bg-emerald-50/80 border border-emerald-200 text-emerald-900 rounded-xl px-3 py-2 font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500 truncate"
+                class="w-full text-xs bg-secondary border border-border text-secondary-foreground rounded-xl px-3 py-2 font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary truncate"
               >
                 <option
                   v-for="r in RECITERS"
                   :key="r.id"
                   :value="r.id"
+                  class="bg-popover text-popover-foreground"
                 >
                   {{ r.name }}
                 </option>
