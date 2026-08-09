@@ -78,78 +78,18 @@
 
       <!-- Verses List -->
       <div class="space-y-6">
-        <div
+        <QuranVerseItem
           v-for="verse in verses"
           :key="verse.id"
           :ref="(el) => setVerseRef(el, verse.verse)"
-          :class="[
-            'rounded-3xl p-4 sm:p-7 border transition-all space-y-4 shadow-xs',
-            isVerseActive(verse.verse)
-              ? 'border-emerald-500 bg-emerald-50/40 ring-2 ring-emerald-500/20'
-              : 'bg-white border-gray-200/80 hover:border-emerald-200'
-          ]"
-        >
-          <!-- Verse Header -->
-          <div class="flex items-center justify-between border-b border-gray-100 pb-3">
-            <div class="flex items-center gap-2">
-              <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shadow-inner">
-                {{ verse.verse }}
-              </span>
-              <span class="text-xs text-gray-400 font-medium">
-                QS {{ chapterDetails.latin }}: {{ verse.verse }}
-              </span>
-            </div>
-
-            <!-- Actions (Play Audio & Copy Verse) -->
-            <div class="flex items-center gap-1">
-              <button
-                @click="handlePlayVerse(verse)"
-                :title="isVerseActive(verse.verse) && quranAudio.isPlaying ? 'Jeda Audio' : 'Putar Audio'"
-                :class="[
-                  'p-2 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center',
-                  isVerseActive(verse.verse)
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-gray-400 hover:text-emerald-700 hover:bg-emerald-50'
-                ]"
-              >
-                <Pause v-if="isVerseActive(verse.verse) && quranAudio.isPlaying" class="w-4 h-4 fill-white" />
-                <Play v-else-if="isVerseActive(verse.verse)" class="w-4 h-4 fill-white ml-0.5" />
-                <Volume2 v-else class="w-4 h-4" />
-              </button>
-
-              <button
-                @click="copyVerse(verse)"
-                title="Salin Ayat"
-                class="p-2 text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center"
-              >
-                <Copy v-if="copiedId !== verse.id" class="w-4 h-4" />
-                <Check v-else class="w-4 h-4 text-emerald-600" />
-              </button>
-            </div>
-          </div>
-
-          <!-- Arabic Text -->
-          <div class="py-2 text-right dir-rtl">
-            <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-gray-900 leading-[2.2]">
-              {{ verse.text }}
-            </p>
-          </div>
-
-          <!-- Transliteration -->
-          <p v-if="verse.transliteration" class="text-emerald-800 text-sm italic leading-relaxed font-medium">
-            {{ verse.transliteration }}
-          </p>
-
-          <!-- Indonesian Translation -->
-          <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
-            {{ verse.translation }}
-          </p>
-
-          <!-- Footnotes -->
-          <div v-if="verse.footnotes" class="bg-gray-50 p-3 rounded-2xl text-xs text-gray-500 border border-gray-100">
-            <span class="font-bold text-gray-600">Catatan:</span> {{ verse.footnotes }}
-          </div>
-        </div>
+          :verse="verse"
+          :chapterDetails="chapterDetails"
+          :isActive="isVerseActive(verse.verse)"
+          :isPlaying="quranAudio.isPlaying"
+          :isCopied="copiedId === verse.id"
+          @play-verse="handlePlayVerse"
+          @copy-verse="copyVerse"
+        />
       </div>
 
       <!-- Sentinel element for IntersectionObserver -->
@@ -187,10 +127,11 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ArrowLeft, Copy, Check, Volume2, Play, Pause } from 'lucide-vue-next';
+import { ArrowLeft } from 'lucide-vue-next';
 import { getQuranChapterVerses } from '@/api';
 import { quranAudio } from '@/store/quranAudio';
 import QuranAudioPlayer from '@/components/QuranAudioPlayer.vue';
+import QuranVerseItem from '@/components/QuranVerseItem.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -214,7 +155,7 @@ let observer = null;
 
 function setVerseRef(el, verseNum) {
   if (el) {
-    verseRefs.value[verseNum] = el;
+    verseRefs.value[verseNum] = el.$el || el;
   }
 }
 
