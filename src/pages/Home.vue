@@ -1,28 +1,26 @@
 <template>
-  <div class="flex flex-col items-center w-full py-4 text-center">
+  <div class="flex flex-col items-center w-full py-2 sm:py-4 text-center">
     <!-- Menu Navigation Items -->
-    <div class="w-full flex flex-col gap-4">
+    <div class="w-full flex flex-col gap-2.5 sm:gap-3.5">
       <component
         v-for="item in menuItems"
         :key="item.title"
         :is="item.route ? 'router-link' : 'button'"
         :to="item.route ? { name: item.route } : undefined"
         @click="!item.route && navigateMenu(item)"
-        class="group flex items-center justify-between w-full px-6 py-4 rounded-full border-2 border-[#1b4332] hover:border-[#0f291e] bg-white hover:bg-emerald-50/60 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-emerald-700/30 text-left"
+        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full border-2 border-[#1b4332] hover:border-[#0f291e] bg-white hover:bg-emerald-50/60 shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-emerald-700/30 text-left"
       >
-        <div class="flex items-center gap-4">
-          <!-- Orange Sparkle Star Icon -->
-          <svg class="w-5 h-5 text-amber-500 fill-amber-500 shrink-0" viewBox="0 0 24 24">
-            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
-          </svg>
-          <span class="text-[#144227] font-bold text-lg sm:text-xl tracking-wide">
+        <div class="flex items-center gap-3 sm:gap-4">
+          <!-- Color Accented Icon Container -->
+          <div :class="['w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-110', item.iconBg]">
+            <component :is="item.icon" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
+          </div>
+          <span class="text-[#144227] font-bold text-base sm:text-lg tracking-wide">
             {{ item.title }}
           </span>
         </div>
-        <!-- Dark Green Right Arrow Chevron -->
-        <svg class="w-5 h-5 text-[#144227] group-hover:translate-x-1.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
+        <!-- Dark Green Right Chevron -->
+        <ChevronRight class="w-5 h-5 text-[#144227] group-hover:translate-x-1 transition-transform duration-200 shrink-0" />
       </component>
     </div>
 
@@ -135,18 +133,51 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { QrCode } from 'lucide-vue-next';
+import {
+  BookOpen,
+  Brain,
+  ClipboardCheck,
+  GraduationCap,
+  HeartHandshake,
+  ChevronRight,
+  QrCode,
+} from 'lucide-vue-next';
 
 const router = useRouter();
 const showInfaqModal = ref(false);
 const showQrisModal = ref(false);
 
 const menuItems = [
-  { title: 'Tadabbur', route: 'tadabbur' },
-  { title: 'Kuis', route: 'quizzes' },
-  { title: 'Evaluasi', route: 'evaluations' },
-  { title: 'Rapor', route: 'reports' },
-  { title: 'Infaq', route: 'infaq' },
+  {
+    title: 'Tadabbur',
+    route: 'tadabbur',
+    icon: BookOpen,
+    iconBg: 'bg-emerald-100 text-emerald-700 border border-emerald-200/60',
+  },
+  {
+    title: 'Kuis',
+    route: 'quizzes',
+    icon: Brain,
+    iconBg: 'bg-amber-100 text-amber-700 border border-amber-200/60',
+  },
+  {
+    title: 'Evaluasi',
+    route: 'evaluations',
+    icon: ClipboardCheck,
+    iconBg: 'bg-teal-100 text-teal-700 border border-teal-200/60',
+  },
+  {
+    title: 'Rapor',
+    route: 'reports',
+    icon: GraduationCap,
+    iconBg: 'bg-indigo-100 text-indigo-700 border border-indigo-200/60',
+  },
+  {
+    title: 'Infaq',
+    route: 'infaq',
+    icon: HeartHandshake,
+    iconBg: 'bg-rose-100 text-rose-700 border border-rose-200/60',
+  },
 ];
 
 function navigateMenu(item) {
