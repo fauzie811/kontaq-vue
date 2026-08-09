@@ -77,15 +77,54 @@
 
         <!-- Text content for E-Learning with highlighted bank details -->
         <div v-else class="space-y-4 text-gray-800 text-base sm:text-lg leading-relaxed">
-          <p>
-            Infaq dan shodaqoh minimal 50,090 dan maksimal tanpa batas, untuk pengembangan tadabbur online learning berbasis web, melalui rekening:
+          <p class="text-gray-800 text-base sm:text-lg leading-relaxed">
+            Infaq dan shodaqoh minimal <strong>Rp 50.090</strong> dan maksimal tanpa batas, untuk pengembangan tadabbur online learning berbasis web.
           </p>
-          <p class="font-bold text-gray-900 text-lg sm:text-xl">
-            Bank Syariah Indonesia (BSI) 3779444390 a.n Meyrinda Rahmawaty Hilipito QQ KontaQ
-          </p>
-          <p>
-            Tambahkan 'Kode 90' diakhir nominal transfer. Bagi yang tidak menambahkan kode tersebut, maka infaq akan dialokasikan untuk operasional dakwah lainnya
-          </p>
+
+          <!-- Dedicated Bank Account Card Container -->
+          <div class="bg-emerald-900/5 border border-emerald-800/10 rounded-2xl p-4 sm:p-5 space-y-3 shadow-2xs">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-[#144227] text-white font-black text-xs flex items-center justify-center shadow-2xs">
+                  BSI
+                </div>
+                <span class="font-semibold text-gray-900 text-sm sm:text-base">Bank Syariah Indonesia</span>
+              </div>
+              <button
+                @click="copyAccount"
+                :class="[
+                  isCopied
+                    ? 'bg-emerald-700 text-white'
+                    : 'bg-white text-[#144227] hover:bg-emerald-50 border border-emerald-200/80',
+                  'px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all cursor-pointer min-h-[38px] sm:min-h-[44px]'
+                ]"
+              >
+                <Check v-if="isCopied" class="w-4 h-4" />
+                <Copy v-else class="w-4 h-4" />
+                <span>{{ isCopied ? 'Tersalin!' : 'Salin No. Rekening' }}</span>
+              </button>
+            </div>
+            <div>
+              <div class="font-mono text-xl sm:text-2xl font-extrabold text-[#144227] tracking-wider">
+                3779 444 390
+              </div>
+              <div class="text-xs sm:text-sm text-gray-600 font-medium mt-0.5">
+                a.n Meyrinda Rahmawaty Hilipito QQ KontaQ
+              </div>
+            </div>
+          </div>
+
+          <!-- Kode 90 Alert Banner -->
+          <div class="bg-amber-50 border border-amber-200/80 rounded-xl p-3.5 text-xs sm:text-sm text-amber-900 leading-normal flex items-start gap-2.5">
+            <div class="shrink-0 mt-0.5 text-amber-600">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <span>Tambahkan <strong>'Kode 90'</strong> diakhir nominal transfer (contoh: Rp 50.090). Bagi yang tidak menambahkan kode tersebut, infaq akan dialokasikan untuk operasional dakwah lainnya.</span>
+          </div>
         </div>
 
         <!-- Confirmation Phone / WhatsApp Line -->
@@ -181,7 +220,7 @@
 <script setup>
 import { ref } from 'vue';
 import { onClickOutside } from '@vueuse/core';
-import { ChevronUp, ChevronDown } from 'lucide-vue-next';
+import { ChevronUp, ChevronDown, Copy, Check } from 'lucide-vue-next';
 
 const isDropdownOpen = ref(false);
 const dropdownRef = ref(null);
@@ -189,6 +228,21 @@ const dropdownRef = ref(null);
 onClickOutside(dropdownRef, () => {
   isDropdownOpen.value = false;
 });
+
+const isCopied = ref(false);
+const accountNumber = '3779444390';
+
+async function copyAccount() {
+  try {
+    await navigator.clipboard.writeText(accountNumber);
+    isCopied.value = true;
+    setTimeout(() => {
+      isCopied.value = false;
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy account number:', err);
+  }
+}
 
 const categories = [
   {
