@@ -14,10 +14,13 @@
         isExpanded ? 'rounded-2xl p-3 sm:p-4' : 'rounded-3xl p-3 sm:px-5'
       ]"
     >
-      <!-- Top Micro Progress Line (visible always) -->
-      <div class="w-full bg-secondary h-1 rounded-full overflow-hidden mb-1">
+      <!-- Top Micro Progress Line (visible when collapsed) -->
+      <div
+        class="w-full bg-secondary rounded-full overflow-hidden transition-all duration-300 ease-in-out"
+        :class="isExpanded ? 'max-h-0 opacity-0 mb-0' : 'max-h-1 h-1 opacity-100 mb-1'"
+      >
         <div
-          class="bg-primary h-1 transition-all duration-200"
+          class="bg-primary h-full transition-all duration-200"
           :style="{ width: progressPercentage + '%' }"
         ></div>
       </div>
