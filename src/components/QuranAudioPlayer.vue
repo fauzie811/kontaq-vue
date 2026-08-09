@@ -44,15 +44,20 @@
 
         <!-- Mini Controls -->
         <div class="flex items-center gap-1.5 shrink-0">
-          <button
-            @click="quranAudio.togglePlayPause()"
-            title="Putar / Jeda"
-            class="p-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer shadow-xs flex items-center justify-center w-8 h-8"
+          <div
+            class="transition-all duration-300 ease-in-out overflow-hidden flex items-center justify-center"
+            :class="isExpanded ? 'max-w-0 opacity-0 scale-75 pointer-events-none' : 'max-w-8 opacity-100 scale-100'"
           >
-            <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent"></div>
-            <Pause v-else-if="quranAudio.isPlaying" class="w-4 h-4 fill-primary-foreground text-primary-foreground" />
-            <Play v-else class="w-4 h-4 fill-primary-foreground text-primary-foreground ml-0.5" />
-          </button>
+            <button
+              @click="quranAudio.togglePlayPause()"
+              title="Putar / Jeda"
+              class="p-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer shadow-xs flex items-center justify-center w-8 h-8 shrink-0"
+            >
+              <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent"></div>
+              <Pause v-else-if="quranAudio.isPlaying" class="w-4 h-4 fill-primary-foreground text-primary-foreground" />
+              <Play v-else class="w-4 h-4 fill-primary-foreground text-primary-foreground ml-0.5" />
+            </button>
+          </div>
 
           <button
             @click="toggleExpanded"
