@@ -9,7 +9,7 @@
   >
     <div
       v-if="quranAudio.currentVerseNumber"
-      class="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 rounded-2xl bg-white/95 backdrop-blur-md border border-emerald-100 shadow-xl overflow-hidden transition-all duration-300"
+      class="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 rounded-2xl bg-white/95 backdrop-blur-md border border-emerald-100 shadow-xl overflow-hidden transition-all duration-300 ease-in-out"
     >
       <!-- Top Micro Progress Line (visible always) -->
       <div class="w-full bg-emerald-100 h-1">
@@ -19,8 +19,8 @@
         ></div>
       </div>
 
-      <!-- COLLAPSED / MINI PLAYER VIEW -->
-      <div v-if="!isExpanded" class="p-3 flex items-center justify-between gap-3">
+      <!-- PERSISTENT MINI PLAYER BAR -->
+      <div class="p-3 flex items-center justify-between gap-3">
         <!-- Title & Info (Clickable to Expand) -->
         <div
           @click="toggleExpanded"
@@ -53,10 +53,11 @@
 
           <button
             @click="toggleExpanded"
-            title="Perluas Player"
+            :title="isExpanded ? 'Kecilkan Player' : 'Perluas Player'"
             class="p-1.5 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
           >
-            <ChevronUp class="w-5 h-5" />
+            <ChevronDown v-if="isExpanded" class="w-5 h-5 transition-transform duration-300" />
+            <ChevronUp v-else class="w-5 h-5 transition-transform duration-300" />
           </button>
 
           <button
@@ -69,111 +70,88 @@
         </div>
       </div>
 
-      <!-- EXPANDED PLAYER VIEW -->
-      <div v-else class="p-4 flex flex-col gap-3">
-        <!-- Expanded Header -->
-        <div class="flex items-center justify-between border-b border-gray-100 pb-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0">
-              {{ quranAudio.currentVerseNumber }}
+      <!-- SMOOTH EXPANDABLE DRAWER -->
+      <div
+        class="grid transition-all duration-300 ease-in-out"
+        :class="isExpanded ? 'grid-rows-[1fr] opacity-100 border-t border-gray-100' : 'grid-rows-[0fr] opacity-0 border-t-0'"
+      >
+        <div class="overflow-hidden">
+          <div class="p-4 pt-3 flex flex-col gap-3">
+            <!-- Full Seeker Slider -->
+            <div class="flex items-center gap-2.5 text-xs font-medium text-gray-500">
+              <span class="w-8 text-right text-[11px]">{{ formatTime(quranAudio.currentTime) }}</span>
+              <input
+                type="range"
+                min="0"
+                :max="quranAudio.duration || 100"
+                :value="quranAudio.currentTime"
+                @input="onSeek"
+                class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+              />
+              <span class="w-8 text-[11px]">{{ formatTime(quranAudio.duration) }}</span>
             </div>
-            <div class="min-w-0">
-              <p class="text-xs font-bold text-emerald-900 truncate">
-                QS {{ chapterName ? chapterName : `Surah #${quranAudio.currentChapterNumber}` }} : {{ quranAudio.currentVerseNumber }}
-              </p>
+
+            <!-- Main Transport Controls -->
+            <div class="flex items-center justify-center gap-3 py-1">
+              <!-- Speed Button -->
+              <button
+                @click="cycleSpeed"
+                title="Kecepatan Pemutaran"
+                class="px-2 py-1 text-xs font-bold text-emerald-700 hover:bg-emerald-50 rounded-lg border border-emerald-200 transition cursor-pointer min-w-[38px] text-center"
+              >
+                {{ quranAudio.playbackRate }}x
+              </button>
+
+              <!-- Prev -->
+              <button
+                @click="quranAudio.playPrev()"
+                title="Ayat Sebelumnya"
+                class="p-2 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
+              >
+                <SkipBack class="w-5 h-5" />
+              </button>
+
+              <!-- Play / Pause -->
+              <button
+                @click="quranAudio.togglePlayPause()"
+                title="Putar / Jeda"
+                class="p-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition cursor-pointer shadow-md flex items-center justify-center w-11 h-11"
+              >
+                <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                <Pause v-else-if="quranAudio.isPlaying" class="w-5 h-5 fill-white" />
+                <Play v-else class="w-5 h-5 fill-white ml-0.5" />
+              </button>
+
+              <!-- Next -->
+              <button
+                @click="quranAudio.playNext()"
+                title="Ayat Selanjutnya"
+                class="p-2 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
+              >
+                <SkipForward class="w-5 h-5" />
+              </button>
+            </div>
+
+            <!-- Reciter Selector Dropdown -->
+            <div class="relative pt-1 border-t border-gray-100">
+              <label class="block text-[10px] font-semibold text-emerald-800 uppercase tracking-wider mb-1 flex items-center gap-1">
+                <User class="w-3 h-3" /> Qori / Murottal
+              </label>
+              <select
+                :value="quranAudio.reciter.id"
+                @change="onReciterChange"
+                class="w-full text-xs bg-emerald-50/80 border border-emerald-200 text-emerald-900 rounded-xl px-3 py-2 font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500 truncate"
+              >
+                <option
+                  v-for="r in RECITERS"
+                  :key="r.id"
+                  :value="r.id"
+                >
+                  {{ r.name }}
+                </option>
+              </select>
             </div>
           </div>
-          <div class="flex items-center gap-1">
-            <button
-              @click="toggleExpanded"
-              title="Kecilkan Player"
-              class="p-1.5 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
-            >
-              <ChevronDown class="w-5 h-5" />
-            </button>
-            <button
-              @click="quranAudio.stop()"
-              title="Tutup Player"
-              class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition cursor-pointer"
-            >
-              <X class="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        <!-- Full Seeker Slider -->
-        <div class="flex items-center gap-2.5 text-xs font-medium text-gray-500 pt-1">
-          <span class="w-8 text-right text-[11px]">{{ formatTime(quranAudio.currentTime) }}</span>
-          <input
-            type="range"
-            min="0"
-            :max="quranAudio.duration || 100"
-            :value="quranAudio.currentTime"
-            @input="onSeek"
-            class="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
-          />
-          <span class="w-8 text-[11px]">{{ formatTime(quranAudio.duration) }}</span>
-        </div>
-
-        <!-- Main Transport Controls -->
-        <div class="flex items-center justify-center gap-3 py-1">
-          <!-- Speed Button -->
-          <button
-            @click="cycleSpeed"
-            title="Kecepatan Pemutaran"
-            class="px-2 py-1 text-xs font-bold text-emerald-700 hover:bg-emerald-50 rounded-lg border border-emerald-200 transition cursor-pointer min-w-[38px] text-center"
-          >
-            {{ quranAudio.playbackRate }}x
-          </button>
-
-          <!-- Prev -->
-          <button
-            @click="quranAudio.playPrev()"
-            title="Ayat Sebelumnya"
-            class="p-2 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
-          >
-            <SkipBack class="w-5 h-5" />
-          </button>
-
-          <!-- Play / Pause -->
-          <button
-            @click="quranAudio.togglePlayPause()"
-            title="Putar / Jeda"
-            class="p-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full transition cursor-pointer shadow-md flex items-center justify-center w-11 h-11"
-          >
-            <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-            <Pause v-else-if="quranAudio.isPlaying" class="w-5 h-5 fill-white" />
-            <Play v-else class="w-5 h-5 fill-white ml-0.5" />
-          </button>
-
-          <!-- Next -->
-          <button
-            @click="quranAudio.playNext()"
-            title="Ayat Selanjutnya"
-            class="p-2 text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
-          >
-            <SkipForward class="w-5 h-5" />
-          </button>
-        </div>
-
-        <!-- Reciter Selector Dropdown -->
-        <div class="relative pt-1 border-t border-gray-100">
-          <label class="block text-[10px] font-semibold text-emerald-800 uppercase tracking-wider mb-1 flex items-center gap-1">
-            <User class="w-3 h-3" /> Qori / Murottal
-          </label>
-          <select
-            :value="quranAudio.reciter.id"
-            @change="onReciterChange"
-            class="w-full text-xs bg-emerald-50/80 border border-emerald-200 text-emerald-900 rounded-xl px-3 py-2 font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500 truncate"
-          >
-            <option
-              v-for="r in RECITERS"
-              :key="r.id"
-              :value="r.id"
-            >
-              {{ r.name }}
-            </option>
-          </select>
         </div>
       </div>
     </div>
