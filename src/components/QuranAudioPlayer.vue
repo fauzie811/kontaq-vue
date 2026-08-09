@@ -181,7 +181,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { Play, Pause, SkipBack, SkipForward, X, ChevronUp, ChevronDown, User } from 'lucide-vue-next';
 import { quranAudio, RECITERS } from '@/store/quranAudio';
 
@@ -193,6 +193,10 @@ defineProps({
 });
 
 const isExpanded = ref(false);
+
+watch(() => quranAudio.currentVerseNumber, () => {
+  isExpanded.value = false;
+});
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value;
