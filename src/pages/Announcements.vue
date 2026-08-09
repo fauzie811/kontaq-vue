@@ -2,20 +2,20 @@
   <div>
     <PageHeader class="mb-8" page-title="Pengumuman" />
 
-    <div class="max-w-3xl overflow-hidden bg-white rounded-md shadow">
-      <div role="list" class="divide-y divide-gray-200">
+    <div class="max-w-3xl overflow-hidden bg-card rounded-2xl border border-border shadow-xs text-card-foreground">
+      <div role="list" class="divide-y divide-border">
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
           :key="announcement.id" :class="[
-            'block px-6 py-4',
-            announcement.is_sticky ? 'bg-warning-100' : '',
+            'block px-6 py-4 transition-colors',
+            announcement.is_sticky ? 'bg-primary/10' : 'hover:bg-secondary/50',
           ]">
           <div class="flex items-baseline justify-between gap-x-4">
-            <p class="text-sm font-semibold leading-6 text-gray-900">{{ announcement.title }}</p>
-            <p class="flex-none text-xs text-gray-600">
+            <p class="text-sm font-semibold leading-6 text-foreground">{{ announcement.title }}</p>
+            <p class="flex-none text-xs text-muted-foreground">
               <time :datetime="announcement.created_at">{{ relativeDate(announcement.created_at) }}</time>
             </p>
           </div>
-          <p class="mt-1 text-sm leading-6 text-gray-600 line-clamp-2">{{ stripTags(announcement.content) }}</p>
+          <p class="mt-1 text-sm leading-6 text-muted-foreground line-clamp-2">{{ stripTags(announcement.content) }}</p>
         </router-link>
       </div>
 

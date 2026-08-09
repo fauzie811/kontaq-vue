@@ -48,7 +48,7 @@ const doLogin = handleSubmit(async (values) => {
 <template>
   <form @submit="doLogin" class="flex flex-col gap-6">
     <div class="flex flex-col items-center gap-2 text-center">
-      <h1 class="text-2xl font-bold">Assalamu'alaikum</h1>
+      <h1 class="text-2xl font-bold text-foreground">Assalamu'alaikum</h1>
       <p class="text-sm text-balance text-muted-foreground">
         Silakan login terlebih dahulu.
       </p>
@@ -68,7 +68,7 @@ const doLogin = handleSubmit(async (values) => {
         <FormItem>
           <div class="flex items-center">
             <FormLabel>Password</FormLabel>
-            <router-link to="/forgot-password" class="ml-auto text-sm underline-offset-4 hover:underline">
+            <router-link to="/forgot-password" class="ml-auto text-sm text-primary underline-offset-4 hover:underline">
               Lupa password?
             </router-link>
           </div>
@@ -84,9 +84,9 @@ const doLogin = handleSubmit(async (values) => {
         Masuk
       </Button>
     </div>
-    <div class="text-sm text-center">
+    <div class="text-sm text-center text-muted-foreground">
       Belum punya akun?
-      <router-link to="/register" class="underline underline-offset-4">Daftar sekarang</router-link>
+      <router-link to="/register" class="text-primary underline underline-offset-4 font-semibold">Daftar sekarang</router-link>
     </div>
   </form>
 </template>

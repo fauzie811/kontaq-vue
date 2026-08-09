@@ -196,9 +196,9 @@ const handleDelete = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center sm:flex-row sm:items-center gap-6 pb-6 border-b border-gray-100">
+  <div class="flex flex-col items-center sm:flex-row sm:items-center gap-6 pb-6 border-b border-border">
     <div class="relative group shrink-0">
-      <div class="w-24 h-24 rounded-full overflow-hidden shadow-md ring-4 ring-lime-500/20 bg-gray-100">
+      <div class="w-24 h-24 rounded-full overflow-hidden shadow-md ring-4 ring-primary/20 bg-secondary">
         <img :src="userAvatar" alt="Avatar" class="w-full h-full object-cover" />
       </div>
 
@@ -222,8 +222,8 @@ const handleDelete = async () => {
     </div>
 
     <div class="flex flex-col gap-2 text-center sm:text-left">
-      <h3 class="text-sm font-semibold text-gray-900">Foto Profil</h3>
-      <p class="text-xs text-gray-500 max-w-xs">
+      <h3 class="text-sm font-semibold text-foreground">Foto Profil</h3>
+      <p class="text-xs text-muted-foreground max-w-xs">
         Format JPG, PNG, atau WebP. Maksimal 2MB. Potong gambar sesuai area lingkaran.
       </p>
       <div class="flex items-center justify-center sm:justify-start gap-2 mt-1">
@@ -259,17 +259,17 @@ const handleDelete = async () => {
       v-if="showCropModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
     >
-      <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl space-y-4">
-        <div class="flex items-center justify-between border-b pb-3">
-          <h4 class="font-semibold text-gray-900 text-base">Atur & Potong Foto</h4>
-          <button type="button" @click="cancelCrop" class="text-gray-400 hover:text-gray-600">
+      <div class="bg-card text-card-foreground rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-border space-y-4">
+        <div class="flex items-center justify-between border-b border-border pb-3">
+          <h4 class="font-semibold text-foreground text-base">Atur & Potong Foto</h4>
+          <button type="button" @click="cancelCrop" class="text-muted-foreground hover:text-foreground">
             <X class="w-5 h-5" />
           </button>
         </div>
 
         <div class="flex justify-center">
           <div
-            class="relative w-[300px] h-[300px] overflow-hidden rounded-xl bg-gray-900 cursor-move touch-none border border-gray-200 shadow-inner"
+            class="relative w-[300px] h-[300px] overflow-hidden rounded-xl bg-gray-900 cursor-move touch-none border border-border shadow-inner"
             @mousedown="startDrag"
             @mousemove="doDrag"
             @mouseup="stopDrag"
@@ -283,7 +283,7 @@ const handleDelete = async () => {
         </div>
 
         <div class="space-y-1">
-          <label class="text-xs text-gray-500 font-medium">Perbesar / Perkecil</label>
+          <label class="text-xs text-muted-foreground font-medium">Perbesar / Perkecil</label>
           <input
             type="range"
             :min="minScale"
@@ -291,15 +291,15 @@ const handleDelete = async () => {
             step="0.01"
             :value="scale"
             @input="updateZoom"
-            class="w-full accent-lime-600"
+            class="w-full accent-primary"
           />
         </div>
 
-        <div class="flex items-center justify-end gap-2 pt-2 border-t">
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-border">
           <Button type="button" variant="outline" size="sm" @click="cancelCrop">
             Batal
           </Button>
-          <Button type="button" size="sm" class="bg-lime-600 hover:bg-lime-500 text-white" @click="confirmCropAndUpload">
+          <Button type="button" size="sm" class="bg-primary hover:bg-primary/90 text-primary-foreground" @click="confirmCropAndUpload">
             <Check class="w-4 h-4 mr-1.5" />
             Simpan Foto
           </Button>

@@ -1,56 +1,41 @@
 <template>
-  <div v-if="meta && meta.from" class="flex items-center justify-between px-4 py-3 border-t border-gray-200 sm:px-6">
+  <div v-if="meta && meta.from" class="flex items-center justify-between px-4 py-3 border-t border-border sm:px-6">
     <div class="flex justify-between flex-1 sm:hidden">
       <button :disabled="meta.current_page == 1" v-on:click="changePage(meta.current_page - 1)"
-        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>
+        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">Previous</button>
       <button :disabled="meta.current_page == meta.last_page" v-on:click="changePage(meta.current_page + 1)"
-        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Next</button>
+        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">Next</button>
     </div>
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
-        <p class="text-sm text-gray-700">
+        <p class="text-sm text-muted-foreground">
           Menampilkan
           {{ ' ' }}
-          <span class="font-medium">{{ meta.from }}</span>
+          <span class="font-medium text-foreground">{{ meta.from }}</span>
           {{ ' ' }}
           sampai
           {{ ' ' }}
-          <span class="font-medium">{{ meta.to }}</span>
+          <span class="font-medium text-foreground">{{ meta.to }}</span>
           {{ ' ' }}
           dari
           {{ ' ' }}
-          <span class="font-medium">{{ meta.total }}</span>
+          <span class="font-medium text-foreground">{{ meta.total }}</span>
           {{ ' ' }}
           hasil
         </p>
       </div>
       <div>
-        <nav class="inline-flex -space-x-px rounded-md shadow-sm isolate" aria-label="Pagination">
+        <nav class="inline-flex gap-1.5 isolate" aria-label="Pagination">
           <button :disabled="meta.current_page == 1" v-on:click="changePage(meta.current_page - 1)"
-            class="relative inline-flex items-center px-2 py-2 text-gray-400 rounded-l-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+            class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">
             <span class="sr-only">Previous</span>
             <ChevronLeftIcon class="w-5 h-5" aria-hidden="true" />
           </button>
-          <!-- Current: "z-10 bg-lime-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
           <button v-for="page in pages" v-on:click="changePage(page)"
-            :class="[page == meta.current_page ? 'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-lime-600 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600' : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0']">{{
+            :class="[page == meta.current_page ? 'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-lg shadow-xs transition-colors' : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-lg transition-colors']">{{
               page }}</button>
-          <!-- <a href="#" aria-current="page"
-            class="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-lime-600 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600">1</a>
-          <a href="#"
-            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">2</a>
-          <a href="#"
-            class="relative items-center hidden px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
-          <span
-            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
-          <a href="#"
-            class="relative items-center hidden px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">8</a>
-          <a href="#"
-            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">9</a>
-          <a href="#"
-            class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">10</a> -->
           <button :disabled="meta.current_page == meta.last_page" v-on:click="changePage(meta.current_page + 1)"
-            class="relative inline-flex items-center px-2 py-2 text-gray-400 rounded-r-md ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+            class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">
             <span class="sr-only">Next</span>
             <ChevronRightIcon class="w-5 h-5" aria-hidden="true" />
           </button>

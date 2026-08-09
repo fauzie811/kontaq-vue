@@ -10,18 +10,18 @@
           @update:modelValue="() => changePage(1)" />
       </div>
 
-      <div class="overflow-hidden bg-white rounded-md shadow">
-        <ul role="list" class="divide-y divide-gray-200">
+      <div class="overflow-hidden bg-card rounded-2xl border border-border shadow-xs text-card-foreground">
+        <ul role="list" class="divide-y divide-border">
           <li v-for="material in materials.data" :key="material.id"
             class="flex items-center justify-between px-6 py-4 gap-x-6">
             <div class="min-w-0">
               <div class="flex items-start gap-x-3">
-                <p class="text-sm font-semibold leading-6 text-gray-900">{{ material.title }}</p>
+                <p class="text-sm font-semibold leading-6 text-foreground">{{ material.title }}</p>
                 <p
-                  :class="[statuses[getStatus(material)], 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset']">
+                  :class="[statuses[getStatus(material)], 'rounded-full whitespace-nowrap mt-0.5 px-2 py-0.5 text-xs font-semibold ring-1 ring-inset']">
                   {{ getStatus(material) }}</p>
               </div>
-              <div class="flex items-center mt-1 text-xs leading-5 text-gray-500 gap-x-2">
+              <div class="flex items-center mt-1 text-xs leading-5 text-muted-foreground gap-x-2">
                 <p v-if="material.category" class="truncate">{{ material.category.name }}</p>
                 <svg v-if="material.category" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
                   <circle cx="1" cy="1" r="1" />
@@ -35,7 +35,7 @@
             </div>
             <div class="flex items-center flex-none gap-x-4">
               <router-link :to="{ name: 'materials.show', params: { id: material.id } }"
-                class="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block">Lihat
+                class="hidden rounded-xl bg-secondary hover:bg-secondary/80 px-3 py-1.5 text-sm font-semibold text-secondary-foreground border border-border shadow-2xs sm:block transition-colors">Lihat
                 materi<span class="sr-only">, {{ material.name }}</span></router-link>
             </div>
           </li>
@@ -76,7 +76,7 @@ function getStatus(material) {
 }
 
 const statuses = {
-  Selesai: 'text-success-700 bg-success-50 ring-success-600/20',
-  'Belum dibaca': 'text-gray-600 bg-gray-50 ring-gray-500/10',
+  Selesai: 'text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 ring-emerald-500/20',
+  'Belum dibaca': 'text-muted-foreground bg-secondary ring-border',
 }
 </script>

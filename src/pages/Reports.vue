@@ -10,44 +10,44 @@
       <CategoryPicker root-only class="w-full ml-auto sm:w-56" v-model="category" @update:modelValue="loadData" />
     </div>
 
-    <div v-if="reports" class="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
-      <table class="min-w-full divide-y divide-gray-300">
-        <thead class="bg-gray-50">
+    <div v-if="reports" class="overflow-x-auto rounded-2xl border border-border shadow-xs">
+      <table class="min-w-full divide-y divide-border">
+        <thead class="bg-muted/50">
           <tr>
-            <th class="sticky left-0 z-10 bg-gray-50 w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900">#</th>
-            <th class="sticky left-10 z-10 bg-gray-50 border-r border-gray-200 shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900">Nama Peserta</th>
-            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
+            <th class="sticky left-0 z-10 bg-muted/50 w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground">#</th>
+            <th class="sticky left-10 z-10 bg-muted/50 border-r border-border shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground">Nama Peserta</th>
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground text-center"
               v-for="(quiz, index) in reports.quizzes" :key="quiz.id">Kuis {{ index + 1 }}</th>
-            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground text-center"
               v-for="evaluation in reports.evaluations" :key="evaluation.id">Evaluasi</th>
           </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-card divide-y divide-border text-card-foreground">
           <tr v-for="(item, idx) in reports.items" :key="item.id">
-            <td class="sticky left-0 z-10 bg-white w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm whitespace-nowrap text-gray-500">
+            <td class="sticky left-0 z-10 bg-card w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm whitespace-nowrap text-muted-foreground">
               {{ idx + 1 }}
             </td>
-            <td class="sticky left-10 z-10 bg-white border-r border-gray-200 shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-gray-500 whitespace-nowrap">
-              <p class="text-xs text-gray-500">{{ item.username }}</p>
-              <p class="text-xs sm:text-sm font-medium text-gray-900">{{ item.name }}</p>
+            <td class="sticky left-10 z-10 bg-card border-r border-border shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+              <p class="text-xs text-muted-foreground">{{ item.username }}</p>
+              <p class="text-xs sm:text-sm font-medium text-foreground">{{ item.name }}</p>
             </td>
-            <td class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-gray-500 whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
+            <td class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-muted-foreground whitespace-nowrap" v-for="quiz in reports.quizzes" :key="quiz.id">
               <QuizScore :score="item.scores ? item.scores[`quiz_${quiz.id}`] : undefined"
                 @update-score="score => updateScore(item.id, `quiz_${quiz.id}`, score)" />
             </td>
-            <td class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-gray-500 whitespace-nowrap" v-for="evaluation in reports.evaluations"
+            <td class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-xs sm:text-sm text-muted-foreground whitespace-nowrap" v-for="evaluation in reports.evaluations"
               :key="evaluation.id">
               <EvaluationScore :score="item.scores ? item.scores[`evaluation_${evaluation.id}`] : undefined" />
             </td>
           </tr>
         </tbody>
-        <tfoot class="bg-gray-50">
+        <tfoot class="bg-muted/50">
           <tr>
-            <th class="sticky left-0 z-10 bg-gray-50 w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900"></th>
-            <th class="sticky left-10 z-10 bg-gray-50 border-r border-gray-200 shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900"></th>
-            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
+            <th class="sticky left-0 z-10 bg-muted/50 w-10 min-w-10 py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground"></th>
+            <th class="sticky left-10 z-10 bg-muted/50 border-r border-border shadow-xs py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground"></th>
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground text-center"
               v-for="quiz in reports.quizzes" :key="quiz.id">{{ totals[`quiz_${quiz.id}`] }}</th>
-            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-gray-900 text-center"
+            <th class="py-2.5 px-2.5 sm:py-4 sm:px-3 text-left text-xs sm:text-sm font-semibold text-foreground text-center"
               v-for="evaluation in reports.evaluations" :key="evaluation.id"></th>
           </tr>
         </tfoot>
@@ -58,7 +58,7 @@
       <Dialog as="div" class="relative z-50" @close="shareDialog = false">
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100"
           leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-          <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+          <div class="fixed inset-0 transition-opacity bg-black/60 backdrop-blur-xs" />
         </TransitionChild>
 
         <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -69,12 +69,12 @@
               leave-from="opacity-100 translate-y-0 sm:scale-100"
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
               <DialogPanel
-                class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-card border border-border text-card-foreground rounded-2xl shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 <div>
                   <div class="mt-3 sm:mt-5">
-                    <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">Rekap KontaQ
+                    <DialogTitle as="h3" class="text-base font-semibold leading-6 text-foreground">Rekap KontaQ
                     </DialogTitle>
-                    <div class="mt-2 text-sm" ref="shareContent">
+                    <div class="mt-2 text-sm text-muted-foreground" ref="shareContent">
                       REKAP KONTAQ GRUP {{ authStore.user ? authStore.user.group.name : '-' }}<br />
                       {{ category ? category.name : '-' }}<br />
                       ➖➖➖➖➖➖➖➖<br />
@@ -87,7 +87,7 @@
                       <br />
                       <span v-for="(item, idx) in reports.items">
                         {{ `${idx + 1}`.padStart(2, '0') }}
-                        <span class="text-red-600" v-for="quiz in reports.quizzes" :key="quiz.id">
+                        <span class="text-destructive" v-for="quiz in reports.quizzes" :key="quiz.id">
                           {{ quizScoreEmoji(item.scores ? item.scores[`quiz_${quiz.id}`] : undefined) }}
                         </span>
                         <span v-for="evaluation in reports.evaluations" :key="evaluation.id">
@@ -112,10 +112,10 @@
                 </div>
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                   <button type="button"
-                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white rounded-md shadow-sm bg-lime-600 hover:bg-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-600 sm:col-start-2"
+                    class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-primary-foreground bg-primary hover:bg-primary/90 rounded-xl shadow-xs transition-colors sm:col-start-2 cursor-pointer"
                     @click="shareDialog = false">Tutup</button>
                   <button type="button"
-                    class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-gray-900 bg-white rounded-md shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                    class="inline-flex justify-center w-full px-3 py-2 mt-3 text-sm font-semibold text-secondary-foreground bg-secondary hover:bg-secondary/80 border border-border rounded-xl shadow-xs transition-colors sm:col-start-1 sm:mt-0 cursor-pointer"
                     @click="copyShare">Salin</button>
                 </div>
               </DialogPanel>
