@@ -208,6 +208,25 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::selection {
+    background-color: hsl(142.1 76.2% 36.3% / 0.25);
+    color: inherit;
+  }
+  /* Custom Smooth Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.25);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
 }
 
 @font-face {

@@ -1,33 +1,34 @@
 <template>
   <div class="flex flex-col items-center w-full py-2 sm:py-4 text-center">
-    <!-- Menu Navigation Items -->
+    <!-- Main Navigation Module List -->
     <div class="w-full flex flex-col gap-2.5 sm:gap-3.5">
       <component
         v-for="item in menuItems"
         :key="item.title"
         :is="item.route ? 'router-link' : 'button'"
-        :to="item.route ? { name: item.route } : undefined"
+        :to="getRouteLocation(item)"
         @click="!item.route && navigateMenu(item)"
-        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border-2 border-border bg-card hover:bg-secondary/50 text-foreground hover:border-primary/40 rounded-full shadow-xs transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring text-left"
+        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border-2 border-border bg-card hover:bg-secondary/50 text-foreground hover:border-primary/40 rounded-full shadow-xs transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring active:scale-[0.98] text-left"
       >
         <div class="flex items-center gap-3 sm:gap-4">
           <!-- Color Accented Icon Container -->
           <div :class="['w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-110', item.iconBg]">
             <component :is="item.icon" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
           </div>
-          <span class="text-foreground font-bold text-base sm:text-lg tracking-wide">
+          <span class="text-foreground font-bold text-base sm:text-lg tracking-wide group-hover:text-primary transition-colors">
             {{ item.title }}
           </span>
         </div>
-        <!-- Right Chevron -->
-        <ChevronRight class="w-5 h-5 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-transform duration-200 shrink-0" />
+
+        <!-- Right Chevron Indicator -->
+        <ChevronRight class="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1.5 transition-all duration-200 shrink-0 ml-2" />
       </component>
     </div>
 
     <!-- Infaq Modal -->
     <div
       v-if="showInfaqModal"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       @click.self="showInfaqModal = false"
     >
       <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-95 duration-200">
@@ -72,7 +73,7 @@
         <!-- QRIS Brand Header -->
         <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border">
           <span class="font-extrabold tracking-widest text-red-600 text-xl font-mono">QRIS</span>
-          <span class="text-[10px] text-muted-foreground font-semibold leading-tight text-left">
+          <span class="text-xs text-muted-foreground font-semibold leading-tight text-left">
             NATIONAL<br />STANDARD
           </span>
         </div>
@@ -107,14 +108,14 @@
             <rect x="85" y="85" width="10" height="10" />
           </svg>
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="bg-white px-2 py-0.5 rounded border border-gray-300 shadow-xs text-[10px] font-bold text-gray-800">
+            <div class="bg-white px-2 py-0.5 rounded border border-gray-300 shadow-xs text-xs font-bold text-gray-800">
               KontaQ
             </div>
           </div>
         </div>
 
         <!-- NMID & Instructions -->
-        <p class="text-[11px] font-mono text-muted-foreground mb-1">NMID: ID1023948576201</p>
+        <p class="text-xs font-mono text-muted-foreground mb-1">NMID: ID1023948576201</p>
         <p class="text-xs text-muted-foreground mb-5 leading-relaxed">
           Dapat di-scan menggunakan seluruh aplikasi m-Banking & E-Wallet (BSI, BCA, Mandiri, GoPay, OVO, Dana, LinkAja, dll).
         </p>
@@ -139,6 +140,7 @@ import {
   ClipboardCheck,
   GraduationCap,
   HeartHandshake,
+  MessageSquare,
   ChevronRight,
   QrCode,
 } from 'lucide-vue-next';
@@ -173,6 +175,12 @@ const menuItems = [
     iconBg: 'bg-indigo-100 text-indigo-700 border border-indigo-200/60',
   },
   {
+    title: 'Forum Ukhuwah',
+    route: 'forum',
+    icon: MessageSquare,
+    iconBg: 'bg-sky-100 text-sky-700 border border-sky-200/60',
+  },
+  {
     title: 'Infaq',
     route: 'infaq',
     icon: HeartHandshake,
@@ -180,9 +188,17 @@ const menuItems = [
   },
 ];
 
+function getRouteLocation(item) {
+  if (!item.route) return undefined;
+  return {
+    name: item.route,
+    params: item.params || undefined,
+  };
+}
+
 function navigateMenu(item) {
   if (item.route) {
-    router.push({ name: item.route });
+    router.push(getRouteLocation(item));
   }
 }
 </script>
