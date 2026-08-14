@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-14T19:26:00.000Z",
+  "title": "Design System: Kontaq",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Forest Emerald",
+        "canonical": "#40835c",
+        "tonalRamp": ["#102218", "#1c3a29", "#29533b", "#356b4c", "#40835c", "#609f7a", "#8cbfa1", "#c2e2cf"]
+      },
+      "accent": {
+        "role": "accent",
+        "displayName": "Warm Amber",
+        "canonical": "#e79b44",
+        "tonalRamp": ["#362007", "#5e390c", "#875211", "#b67119", "#e79b44", "#ebb16d", "#f1c998", "#f8e5cc"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Off-White Canvas",
+        "canonical": "#fafafa",
+        "tonalRamp": ["#18181b", "#27272a", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#fafafa"]
+      },
+      "neutral-fg": {
+        "role": "neutral",
+        "displayName": "Charcoal Slate",
+        "canonical": "#09090b",
+        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#71717a", "#a1a1aa", "#e4e4e7", "#ffffff"]
+      },
+      "card": {
+        "role": "surface",
+        "displayName": "Pure White Card",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#18181b", "#27272a", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#f4f4f5", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Title",
+        "purpose": "Hero headers and primary section titles"
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headers and chapter titles"
+      },
+      "body": {
+        "displayName": "Body Copy",
+        "purpose": "Standard UI labels, translations, and forum text"
+      },
+      "quran": {
+        "displayName": "Quran Script",
+        "purpose": "Sacred Arabic Quranic text using LPMQ Isep Misbah"
+      }
+    },
+    "shadows": [
+      {
+        "name": "subtle-elevation",
+        "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        "purpose": "Rest state elevation for buttons and cards"
+      },
+      {
+        "name": "hover-elevation",
+        "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+        "purpose": "Interactive hover state elevation"
+      }
+    ],
+    "motion": [
+      {
+        "name": "view-transition",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1) 250ms",
+        "purpose": "Smooth directional route transition animations"
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Forest Emerald primary action button with smooth hover elevation and scale click feedback.",
+      "html": "<button class=\"ds-btn-primary\">Lanjutkan Learning</button>",
+      "css": ".ds-btn-primary { background: #40835c; color: #ffffff; padding: 10px 20px; border-radius: 12px; font-family: Raleway, sans-serif; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); } .ds-btn-primary:hover { background: #356e4c; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Secondary Amber Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Warm Amber secondary button used for active highlights and secondary CTAs.",
+      "html": "<button class=\"ds-btn-secondary\">Tadabbur Hari Ini</button>",
+      "css": ".ds-btn-secondary { background: #e79b44; color: #ffffff; padding: 10px 20px; border-radius: 12px; font-family: Raleway, sans-serif; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); } .ds-btn-secondary:hover { background: #d48a35; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); } .ds-btn-secondary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Card Surface",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Clean white card surface with light border and hover depth.",
+      "html": "<div class=\"ds-card\"><h3>Surah Al-Fatiha</h3><p>7 Verses • Makkiyah</p></div>",
+      "css": ".ds-card { background: #ffffff; border: 1px solid #e4e4e7; border-radius: 12px; padding: 20px; font-family: Raleway, sans-serif; transition: all 0.2s ease; } .ds-card h3 { margin: 0 0 4px 0; color: #09090b; font-size: 18px; font-weight: 600; } .ds-card p { margin: 0; color: #71717a; font-size: 14px; } .ds-card:hover { border-color: rgba(64,131,92,0.3); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Standard form input field with Forest Emerald focus ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Cari Surah atau Ayat...\" />",
+      "css": ".ds-input { background: #ffffff; border: 1px solid #e4e4e7; border-radius: 12px; padding: 10px 16px; font-family: Raleway, sans-serif; font-size: 14px; color: #09090b; width: 100%; outline: none; transition: border-color 0.2s, box-shadow 0.2s; } .ds-input:focus { border-color: #40835c; box-shadow: 0 0 0 2px rgba(64,131,92,0.2); }"
+    },
+    {
+      "name": "Amber Active Badge",
+      "kind": "chip",
+      "refersTo": "badge-accent",
+      "description": "Warm amber status pill badge for active highlights and milestones.",
+      "html": "<span class=\"ds-badge-accent\">Aktif • Juz 30</span>",
+      "css": ".ds-badge-accent { display: inline-flex; align-items: center; background: rgba(231,155,68,0.15); color: #d48a35; border: 1px solid rgba(231,155,68,0.3); border-radius: 9999px; padding: 4px 12px; font-family: Raleway, sans-serif; font-size: 12px; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quranic Sanctuary",
+    "overview": "Kontaq embodies a serene, focused, and elevated digital sanctuary designed for Quranic study, daily reflection (tadabbur), interactive quizzes, and community engagement. The visual world balances rich natural Forest Green (#40835c) identity anchors with illuminating Warm Amber (#e79b44) accents.",
+    "keyCharacteristics": [
+      "Serene Palette",
+      "Dedicated Quranic Typography",
+      "Tonal Layering",
+      "Tactile Micro-Interactions"
+    ],
+    "rules": [
+      {
+        "name": "The Legibility First Rule",
+        "body": "Quranic text and Indonesian translations must maintain crisp contrast against background surfaces; decorative color fills should never compromise readability.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dual-Language Line Height Rule",
+        "body": "Arabic scripture text must maintain a minimum line-height: 2em to prevent voweling marks (tashkeel) from overlapping or clipping.",
+        "section": "typography"
+      },
+      {
+        "name": "The State-Gated Shadow Rule",
+        "body": "Surfaces remain flat at rest. Ambient drop shadows appear exclusively in response to user interaction (hover, focus, or modal overlay).",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use 'LPMQ Isep Misbah' with line-height: 2em for all Arabic Quran scripture rendering.",
+      "Do apply smooth 12px radiuses for buttons, cards, and input fields.",
+      "Do use #40835c for primary brand framing and #e79b44 for interactive highlights, badges, and active states."
+    ],
+    "donts": [
+      "Don't compress Arabic line-heights, which clips tashkeel diacritic marks.",
+      "Don't apply harsh black drop shadows; use soft ambient shadows for interactive hover states.",
+      "Don't introduce competing accent colors that disrupt the serene green and warm amber palette."
+    ]
+  }
+}
