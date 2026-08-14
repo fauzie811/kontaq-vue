@@ -62,7 +62,7 @@ const doRegister = handleSubmit(async (values) => {
 <template>
   <form @submit="doRegister" class="flex flex-col gap-6">
     <div class="flex flex-col items-center gap-2 text-center">
-      <h1 class="text-2xl font-bold">Assalamu'alaikum</h1>
+      <h1 class="text-2xl sm:text-3xl font-bold text-foreground font-arabic">بِسْمِ اللَّهِ، السَّلَامُ عَلَيْكُمْ</h1>
       <p class="text-sm text-balance text-muted-foreground">
         Silakan lengkapi formulir berikut untuk mendaftar.
       </p>
