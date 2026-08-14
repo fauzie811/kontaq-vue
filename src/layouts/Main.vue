@@ -1,25 +1,26 @@
 <template>
   <div class="min-h-screen bg-background flex flex-col font-sans text-foreground relative pb-32 sm:pb-24">
     <!-- Top Header -->
-    <header class="bg-card border-b border-border shadow-xs sticky top-0 z-30 px-4 py-3 sm:px-8">
+    <header class="bg-card/90 backdrop-blur-md border-b border-border shadow-2xs sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <!-- Left balance spacer -->
-        <div class="w-24 hidden sm:block"></div>
-
-        <!-- Center Logo -->
-        <router-link :to="{ name: 'home' }" class="flex items-center justify-center mx-auto sm:mx-0">
-          <img src="@/assets/logo-kontaq.png" alt="KontaQ" class="h-14 sm:h-16 w-auto object-contain" />
-        </router-link>
-
-        <!-- Right Header Icons (Search, Notification, Profile) -->
+        <!-- Left Brand Logo -->
         <div class="flex items-center gap-3">
-          <!-- Search Icon Button -->
+          <router-link :to="{ name: 'home' }" class="flex items-center gap-2 group">
+            <img src="@/assets/logo-kontaq.png" alt="KontaQ" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          </router-link>
+        </div>
+
+        <!-- Right Header Icons (Search, Notification, User Profile) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Search Icon Button with keyboard shortcut badge -->
           <button
             @click="isSearchOpen = true"
-            title="Cari Surah, ayat, tadabbur"
-            class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition shadow-xs border border-border cursor-pointer"
+            title="Cari Surah, ayat, tadabbur (Ctrl+K)"
+            class="h-10 px-3 sm:px-3.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center gap-2 transition shadow-2xs border border-border cursor-pointer active:scale-95"
           >
-            <Search class="w-5 h-5 stroke-[2.2]" />
+            <Search class="w-4.5 h-4.5 stroke-[2.2] text-primary" />
+            <span class="hidden md:inline-block text-xs text-muted-foreground font-medium">Cari...</span>
+            <kbd class="hidden md:inline-flex items-center gap-0.5 text-xs bg-card/80 px-1.5 py-0.5 rounded border border-border text-muted-foreground font-mono font-bold shadow-2xs">⌘K</kbd>
           </button>
 
           <!-- Notification Bell Button -->
@@ -27,10 +28,10 @@
             <button
               @click="toggleNotification"
               title="Notifikasi"
-              class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition shadow-xs border border-border relative cursor-pointer"
+              class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition shadow-2xs border border-border relative cursor-pointer active:scale-95"
             >
-              <Bell class="w-5 h-5 stroke-[2.2]" />
-              <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-card"></span>
+              <Bell class="w-5 h-5 stroke-[2.2] text-primary" />
+              <span v-if="notificationList.length > 0" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-card animate-pulse"></span>
             </button>
 
             <NotificationDrawer
@@ -46,30 +47,72 @@
             <button
               @click="toggleUserMenu"
               title="Menu Pengguna"
-              class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition shadow-xs border border-border cursor-pointer"
+              class="flex items-center gap-2 p-1 sm:pl-1 sm:pr-2.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition shadow-2xs border border-border cursor-pointer active:scale-95"
             >
-              <User class="w-5 h-5 stroke-[2.2]" />
+              <img
+                :src="authStore.user?.avatar_url || defaultAvatar"
+                alt="Avatar"
+                class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
+              />
+              <span class="hidden sm:inline-block text-xs font-bold text-foreground max-w-[100px] truncate">
+                {{ authStore.user?.name || 'User' }}
+              </span>
+              <ChevronDown class="w-3.5 h-3.5 text-muted-foreground transition-transform hidden sm:inline-block" :class="{ 'rotate-180': isUserMenuOpen }" />
             </button>
 
             <!-- User Menu Dropdown Panel -->
             <div
               v-if="isUserMenuOpen"
-              class="absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-card rounded-2xl shadow-xl border border-border py-2 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+              class="absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
             >
               <!-- User Info Header -->
-              <div v-if="authStore.user" class="px-4 py-2 border-b border-border bg-muted/50">
-                <p class="font-bold text-foreground text-xs truncate">{{ authStore.user.name }}</p>
-                <p class="text-[11px] text-muted-foreground truncate">{{ authStore.user.username || authStore.user.email }}</p>
+              <div v-if="authStore.user" class="px-4 py-3 border-b border-border bg-muted/50 flex items-center gap-3">
+                <img
+                  :src="authStore.user.avatar_url || defaultAvatar"
+                  alt="Avatar"
+                  class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 shrink-0"
+                />
+                <div class="min-w-0 flex-1">
+                  <p class="font-bold text-foreground text-xs truncate">{{ authStore.user.name }}</p>
+                  <p class="text-xs text-muted-foreground truncate">@{{ authStore.user.username || authStore.user.email }}</p>
+                </div>
               </div>
 
               <div class="py-1">
                 <router-link
                   :to="{ name: 'profile' }"
                   @click="isUserMenuOpen = false"
-                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
                 >
                   <User class="w-4 h-4 text-primary" />
-                  Profile
+                  Profil Saya
+                </router-link>
+
+                <router-link
+                  :to="{ name: 'forum' }"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                >
+                  <MessageSquare class="w-4 h-4 text-primary" />
+                  Forum Ukhuwah
+                </router-link>
+
+                <router-link
+                  :to="{ name: 'certificates' }"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                >
+                  <Award class="w-4 h-4 text-primary" />
+                  Sertifikat Saya
+                </router-link>
+
+                <router-link
+                  :to="{ name: 'announcements' }"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                >
+                  <Bell class="w-4 h-4 text-primary" />
+                  Pengumuman
                 </router-link>
 
                 <div class="my-1 border-t border-border"></div>
@@ -80,7 +123,7 @@
                   class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-destructive hover:bg-destructive/10 hover:text-destructive transition"
                 >
                   <LogOut class="w-4 h-4 text-destructive" />
-                  Logout
+                  Keluar
                 </router-link>
               </div>
             </div>
@@ -91,27 +134,29 @@
 
     <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
     <section v-if="route.name !== 'infaq'" class="hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
-      <div class="bg-muted/80 rounded-3xl p-3 sm:p-4 shadow-inner flex items-center justify-around gap-2 sm:gap-4 border border-border">
+      <div class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 shadow-inner flex items-center justify-around gap-2 sm:gap-3 border border-border/80">
         <router-link
           v-for="item in navTabs"
           :key="item.name"
           :to="{ name: item.route }"
           :class="[
             isTabActive(item)
-              ? 'bg-card shadow-xs border border-primary/20 text-primary'
-              : 'hover:bg-card/50 text-muted-foreground hover:text-foreground',
-            'flex-1 flex flex-col items-center justify-center py-2 px-2 rounded-2xl transition group'
+              ? 'bg-card shadow-sm border border-primary/30 text-primary font-bold'
+              : 'hover:bg-card/60 text-muted-foreground hover:text-foreground font-medium',
+            'flex-1 flex flex-col items-center justify-center py-2.5 px-3 rounded-2xl transition-all duration-200 group relative overflow-hidden'
           ]"
         >
           <div
             :class="[
-              isTabActive(item) ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground',
-              'w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-1 shadow-xs group-hover:scale-105 transition-transform'
+              isTabActive(item) ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground group-hover:text-foreground',
+              'w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center mb-1.5 shadow-2xs group-hover:scale-105 transition-all duration-200'
             ]"
           >
-            <component :is="item.icon" class="w-7 h-7 stroke-2 text-primary" />
+            <component :is="item.icon" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] text-primary" />
           </div>
-          <span class="font-bold text-sm sm:text-base">{{ item.name }}</span>
+          <span class="text-xs sm:text-sm tracking-wide">{{ item.name }}</span>
+          <!-- Active Tab Indicator Dot -->
+          <div v-if="isTabActive(item)" class="w-1.5 h-1.5 bg-primary rounded-full mt-1 animate-in zoom-in duration-200"></div>
         </router-link>
       </div>
     </section>
@@ -124,7 +169,7 @@
     <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
     <footer
       v-if="isBannerVisible"
-      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-border rounded-full px-4 sm:px-8 py-2.5 sm:py-3 shadow-xl backdrop-blur-md transition-all duration-300"
+      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:shadow-2xl"
     >
       <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
@@ -136,7 +181,7 @@
         <div class="flex items-center shrink-0">
           <router-link
             :to="{ name: 'infaq' }"
-            class="bg-primary hover:bg-primary/90 text-primary-foreground px-5 sm:px-7 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-transform hover:scale-105 flex items-center justify-center cursor-pointer"
+            class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
           >
             <span>Infaq</span>
           </router-link>
@@ -156,7 +201,7 @@
     <!-- Mobile Bottom Navigation Bar -->
     <nav
       v-if="route.name !== 'infaq'"
-      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border shadow-lg px-2 py-1.5 justify-around items-center"
+      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border shadow-lg px-2 py-1.5 justify-around items-center pb-safe"
     >
       <router-link
         v-for="item in navTabs"
@@ -166,7 +211,7 @@
           isTabActive(item)
             ? 'text-primary bg-primary/10 font-bold rounded-2xl'
             : 'text-muted-foreground hover:text-foreground font-medium',
-          'flex-1 flex flex-col items-center justify-center py-1 px-1 transition text-center'
+          'flex-1 flex flex-col items-center justify-center py-1.5 px-1 transition text-center active:scale-95'
         ]"
       >
         <component
@@ -176,7 +221,7 @@
             'w-5 h-5 transition-transform mb-0.5'
           ]"
         />
-        <span class="text-[11px] leading-tight">{{ item.name }}</span>
+        <span class="text-xs leading-tight">{{ item.name }}</span>
       </router-link>
     </nav>
 
@@ -284,7 +329,7 @@
             <template v-else>
               <!-- 1. Surah Results -->
               <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
-                <h4 class="text-[11px] font-bold tracking-wider text-primary uppercase px-1">
+                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
                   Surah ({{ searchResults.chapters.length }})
                 </h4>
                 <div class="grid grid-cols-1 gap-2">
@@ -312,7 +357,7 @@
 
               <!-- 2. Verse Results -->
               <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
-                <h4 class="text-[11px] font-bold tracking-wider text-primary uppercase px-1">
+                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
                   Ayat Al-Qur'an ({{ searchResults.verses.length }})
                 </h4>
                 <div class="space-y-2">
@@ -339,7 +384,7 @@
 
               <!-- 3. Material Results -->
               <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
-                <h4 class="text-[11px] font-bold tracking-wider text-primary uppercase px-1">
+                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
                   Materi Tadabbur ({{ searchResults.materials.length }})
                 </h4>
                 <div class="space-y-2">
@@ -448,7 +493,7 @@
               <template v-else>
                 <!-- 1. Surah Results -->
                 <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
-                  <h4 class="text-[11px] font-bold tracking-wider text-primary uppercase px-1">
+                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
                     Surah ({{ searchResults.chapters.length }})
                   </h4>
                   <div class="grid grid-cols-2 gap-2">
@@ -476,7 +521,7 @@
 
                 <!-- 2. Verse Results -->
                 <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
-                  <h4 class="text-[11px] font-bold tracking-wider text-primary uppercase px-1">
+                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
                     Ayat Al-Qur'an ({{ searchResults.verses.length }})
                   </h4>
                   <div class="space-y-2">
@@ -503,7 +548,7 @@
 
                 <!-- 3. Material Results -->
                 <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
-                  <h4 class="text-[11px] font-bold tracking-wider text-primary uppercase px-1">
+                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
                     Materi Tadabbur ({{ searchResults.materials.length }})
                   </h4>
                   <div class="space-y-2">
@@ -580,7 +625,7 @@
         <!-- QRIS Brand Header -->
         <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border">
           <span class="font-extrabold tracking-widest text-red-600 text-xl font-mono">QRIS</span>
-          <span class="text-[10px] text-muted-foreground font-semibold leading-tight text-left">
+          <span class="text-xs text-muted-foreground font-semibold leading-tight text-left">
             NATIONAL<br />STANDARD
           </span>
         </div>
@@ -615,14 +660,14 @@
             <rect x="85" y="85" width="10" height="10" />
           </svg>
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="bg-card px-2 py-0.5 rounded border border-border shadow-xs text-[10px] font-bold text-foreground">
+            <div class="bg-card px-2 py-0.5 rounded border border-border shadow-xs text-xs font-bold text-foreground">
               KontaQ
             </div>
           </div>
         </div>
 
         <!-- NMID & Instructions -->
-        <p class="text-[11px] font-mono text-muted-foreground mb-1">NMID: ID1023948576201</p>
+        <p class="text-xs font-mono text-muted-foreground mb-1">NMID: ID1023948576201</p>
         <p class="text-xs text-muted-foreground mb-5 leading-relaxed">
           Dapat di-scan menggunakan seluruh aplikasi m-Banking & E-Wallet (BSI, BCA, Mandiri, GoPay, OVO, Dana, LinkAja, dll).
         </p>
@@ -655,11 +700,23 @@ import {
   QrCode,
   Pin,
   X,
+  ChevronDown,
+  MessageSquare,
+  Award,
 } from 'lucide-vue-next';
 import NotificationDrawer from '@/components/NotificationDrawer.vue';
 import authStore from '@/store/auth';
 import { getUser, listAnnouncements, searchQuran } from '@/api';
 import { relativeDate, stripTags } from '@/utils';
+import defaultAvatar from '@/assets/images/default-avatar.jpg';
+
+function handleGlobalKeydown(e) {
+  const isInputTarget = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
+  if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !isInputTarget)) {
+    e.preventDefault();
+    isSearchOpen.value = !isSearchOpen.value;
+  }
+}
 
 const route = useRoute();
 const router = useRouter();
@@ -840,6 +897,7 @@ onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('popstate', onPopState);
     window.removeEventListener('popstate', onNotificationPopState);
+    window.removeEventListener('keydown', handleGlobalKeydown);
   }
 });
 
@@ -861,6 +919,9 @@ function isTabActive(item) {
 const announcements = ref([]);
 
 onMounted(async () => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('keydown', handleGlobalKeydown);
+  }
   try {
     const res = await listAnnouncements(1);
     if (res && res.data) {

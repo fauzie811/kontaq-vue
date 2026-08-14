@@ -3,37 +3,46 @@
     <!-- Desktop Dropdown (sm: breakpoint and up) -->
     <div
       v-if="isOpen"
-      class="hidden sm:block absolute right-0 mt-2 w-96 bg-card rounded-2xl shadow-xl border border-border py-3 z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+      class="hidden sm:block absolute right-0 mt-2.5 w-96 bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
     >
-      <div class="px-4 py-2 border-b border-border flex justify-between items-center bg-muted/50">
-        <h4 class="font-bold text-foreground text-sm flex items-center gap-1.5">
+      <div class="px-4 py-3 border-b border-border flex justify-between items-center bg-muted/50">
+        <h4 class="font-bold text-foreground text-xs sm:text-sm flex items-center gap-2">
           <Bell class="w-4 h-4 text-primary" />
           Notifikasi & Pengumuman
         </h4>
-        <span class="text-xs bg-primary/10 text-primary font-semibold px-2 py-0.5 rounded-full">
+        <span class="text-xs bg-primary/10 text-primary font-bold px-2.5 py-0.5 rounded-full">
           {{ notifications.length }} Baru
         </span>
       </div>
 
       <!-- Notifications List -->
       <div class="divide-y divide-border max-h-80 overflow-y-auto text-sm">
-        <div v-if="notifications.length === 0" class="p-6 text-center text-xs text-muted-foreground">
-          Tidak ada pengumuman baru.
+        <div v-if="notifications.length === 0" class="p-8 text-center text-xs text-muted-foreground flex flex-col items-center gap-2">
+          <Bell class="w-8 h-8 text-muted-foreground/30" />
+          <span>Tidak ada pengumuman baru.</span>
         </div>
         <div
           v-for="(notif, idx) in notifications"
           :key="notif.id || idx"
           @click="onSelect(notif)"
-          class="p-3.5 hover:bg-accent/50 transition cursor-pointer flex gap-3 items-start"
+          class="p-3.5 hover:bg-accent/60 transition cursor-pointer flex gap-3 items-start group"
         >
-          <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-            <Pin v-if="notif.isSticky" class="w-4 h-4 text-primary" />
-            <Bell v-else class="w-4 h-4 text-primary" />
+          <div
+            :class="[
+              notif.isSticky ? 'bg-amber-500/15 text-amber-600' : 'bg-primary/10 text-primary',
+              'w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-transform group-hover:scale-105'
+            ]"
+          >
+            <Pin v-if="notif.isSticky" class="w-4 h-4" />
+            <Bell v-else class="w-4 h-4" />
           </div>
           <div class="min-w-0 flex-1">
-            <p class="font-semibold text-foreground text-xs sm:text-sm truncate">{{ notif.title }}</p>
+            <div class="flex items-center gap-1.5 justify-between">
+              <p class="font-bold text-foreground text-xs sm:text-sm truncate group-hover:text-primary transition-colors">{{ notif.title }}</p>
+              <span v-if="notif.isSticky" class="text-xs bg-amber-500/15 text-amber-600 dark:text-amber-400 font-semibold px-1.5 py-0.5 rounded shrink-0">Penting</span>
+            </div>
             <p class="text-xs text-muted-foreground mt-0.5 leading-snug line-clamp-2">{{ notif.desc }}</p>
-            <span class="text-[10px] text-primary font-medium mt-1 block">{{ notif.time }}</span>
+            <span class="text-xs text-primary font-semibold mt-1 block">{{ notif.time }}</span>
           </div>
         </div>
       </div>
@@ -42,7 +51,7 @@
       <router-link
         :to="{ name: 'announcements' }"
         @click="emit('close')"
-        class="block text-center py-2.5 text-xs font-bold text-primary bg-primary/5 hover:bg-primary/10 transition border-t border-border"
+        class="block text-center py-3 text-xs font-bold text-primary bg-muted/30 hover:bg-primary/10 transition border-t border-border tracking-wide"
       >
         Lihat Semua Pengumuman &rarr;
       </router-link>
@@ -84,9 +93,9 @@
 
           <!-- Sheet Header -->
           <div class="px-5 py-3 border-b border-border flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <Bell class="w-4 h-4" />
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                <Bell class="w-4.5 h-4.5 text-primary" />
               </div>
               <div>
                 <h3 class="font-bold text-foreground text-base leading-tight">Notifikasi</h3>
@@ -94,14 +103,14 @@
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-xs bg-primary/10 text-primary font-semibold px-2.5 py-1 rounded-full">
+              <span class="text-xs bg-primary/10 text-primary font-bold px-2.5 py-1 rounded-full">
                 {{ notifications.length }} Baru
               </span>
               <button
                 @click="emit('close')"
-                class="w-8 h-8 rounded-full bg-muted hover:bg-accent text-muted-foreground hover:text-foreground flex items-center justify-center transition"
+                class="w-8 h-8 rounded-full bg-muted hover:bg-accent text-muted-foreground hover:text-foreground flex items-center justify-center transition cursor-pointer"
               >
-                <X class="w-4 h-4" />
+                <X class="w-4 h-4 stroke-[2.2]" />
               </button>
             </div>
           </div>
@@ -109,23 +118,31 @@
           <!-- Notifications List -->
           <div class="divide-y divide-border max-h-[55vh] overflow-y-auto px-4 py-2 text-sm">
             <div v-if="notifications.length === 0" class="py-10 text-center text-xs text-muted-foreground flex flex-col items-center gap-2">
-              <Bell class="w-8 h-8 text-muted-foreground/50" />
+              <Bell class="w-8 h-8 text-muted-foreground/40" />
               <span>Tidak ada pengumuman baru.</span>
             </div>
             <div
               v-for="(notif, idx) in notifications"
               :key="notif.id || idx"
               @click="onSelect(notif)"
-              class="py-3 px-2 hover:bg-accent/50 rounded-xl transition cursor-pointer flex gap-3 items-start my-1"
+              class="py-3 px-2.5 hover:bg-accent/50 rounded-xl transition cursor-pointer flex gap-3 items-start my-1 group"
             >
-              <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                <Pin v-if="notif.isSticky" class="w-4.5 h-4.5 text-primary" />
-                <Bell v-else class="w-4.5 h-4.5 text-primary" />
+              <div
+                :class="[
+                  notif.isSticky ? 'bg-amber-500/15 text-amber-600' : 'bg-primary/10 text-primary',
+                  'w-9 h-9 rounded-full flex items-center justify-center shrink-0 mt-0.5'
+                ]"
+              >
+                <Pin v-if="notif.isSticky" class="w-4.5 h-4.5" />
+                <Bell v-else class="w-4.5 h-4.5" />
               </div>
               <div class="min-w-0 flex-1">
-                <p class="font-semibold text-foreground text-sm leading-snug">{{ notif.title }}</p>
+                <div class="flex items-center justify-between gap-2">
+                  <p class="font-semibold text-foreground text-sm leading-snug group-hover:text-primary transition-colors">{{ notif.title }}</p>
+                  <span v-if="notif.isSticky" class="text-xs bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold px-1.5 py-0.5 rounded shrink-0">Penting</span>
+                </div>
                 <p class="text-xs text-muted-foreground mt-1 leading-normal line-clamp-2">{{ notif.desc }}</p>
-                <span class="text-[11px] text-primary font-semibold mt-1.5 block">{{ notif.time }}</span>
+                <span class="text-xs text-primary font-bold mt-1.5 block">{{ notif.time }}</span>
               </div>
             </div>
           </div>
