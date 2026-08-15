@@ -166,17 +166,6 @@ export const deleteAvatar = async () => {
   }
 };
 
-export const listCategories = async (rootOnly = false) => {
-  try {
-    const { data } = await axios.get('categories', {
-      params: { rootOnly: rootOnly ? 1 : 0 },
-    });
-    return data;
-  } catch (e) {
-    throw e;
-  }
-};
-
 export const listForumPosts = async ({ page = 1 }) => {
   try {
     const { data } = await axios.get('forum-posts', {
@@ -199,13 +188,13 @@ export const storeForumPost = async ({ message }) => {
 
 export const listMyMaterials = async ({
   page = 1,
-  category = null,
+  week = null,
   part_number = null,
   chapter_number = null,
 }) => {
   try {
     const { data } = await axios.get('me/materials', {
-      params: { page, category, part_number, chapter_number },
+      params: { page, week, part_number, chapter_number },
     });
     return data;
   } catch (e) {
@@ -231,20 +220,20 @@ export const updateMyMaterial = async (id) => {
   }
 };
 
-export const getReports = async (category) => {
+export const getReports = async (week) => {
   try {
-    const { data } = await axios.post('me/group/report', { category });
+    const { data } = await axios.post('me/group/report', { week });
     return data;
   } catch (e) {
     throw e;
   }
 };
 
-export const updateReport = async ({ user_id, category_id, scores }) => {
+export const updateReport = async ({ user_id, week, scores }) => {
   try {
     const { data } = await axios.post('me/group/update-report', {
       user_id,
-      category_id,
+      week,
       scores,
     });
     return data;
@@ -271,10 +260,10 @@ export const getAnnouncement = async (id) => {
   }
 };
 
-export const listMyQuizzes = async ({ page = 1, category = null }) => {
+export const listMyQuizzes = async ({ page = 1, week = null }) => {
   try {
     const { data } = await axios.get('me/quizzes', {
-      params: { page, category },
+      params: { page, week },
     });
     return data;
   } catch (e) {
@@ -300,10 +289,10 @@ export const updateMyQuiz = async (id, answers) => {
   }
 };
 
-export const listMyEvaluations = async ({ page = 1, category = null }) => {
+export const listMyEvaluations = async ({ page = 1, week = null }) => {
   try {
     const { data } = await axios.get('me/evaluations', {
-      params: { page, category },
+      params: { page, week },
     });
     return data;
   } catch (e) {

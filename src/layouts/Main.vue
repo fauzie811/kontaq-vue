@@ -399,7 +399,7 @@
                         {{ material.title }}
                       </p>
                       <p class="text-xs text-muted-foreground truncate mt-0.5">
-                        {{ material.category ? material.category.name : 'Materi Tadabbur' }}
+                        {{ material.week ? ('Pekan ' + material.week) : 'Materi Tadabbur' }}
                       </p>
                     </div>
                     <BookOpen class="w-4 h-4 text-primary shrink-0 ml-3" />
@@ -563,7 +563,7 @@
                           {{ material.title }}
                         </p>
                         <p class="text-xs text-muted-foreground truncate mt-0.5">
-                          {{ material.category ? material.category.name : 'Materi Tadabbur' }}
+                          {{ material.week ? ('Pekan ' + material.week) : 'Materi Tadabbur' }}
                         </p>
                       </div>
                       <BookOpen class="w-4 h-4 text-primary shrink-0 ml-3" />

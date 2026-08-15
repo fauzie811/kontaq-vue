@@ -17,17 +17,16 @@
           <div>
             <span class="text-xs text-muted-foreground block">Total Evaluasi</span>
             <span class="text-sm font-bold text-foreground">
-              {{ evaluations.data?.length || 0 }} evaluasi {{ category ? `(${category.name})` : 'tersedia' }}
+              {{ evaluations.data?.length || 0 }} evaluasi {{ week ? `(Pekan ${week})` : 'tersedia' }}
             </span>
           </div>
         </div>
 
         <div class="w-full sm:w-auto">
-          <CategoryPicker
+          <WeekPicker
             show-all-option
-            root-only
             class="w-full sm:w-60"
-            v-model="category"
+            v-model="week"
             @update:modelValue="() => changePage(1)"
           />
         </div>
@@ -102,15 +101,15 @@
         </div>
         <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Evaluasi</h4>
         <p class="text-sm text-muted-foreground max-w-md mb-5">
-          Evaluasi untuk kategori <span v-if="category" class="font-semibold text-foreground">'{{ category.name }}'</span> belum tersedia saat ini.
+          Evaluasi untuk <span v-if="week" class="font-semibold text-foreground">Pekan {{ week }}</span><span v-else>semua pekan</span> belum tersedia saat ini.
         </p>
         <button
-          v-if="category"
-          @click="resetCategory"
+          v-if="week"
+          @click="resetWeek"
           class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-xl transition-all cursor-pointer"
         >
           <RotateCcw class="w-3.5 h-3.5" />
-          <span>Tampilkan Semua Kategori</span>
+          <span>Tampilkan Semua Pekan</span>
         </button>
       </div>
 
@@ -137,10 +136,10 @@ import {
 import { listMyEvaluations } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
-import CategoryPicker from '@/components/CategoryPicker.vue';
+import WeekPicker from '@/components/WeekPicker.vue';
 
 const page = ref(1);
-const category = ref();
+const week = ref(null);
 const evaluations = ref({ data: [] });
 const isLoading = ref(true);
 
@@ -149,7 +148,7 @@ async function loadData() {
   try {
     const { data } = await listMyEvaluations({
       page: page.value,
-      category: category.value ? category.value.id : null,
+      week: week.value,
     });
     evaluations.value = data;
   } catch (error) {
@@ -165,8 +164,8 @@ function changePage(p) {
   loadData();
 }
 
-function resetCategory() {
-  category.value = null;
+function resetWeek() {
+  week.value = null;
   changePage(1);
 }
 

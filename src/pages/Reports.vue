@@ -7,7 +7,7 @@
         <p v-if="authStore.user && authStore.user.group">{{ authStore.user.group.name }}</p>
         <TextPlaceholder v-else class="block w-32" />
       </InputFrame>
-      <CategoryPicker root-only class="w-full ml-auto sm:w-56" v-model="category" @update:modelValue="loadData" />
+      <WeekPicker class="w-full ml-auto sm:w-56" v-model="week" @update:modelValue="loadData" />
     </div>
 
     <div v-if="reports" class="overflow-x-auto rounded-2xl border border-border shadow-xs">
@@ -76,10 +76,10 @@
                     </DialogTitle>
                     <div class="mt-2 text-sm text-muted-foreground" ref="shareContent">
                       REKAP KONTAQ GRUP {{ authStore.user ? authStore.user.group.name : '-' }}<br />
-                      {{ category ? category.name : '-' }}<br />
+                      Pekan {{ week }}<br />
                       ➖➖➖➖➖➖➖➖<br />
-                      Admin : {{ reports.items[0].name }}<br />
-                      Asmin : {{ reports.items[1].name }}<br />
+                      Admin : {{ reports.items[0] ? reports.items[0].name : '-' }}<br />
+                      Asmin : {{ reports.items[1] ? reports.items[1].name : '-' }}<br />
                       <br />
                       Kuis wajib dikerjakan<br />
                       <br />
@@ -134,21 +134,21 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { getReports, updateReport } from '@/api';
 import authStore from '@/store/auth';
 import PageHeader from '../components/PageHeader.vue';
-import CategoryPicker from '@/components/CategoryPicker.vue';
+import WeekPicker from '@/components/WeekPicker.vue';
 import InputFrame from '@/components/forms/InputFrame.vue';
 import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
 import EvaluationScore from '@/components/EvaluationScore.vue';
 import QuizScore from '@/components/QuizScore.vue';
 
 const route = useRoute();
-const category = ref();
+const week = ref(1);
 const reports = ref();
 const totals = ref({});
 const shareDialog = ref(false);
 
 async function loadData() {
-  if (category.value) {
-    const data = await getReports(category.value ? category.value.id : null);
+  if (week.value) {
+    const data = await getReports(week.value);
     reports.value = data.data;
     calculateTotals();
     console.log(data);
@@ -157,7 +157,7 @@ async function loadData() {
 loadData();
 
 const updateScore = async (userId, key, value) => {
-  const data = await updateReport({ user_id: userId, category_id: category.value.id, scores: { [key]: value } });
+  const data = await updateReport({ user_id: userId, week: week.value, scores: { [key]: value } });
   const items = reports.value.items;
   items.forEach(i => {
     if (i.id == userId) {

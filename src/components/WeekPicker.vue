@@ -1,10 +1,10 @@
 <template>
-  <Listbox as="div" :modelValue="modelValue" @update:modelValue="value => emit('update:modelValue', value)" by="id">
+  <Listbox as="div" :modelValue="modelValue" @update:modelValue="value => emit('update:modelValue', value)">
     <div class="relative mt-2">
       <ListboxButton
         class="relative w-full cursor-default rounded-xl bg-card py-2 pl-3 pr-10 text-left text-card-foreground shadow-xs border border-border focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm">
-        <span v-if="modelValue || showAllOption" class="block truncate">{{ modelValue ? modelValue.name : 'Semua Kategori' }}</span>
-        <span v-else class="block text-muted-foreground truncate">Pilih Kategori</span>
+        <span v-if="modelValue || showAllOption" class="block truncate">{{ modelValue ? 'Pekan ' + modelValue : 'Semua Pekan' }}</span>
+        <span v-else class="block text-muted-foreground truncate">Pilih Pekan</span>
         <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
           <ChevronUpDownIcon class="w-5 h-5 text-muted-foreground" aria-hidden="true" />
         </span>
@@ -17,7 +17,7 @@
           <ListboxOption v-if="showAllOption" as="template" :value="null" v-slot="{ active, selected }">
             <li
               :class="[selected || active ? 'bg-primary text-primary-foreground' : 'text-popover-foreground hover:bg-secondary hover:text-secondary-foreground', 'relative cursor-default select-none py-2 pl-3 pr-9 mx-1 my-0.5 rounded-lg transition-colors']">
-              <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">Semua Kategori</span>
+              <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">Semua Pekan</span>
 
               <span v-if="selected"
                 :class="[selected || active ? 'text-primary-foreground' : 'text-primary', 'absolute inset-y-0 right-0 flex items-center pr-4']">
@@ -25,12 +25,10 @@
               </span>
             </li>
           </ListboxOption>
-          <ListboxOption as="template" v-for="category in categories" :key="category.id" :value="category"
-            v-slot="{ active, selected }">
+          <ListboxOption as="template" v-for="week in maxWeeks" :key="week" :value="week" v-slot="{ active, selected }">
             <li
               :class="[selected || active ? 'bg-primary text-primary-foreground' : 'text-popover-foreground hover:bg-secondary hover:text-secondary-foreground', 'relative cursor-default select-none py-2 pl-3 pr-9 mx-1 my-0.5 rounded-lg transition-colors']">
-              <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']"
-                :style="'padding-left: ' + (0.75 * category.depth) + 'rem;'">{{ category.name }}</span>
+              <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">Pekan {{ week }}</span>
 
               <span v-if="selected"
                 :class="[selected || active ? 'text-primary-foreground' : 'text-primary', 'absolute inset-y-0 right-0 flex items-center pr-4']">
@@ -45,23 +43,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-import { listCategories } from '@/api';
 
 const props = defineProps({
-  modelValue: Object,
-  rootOnly: Boolean,
-  showAllOption: Boolean,
+  modelValue: {
+    type: Number,
+    default: null,
+  },
+  showAllOption: {
+    type: Boolean,
+    default: false,
+  },
+  maxWeeks: {
+    type: Number,
+    default: 30,
+  },
 });
 const emit = defineEmits(['update:modelValue']);
-
-const categories = ref([]);
-
-const loadData = async () => {
-  const data = await listCategories(props.rootOnly);
-  categories.value = data.data;
-}
-loadData();
 </script>

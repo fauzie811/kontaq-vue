@@ -6,7 +6,7 @@
     <div class="max-w-3xl">
       <div class="flex justify-end gap-4 mb-4">
         <PartPicker class="w-full sm:w-40" v-model="part_number" @update:modelValue="() => changePage(1)" />
-        <CategoryPicker show-all-option class="w-full sm:w-56" v-model="category"
+        <WeekPicker show-all-option class="w-full sm:w-56" v-model="week"
           @update:modelValue="() => changePage(1)" />
       </div>
 
@@ -22,12 +22,12 @@
                   {{ getStatus(material) }}</p>
               </div>
               <div class="flex items-center mt-1 text-xs leading-5 text-muted-foreground gap-x-2">
-                <p v-if="material.category" class="truncate">{{ material.category.name }}</p>
-                <svg v-if="material.category" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                <p v-if="material.week" class="truncate">Pekan {{ material.week }}</p>
+                <svg v-if="material.week && (material.part_number || material.chapter)" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
                   <circle cx="1" cy="1" r="1" />
                 </svg>
                 <p v-if="material.part_number" class="truncate">Juz {{ material.part_number }}</p>
-                <svg v-if="material.part_number" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                <svg v-if="material.part_number && material.chapter" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
                   <circle cx="1" cy="1" r="1" />
                 </svg>
                 <p v-if="material.chapter" class="truncate">Surah {{ material.chapter }}</p>
@@ -51,16 +51,16 @@ import { ref } from 'vue';
 import { listMyMaterials } from '@/api';
 import PageHeader from '../components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
-import CategoryPicker from '@/components/CategoryPicker.vue';
+import WeekPicker from '@/components/WeekPicker.vue';
 import PartPicker from '@/components/PartPicker.vue';
 
 const page = ref(1);
-const category = ref(null);
+const week = ref(null);
 const part_number = ref(null);
 const materials = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyMaterials({ page: page.value, category: category.value ? category.value.id : null, part_number: part_number.value });
+  const { data } = await listMyMaterials({ page: page.value, week: week.value, part_number: part_number.value });
   materials.value = data;
 }
 loadData();
