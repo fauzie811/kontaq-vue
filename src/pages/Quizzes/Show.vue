@@ -37,8 +37,28 @@
               </div>
             </div>
 
-            <!-- Options Review List -->
-            <div class="py-1">
+            <!-- True/False Review (Side-by-side) -->
+            <div v-if="question.type === 'true_false'" class="p-4 sm:p-5">
+              <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                <div
+                  v-for="opt in [{ key: 'true', label: 'Benar' }, { key: 'false', label: 'Salah' }]"
+                  :key="opt.key"
+                  :class="[
+                    userQuiz.answers[question.id] === opt.key ? 'bg-[#bbf7d0] text-emerald-950 font-semibold border-emerald-500' : 'text-gray-800 border-gray-200 bg-white',
+                    'flex items-center justify-center px-4 py-3.5 rounded-xl border-2 text-base sm:text-lg'
+                  ]"
+                >
+                  <CheckIcon
+                    class="shrink-0 w-5 h-5 mr-2"
+                    :class="[question.answer === opt.key ? 'text-emerald-700 font-bold' : 'opacity-0']"
+                  />
+                  <span>{{ opt.label }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Multiple Choice Options Review List -->
+            <div v-else class="py-1">
               <div
                 v-for="option in ['a', 'b', 'c', 'd']"
                 :key="option"
@@ -52,7 +72,7 @@
                   :class="[question.answer === option ? 'text-emerald-700 font-bold' : 'opacity-0']"
                 />
                 <span class="mr-2 font-normal text-base">{{ option }}.</span>
-                <span class="text-base leading-relaxed">{{ question.details[`option_${option}`] }}</span>
+                <span class="text-base leading-relaxed">{{ question.details?.[`option_${option}`] || question.details?.[`option_${option} `] }}</span>
               </div>
             </div>
           </div>
