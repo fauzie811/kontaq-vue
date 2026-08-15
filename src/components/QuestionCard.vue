@@ -13,8 +13,43 @@
       </div>
     </div>
 
-    <!-- Options List -->
-    <div class="py-1">
+    <!-- True / False Options (Side-by-side) -->
+    <div v-if="question.type === 'true_false'" class="p-4 sm:p-5">
+      <RadioGroup :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
+        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+          <RadioGroupOption
+            v-for="opt in [{ key: 'true', label: 'Benar' }, { key: 'false', label: 'Salah' }]"
+            :key="opt.key"
+            :value="opt.key"
+            v-slot="{ checked }"
+          >
+            <div
+              :class="[
+                checked
+                  ? 'bg-[#bbf7d0] text-emerald-950 font-semibold border-emerald-500 shadow-sm'
+                  : 'bg-white hover:bg-gray-50 text-gray-800 border-gray-200',
+                'flex items-center justify-center px-4 py-3.5 rounded-xl border-2 cursor-pointer transition-all duration-150 select-none text-base sm:text-lg'
+              ]"
+            >
+              <!-- Custom Radio Button Circle -->
+              <span
+                :class="[
+                  checked ? 'border-emerald-600 bg-emerald-600' : 'border-gray-300 bg-white',
+                  'w-5 h-5 rounded-full border flex items-center justify-center mr-3 shrink-0 transition-colors'
+                ]"
+              >
+                <span v-if="checked" class="w-2 h-2 rounded-full bg-white"></span>
+              </span>
+
+              <span>{{ opt.label }}</span>
+            </div>
+          </RadioGroupOption>
+        </div>
+      </RadioGroup>
+    </div>
+
+    <!-- Multiple Choice Options List -->
+    <div v-else class="py-1">
       <RadioGroup :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
         <div class="space-y-0">
           <RadioGroupOption
