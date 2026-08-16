@@ -1,5 +1,5 @@
 <template>
-  <main class="h-full">
+  <main class="view-transition-content h-full">
     <slot />
   </main>
 </template>

@@ -278,6 +278,25 @@ select {
 }
 
 /* View Transitions */
+
+/*
+  Only the routed content area participates in route transitions. The
+  persistent page shell (header, nav tabs, footer, mobile bottom nav) is
+  excluded: it lives in the root snapshot, which never animates.
+
+  Every layout applies this class to the element that wraps the routed
+  content, so navigation animates content between layouts as well.
+*/
+.view-transition-content {
+  view-transition-name: page-content;
+}
+
+/* Page shell: keep static chrome from cross-fading or sliding */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
 @keyframes vt-fade-out {
   from {
     opacity: 1;
@@ -344,35 +363,38 @@ select {
   }
 }
 
-::view-transition-old(root) {
+::view-transition-old(page-content) {
   animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-out;
 }
 
-::view-transition-new(root) {
+::view-transition-new(page-content) {
   animation: 250ms cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-in;
 }
 
 /* Directional transitions via active-view-transition-type pseudo class */
-html:active-view-transition-type(forward)::view-transition-old(root) {
+html:active-view-transition-type(forward)::view-transition-old(page-content) {
   animation: 220ms cubic-bezier(0.4, 0, 0.2, 1) both vt-slide-to-left;
 }
 
-html:active-view-transition-type(forward)::view-transition-new(root) {
+html:active-view-transition-type(forward)::view-transition-new(page-content) {
   animation: 250ms cubic-bezier(0.4, 0, 0.2, 1) both vt-slide-from-right;
 }
 
-html:active-view-transition-type(backward)::view-transition-old(root) {
+html:active-view-transition-type(backward)::view-transition-old(page-content) {
   animation: 220ms cubic-bezier(0.4, 0, 0.2, 1) both vt-slide-to-right;
 }
 
-html:active-view-transition-type(backward)::view-transition-new(root) {
+html:active-view-transition-type(backward)::view-transition-new(page-content) {
   animation: 250ms cubic-bezier(0.4, 0, 0.2, 1) both vt-slide-from-left;
 }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(root),
   ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-new(root),
+  ::view-transition-group(page-content),
+  ::view-transition-old(page-content),
+  ::view-transition-new(page-content) {
     animation: none !important;
   }
 }

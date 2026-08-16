@@ -1,5 +1,5 @@
 <template>
-  <main class="grid min-h-svh lg:h-screen lg:overflow-hidden lg:grid-cols-12 bg-background font-sans selection:bg-primary/20 selection:text-primary">
+  <main class="view-transition-content grid min-h-svh lg:h-screen lg:overflow-hidden lg:grid-cols-12 bg-background font-sans selection:bg-primary/20 selection:text-primary">
     <!-- Desktop Left Hero Panel (Static 100vh, non-scrollable) -->
     <div class="relative hidden lg:flex lg:col-span-6 xl:col-span-7 flex-col justify-between p-10 overflow-hidden bg-primary/10 lg:h-screen lg:sticky lg:top-0">
       <img class="absolute inset-0 object-cover w-full h-full scale-105 transition-transform duration-1000 ease-out hover:scale-100" src="@/assets/bg-auth.jpg" alt="" />

@@ -162,7 +162,7 @@
     </section>
 
     <!-- Main Content Slot -->
-    <main class="max-w-6xl mx-auto px-4 mt-8 sm:mt-10 w-full flex-1">
+    <main class="view-transition-content max-w-6xl mx-auto px-4 mt-8 sm:mt-10 w-full flex-1">
       <slot />
     </main>
 
