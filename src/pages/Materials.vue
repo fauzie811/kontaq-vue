@@ -23,14 +23,6 @@
               </div>
               <div class="flex items-center mt-1 text-xs leading-5 text-muted-foreground gap-x-2">
                 <p v-if="material.week" class="truncate">Pekan {{ material.week }}</p>
-                <svg v-if="material.week && (material.part_number || material.chapter)" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
-                  <circle cx="1" cy="1" r="1" />
-                </svg>
-                <p v-if="material.part_number" class="truncate">Juz {{ material.part_number }}</p>
-                <svg v-if="material.part_number && material.chapter" viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
-                  <circle cx="1" cy="1" r="1" />
-                </svg>
-                <p v-if="material.chapter" class="truncate">Surah {{ material.chapter }}</p>
               </div>
             </div>
             <div class="flex items-center flex-none gap-x-4">
