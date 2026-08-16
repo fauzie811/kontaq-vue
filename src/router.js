@@ -162,6 +162,9 @@ if (typeof window !== 'undefined') {
 }
 
 router.beforeResolve((to, from) => {
+  const isBack = isBackNavigation;
+  isBackNavigation = false;
+
   if (
     typeof document === 'undefined' ||
     !document.startViewTransition ||
@@ -170,15 +173,15 @@ router.beforeResolve((to, from) => {
     return;
   }
 
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+  const prefersReducedMotion =
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) {
     return;
   }
 
-  const direction = isBackNavigation ? 'backward' : 'forward';
-  isBackNavigation = false;
+  const direction = isBack ? 'backward' : 'forward';
 
   return new Promise((resolve) => {
     try {
