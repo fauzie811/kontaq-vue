@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-background flex flex-col font-sans text-foreground relative pb-32 sm:pb-24">
     <!-- Top Header -->
-    <header class="bg-card/90 backdrop-blur-md border-b border-border shadow-2xs sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all">
+    <header class="view-transition-header bg-card/90 backdrop-blur-md border-b border-border shadow-2xs sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <!-- Left Brand Logo -->
         <div class="flex items-center gap-3">
@@ -133,7 +133,7 @@
     </header>
 
     <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
-    <section v-if="route.name !== 'infaq'" class="hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
+    <section v-if="route.name !== 'infaq'" class="view-transition-nav hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
       <div class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 shadow-inner flex items-center justify-around gap-2 sm:gap-3 border border-border/80">
         <router-link
           v-for="item in navTabs"
@@ -169,7 +169,7 @@
     <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
     <footer
       v-if="isBannerVisible"
-      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:shadow-2xl"
+      class="view-transition-floating-banner fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:shadow-2xl"
     >
       <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
@@ -201,7 +201,7 @@
     <!-- Mobile Bottom Navigation Bar -->
     <nav
       v-if="route.name !== 'infaq'"
-      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border shadow-lg px-2 py-1.5 justify-around items-center pb-safe"
+      class="view-transition-bottom-nav flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border shadow-lg px-2 py-1.5 justify-around items-center pb-safe"
     >
       <router-link
         v-for="item in navTabs"

@@ -1,5 +1,5 @@
 <template>
-  <main class="view-transition-content grid min-h-svh lg:h-screen lg:overflow-hidden lg:grid-cols-12 bg-background font-sans">
+  <main class="grid min-h-svh lg:h-screen lg:overflow-hidden lg:grid-cols-12 bg-background font-sans">
     <!-- Left Hero Section ("The Quranic Sanctuary" - Fixed/Sticky 100vh on Desktop) -->
     <div
       class="relative flex flex-col items-center justify-center p-6 sm:p-8 lg:p-12 lg:col-span-7 bg-[#1c442d] overflow-hidden text-center py-8 sm:py-10 lg:h-screen lg:sticky lg:top-0 select-none">
@@ -61,7 +61,7 @@
         </a>
       </div>
       <div class="flex items-center justify-center flex-1 w-full my-auto">
-        <div class="w-full max-w-md">
+        <div class="view-transition-content w-full max-w-md">
           <slot />
         </div>
       </div>
