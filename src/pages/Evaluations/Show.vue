@@ -60,7 +60,7 @@
             <!-- Multiple Choice Options Review List -->
             <div v-else class="py-1">
               <div
-                v-for="option in ['a', 'b', 'c', 'd']"
+                v-for="option in getMultipleOptions(question)"
                 :key="option"
                 :class="[
                   userEvaluation.answers[question.id] === option ? 'bg-[#bbf7d0] text-emerald-950 font-medium' : 'text-gray-800',
@@ -151,6 +151,15 @@ async function showAlert() {
 async function submitAnswers() {
   await updateMyEvaluation(route.params.id, selected.value);
   router.push('/evaluations');
+}
+
+function getMultipleOptions(question) {
+  const base = ['a', 'b', 'c', 'd'];
+  const optionE = question?.details?.option_e || question?.details?.['option_e '];
+  if (optionE && String(optionE).trim() !== '') {
+    base.push('e');
+  }
+  return base;
 }
 
 const forceFinish = () => {
