@@ -53,7 +53,7 @@
       <RadioGroup :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
         <div class="space-y-0">
           <RadioGroupOption
-            v-for="optKey in ['a', 'b', 'c', 'd']"
+            v-for="optKey in multipleOptions"
             :key="optKey"
             :value="optKey"
             v-slot="{ checked }"
@@ -86,6 +86,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 
 const props = defineProps({
@@ -100,4 +101,14 @@ function getOptionText(key) {
   if (!props.question || !props.question.details) return '';
   return props.question.details[`option_${key}`] || props.question.details[`option_${key} `] || '';
 }
+
+const multipleOptions = computed(() => {
+  const base = ['a', 'b', 'c', 'd'];
+  const optionE = getOptionText('e');
+  if (optionE && optionE.trim() !== '') {
+    base.push('e');
+  }
+  return base;
+});
 </script>
+
