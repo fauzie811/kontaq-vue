@@ -63,7 +63,7 @@
             <!-- User Menu Dropdown Panel -->
             <div
               v-if="isUserMenuOpen"
-              class="absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+              class="absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
             >
               <!-- User Info Header -->
               <div v-if="authStore.user" class="px-4 py-3 border-b border-border bg-muted/50 flex items-center gap-3">
@@ -229,10 +229,10 @@
     <Teleport to="body">
       <!-- Backdrop Backdrop Fade -->
       <Transition
-        enter-active-class="transition duration-200 ease-out"
+        enter-active-class="transition duration-400 ease-out"
         enter-from-class="opacity-0"
         enter-to-class="opacity-100"
-        leave-active-class="transition duration-150 ease-in"
+        leave-active-class="transition duration-350 ease-in"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
@@ -245,10 +245,10 @@
 
       <!-- Mobile Bottom Sheet Slide Drawer (< sm breakpoint) -->
       <Transition
-        enter-active-class="transition duration-300 ease-out transform"
+        enter-active-class="transition duration-400 ease-out transform"
         enter-from-class="translate-y-full opacity-0"
         enter-to-class="translate-y-0 opacity-100"
-        leave-active-class="transition duration-200 ease-in transform"
+        leave-active-class="transition duration-350 ease-in transform"
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-full opacity-0"
       >
@@ -413,12 +413,12 @@
 
       <!-- Desktop Search Modal Popup (>= sm breakpoint) -->
       <Transition
-        enter-active-class="transition duration-200 ease-out transform"
-        enter-from-class="opacity-0 scale-95"
+        enter-active-class="transition duration-250 ease-out transform"
+        enter-from-class="opacity-0 scale-[0.96]"
         enter-to-class="opacity-100 scale-100"
         leave-active-class="transition duration-150 ease-in transform"
         leave-from-class="opacity-100 scale-100"
-        leave-to-class="opacity-0 scale-95"
+        leave-to-class="opacity-0 scale-[0.96]"
       >
         <div
           v-if="isSearchOpen"
@@ -583,7 +583,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       @click.self="showInfaqModal = false"
     >
-      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-95 duration-200">
+      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250">
         <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
           <QrCode class="w-7 h-7 text-primary" />
         </div>
@@ -621,7 +621,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       @click.self="showQrisModal = false"
     >
-      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-95 duration-200 relative overflow-hidden">
+      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden">
         <!-- QRIS Brand Header -->
         <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border">
           <span class="font-extrabold tracking-widest text-red-600 text-xl font-mono">QRIS</span>

@@ -9,7 +9,7 @@
         </span>
       </ListboxButton>
 
-      <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100"
+      <transition leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100"
         leave-to-class="opacity-0">
         <ListboxOptions
           class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-popover border border-border rounded-xl shadow-lg max-h-60 focus:outline-none sm:text-sm">

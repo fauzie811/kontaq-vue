@@ -1,22 +1,22 @@
 <template>
   <Transition
-    enter-active-class="transition ease-out duration-300 transform"
+    enter-active-class="transition ease-out duration-400 transform"
     enter-from-class="translate-y-full opacity-0"
     enter-to-class="translate-y-0 opacity-100"
-    leave-active-class="transition ease-in duration-200 transform"
+    leave-active-class="transition ease-in duration-350 transform"
     leave-from-class="translate-y-0 opacity-100"
     leave-to-class="translate-y-full opacity-0"
   >
     <div
       v-if="quranAudio.currentVerseNumber"
       :class="[
-        'view-transition-audio-player fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border shadow-xl overflow-hidden transition-all duration-300 ease-in-out',
+        'view-transition-audio-player fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border shadow-xl overflow-hidden transition-all duration-400 ease-in-out',
         isExpanded ? 'rounded-2xl p-3 sm:p-4' : 'rounded-3xl p-3 sm:px-5'
       ]"
     >
       <!-- Top Micro Progress Line (visible when collapsed) -->
       <div
-        class="w-full bg-secondary rounded-full overflow-hidden transition-all duration-300 ease-in-out"
+        class="w-full bg-secondary rounded-full overflow-hidden transition-all duration-400 ease-in-out"
         :class="isExpanded ? 'max-h-0 opacity-0 mb-0' : 'max-h-1 h-1 opacity-100 mb-1'"
       >
         <div
@@ -48,7 +48,7 @@
         <!-- Mini Controls -->
         <div class="flex items-center gap-1.5 shrink-0">
           <div
-            class="transition-all duration-300 ease-in-out overflow-hidden flex items-center justify-center"
+            class="transition-all duration-400 ease-in-out overflow-hidden flex items-center justify-center"
             :class="isExpanded ? 'max-w-0 opacity-0 scale-75 pointer-events-none' : 'max-w-8 opacity-100 scale-100'"
           >
             <button
@@ -67,8 +67,8 @@
             :title="isExpanded ? 'Kecilkan Player' : 'Perluas Player'"
             class="p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
           >
-            <ChevronDown v-if="isExpanded" class="w-5 h-5 transition-transform duration-300" />
-            <ChevronUp v-else class="w-5 h-5 transition-transform duration-300" />
+            <ChevronDown v-if="isExpanded" class="w-5 h-5 transition-transform duration-400" />
+            <ChevronUp v-else class="w-5 h-5 transition-transform duration-400" />
           </button>
 
           <button
@@ -83,7 +83,7 @@
 
       <!-- SMOOTH EXPANDABLE DRAWER -->
       <div
-        class="grid transition-all duration-300 ease-in-out"
+        class="grid transition-all duration-400 ease-in-out"
         :class="isExpanded ? 'grid-rows-[1fr] opacity-100 border-t border-border mt-3' : 'grid-rows-[0fr] opacity-0 border-t-0'"
       >
         <div class="overflow-hidden">

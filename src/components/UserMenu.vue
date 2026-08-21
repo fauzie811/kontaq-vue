@@ -18,11 +18,11 @@
         <ChevronDownIcon class="w-5 h-5 ml-2 text-muted-foreground" aria-hidden="true" />
       </span>
     </MenuButton>
-    <transition enter-active-class="transition duration-100 ease-out" enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-75 ease-in"
-      leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
+    <transition enter-active-class="transition duration-250 ease-out" enter-from-class="transform scale-[0.97] opacity-0"
+      enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-150 ease-in"
+      leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-[0.99] opacity-0">
       <MenuItems
-        class="absolute right-0 z-10 mt-2.5 w-44 origin-top-right rounded-2xl bg-card py-2 shadow-xl border border-border focus:outline-none animate-in fade-in zoom-in-95 duration-150">
+        class="absolute right-0 z-10 mt-2.5 w-44 origin-top-right rounded-2xl bg-card py-2 shadow-xl border border-border focus:outline-none">
         <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
         <div v-if="item.separator" class="w-full h-px my-1 bg-border"></div>
         <router-link v-else :to="item.route"

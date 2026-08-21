@@ -28,12 +28,12 @@
         </MenuButton>
 
         <transition
-          enter-active-class="transition duration-100 ease-out"
-          enter-from-class="transform scale-95 opacity-0"
+          enter-active-class="transition duration-250 ease-out"
+          enter-from-class="transform scale-[0.97] opacity-0"
           enter-to-class="transform scale-100 opacity-100"
-          leave-active-class="transition duration-75 ease-in"
+          leave-active-class="transition duration-150 ease-in"
           leave-from-class="transform scale-100 opacity-100"
-          leave-to-class="transform scale-95 opacity-0"
+          leave-to-class="transform scale-[0.99] opacity-0"
         >
           <MenuItems
             class="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-2xl bg-popover text-popover-foreground p-1.5 shadow-xl border border-border focus:outline-none space-y-0.5"

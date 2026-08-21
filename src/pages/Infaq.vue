@@ -31,7 +31,7 @@
         <!-- Dropdown Menu Options -->
         <div
           v-if="isDropdownOpen"
-          class="absolute right-0 mt-2 w-56 bg-popover rounded-2xl shadow-xl border border-border py-2 z-50 animate-in fade-in zoom-in-95 duration-150"
+          class="absolute right-0 mt-2 w-56 bg-popover rounded-2xl shadow-xl border border-border py-2 z-50 animate-in fade-in zoom-in-[0.97] duration-250"
         >
           <button
             v-for="cat in categories"

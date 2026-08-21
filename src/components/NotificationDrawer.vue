@@ -3,7 +3,7 @@
     <!-- Desktop Dropdown (sm: breakpoint and up) -->
     <div
       v-if="isOpen"
-      class="hidden sm:block absolute right-0 mt-2.5 w-96 bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+      class="hidden sm:block absolute right-0 mt-2.5 w-96 bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
     >
       <div class="px-4 py-3 border-b border-border flex justify-between items-center bg-muted/50">
         <h4 class="font-bold text-foreground text-xs sm:text-sm flex items-center gap-2">
@@ -60,10 +60,10 @@
     <!-- Mobile Bottom Sheet (Teleported to Body for < sm breakpoint) -->
     <Teleport to="body">
       <Transition
-        enter-active-class="transition duration-200 ease-out"
+        enter-active-class="transition duration-400 ease-out"
         enter-from-class="opacity-0"
         enter-to-class="opacity-100"
-        leave-active-class="transition duration-150 ease-in"
+        leave-active-class="transition duration-350 ease-in"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
@@ -75,10 +75,10 @@
       </Transition>
 
       <Transition
-        enter-active-class="transition duration-300 ease-out transform"
+        enter-active-class="transition duration-400 ease-out transform"
         enter-from-class="translate-y-full"
         enter-to-class="translate-y-0"
-        leave-active-class="transition duration-200 ease-in transform"
+        leave-active-class="transition duration-350 ease-in transform"
         leave-from-class="translate-y-0"
         leave-to-class="translate-y-full"
       >
