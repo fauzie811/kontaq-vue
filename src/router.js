@@ -111,6 +111,12 @@ const routes = [
     meta: { needsAuth: true, layout: MainLayout },
   },
   {
+    path: '/late-permissions',
+    component: () => import('./pages/LatePermissions.vue'),
+    name: 'late-permissions',
+    meta: { needsAuth: true, layout: MainLayout },
+  },
+  {
     path: '/reports',
     component: () => import('./pages/Reports.vue'),
     name: 'reports',

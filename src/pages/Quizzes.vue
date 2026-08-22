@@ -62,8 +62,12 @@
                 <span>{{ quiz.duration }} menit</span>
               </div>
 
-              <!-- Locked Prerequisite or Status Badge -->
-              <div v-if="!quiz.material_read" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 ring-1 ring-inset ring-rose-500/20">
+              <!-- Schedule Lock, Locked Prerequisite, or Status Badge -->
+              <div v-if="scheduleLock(quiz)" :class="[scheduleLock(quiz).wrapper, 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ring-1 ring-inset']">
+                <component :is="scheduleLock(quiz).icon" class="w-3.5 h-3.5" />
+                <span>{{ scheduleLock(quiz).label }}</span>
+              </div>
+              <div v-else-if="!quiz.material_read" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 ring-1 ring-inset ring-rose-500/20">
                 <Lock class="w-3.5 h-3.5" />
                 <span>Materi Belum Dibaca</span>
               </div>
@@ -74,16 +78,79 @@
             </div>
 
             <!-- Card Content: Title -->
-            <h3 class="text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-4 leading-snug">
+            <h3 class="text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2 leading-snug">
               {{ quiz.title }}
             </h3>
+
+            <!-- Schedule Window -->
+            <p v-if="quiz.opens_at" class="text-xs text-muted-foreground mb-4 flex items-start gap-1.5">
+              <CalendarClock class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>{{ shortDateTime(quiz.opens_at) }} &ndash; {{ shortDateTime(quiz.closes_at) }}</span>
+            </p>
+            <div v-else class="mb-4" />
+
+            <!-- Late permission feedback -->
+            <p
+              v-if="quiz.late_permission_status === 'pending'"
+              class="text-xs font-medium text-amber-700 dark:text-amber-400 mb-4 flex items-start gap-1.5"
+            >
+              <Hourglass class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>Pengajuan izin telat Anda sedang ditinjau admin.</span>
+            </p>
+            <p
+              v-else-if="quiz.late_permission_status === 'rejected'"
+              class="text-xs font-medium text-rose-700 dark:text-rose-400 mb-4 flex items-start gap-1.5"
+            >
+              <CircleAlert class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>Pengajuan izin telat ditolak{{ quiz.late_permission_review_note ? `: ${quiz.late_permission_review_note}` : '.' }}</span>
+            </p>
+            <p
+              v-else-if="quiz.late_permission_expires_at"
+              class="text-xs font-medium text-emerald-700 dark:text-emerald-400 mb-4 flex items-start gap-1.5"
+            >
+              <ClockAlert class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>Izin telat berlaku sampai {{ shortDateTime(quiz.late_permission_expires_at) }}.</span>
+            </p>
           </div>
 
           <!-- Card Footer: Action Button -->
           <div class="pt-3 border-t border-border/40">
+            <!-- Closed: offer a late-permission request -->
+            <button
+              v-if="quiz.can_request_late_permission"
+              type="button"
+              @click.prevent="openRequestDialog(quiz)"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+            >
+              <Send class="w-4 h-4" />
+              <span>Ajukan Izin Telat</span>
+            </button>
+
+            <!-- Closed, request already pending -->
+            <button
+              v-else-if="!quiz.is_open && quiz.late_permission_status === 'pending'"
+              type="button"
+              disabled
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+            >
+              <Hourglass class="w-4 h-4" />
+              <span>Menunggu Persetujuan</span>
+            </button>
+
+            <!-- Not open yet -->
+            <button
+              v-else-if="!quiz.is_open"
+              type="button"
+              disabled
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+            >
+              <Lock class="w-4 h-4" />
+              <span>Belum Dibuka</span>
+            </button>
+
             <!-- Locked Button (Needs Material Read) -->
             <button
-              v-if="!quiz.material_read"
+              v-else-if="!quiz.material_read"
               type="button"
               @click.prevent="showAlert(quiz.material_id)"
               class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer border border-border"
@@ -134,6 +201,15 @@
       <!-- Pagination -->
       <Pagination v-if="!isLoading" :meta="quizzes" v-on:change="changePage" />
     </div>
+
+    <LatePermissionDialog
+      v-model:open="requestDialogOpen"
+      type="quiz"
+      :item-id="requestTarget?.id"
+      :item-label="requestTarget?.title"
+      :closed-at="requestTarget?.closes_at"
+      @submitted="loadData"
+    />
   </div>
 </template>
 
@@ -152,10 +228,16 @@ import {
   RotateCcw,
   Info,
   ArrowRight,
-  FileQuestion
+  FileQuestion,
+  CalendarClock,
+  ClockAlert,
+  CircleAlert,
+  Hourglass,
+  Send
 } from 'lucide-vue-next';
 import { listMyQuizzes } from '@/api';
-import { swConfirm } from '@/utils';
+import { swConfirm, shortDateTime } from '@/utils';
+import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import PageHeader from '../components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import WeekPicker from '@/components/WeekPicker.vue';
@@ -165,6 +247,35 @@ const page = ref(1);
 const week = ref(null);
 const quizzes = ref({ data: [] });
 const isLoading = ref(true);
+const requestDialogOpen = ref(false);
+const requestTarget = ref(null);
+
+function openRequestDialog(quiz) {
+  requestTarget.value = quiz;
+  requestDialogOpen.value = true;
+}
+
+/**
+ * The badge shown when a quiz is locked by its schedule rather than by
+ * prerequisites. Returns null when the quiz is workable.
+ */
+function scheduleLock(quiz) {
+  if (quiz.is_open || !quiz.opens_at) return null;
+
+  const notYetOpen = new Date(quiz.opens_at) > new Date();
+
+  return notYetOpen
+    ? {
+        label: 'Belum Dibuka',
+        icon: Lock,
+        wrapper: 'text-muted-foreground bg-secondary ring-border',
+      }
+    : {
+        label: 'Waktu Habis',
+        icon: ClockAlert,
+        wrapper: 'text-rose-700 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
+      };
+}
 
 async function loadData() {
   isLoading.value = true;

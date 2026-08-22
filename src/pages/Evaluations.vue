@@ -62,21 +62,89 @@
                 <span>{{ evaluation.duration }} menit</span>
               </div>
 
-              <div :class="[statuses[getStatus(evaluation)].wrapper, 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ring-1 ring-inset']">
+              <div v-if="scheduleLock(evaluation)" :class="[scheduleLock(evaluation).wrapper, 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ring-1 ring-inset']">
+                <component :is="scheduleLock(evaluation).icon" class="w-3.5 h-3.5" />
+                <span>{{ scheduleLock(evaluation).label }}</span>
+              </div>
+              <div v-else :class="[statuses[getStatus(evaluation)].wrapper, 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ring-1 ring-inset']">
                 <component :is="statuses[getStatus(evaluation)].icon" class="w-3.5 h-3.5" />
                 <span>{{ getStatus(evaluation) }}</span>
               </div>
             </div>
 
             <!-- Card Content: Title -->
-            <h3 class="text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-4 leading-snug">
+            <h3 class="text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2 leading-snug">
               {{ evaluation.title }}
             </h3>
+
+            <!-- Schedule Window -->
+            <p v-if="evaluation.opens_at" class="text-xs text-muted-foreground mb-4 flex items-start gap-1.5">
+              <CalendarClock class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>{{ shortDateTime(evaluation.opens_at) }} &ndash; {{ shortDateTime(evaluation.closes_at) }}</span>
+            </p>
+            <div v-else class="mb-4" />
+
+            <!-- Late permission feedback -->
+            <p
+              v-if="evaluation.late_permission_status === 'pending'"
+              class="text-xs font-medium text-amber-700 dark:text-amber-400 mb-4 flex items-start gap-1.5"
+            >
+              <Hourglass class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>Pengajuan izin telat Anda sedang ditinjau admin.</span>
+            </p>
+            <p
+              v-else-if="evaluation.late_permission_status === 'rejected'"
+              class="text-xs font-medium text-rose-700 dark:text-rose-400 mb-4 flex items-start gap-1.5"
+            >
+              <CircleAlert class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>Pengajuan izin telat ditolak{{ evaluation.late_permission_review_note ? `: ${evaluation.late_permission_review_note}` : '.' }}</span>
+            </p>
+            <p
+              v-else-if="evaluation.late_permission_expires_at"
+              class="text-xs font-medium text-emerald-700 dark:text-emerald-400 mb-4 flex items-start gap-1.5"
+            >
+              <ClockAlert class="w-3.5 h-3.5 mt-px shrink-0" />
+              <span>Izin telat berlaku sampai {{ shortDateTime(evaluation.late_permission_expires_at) }}.</span>
+            </p>
           </div>
 
           <!-- Card Footer: Action Button -->
           <div class="pt-3 border-t border-border/40">
+            <!-- Closed: offer a late-permission request -->
+            <button
+              v-if="evaluation.can_request_late_permission"
+              type="button"
+              @click.prevent="openRequestDialog(evaluation)"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+            >
+              <Send class="w-4 h-4" />
+              <span>Ajukan Izin Telat</span>
+            </button>
+
+            <!-- Closed, request already pending -->
+            <button
+              v-else-if="!evaluation.is_open && evaluation.late_permission_status === 'pending'"
+              type="button"
+              disabled
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+            >
+              <Hourglass class="w-4 h-4" />
+              <span>Menunggu Persetujuan</span>
+            </button>
+
+            <!-- Not open yet -->
+            <button
+              v-else-if="!evaluation.is_open"
+              type="button"
+              disabled
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+            >
+              <Lock class="w-4 h-4" />
+              <span>Belum Dibuka</span>
+            </button>
+
             <router-link
+              v-else
               :to="{ name: 'evaluations.show', params: { id: evaluation.id } }"
               :class="[
                 'w-full font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
@@ -116,6 +184,15 @@
       <!-- Pagination -->
       <Pagination v-if="!isLoading" :meta="evaluations" v-on:change="changePage" />
     </div>
+
+    <LatePermissionDialog
+      v-model:open="requestDialogOpen"
+      type="evaluation"
+      :item-id="requestTarget?.id"
+      :item-label="requestTarget?.title"
+      :closed-at="requestTarget?.closes_at"
+      @submitted="loadData"
+    />
   </div>
 </template>
 
@@ -129,11 +206,19 @@ import {
   Sparkles,
   Award,
   Eye,
+  Lock,
   RotateCcw,
   Info,
-  ArrowRight
+  ArrowRight,
+  CalendarClock,
+  ClockAlert,
+  CircleAlert,
+  Hourglass,
+  Send
 } from 'lucide-vue-next';
 import { listMyEvaluations } from '@/api';
+import { shortDateTime } from '@/utils';
+import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import PageHeader from '../components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import WeekPicker from '@/components/WeekPicker.vue';
@@ -142,6 +227,35 @@ const page = ref(1);
 const week = ref(null);
 const evaluations = ref({ data: [] });
 const isLoading = ref(true);
+const requestDialogOpen = ref(false);
+const requestTarget = ref(null);
+
+function openRequestDialog(evaluation) {
+  requestTarget.value = evaluation;
+  requestDialogOpen.value = true;
+}
+
+/**
+ * The badge shown when an evaluation is locked by its schedule.
+ * Returns null when it is workable.
+ */
+function scheduleLock(evaluation) {
+  if (evaluation.is_open || !evaluation.opens_at) return null;
+
+  const notYetOpen = new Date(evaluation.opens_at) > new Date();
+
+  return notYetOpen
+    ? {
+        label: 'Belum Dibuka',
+        icon: Lock,
+        wrapper: 'text-muted-foreground bg-secondary ring-border',
+      }
+    : {
+        label: 'Waktu Habis',
+        icon: ClockAlert,
+        wrapper: 'text-rose-700 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
+      };
+}
 
 async function loadData() {
   isLoading.value = true;

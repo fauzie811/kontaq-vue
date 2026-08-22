@@ -25,6 +25,7 @@ describe('Quizzes/Show.vue Review Mode', () => {
 
   it('renders 4 options (a-d) when option_e is not present in completed quiz review', async () => {
     api.getMyQuiz.mockResolvedValue({
+      success: true,
       data: {
         quiz: {
           id: 1,
@@ -77,6 +78,7 @@ describe('Quizzes/Show.vue Review Mode', () => {
 
   it('renders 5 options (a-e) when option_e is present in completed quiz review', async () => {
     api.getMyQuiz.mockResolvedValue({
+      success: true,
       data: {
         quiz: {
           id: 1,

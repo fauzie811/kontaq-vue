@@ -117,6 +117,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { CheckIcon } from '@heroicons/vue/24/outline';
 import parseISO from 'date-fns/parseISO';
 
+import { swAlert } from '@/utils';
 import { getMyQuiz, updateMyQuiz } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 import Countdown from '@/components/Countdown.vue';
@@ -131,13 +132,31 @@ const userQuiz = ref();
 
 async function loadData() {
   const data = await getMyQuiz(route.params.id);
+
+  // The quiz may be locked by its schedule or by an unread material, in which
+  // case the payload carries no attempt to render.
+  if (!data.success) return showBlocked(data.message);
+
   quiz.value = data.data.quiz;
   userQuiz.value = data.data.user_quiz;
 }
 loadData();
 
+async function showBlocked(message) {
+  await swAlert({
+    icon: 'warning',
+    title: 'Mohon Maaf',
+    text: message || 'Kuis ini tidak dapat dikerjakan saat ini.',
+    buttonText: 'Kembali',
+  });
+  router.push('/quizzes');
+}
+
 async function submitAnswers() {
-  await updateMyQuiz(route.params.id, selected.value);
+  const data = await updateMyQuiz(route.params.id, selected.value);
+
+  if (!data.success) return showBlocked(data.message);
+
   router.push('/quizzes');
 }
 

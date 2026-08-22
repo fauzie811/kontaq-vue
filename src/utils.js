@@ -10,6 +10,12 @@ export const shortDate = (date) =>
 export const relativeDate = (date) =>
     formatRelative(parseJSON(date), new Date(), { locale: id });
 
+export const shortDateTime = (date) =>
+    format(parseJSON(date), "d MMM yyyy 'pukul' HH:mm", { locale: id });
+
+export const dayDateTime = (date) =>
+    format(parseJSON(date), "EEEE, d MMM yyyy 'pukul' HH:mm", { locale: id });
+
 export const stripTags = (text) => text.replace(/(<([^>]+)>)/gi, '');
 
 const icons = (name) =>

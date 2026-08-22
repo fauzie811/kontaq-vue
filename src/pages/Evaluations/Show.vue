@@ -132,24 +132,33 @@ const userEvaluation = ref();
 
 async function loadData() {
   const data = await getMyEvaluation(route.params.id);
+
+  // A blocked evaluation (schedule window closed, or prerequisite quizzes
+  // unfinished) comes back without an attempt to render.
+  if (!data.success) return showBlocked(data.message);
+
   evaluation.value = data.data.evaluation;
   userEvaluation.value = data.data.user_evaluation;
-  if (!data.success) return showAlert();
 }
 loadData();
 
-async function showAlert() {
+async function showBlocked(message) {
   await swAlert({
     icon: 'warning',
     title: 'Mohon Maaf',
-    text: 'Anda harus menyelesaikan semua kuis terkait untuk mengerjakan evaluasi ini.',
+    text:
+      message ||
+      'Anda harus menyelesaikan semua kuis terkait untuk mengerjakan evaluasi ini.',
     buttonText: 'Kembali',
   });
-  router.back();
+  router.push('/evaluations');
 }
 
 async function submitAnswers() {
-  await updateMyEvaluation(route.params.id, selected.value);
+  const data = await updateMyEvaluation(route.params.id, selected.value);
+
+  if (!data.success) return showBlocked(data.message);
+
   router.push('/evaluations');
 }
 

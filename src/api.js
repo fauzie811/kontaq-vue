@@ -318,6 +318,30 @@ export const updateMyEvaluation = async (id, answers) => {
   }
 };
 
+export const listMyLatePermissions = async ({ page = 1 } = {}) => {
+  try {
+    const { data } = await axios.get('me/late-permissions', {
+      params: { page },
+    });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const requestLatePermission = async ({ type, id, reason }) => {
+  try {
+    const { data } = await axios.post('me/late-permissions', {
+      type,
+      id,
+      reason,
+    });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 let chaptersCache = null;
 
 export const listQuranChapters = async (forceRefresh = false) => {

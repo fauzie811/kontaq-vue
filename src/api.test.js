@@ -9,6 +9,8 @@ import {
   listMyEvaluations,
   getReports,
   updateReport,
+  listMyLatePermissions,
+  requestLatePermission,
 } from './api';
 
 vi.mock('axios');
@@ -109,6 +111,56 @@ describe('API Helper Functions', () => {
         scores: { quiz_1: 100 },
       });
       expect(res).toEqual(mockResult);
+    });
+  });
+
+  describe('listMyLatePermissions', () => {
+    it('should fetch the late permission history with pagination', async () => {
+      const mockData = { data: { data: [{ id: 1, status: 'pending' }] } };
+      axios.get.mockResolvedValueOnce({ data: mockData });
+
+      const res = await listMyLatePermissions({ page: 3 });
+      expect(axios.get).toHaveBeenCalledWith('me/late-permissions', {
+        params: { page: 3 },
+      });
+      expect(res).toEqual(mockData);
+    });
+
+    it('should default to the first page', async () => {
+      axios.get.mockResolvedValueOnce({ data: {} });
+
+      await listMyLatePermissions();
+      expect(axios.get).toHaveBeenCalledWith('me/late-permissions', {
+        params: { page: 1 },
+      });
+    });
+  });
+
+  describe('requestLatePermission', () => {
+    it('should post the request payload', async () => {
+      const mockData = { success: true, data: { id: 7, status: 'pending' } };
+      axios.post.mockResolvedValueOnce({ data: mockData });
+
+      const res = await requestLatePermission({
+        type: 'quiz',
+        id: 12,
+        reason: 'Saya sakit selama sepekan.',
+      });
+
+      expect(axios.post).toHaveBeenCalledWith('me/late-permissions', {
+        type: 'quiz',
+        id: 12,
+        reason: 'Saya sakit selama sepekan.',
+      });
+      expect(res).toEqual(mockData);
+    });
+
+    it('should propagate the rejection message', async () => {
+      axios.post.mockRejectedValueOnce('Waktu pengerjaan belum berakhir.');
+
+      await expect(
+        requestLatePermission({ type: 'quiz', id: 1, reason: 'terlambat sekali' })
+      ).rejects.toBe('Waktu pengerjaan belum berakhir.');
     });
   });
 });

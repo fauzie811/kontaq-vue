@@ -43,6 +43,7 @@ import {
   UsersIcon,
   ClipboardDocumentCheckIcon,
   ChatBubbleLeftRightIcon,
+  ClockIcon,
 } from '@heroicons/vue/24/outline'
 
 const navigation = [
@@ -51,6 +52,7 @@ const navigation = [
   { name: 'Materi Tadabbur', route: 'materials', icon: FolderIcon },
   { name: 'Kuis', route: 'quizzes', icon: QuestionMarkCircleIcon },
   { name: 'Evaluasi', route: 'evaluations', icon: ClipboardDocumentCheckIcon },
+  { name: 'Izin Telat', route: 'late-permissions', icon: ClockIcon },
   { name: 'Rapor', route: 'reports', icon: DocumentChartBarIcon },
   { name: 'Sertifikat', route: 'certificates', icon: DocumentCheckIcon },
   { name: 'Pengumuman', route: 'announcements', icon: MegaphoneIcon },
