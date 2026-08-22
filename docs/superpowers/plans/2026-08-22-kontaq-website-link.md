@@ -28,7 +28,7 @@
 - Consumes: `Globe`, `ExternalLink` from `lucide-vue-next`
 - Produces: Navigation link to `https://kontaq.org` inside user profile dropdown menu
 
-- [ ] **Step 1: Write the failing test for Main layout user dropdown**
+- [x] **Step 1: Write the failing test for Main layout user dropdown**
 
 Create `src/layouts/Main.test.js`:
 ```javascript
@@ -77,12 +77,12 @@ describe('Main.vue - User Menu Dropdown', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/layouts/Main.test.js`
 Expected: FAIL (link not found or file not yet passing)
 
-- [ ] **Step 3: Modify `src/layouts/Main.vue` and `src/components/UserMenu.vue`**
+- [x] **Step 3: Modify `src/layouts/Main.vue` and `src/components/UserMenu.vue`**
 
 In `src/layouts/Main.vue`:
 1. Import `Globe` and `ExternalLink` from `'lucide-vue-next'`.
@@ -106,12 +106,12 @@ In `src/layouts/Main.vue`:
 In `src/components/UserMenu.vue`:
 Update `userNavigation` to include the external website link and support `external: true` items.
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run src/layouts/Main.test.js`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/layouts/Main.vue src/components/UserMenu.vue src/layouts/Main.test.js
@@ -130,7 +130,7 @@ git commit -m "feat(layout): add kontaq.org main website link to user menu dropd
 - Consumes: `Globe`, `ExternalLink` from `lucide-vue-next`
 - Produces: Action button link to `https://kontaq.org` in the support footer card
 
-- [ ] **Step 1: Update `src/pages/Help.test.js` with failing test**
+- [x] **Step 1: Update `src/pages/Help.test.js` with failing test**
 
 Add to `src/pages/Help.test.js`:
 ```javascript
@@ -146,12 +146,12 @@ it('renders link to official website kontaq.org in support section', async () =>
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/pages/Help.test.js`
 Expected: FAIL
 
-- [ ] **Step 3: Modify `src/pages/Help.vue`**
+- [x] **Step 3: Modify `src/pages/Help.vue`**
 
 In `src/pages/Help.vue`:
 1. Import `Globe` and `ExternalLink` from `'lucide-vue-next'`.
@@ -177,12 +177,12 @@ In `src/pages/Help.vue`:
 </div>
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run src/pages/Help.test.js`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/pages/Help.vue src/pages/Help.test.js
@@ -201,7 +201,7 @@ git commit -m "feat(help): add kontaq.org link to help and support card"
 - Consumes: External link `https://kontaq.org`
 - Produces: Clickable website link in both desktop hero and mobile footers of Auth layout
 
-- [ ] **Step 1: Write the failing test for Auth layout**
+- [x] **Step 1: Write the failing test for Auth layout**
 
 Create `src/layouts/Auth.test.js`:
 ```javascript
@@ -229,12 +229,12 @@ describe('Auth.vue Layout', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run src/layouts/Auth.test.js`
 Expected: FAIL
 
-- [ ] **Step 3: Modify `src/layouts/Auth.vue`**
+- [x] **Step 3: Modify `src/layouts/Auth.vue`**
 
 In `src/layouts/Auth.vue`:
 1. In desktop hero footer (line 21):
@@ -262,12 +262,12 @@ In `src/layouts/Auth.vue`:
 </div>
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run src/layouts/Auth.test.js`
 Expected: PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/layouts/Auth.vue src/layouts/Auth.test.js
@@ -281,14 +281,14 @@ git commit -m "feat(auth): add kontaq.org links to desktop and mobile footers"
 **Files:**
 - Run full test suite & production build verification
 
-- [ ] **Step 1: Run full test suite**
+- [x] **Step 1: Run full test suite**
 
 Run: `npm test`
 Expected: All 22+ test files pass
 
-- [ ] **Step 2: Run production build**
+- [x] **Step 2: Run production build**
 
 Run: `npm run build`
 Expected: Build succeeds without errors
 
-- [ ] **Step 3: Final commit if any tweaks needed**
+- [x] **Step 3: Final commit if any tweaks needed**
