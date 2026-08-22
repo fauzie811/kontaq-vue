@@ -61,7 +61,7 @@
         </a>
       </div>
       <div class="flex items-center justify-center flex-1 w-full my-auto">
-        <div class="view-transition-content w-full max-w-md">
+        <div class="w-full max-w-md">
           <slot />
         </div>
       </div>

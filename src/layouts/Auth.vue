@@ -38,7 +38,7 @@
 
       <!-- Main Slot Container -->
       <div class="flex items-center justify-center flex-1 py-4">
-        <div class="view-transition-content w-full max-w-md lg:max-w-xl transition-all duration-300">
+        <div class="w-full max-w-md lg:max-w-xl transition-all duration-300">
           <slot />
         </div>
       </div>

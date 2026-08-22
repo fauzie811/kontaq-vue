@@ -1,4 +1,3 @@
-import { nextTick } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import authStore from './store/auth';
@@ -165,53 +164,6 @@ router.beforeEach((to, from, next) => {
     next({ name: 'login' });
   else if (to.name === 'login' && authStore.isLoggedIn) next({ name: 'home' });
   else next();
-});
-
-let isBackNavigation = false;
-if (typeof window !== 'undefined') {
-  window.addEventListener('popstate', () => {
-    isBackNavigation = true;
-  });
-}
-
-router.beforeResolve((to, from) => {
-  const isBack = isBackNavigation;
-  isBackNavigation = false;
-
-  if (
-    typeof document === 'undefined' ||
-    !document.startViewTransition ||
-    to.path === from.path
-  ) {
-    return;
-  }
-
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    typeof window.matchMedia === 'function' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    return;
-  }
-
-  const direction = isBack ? 'backward' : 'forward';
-
-  return new Promise((resolve) => {
-    try {
-      document.startViewTransition({
-        update: async () => {
-          resolve();
-          await nextTick();
-        },
-        types: [direction],
-      });
-    } catch (e) {
-      document.startViewTransition(async () => {
-        resolve();
-        await nextTick();
-      });
-    }
-  });
 });
 
 export default router;

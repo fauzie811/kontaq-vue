@@ -132,7 +132,7 @@ The color palette pairs natural forest tones with warm golden amber accents, gro
 
 ## Layout
 
-The grid model centers content within a responsive `max-w-7xl` container with responsive padding (`px-4 sm:px-6 lg:px-8`). Content rhythm follows an 8px spatial grid (8px, 16px, 24px, 32px). Page transitions use native View Transitions (`document.startViewTransition`) for smooth directional slide and fade effects between routes.
+The grid model centers content within a responsive `max-w-7xl` container with responsive padding (`px-4 sm:px-6 lg:px-8`). Content rhythm follows an 8px spatial grid (8px, 16px, 24px, 32px).
 
 ## Elevation & Depth
 
