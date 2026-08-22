@@ -57,6 +57,32 @@
               </button>
             </MenuItem>
 
+            <!-- Go to Related Material (Tadabbur) -->
+            <template v-if="hasMaterials">
+              <MenuItem
+                v-for="mat in materialsList"
+                :key="mat.id"
+                v-slot="{ active }"
+              >
+                <button
+                  @click="goToMaterial(mat)"
+                  :class="[
+                    active
+                      ? 'bg-accent text-accent-foreground'
+                      : 'text-foreground',
+                    'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
+                  ]"
+                >
+                  <BookOpen class="w-4 h-4 text-primary shrink-0" />
+                  <span class="truncate">{{
+                    materialsList.length > 1
+                      ? `Tadabbur: ${mat.title || ('Pekan ' + mat.week)}`
+                      : 'Tadabbur'
+                  }}</span>
+                </button>
+              </MenuItem>
+            </template>
+
             <!-- Toggle Footnote (If available) -->
             <MenuItem v-if="verse.footnotes" v-slot="{ active }">
               <button
@@ -99,6 +125,17 @@
         <span class="text-xs text-muted-foreground font-medium">
           QS {{ chapterDetails?.latin }}: {{ verse.verse }}
         </span>
+
+        <!-- Tadabbur badge button if verse has related materials -->
+        <button
+          v-if="hasMaterials"
+          @click="goToMaterial(materialsList[0])"
+          class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition cursor-pointer border border-primary/20 active:scale-95"
+          :title="materialsList[0]?.title ? `Materi: ${materialsList[0].title}` : 'Lihat Tadabbur'"
+        >
+          <BookOpen class="w-3.5 h-3.5 text-primary" />
+          <span>Tadabbur</span>
+        </button>
       </div>
     </div>
 
@@ -149,6 +186,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 import {
   FileText,
@@ -158,6 +196,7 @@ import {
   Copy,
   Check,
   MoreVertical,
+  BookOpen,
 } from 'lucide-vue-next';
 import QuranVerseNumber from '@/components/QuranVerseNumber.vue';
 
@@ -184,9 +223,33 @@ const props = defineProps({
   },
 });
 
-defineEmits(['play-verse', 'copy-verse']);
+const emit = defineEmits(['play-verse', 'copy-verse', 'go-to-material']);
+
+let router = null;
+try {
+  router = useRouter();
+} catch (_) {}
 
 const showFootnotes = ref(false);
+
+const materialsList = computed(() => {
+  if (Array.isArray(props.verse?.materials) && props.verse.materials.length > 0) {
+    return props.verse.materials;
+  }
+  if (props.verse?.material) {
+    return [props.verse.material];
+  }
+  return [];
+});
+
+const hasMaterials = computed(() => materialsList.value.length > 0);
+
+function goToMaterial(material) {
+  emit('go-to-material', material);
+  if (material?.id && router) {
+    router.push({ name: 'materials.show', params: { id: material.id } });
+  }
+}
 
 const formattedTranslation = computed(() => {
   if (!props.verse?.translation) return '';
