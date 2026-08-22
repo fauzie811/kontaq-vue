@@ -103,6 +103,57 @@ describe('SearchModal.vue', () => {
     expect(wrapper.text()).toContain('Sapi Betina');
   });
 
+  it('clicking a verse result emits select event and navigates to quran.show with chapter and verse query', async () => {
+    api.searchQuran.mockResolvedValueOnce({
+      success: true,
+      data: {
+        chapters: [],
+        verses: {
+          data: [
+            {
+              id: 262,
+              chapter: 2,
+              verse: 255,
+              text: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ',
+              translation: 'Allah, tidak ada tuhan selain Dia. Yang Mahahidup, Yang terus-menerus mengurus (makhluk-Nya)',
+              surah: { number: 2, latin: 'Al-Baqarah' },
+            },
+          ],
+        },
+        materials: [],
+        faqs: [],
+      },
+    });
+
+    await mountModal();
+
+    const input = wrapper.find('input[type="text"]');
+    await input.setValue('kursi');
+
+    vi.advanceTimersByTime(250);
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('QS Al-Baqarah: 255');
+
+    const verseItem = wrapper.findAll('[data-item-key]').find((el) => el.attributes('data-item-key') === 'verse-262');
+    expect(verseItem).toBeDefined();
+
+    await verseItem.trigger('click');
+    await flushPromises();
+
+    expect(wrapper.emitted('select')).toBeTruthy();
+    expect(wrapper.emitted('select')[0][0]).toEqual({
+      type: 'verse',
+      data: expect.objectContaining({ chapter: 2, verse: 255 }),
+    });
+    expect(wrapper.emitted('close')).toBeTruthy();
+    expect(mockPush).toHaveBeenCalledWith({
+      name: 'quran.show',
+      params: { chapter: 2 },
+      query: { verse: 255 },
+    });
+  });
+
   it('handles category filter chips to add and toggle prefixes', async () => {
     await mountModal();
 

@@ -85,6 +85,7 @@
           :verse="verse"
           :chapterDetails="chapterDetails"
           :isActive="isVerseActive(verse.verse)"
+          :isTargeted="targetVerseNumber === verse.verse"
           :isPlaying="quranAudio.isPlaying"
           :isCopied="copiedId === verse.id"
           @play-verse="handlePlayVerse"
@@ -137,6 +138,12 @@ const route = useRoute();
 const router = useRouter();
 
 const chapterNumber = computed(() => parseInt(route.params.chapter, 10));
+const targetVerseNumber = computed(() => {
+  const v =
+    route.query.verse ||
+    (route.hash ? route.hash.replace('#verse-', '').replace('#', '') : null);
+  return v ? parseInt(v, 10) : null;
+});
 
 const initialLoading = ref(true);
 const loadingMore = ref(false);
@@ -173,18 +180,77 @@ watch(verses, (newVerses) => {
   }
 });
 
+async function scrollToVerse(verseNum, smooth = true) {
+  if (!verseNum) return;
+  await nextTick();
+  const attemptScroll = () => {
+    const el = verseRefs.value[verseNum] || (typeof document !== 'undefined' ? document.getElementById(`verse-${verseNum}`) : null);
+    if (el && typeof el.scrollIntoView === 'function') {
+      el.scrollIntoView({
+        behavior: smooth ? 'smooth' : 'auto',
+        block: 'center',
+      });
+      return true;
+    }
+    return false;
+  };
+
+  if (!attemptScroll()) {
+    setTimeout(attemptScroll, 120);
+  }
+}
+
 watch(
   () => quranAudio.currentVerseNumber,
   async (newVerseNum) => {
     if (newVerseNum && quranAudio.currentChapterNumber === chapterNumber.value) {
-      await nextTick();
-      const el = verseRefs.value[newVerseNum];
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      await scrollToVerse(newVerseNum, true);
     }
   }
 );
+
+watch(targetVerseNumber, async (newVerse) => {
+  if (!newVerse || !chapterNumber.value) return;
+
+  const isLoaded = verses.value.some((v) => v.verse === newVerse);
+  if (isLoaded) {
+    await scrollToVerse(newVerse, true);
+    return;
+  }
+
+  const targetPage = Math.ceil(newVerse / 20);
+  if (targetPage > currentPage.value && currentPage.value < lastPage.value) {
+    loadingMore.value = true;
+    try {
+      const maxPageToLoad = Math.min(targetPage, lastPage.value);
+      const pagePromises = [];
+      for (let p = currentPage.value + 1; p <= maxPageToLoad; p++) {
+        pagePromises.push(getQuranChapterVerses(chapterNumber.value, p));
+      }
+
+      const results = await Promise.all(pagePromises);
+      const newVerses = [];
+      for (const res of results) {
+        if (res && res.success && res.data?.data) {
+          newVerses.push(...res.data.data);
+        }
+      }
+
+      const existingIds = new Set(verses.value.map((v) => v.id));
+      const filtered = newVerses.filter((v) => !existingIds.has(v.id));
+      verses.value = [...verses.value, ...filtered];
+
+      currentPage.value = maxPageToLoad;
+      hasMore.value = maxPageToLoad < lastPage.value;
+
+      await scrollToVerse(newVerse, true);
+    } catch (e) {
+      console.error('Error loading additional pages for verse:', e);
+    } finally {
+      loadingMore.value = false;
+    }
+  }
+});
 
 async function resetAndFetch() {
   verses.value = [];
@@ -195,7 +261,54 @@ async function resetAndFetch() {
   initialLoading.value = true;
   error.value = null;
 
-  await fetchVerses(1);
+  try {
+    const targetVerse = targetVerseNumber.value;
+    const targetPage = targetVerse ? Math.ceil(targetVerse / 20) : 1;
+
+    const res1 = await getQuranChapterVerses(chapterNumber.value, 1);
+    if (!res1 || !res1.success) {
+      error.value = res1?.message || 'Surah tidak ditemukan.';
+      return;
+    }
+
+    chapterDetails.value = res1.chapter;
+    const totalPages = res1.data?.last_page || 1;
+    lastPage.value = totalPages;
+
+    let loadedVerses = res1.data?.data || [];
+    let finalPage = 1;
+
+    if (targetPage > 1 && totalPages >= 2) {
+      const maxPageToLoad = Math.min(targetPage, totalPages);
+      finalPage = maxPageToLoad;
+
+      const pagePromises = [];
+      for (let p = 2; p <= maxPageToLoad; p++) {
+        pagePromises.push(getQuranChapterVerses(chapterNumber.value, p));
+      }
+
+      const additionalResults = await Promise.all(pagePromises);
+      for (const res of additionalResults) {
+        if (res && res.success && res.data?.data) {
+          loadedVerses = [...loadedVerses, ...res.data.data];
+        }
+      }
+    }
+
+    verses.value = loadedVerses;
+    currentPage.value = finalPage;
+    hasMore.value = finalPage < totalPages;
+
+    if (targetVerse) {
+      await scrollToVerse(targetVerse, false);
+    }
+  } catch (e) {
+    console.error('Error fetching verses:', e);
+    error.value = typeof e === 'string' ? e : (e.message || 'Gagal memuat data ayat.');
+  } finally {
+    initialLoading.value = false;
+    loadingMore.value = false;
+  }
 }
 
 async function fetchVerses(page = 1) {
@@ -255,7 +368,7 @@ function setupObserver() {
       }
     },
     {
-      rootMargin: '200px 0px', // Trigger load 200px before scrolling to bottom
+      rootMargin: '200px 0px',
     }
   );
 

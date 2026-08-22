@@ -1168,7 +1168,11 @@ function handleSelectVerse(verse) {
   emit('select', { type: 'verse', data: verse });
   emitClose();
   searchQuery.value = '';
-  router.push({ name: 'quran.show', params: { chapter: verse.chapter } });
+  router.push({
+    name: 'quran.show',
+    params: { chapter: verse.chapter },
+    query: { verse: verse.verse },
+  });
 }
 
 function handleSelectMaterial(material) {

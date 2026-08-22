@@ -1,10 +1,14 @@
 <template>
   <div
+    :id="`verse-${verse.verse}`"
+    :data-verse="verse.verse"
     :class="[
-      'rounded-2xl p-4 sm:p-6 border transition-all space-y-4 shadow-xs',
+      'rounded-2xl p-4 sm:p-6 border transition-all duration-300 space-y-4 shadow-xs',
       isActive
         ? 'border-accent/60 bg-accent/5 ring-2 ring-accent/20'
-        : 'bg-card text-card-foreground border-border/70 hover:border-primary/30',
+        : isTargeted
+          ? 'border-primary/60 bg-primary/5 ring-2 ring-primary/30 shadow-md'
+          : 'bg-card text-card-foreground border-border/70 hover:border-primary/30',
     ]"
   >
     <!-- Verse Header -->
@@ -199,6 +203,10 @@ const props = defineProps({
     default: null,
   },
   isActive: {
+    type: Boolean,
+    default: false,
+  },
+  isTargeted: {
     type: Boolean,
     default: false,
   },
