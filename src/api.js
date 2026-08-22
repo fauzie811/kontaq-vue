@@ -396,3 +396,24 @@ export const searchQuran = async ({ q, page = 1 }) => {
   }
 };
 
+export const listFaqs = async (params = {}) => {
+  try {
+    const { data } = await axios.get('faqs', {
+      params,
+    });
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getFaq = async (id) => {
+  try {
+    const { data } = await axios.get(`faqs/${id}`);
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+

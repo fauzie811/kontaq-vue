@@ -15,7 +15,7 @@
           <!-- Search Icon Button with keyboard shortcut badge -->
           <button
             @click="isSearchOpen = true"
-            title="Cari Surah, ayat, tadabbur (Ctrl+K)"
+            title="Cari Surah, ayat, tadabbur, bantuan (Ctrl+K)"
             class="h-10 px-3 sm:px-3.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center gap-2 transition shadow-2xs border border-border cursor-pointer active:scale-95"
           >
             <Search class="w-4.5 h-4.5 stroke-[2.2] text-primary" />
@@ -113,6 +113,15 @@
                 >
                   <Bell class="w-4 h-4 text-primary" />
                   Pengumuman
+                </router-link>
+
+                <router-link
+                  :to="{ name: 'help' }"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                >
+                  <HelpCircle class="w-4 h-4 text-primary" />
+                  Pusat Bantuan / FAQ
                 </router-link>
 
                 <div class="my-1 border-t border-border"></div>
@@ -269,7 +278,7 @@
                 v-model="searchQuery"
                 ref="mobileSearchInputRef"
                 type="text"
-                placeholder="Cari Surah, ayat, tadabbur (#, @, ?)..."
+                placeholder="Cari Surah, ayat, tadabbur, bantuan (#, @, !, ?)..."
                 class="w-full text-base border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-foreground placeholder-muted-foreground bg-transparent font-medium p-0"
                 @keydown.esc="isSearchOpen = false"
               />
@@ -300,8 +309,11 @@
             <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
               @ Ayat
             </button>
+            <button @click="setSearchPrefix('! ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
+              ! Tadabbur
+            </button>
             <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
-              ? Tadabbur
+              ? Bantuan
             </button>
           </div>
 
@@ -315,7 +327,7 @@
 
             <!-- Empty Query Placeholder -->
             <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-muted-foreground text-xs sm:text-sm">
-              Ketik kata kunci untuk mencari Surah, Ayat, atau Materi Tadabbur.
+              Ketik kata kunci untuk mencari Surah, Ayat, Materi Tadabbur, atau Bantuan FAQ.
             </div>
 
             <!-- No Results Found -->
@@ -406,6 +418,34 @@
                   </div>
                 </div>
               </div>
+
+              <!-- 4. FAQ / Bantuan Results -->
+              <div v-if="searchResults.faqs && searchResults.faqs.length > 0" class="space-y-2 pt-3">
+                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+                  Bantuan & FAQ ({{ searchResults.faqs.length }})
+                </h4>
+                <div class="space-y-2">
+                  <div
+                    v-for="faq in searchResults.faqs"
+                    :key="faq.id"
+                    @click="selectFaq(faq)"
+                    class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                  >
+                    <div class="min-w-0 flex-1 pr-3">
+                      <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">
+                        {{ faq.question }}
+                      </p>
+                      <p class="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                        {{ faq.answer }}
+                      </p>
+                      <span v-if="faq.category" class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary">
+                        {{ faq.category }}
+                      </span>
+                    </div>
+                    <HelpCircle class="w-4 h-4 text-primary shrink-0" />
+                  </div>
+                </div>
+              </div>
             </template>
           </div>
         </div>
@@ -433,7 +473,7 @@
                   v-model="searchQuery"
                   ref="searchInputRef"
                   type="text"
-                  placeholder="Cari Surah, ayat, tadabbur (# surah, @ ayat, ? materi)..."
+                  placeholder="Cari Surah, ayat, tadabbur, bantuan (# surah, @ ayat, ! materi, ? bantuan)..."
                   class="w-full text-lg border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-foreground placeholder-muted-foreground bg-transparent font-medium p-0"
                   @keydown.esc="isSearchOpen = false"
                 />
@@ -464,8 +504,11 @@
               <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
                 @ Ayat
               </button>
+              <button @click="setSearchPrefix('! ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
+                ! Tadabbur
+              </button>
               <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
-                ? Tadabbur
+                ? Bantuan
               </button>
             </div>
 
@@ -479,7 +522,7 @@
 
               <!-- Empty Query Placeholder -->
               <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-muted-foreground text-sm">
-                Ketik kata kunci untuk mencari Surah, Ayat, atau Materi Tadabbur.
+                Ketik kata kunci untuk mencari Surah, Ayat, Materi Tadabbur, atau Bantuan FAQ.
               </div>
 
               <!-- No Results Found -->
@@ -567,6 +610,34 @@
                         </p>
                       </div>
                       <BookOpen class="w-4 h-4 text-primary shrink-0 ml-3" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4. FAQ / Bantuan Results -->
+                <div v-if="searchResults.faqs && searchResults.faqs.length > 0" class="space-y-2 pt-3">
+                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+                    Bantuan & FAQ ({{ searchResults.faqs.length }})
+                  </h4>
+                  <div class="grid grid-cols-1 gap-2">
+                    <div
+                      v-for="faq in searchResults.faqs"
+                      :key="faq.id"
+                      @click="selectFaq(faq)"
+                      class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                    >
+                      <div class="min-w-0 flex-1 pr-3">
+                        <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">
+                          {{ faq.question }}
+                        </p>
+                        <p class="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                          {{ faq.answer }}
+                        </p>
+                        <span v-if="faq.category" class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary">
+                          {{ faq.category }}
+                        </span>
+                      </div>
+                      <HelpCircle class="w-4 h-4 text-primary shrink-0" />
                     </div>
                   </div>
                 </div>
@@ -703,6 +774,7 @@ import {
   ChevronDown,
   MessageSquare,
   Award,
+  HelpCircle,
 } from 'lucide-vue-next';
 import NotificationDrawer from '@/components/NotificationDrawer.vue';
 import authStore from '@/store/auth';
@@ -777,7 +849,7 @@ const searchInputRef = ref(null);
 const mobileSearchInputRef = ref(null);
 
 const isSearching = ref(false);
-const searchResults = ref({ chapters: [], verses: [], materials: [] });
+const searchResults = ref({ chapters: [], verses: [], materials: [], faqs: [] });
 let searchDebounceTimer = null;
 
 watch(isSearchOpen, (open) => {
@@ -834,7 +906,7 @@ watch(searchQuery, (newVal) => {
   if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
   const q = (newVal || '').trim();
   if (!q) {
-    searchResults.value = { chapters: [], verses: [], materials: [] };
+    searchResults.value = { chapters: [], verses: [], materials: [], faqs: [] };
     isSearching.value = false;
     return;
   }
@@ -848,6 +920,7 @@ watch(searchQuery, (newVal) => {
           chapters: res.data.chapters || [],
           verses: res.data.verses ? (res.data.verses.data || []) : [],
           materials: res.data.materials || [],
+          faqs: res.data.faqs || [],
         };
       }
     } catch (e) {
@@ -859,8 +932,13 @@ watch(searchQuery, (newVal) => {
 });
 
 const hasSearchResults = computed(() => {
-  const { chapters, verses, materials } = searchResults.value;
-  return (chapters && chapters.length > 0) || (verses && verses.length > 0) || (materials && materials.length > 0);
+  const { chapters, verses, materials, faqs } = searchResults.value;
+  return (
+    (chapters && chapters.length > 0) ||
+    (verses && verses.length > 0) ||
+    (materials && materials.length > 0) ||
+    (faqs && faqs.length > 0)
+  );
 });
 
 function setSearchPrefix(prefix) {
@@ -891,6 +969,13 @@ function selectMaterial(material) {
   isSearchOpen.value = false;
   searchQuery.value = '';
   router.push({ name: 'materials.show', params: { id: material.id } });
+}
+
+function selectFaq(faq) {
+  isPushedState.value = false;
+  isSearchOpen.value = false;
+  searchQuery.value = '';
+  router.push({ name: 'help', query: { id: faq.id } });
 }
 
 onUnmounted(() => {

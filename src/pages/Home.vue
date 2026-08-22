@@ -143,6 +143,7 @@ import {
   MessageSquare,
   ChevronRight,
   QrCode,
+  HelpCircle,
 } from 'lucide-vue-next';
 
 const router = useRouter();
@@ -185,6 +186,12 @@ const menuItems = [
     route: 'infaq',
     icon: HeartHandshake,
     iconBg: 'bg-rose-100 text-rose-700 border border-rose-200/60',
+  },
+  {
+    title: 'Pusat Bantuan',
+    route: 'help',
+    icon: HelpCircle,
+    iconBg: 'bg-violet-100 text-violet-700 border border-violet-200/60',
   },
 ];
 

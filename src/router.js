@@ -146,6 +146,13 @@ const routes = [
     name: 'profile',
     meta: { needsAuth: true, layout: MainLayout },
   },
+  {
+    path: '/help',
+    alias: '/bantuan',
+    component: () => import('./pages/Help.vue'),
+    name: 'help',
+    meta: { needsAuth: true, layout: MainLayout },
+  },
 ];
 
 const router = createRouter({
