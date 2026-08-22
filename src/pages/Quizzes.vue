@@ -68,7 +68,7 @@
                 <component :is="scheduleLock(quiz).icon" class="w-3.5 h-3.5" />
                 <span>{{ scheduleLock(quiz).label }}</span>
               </div>
-              <div v-else-if="!quiz.material_read" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 ring-1 ring-inset ring-rose-500/20">
+              <div v-else-if="quiz.material_id && !quiz.material_read" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 ring-1 ring-inset ring-rose-500/20">
                 <Lock class="w-3.5 h-3.5" />
                 <span>Materi Belum Dibaca</span>
               </div>
@@ -151,7 +151,7 @@
 
             <!-- Locked Button (Needs Material Read) -->
             <button
-              v-else-if="!quiz.material_read"
+              v-else-if="quiz.material_id && !quiz.material_read"
               type="button"
               @click.prevent="showAlert(quiz.material_id)"
               class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer border border-border"

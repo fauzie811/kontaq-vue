@@ -151,12 +151,23 @@ describe('Quizzes.vue schedule locking', () => {
 
   it('still demands the material be read before an open quiz can start', async () => {
     const wrapper = mountPage([
-      quiz({ is_open: true, can_request_late_permission: false, material_read: false }),
+      quiz({ is_open: true, can_request_late_permission: false, material_id: 10, material_read: false }),
     ]);
     await flushPromises();
 
     expect(wrapper.text()).toContain('Materi Belum Dibaca');
     expect(wrapper.text()).toContain('Baca Materi Terlebih Dahulu');
+  });
+
+  it('does not demand material reading when quiz has no related material', async () => {
+    const wrapper = mountPage([
+      quiz({ is_open: true, can_request_late_permission: false, material_id: null, material_read: false }),
+    ]);
+    await flushPromises();
+
+    expect(wrapper.text()).not.toContain('Materi Belum Dibaca');
+    expect(wrapper.text()).not.toContain('Baca Materi Terlebih Dahulu');
+    expect(wrapper.text()).toContain('Mulai Kuis');
   });
 
   it('passes all available weeks from the API to the WeekPicker', async () => {
