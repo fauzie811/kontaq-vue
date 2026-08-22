@@ -27,6 +27,7 @@
             show-all-option
             class="w-full sm:w-60"
             v-model="week"
+            :weeks="availableWeeks"
             @update:modelValue="() => changePage(1)"
           />
         </div>
@@ -245,6 +246,7 @@ import WeekPicker from '@/components/WeekPicker.vue';
 const router = useRouter();
 const page = ref(1);
 const week = ref(null);
+const availableWeeks = ref([]);
 const quizzes = ref({ data: [] });
 const isLoading = ref(true);
 const requestDialogOpen = ref(false);
@@ -280,11 +282,14 @@ function scheduleLock(quiz) {
 async function loadData() {
   isLoading.value = true;
   try {
-    const { data } = await listMyQuizzes({
+    const res = await listMyQuizzes({
       page: page.value,
       week: week.value,
     });
-    quizzes.value = data;
+    quizzes.value = res.data;
+    if (res.available_weeks) {
+      availableWeeks.value = res.available_weeks;
+    }
   } catch (error) {
     console.error('Gagal memuat daftar kuis:', error);
   } finally {

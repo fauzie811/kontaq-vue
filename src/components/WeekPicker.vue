@@ -25,7 +25,7 @@
               </span>
             </li>
           </ListboxOption>
-          <ListboxOption as="template" v-for="week in maxWeeks" :key="week" :value="week" v-slot="{ active, selected }">
+          <ListboxOption as="template" v-for="week in weekOptions" :key="week" :value="week" v-slot="{ active, selected }">
             <li
               :class="[selected || active ? 'bg-primary text-primary-foreground' : 'text-popover-foreground hover:bg-secondary hover:text-secondary-foreground', 'relative cursor-default select-none py-2 pl-3 pr-9 mx-1 my-0.5 rounded-lg transition-colors']">
               <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">Pekan {{ week }}</span>
@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
@@ -55,10 +56,24 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  weeks: {
+    type: Array,
+    default: null,
+  },
   maxWeeks: {
     type: Number,
     default: 30,
   },
 });
 const emit = defineEmits(['update:modelValue']);
+
+const weekOptions = computed(() => {
+  if (Array.isArray(props.weeks) && props.weeks.length > 0) {
+    return [...props.weeks]
+      .map(Number)
+      .filter(n => !isNaN(n))
+      .sort((a, b) => a - b);
+  }
+  return Array.from({ length: props.maxWeeks }, (_, i) => i + 1);
+});
 </script>

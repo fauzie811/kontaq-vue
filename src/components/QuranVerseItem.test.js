@@ -58,10 +58,14 @@ describe('QuranVerseItem.vue', () => {
       },
     });
 
+    const menuButton = wrapper.find('button[title="Opsi Ayat"]');
+    expect(menuButton.exists()).toBe(true);
+    await menuButton.trigger('click');
+
     expect(wrapper.text()).toContain('Tadabbur');
 
     // Find the Tadabbur pill button
-    const tadabburButton = wrapper.find('button[title*="Tadabbur"], button[title*="Materi"]');
+    const tadabburButton = wrapper.find('button span.truncate');
     expect(tadabburButton.exists()).toBe(true);
 
     await tadabburButton.trigger('click');
@@ -90,8 +94,11 @@ describe('QuranVerseItem.vue', () => {
       },
     });
 
+    const menuButton = wrapper.find('button[title="Opsi Ayat"]');
+    await menuButton.trigger('click');
+
     expect(wrapper.text()).toContain('Tadabbur');
-    const tadabburButton = wrapper.find('button[title*="Tadabbur"], button[title*="Materi"]');
+    const tadabburButton = wrapper.find('button span.truncate');
     await tadabburButton.trigger('click');
 
     expect(mockPush).toHaveBeenCalledWith({

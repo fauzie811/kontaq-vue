@@ -33,9 +33,10 @@ const quiz = (overrides = {}) => ({
   ...overrides,
 });
 
-function mountPage(rows) {
+function mountPage(rows, availableWeeks = [1, 26, 27, 87]) {
   api.listMyQuizzes.mockResolvedValue({
     data: { data: rows, total: rows.length, from: 1, to: rows.length, current_page: 1, last_page: 1 },
+    available_weeks: availableWeeks,
   });
 
   return mount(Quizzes, {
@@ -45,7 +46,10 @@ function mountPage(rows) {
         routerLink: { template: '<a><slot /></a>' },
         PageHeader: true,
         Pagination: true,
-        WeekPicker: true,
+        WeekPicker: {
+          props: ['modelValue', 'weeks', 'showAllOption'],
+          template: '<div data-test="week-picker" :data-weeks="JSON.stringify(weeks)"></div>',
+        },
         LatePermissionDialog: true,
       },
     },
@@ -153,5 +157,15 @@ describe('Quizzes.vue schedule locking', () => {
 
     expect(wrapper.text()).toContain('Materi Belum Dibaca');
     expect(wrapper.text()).toContain('Baca Materi Terlebih Dahulu');
+  });
+
+  it('passes all available weeks from the API to the WeekPicker', async () => {
+    const availableWeeks = [1, 26, 27, 87];
+    const wrapper = mountPage([quiz()], availableWeeks);
+    await flushPromises();
+
+    const picker = wrapper.find('[data-test="week-picker"]');
+    expect(picker.exists()).toBe(true);
+    expect(picker.attributes('data-weeks')).toBe(JSON.stringify(availableWeeks));
   });
 });

@@ -27,6 +27,7 @@
             show-all-option
             class="w-full sm:w-60"
             v-model="week"
+            :weeks="availableWeeks"
             @update:modelValue="() => changePage(1)"
           />
         </div>
@@ -225,6 +226,7 @@ import WeekPicker from '@/components/WeekPicker.vue';
 
 const page = ref(1);
 const week = ref(null);
+const availableWeeks = ref([]);
 const evaluations = ref({ data: [] });
 const isLoading = ref(true);
 const requestDialogOpen = ref(false);
@@ -260,11 +262,14 @@ function scheduleLock(evaluation) {
 async function loadData() {
   isLoading.value = true;
   try {
-    const { data } = await listMyEvaluations({
+    const res = await listMyEvaluations({
       page: page.value,
       week: week.value,
     });
-    evaluations.value = data;
+    evaluations.value = res.data;
+    if (res.available_weeks) {
+      availableWeeks.value = res.available_weeks;
+    }
   } catch (error) {
     console.error('Gagal memuat daftar evaluasi:', error);
   } finally {

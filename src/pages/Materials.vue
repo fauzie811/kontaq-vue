@@ -6,7 +6,7 @@
     <div class="max-w-3xl">
       <div class="flex justify-end gap-4 mb-4">
         <PartPicker class="w-full sm:w-40" v-model="part_number" @update:modelValue="() => changePage(1)" />
-        <WeekPicker show-all-option class="w-full sm:w-56" v-model="week"
+        <WeekPicker show-all-option class="w-full sm:w-56" v-model="week" :weeks="availableWeeks"
           @update:modelValue="() => changePage(1)" />
       </div>
 
@@ -48,12 +48,16 @@ import PartPicker from '@/components/PartPicker.vue';
 
 const page = ref(1);
 const week = ref(null);
+const availableWeeks = ref([]);
 const part_number = ref(null);
 const materials = ref({ data: [] });
 
 async function loadData() {
-  const { data } = await listMyMaterials({ page: page.value, week: week.value, part_number: part_number.value });
-  materials.value = data;
+  const res = await listMyMaterials({ page: page.value, week: week.value, part_number: part_number.value });
+  materials.value = res.data;
+  if (res.available_weeks) {
+    availableWeeks.value = res.available_weeks;
+  }
 }
 loadData();
 

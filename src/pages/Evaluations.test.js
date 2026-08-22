@@ -26,9 +26,10 @@ const evaluation = (overrides = {}) => ({
   ...overrides,
 });
 
-function mountPage(rows) {
+function mountPage(rows, availableWeeks = [1, 26, 27, 86]) {
   api.listMyEvaluations.mockResolvedValue({
     data: { data: rows, total: rows.length, from: 1, to: rows.length, current_page: 1, last_page: 1 },
+    available_weeks: availableWeeks,
   });
 
   return mount(Evaluations, {
@@ -37,7 +38,10 @@ function mountPage(rows) {
         routerLink: { template: '<a><slot /></a>' },
         PageHeader: true,
         Pagination: true,
-        WeekPicker: true,
+        WeekPicker: {
+          props: ['modelValue', 'weeks', 'showAllOption'],
+          template: '<div data-test="week-picker" :data-weeks="JSON.stringify(weeks)"></div>',
+        },
         LatePermissionDialog: true,
       },
     },
@@ -114,5 +118,15 @@ describe('Evaluations.vue schedule locking', () => {
     expect(wrapper.text()).toContain('Mulai Evaluasi');
     expect(wrapper.text()).not.toContain('Waktu Habis');
     expect(wrapper.text()).not.toContain('Belum Dibuka');
+  });
+
+  it('passes all available weeks from the API to the WeekPicker', async () => {
+    const availableWeeks = [1, 26, 27, 86];
+    const wrapper = mountPage([evaluation()], availableWeeks);
+    await flushPromises();
+
+    const picker = wrapper.find('[data-test="week-picker"]');
+    expect(picker.exists()).toBe(true);
+    expect(picker.attributes('data-weeks')).toBe(JSON.stringify(availableWeeks));
   });
 });
