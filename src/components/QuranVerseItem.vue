@@ -4,20 +4,13 @@
       'rounded-2xl p-4 sm:p-6 border transition-all space-y-4 shadow-xs',
       isActive
         ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
-        : 'bg-card text-card-foreground border-border/70 hover:border-primary/30'
+        : 'bg-card text-card-foreground border-border/70 hover:border-primary/30',
     ]"
   >
     <!-- Verse Header -->
-    <div class="flex items-center justify-between border-b border-border/60 pb-3">
-      <div class="flex items-center gap-2.5">
-        <span class="w-9 h-9 rounded-full bg-secondary text-secondary-foreground font-bold text-xs flex items-center justify-center">
-          {{ verse.verse }}
-        </span>
-        <span class="text-xs text-muted-foreground font-medium">
-          QS {{ chapterDetails?.latin }}: {{ verse.verse }}
-        </span>
-      </div>
-
+    <div
+      class="flex items-center justify-start gap-2.5 border-b border-border/60 pb-3"
+    >
       <!-- Actions Dropdown (3-dots) -->
       <Menu as="div" class="relative">
         <MenuButton
@@ -36,21 +29,31 @@
           leave-to-class="transform scale-[0.99] opacity-0"
         >
           <MenuItems
-            class="absolute right-0 z-10 mt-1 w-48 origin-top-right rounded-2xl bg-popover text-popover-foreground p-1.5 shadow-xl border border-border focus:outline-none space-y-0.5"
+            class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-2xl bg-popover text-popover-foreground p-1.5 shadow-xl border border-border focus:outline-none space-y-0.5"
           >
             <!-- Play / Pause Audio -->
             <MenuItem v-slot="{ active }">
               <button
                 @click="$emit('play-verse', verse)"
                 :class="[
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer'
+                  active
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-foreground',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                 ]"
               >
-                <Pause v-if="isActive && isPlaying" class="w-4 h-4 text-primary fill-primary" />
-                <Play v-else-if="isActive" class="w-4 h-4 text-primary fill-primary ml-0.5" />
+                <Pause
+                  v-if="isActive && isPlaying"
+                  class="w-4 h-4 text-primary fill-primary"
+                />
+                <Play
+                  v-else-if="isActive"
+                  class="w-4 h-4 text-primary fill-primary ml-0.5"
+                />
                 <Volume2 v-else class="w-4 h-4 text-muted-foreground" />
-                <span>{{ isActive && isPlaying ? 'Jeda Audio' : 'Putar Audio' }}</span>
+                <span>{{
+                  isActive && isPlaying ? 'Jeda Audio' : 'Putar Audio'
+                }}</span>
               </button>
             </MenuItem>
 
@@ -59,12 +62,16 @@
               <button
                 @click="showFootnotes = !showFootnotes"
                 :class="[
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer'
+                  active
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-foreground',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                 ]"
               >
                 <FileText class="w-4 h-4 text-primary" />
-                <span>{{ showFootnotes ? 'Sembunyikan Catatan' : 'Lihat Catatan Kaki' }}</span>
+                <span>{{
+                  showFootnotes ? 'Sembunyikan Catatan' : 'Lihat Catatan Kaki'
+                }}</span>
               </button>
             </MenuItem>
 
@@ -73,8 +80,10 @@
               <button
                 @click="$emit('copy-verse', verse)"
                 :class="[
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer'
+                  active
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-foreground',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                 ]"
               >
                 <Check v-if="isCopied" class="w-4 h-4 text-primary" />
@@ -85,29 +94,45 @@
           </MenuItems>
         </transition>
       </Menu>
+
+      <div class="flex items-center gap-2.5">
+        <span class="text-xs text-muted-foreground font-medium">
+          QS {{ chapterDetails?.latin }}: {{ verse.verse }}
+        </span>
+      </div>
     </div>
 
     <!-- Arabic Text -->
     <div class="py-2 text-right dir-rtl">
-      <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-foreground leading-[2.2]">
-        {{ verse.text }}
+      <p
+        class="font-quran text-xl sm:text-2xl lg:text-3xl text-foreground leading-[2.2]"
+      >
+        {{ verse.text }}&nbsp;<QuranVerseNumber :number="verse.verse" />
       </p>
     </div>
 
     <!-- Transliteration -->
-    <p v-if="verse.transliteration" class="text-primary text-sm italic leading-relaxed font-medium">
+    <p
+      v-if="verse.transliteration"
+      class="text-primary text-sm italic leading-relaxed font-medium"
+    >
       {{ verse.transliteration }}
     </p>
 
     <!-- Indonesian Translation with Formatted Footnote Markers -->
-    <p class="text-foreground/90 text-sm sm:text-base leading-relaxed" v-html="formattedTranslation"></p>
+    <p
+      class="text-foreground/90 text-sm sm:text-base leading-relaxed"
+      v-html="formattedTranslation"
+    ></p>
 
     <!-- Footnotes Drawer -->
     <div
       v-if="verse.footnotes && showFootnotes"
       class="bg-secondary/60 border border-border rounded-2xl p-4 text-xs text-foreground leading-relaxed shadow-2xs space-y-1.5 transition-all mt-3"
     >
-      <div class="flex items-center gap-1.5 font-bold text-primary text-xs mb-1">
+      <div
+        class="flex items-center gap-1.5 font-bold text-primary text-xs mb-1"
+      >
         <FileText class="w-3.5 h-3.5 text-primary" />
         <span>Catatan Kaki:</span>
       </div>
@@ -125,7 +150,16 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import { FileText, Volume2, Play, Pause, Copy, Check, MoreVertical } from 'lucide-vue-next';
+import {
+  FileText,
+  Volume2,
+  Play,
+  Pause,
+  Copy,
+  Check,
+  MoreVertical,
+} from 'lucide-vue-next';
+import QuranVerseNumber from '@/components/QuranVerseNumber.vue';
 
 const props = defineProps({
   verse: {
@@ -159,7 +193,7 @@ const formattedTranslation = computed(() => {
   // Transform patterns like "1)" or "2)" into superscript badges
   return props.verse.translation.replace(
     /(\d+)\)/g,
-    '<sup class="inline-flex items-center text-[10px] font-bold text-primary bg-secondary border border-border rounded-xs px-1 py-0.1 mx-0.5 select-none font-mono">[$1]</sup>'
+    '<sup class="inline-flex items-center text-[10px] font-bold text-primary bg-secondary border border-border rounded-xs px-1 py-0.1 mx-0.5 select-none font-mono">[$1]</sup>',
   );
 });
 
@@ -168,7 +202,7 @@ const footnoteLines = computed(() => {
   // Split multiple footnotes if separated by line breaks or numbers
   return props.verse.footnotes
     .split(/\n+/)
-    .map(line => line.trim())
+    .map((line) => line.trim())
     .filter(Boolean);
 });
 </script>

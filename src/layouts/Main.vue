@@ -1,12 +1,23 @@
 <template>
-  <div class="min-h-screen bg-background flex flex-col font-sans text-foreground relative pb-32 sm:pb-24">
+  <div
+    class="min-h-screen bg-background flex flex-col font-sans text-foreground relative pb-32 sm:pb-24"
+  >
     <!-- Top Header -->
-    <header class="view-transition-header bg-card/90 backdrop-blur-md border-b border-border shadow-2xs sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all">
+    <header
+      class="view-transition-header bg-card/90 backdrop-blur-md border-b border-border shadow-2xs sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all"
+    >
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <!-- Left Brand Logo -->
         <div class="flex items-center gap-3">
-          <router-link :to="{ name: 'home' }" class="flex items-center gap-2 group">
-            <img src="@/assets/logo-kontaq.png" alt="KontaQ" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
+          <router-link
+            :to="{ name: 'home' }"
+            class="flex items-center gap-2 group"
+          >
+            <img
+              src="@/assets/logo-kontaq.png"
+              alt="KontaQ"
+              class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
+            />
           </router-link>
         </div>
 
@@ -19,8 +30,14 @@
             class="h-10 px-3 sm:px-3.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center gap-2 transition shadow-2xs border border-border cursor-pointer active:scale-95"
           >
             <Search class="w-4.5 h-4.5 stroke-[2.2] text-primary" />
-            <span class="hidden md:inline-block text-xs text-muted-foreground font-medium">Cari...</span>
-            <kbd class="hidden md:inline-flex items-center gap-0.5 text-xs bg-card/80 px-1.5 py-0.5 rounded border border-border text-muted-foreground font-mono font-bold shadow-2xs">⌘K</kbd>
+            <span
+              class="hidden md:inline-block text-xs text-muted-foreground font-medium"
+              >Cari...</span
+            >
+            <kbd
+              class="hidden md:inline-flex items-center gap-0.5 text-xs bg-card/80 px-1.5 py-0.5 rounded border border-border text-muted-foreground font-mono font-bold shadow-2xs"
+              >⌘K</kbd
+            >
           </button>
 
           <!-- Notification Bell Button -->
@@ -31,7 +48,10 @@
               class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition shadow-2xs border border-border relative cursor-pointer active:scale-95"
             >
               <Bell class="w-5 h-5 stroke-[2.2] text-primary" />
-              <span v-if="notificationList.length > 0" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-card animate-pulse"></span>
+              <span
+                v-if="notificationList.length > 0"
+                class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-card animate-pulse"
+              ></span>
             </button>
 
             <NotificationDrawer
@@ -54,10 +74,15 @@
                 alt="Avatar"
                 class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
               />
-              <span class="hidden sm:inline-block text-xs font-bold text-foreground max-w-[100px] truncate">
+              <span
+                class="hidden sm:inline-block text-xs font-bold text-foreground max-w-[100px] truncate"
+              >
                 {{ authStore.user?.name || 'User' }}
               </span>
-              <ChevronDown class="w-3.5 h-3.5 text-muted-foreground transition-transform hidden sm:inline-block" :class="{ 'rotate-180': isUserMenuOpen }" />
+              <ChevronDown
+                class="w-3.5 h-3.5 text-muted-foreground transition-transform hidden sm:inline-block"
+                :class="{ 'rotate-180': isUserMenuOpen }"
+              />
             </button>
 
             <!-- User Menu Dropdown Panel -->
@@ -66,15 +91,22 @@
               class="absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
             >
               <!-- User Info Header -->
-              <div v-if="authStore.user" class="px-4 py-3 border-b border-border bg-muted/50 flex items-center gap-3">
+              <div
+                v-if="authStore.user"
+                class="px-4 py-3 border-b border-border bg-muted/50 flex items-center gap-3"
+              >
                 <img
                   :src="authStore.user.avatar_url || defaultAvatar"
                   alt="Avatar"
                   class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 shrink-0"
                 />
                 <div class="min-w-0 flex-1">
-                  <p class="font-bold text-foreground text-xs truncate">{{ authStore.user.name }}</p>
-                  <p class="text-xs text-muted-foreground truncate">@{{ authStore.user.username || authStore.user.email }}</p>
+                  <p class="font-bold text-foreground text-xs truncate">
+                    {{ authStore.user.name }}
+                  </p>
+                  <p class="text-xs text-muted-foreground truncate">
+                    @{{ authStore.user.username || authStore.user.email }}
+                  </p>
                 </div>
               </div>
 
@@ -142,8 +174,13 @@
     </header>
 
     <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
-    <section v-if="route.name !== 'infaq'" class="view-transition-nav hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full">
-      <div class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 shadow-inner flex items-center justify-around gap-2 sm:gap-3 border border-border/80">
+    <section
+      v-if="route.name !== 'infaq'"
+      class="view-transition-nav hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full"
+    >
+      <div
+        class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 shadow-inner flex items-center justify-around gap-2 sm:gap-3 border border-border/80"
+      >
         <router-link
           v-for="item in navTabs"
           :key="item.name"
@@ -152,26 +189,36 @@
             isTabActive(item)
               ? 'bg-card shadow-sm border border-primary/30 text-primary font-bold'
               : 'hover:bg-card/60 text-muted-foreground hover:text-foreground font-medium',
-            'flex-1 flex flex-col items-center justify-center py-2.5 px-3 rounded-2xl transition-all duration-200 group relative overflow-hidden'
+            'flex-1 flex flex-col items-center justify-center py-2.5 px-3 rounded-2xl transition-all duration-200 group relative overflow-hidden',
           ]"
         >
           <div
             :class="[
-              isTabActive(item) ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground group-hover:text-foreground',
-              'w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center mb-1.5 shadow-2xs group-hover:scale-105 transition-all duration-200'
+              isTabActive(item)
+                ? 'bg-primary/10 text-primary'
+                : 'bg-secondary text-muted-foreground group-hover:text-foreground',
+              'w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center mb-1.5 shadow-2xs group-hover:scale-105 transition-all duration-200',
             ]"
           >
-            <component :is="item.icon" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] text-primary" />
+            <component
+              :is="item.icon"
+              class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] text-primary"
+            />
           </div>
           <span class="text-xs sm:text-sm tracking-wide">{{ item.name }}</span>
           <!-- Active Tab Indicator Dot -->
-          <div v-if="isTabActive(item)" class="w-1.5 h-1.5 bg-primary rounded-full mt-1 animate-in zoom-in duration-200"></div>
+          <div
+            v-if="isTabActive(item)"
+            class="w-1.5 h-1.5 bg-primary rounded-full mt-1 animate-in zoom-in duration-200"
+          ></div>
         </router-link>
       </div>
     </section>
 
     <!-- Main Content Slot -->
-    <main class="view-transition-content max-w-6xl mx-auto px-4 mt-8 sm:mt-10 w-full flex-1">
+    <main
+      class="view-transition-content max-w-6xl mx-auto px-4 mt-8 sm:mt-10 w-full flex-1"
+    >
       <slot />
     </main>
 
@@ -182,7 +229,9 @@
     >
       <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
-        <span class="font-bold text-secondary-foreground text-xs sm:text-base tracking-wide text-left truncate sm:whitespace-normal">
+        <span
+          class="font-bold text-secondary-foreground text-xs sm:text-base tracking-wide text-left truncate sm:whitespace-normal"
+        >
           DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
         </span>
 
@@ -220,14 +269,16 @@
           isTabActive(item)
             ? 'text-primary bg-primary/10 font-bold rounded-2xl'
             : 'text-muted-foreground hover:text-foreground font-medium',
-          'flex-1 flex flex-col items-center justify-center py-1.5 px-1 transition text-center active:scale-95'
+          'flex-1 flex flex-col items-center justify-center py-1.5 px-1 transition text-center active:scale-95',
         ]"
       >
         <component
           :is="item.icon"
           :class="[
-            isTabActive(item) ? 'text-primary scale-110' : 'text-muted-foreground',
-            'w-5 h-5 transition-transform mb-0.5'
+            isTabActive(item)
+              ? 'text-primary scale-110'
+              : 'text-muted-foreground',
+            'w-5 h-5 transition-transform mb-0.5',
           ]"
         />
         <span class="text-xs leading-tight">{{ item.name }}</span>
@@ -266,13 +317,20 @@
           class="sm:hidden fixed bottom-0 inset-x-0 bg-card rounded-t-3xl border-t border-border shadow-2xl z-50 max-h-[90vh] flex flex-col overflow-hidden"
         >
           <!-- Grab Handle -->
-          <div class="pt-3 pb-1 flex justify-center cursor-grab active:cursor-grabbing" @click="isSearchOpen = false">
+          <div
+            class="pt-3 pb-1 flex justify-center cursor-grab active:cursor-grabbing"
+            @click="isSearchOpen = false"
+          >
             <div class="w-12 h-1.5 bg-muted-foreground/30 rounded-full"></div>
           </div>
 
           <!-- Search Input Header -->
-          <div class="p-3.5 border-b border-border flex items-center gap-2.5 bg-card">
-            <div class="flex-1 flex items-center gap-2.5 bg-muted border border-border rounded-2xl px-3.5 py-2.5 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs">
+          <div
+            class="p-3.5 border-b border-border flex items-center gap-2.5 bg-card"
+          >
+            <div
+              class="flex-1 flex items-center gap-2.5 bg-muted border border-border rounded-2xl px-3.5 py-2.5 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
+            >
               <Search class="w-5 h-5 text-primary shrink-0" />
               <input
                 v-model="searchQuery"
@@ -301,33 +359,62 @@
           </div>
 
           <!-- Filter Chips / Shortcuts -->
-          <div class="px-4 py-2 bg-muted/50 flex items-center gap-1.5 text-xs text-muted-foreground border-b border-border overflow-x-auto">
-            <span class="font-medium text-muted-foreground shrink-0">Pintasan:</span>
-            <button @click="setSearchPrefix('# ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
+          <div
+            class="px-4 py-2 bg-muted/50 flex items-center gap-1.5 text-xs text-muted-foreground border-b border-border overflow-x-auto"
+          >
+            <span class="font-medium text-muted-foreground shrink-0"
+              >Pintasan:</span
+            >
+            <button
+              @click="setSearchPrefix('# ')"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+            >
               # Surah
             </button>
-            <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
+            <button
+              @click="setSearchPrefix('@ ')"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+            >
               @ Ayat
             </button>
-            <button @click="setSearchPrefix('! ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
+            <button
+              @click="setSearchPrefix('! ')"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+            >
               ! Tadabbur
             </button>
-            <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0">
+            <button
+              @click="setSearchPrefix('? ')"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+            >
               ? Bantuan
             </button>
           </div>
 
           <!-- Search Results Body -->
-          <div class="overflow-y-auto p-4 space-y-4 flex-1 divide-y divide-border">
+          <div
+            class="overflow-y-auto p-4 space-y-4 flex-1 divide-y divide-border"
+          >
             <!-- Loading Spinner -->
-            <div v-if="isSearching" class="text-center py-8 text-primary flex items-center justify-center gap-2">
-              <div class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
-              <span class="text-xs font-medium text-muted-foreground">Mencari...</span>
+            <div
+              v-if="isSearching"
+              class="text-center py-8 text-primary flex items-center justify-center gap-2"
+            >
+              <div
+                class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"
+              ></div>
+              <span class="text-xs font-medium text-muted-foreground"
+                >Mencari...</span
+              >
             </div>
 
             <!-- Empty Query Placeholder -->
-            <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-muted-foreground text-xs sm:text-sm">
-              Ketik kata kunci untuk mencari Surah, Ayat, Materi Tadabbur, atau Bantuan FAQ.
+            <div
+              v-else-if="!searchQuery.trim()"
+              class="text-center py-10 text-muted-foreground text-xs sm:text-sm"
+            >
+              Ketik kata kunci untuk mencari Surah, Ayat, Materi Tadabbur, atau
+              Bantuan FAQ.
             </div>
 
             <!-- No Results Found -->
@@ -335,13 +422,23 @@
               v-else-if="!hasSearchResults"
               class="text-center py-10 text-muted-foreground text-sm"
             >
-              Tidak ada hasil ditemukan untuk "<span class="font-semibold text-foreground">{{ searchQuery }}</span>".
+              Tidak ada hasil ditemukan untuk "<span
+                class="font-semibold text-foreground"
+                >{{ searchQuery }}</span
+              >".
             </div>
 
             <template v-else>
               <!-- 1. Surah Results -->
-              <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
-                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+              <div
+                v-if="
+                  searchResults.chapters && searchResults.chapters.length > 0
+                "
+                class="space-y-2 pt-2 first:pt-0"
+              >
+                <h4
+                  class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                >
                   Surah ({{ searchResults.chapters.length }})
                 </h4>
                 <div class="grid grid-cols-1 gap-2">
@@ -352,15 +449,25 @@
                     class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition flex items-center justify-between group"
                   >
                     <div class="flex items-center gap-3 min-w-0">
-                      <span class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold text-xs flex items-center justify-center shrink-0">
+                      <span
+                        class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold text-xs flex items-center justify-center shrink-0"
+                      >
                         {{ surah.number }}
                       </span>
                       <div class="min-w-0">
-                        <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">{{ surah.latin }}</p>
-                        <p class="text-xs text-muted-foreground truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
+                        <p
+                          class="font-bold text-sm text-foreground truncate group-hover:text-primary"
+                        >
+                          {{ surah.latin }}
+                        </p>
+                        <p class="text-xs text-muted-foreground truncate">
+                          {{ surah.meaning }} • {{ surah.ayat }} ayat
+                        </p>
                       </div>
                     </div>
-                    <span class="font-arabic text-xl font-bold text-foreground ml-2 shrink-0 dir-rtl">
+                    <span
+                      class="font-arabic text-xl font-bold text-foreground ml-2 shrink-0 dir-rtl"
+                    >
                       {{ surah.arabic }}
                     </span>
                   </div>
@@ -368,8 +475,13 @@
               </div>
 
               <!-- 2. Verse Results -->
-              <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
-                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+              <div
+                v-if="searchResults.verses && searchResults.verses.length > 0"
+                class="space-y-2.5 pt-3"
+              >
+                <h4
+                  class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                >
                   Ayat Al-Qur'an ({{ searchResults.verses.length }})
                 </h4>
                 <div class="space-y-2">
@@ -380,14 +492,26 @@
                     class="p-3.5 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition space-y-1.5 group"
                   >
                     <div class="flex items-center justify-between">
-                      <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                        QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
+                      <span
+                        class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full"
+                      >
+                        QS
+                        {{
+                          verse.surah
+                            ? verse.surah.latin
+                            : 'Surah ' + verse.chapter
+                        }}: {{ verse.verse }}
                       </span>
                     </div>
-                    <p class="font-quran text-lg text-foreground text-right dir-rtl font-bold leading-relaxed">
+                    <p
+                      class="font-quran text-lg text-foreground text-right dir-rtl font-bold leading-relaxed"
+                    >
                       {{ verse.text }}
+                      <QuranVerseNumber :number="verse.verse" />
                     </p>
-                    <p class="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                    <p
+                      class="text-xs text-muted-foreground line-clamp-2 leading-relaxed"
+                    >
                       {{ verse.translation }}
                     </p>
                   </div>
@@ -395,8 +519,15 @@
               </div>
 
               <!-- 3. Material Results -->
-              <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
-                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+              <div
+                v-if="
+                  searchResults.materials && searchResults.materials.length > 0
+                "
+                class="space-y-2 pt-3"
+              >
+                <h4
+                  class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                >
                   Materi Tadabbur ({{ searchResults.materials.length }})
                 </h4>
                 <div class="space-y-2">
@@ -407,11 +538,17 @@
                     class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                   >
                     <div class="min-w-0">
-                      <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">
+                      <p
+                        class="font-bold text-sm text-foreground truncate group-hover:text-primary"
+                      >
                         {{ material.title }}
                       </p>
                       <p class="text-xs text-muted-foreground truncate mt-0.5">
-                        {{ material.week ? ('Pekan ' + material.week) : 'Materi Tadabbur' }}
+                        {{
+                          material.week
+                            ? 'Pekan ' + material.week
+                            : 'Materi Tadabbur'
+                        }}
                       </p>
                     </div>
                     <BookOpen class="w-4 h-4 text-primary shrink-0 ml-3" />
@@ -420,8 +557,13 @@
               </div>
 
               <!-- 4. FAQ / Bantuan Results -->
-              <div v-if="searchResults.faqs && searchResults.faqs.length > 0" class="space-y-2 pt-3">
-                <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+              <div
+                v-if="searchResults.faqs && searchResults.faqs.length > 0"
+                class="space-y-2 pt-3"
+              >
+                <h4
+                  class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                >
                   Bantuan & FAQ ({{ searchResults.faqs.length }})
                 </h4>
                 <div class="space-y-2">
@@ -432,13 +574,20 @@
                     class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                   >
                     <div class="min-w-0 flex-1 pr-3">
-                      <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">
+                      <p
+                        class="font-bold text-sm text-foreground truncate group-hover:text-primary"
+                      >
                         {{ faq.question }}
                       </p>
-                      <p class="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                      <p
+                        class="text-xs text-muted-foreground line-clamp-1 mt-0.5"
+                      >
                         {{ faq.answer }}
                       </p>
-                      <span v-if="faq.category" class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary">
+                      <span
+                        v-if="faq.category"
+                        class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary"
+                      >
                         {{ faq.category }}
                       </span>
                     </div>
@@ -464,10 +613,16 @@
           v-if="isSearchOpen"
           class="hidden sm:flex fixed inset-0 z-50 items-start justify-center pt-20 px-4 pointer-events-none"
         >
-          <div class="bg-card rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-border flex flex-col max-h-[85vh] pointer-events-auto">
+          <div
+            class="bg-card rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-border flex flex-col max-h-[85vh] pointer-events-auto"
+          >
             <!-- Search Input Header -->
-            <div class="p-4 border-b border-border flex items-center gap-3 bg-card">
-              <div class="flex-1 flex items-center gap-3 bg-muted border border-border rounded-2xl px-3.5 py-2.5 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs">
+            <div
+              class="p-4 border-b border-border flex items-center gap-3 bg-card"
+            >
+              <div
+                class="flex-1 flex items-center gap-3 bg-muted border border-border rounded-2xl px-3.5 py-2.5 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
+              >
                 <Search class="w-5 h-5 text-primary shrink-0" />
                 <input
                   v-model="searchQuery"
@@ -496,33 +651,60 @@
             </div>
 
             <!-- Filter Chips / Shortcuts -->
-            <div class="px-4 py-2.5 bg-muted/50 flex items-center gap-2 text-xs text-muted-foreground border-b border-border">
+            <div
+              class="px-4 py-2.5 bg-muted/50 flex items-center gap-2 text-xs text-muted-foreground border-b border-border"
+            >
               <span class="font-medium text-muted-foreground">Pintasan:</span>
-              <button @click="setSearchPrefix('# ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
+              <button
+                @click="setSearchPrefix('# ')"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+              >
                 # Surah
               </button>
-              <button @click="setSearchPrefix('@ ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
+              <button
+                @click="setSearchPrefix('@ ')"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+              >
                 @ Ayat
               </button>
-              <button @click="setSearchPrefix('! ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
+              <button
+                @click="setSearchPrefix('! ')"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+              >
                 ! Tadabbur
               </button>
-              <button @click="setSearchPrefix('? ')" class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer">
+              <button
+                @click="setSearchPrefix('? ')"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+              >
                 ? Bantuan
               </button>
             </div>
 
             <!-- Search Results Body -->
-            <div class="overflow-y-auto p-4 space-y-5 flex-1 divide-y divide-border">
+            <div
+              class="overflow-y-auto p-4 space-y-5 flex-1 divide-y divide-border"
+            >
               <!-- Loading Spinner -->
-              <div v-if="isSearching" class="text-center py-8 text-primary flex items-center justify-center gap-2">
-                <div class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
-                <span class="text-xs font-medium text-muted-foreground">Mencari...</span>
+              <div
+                v-if="isSearching"
+                class="text-center py-8 text-primary flex items-center justify-center gap-2"
+              >
+                <div
+                  class="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"
+                ></div>
+                <span class="text-xs font-medium text-muted-foreground"
+                  >Mencari...</span
+                >
               </div>
 
               <!-- Empty Query Placeholder -->
-              <div v-else-if="!searchQuery.trim()" class="text-center py-10 text-muted-foreground text-sm">
-                Ketik kata kunci untuk mencari Surah, Ayat, Materi Tadabbur, atau Bantuan FAQ.
+              <div
+                v-else-if="!searchQuery.trim()"
+                class="text-center py-10 text-muted-foreground text-sm"
+              >
+                Ketik kata kunci untuk mencari Surah, Ayat, Materi Tadabbur,
+                atau Bantuan FAQ.
               </div>
 
               <!-- No Results Found -->
@@ -530,13 +712,23 @@
                 v-else-if="!hasSearchResults"
                 class="text-center py-10 text-muted-foreground text-sm"
               >
-                Tidak ada hasil ditemukan untuk "<span class="font-semibold text-foreground">{{ searchQuery }}</span>".
+                Tidak ada hasil ditemukan untuk "<span
+                  class="font-semibold text-foreground"
+                  >{{ searchQuery }}</span
+                >".
               </div>
 
               <template v-else>
                 <!-- 1. Surah Results -->
-                <div v-if="searchResults.chapters && searchResults.chapters.length > 0" class="space-y-2 pt-2 first:pt-0">
-                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+                <div
+                  v-if="
+                    searchResults.chapters && searchResults.chapters.length > 0
+                  "
+                  class="space-y-2 pt-2 first:pt-0"
+                >
+                  <h4
+                    class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                  >
                     Surah ({{ searchResults.chapters.length }})
                   </h4>
                   <div class="grid grid-cols-2 gap-2">
@@ -547,15 +739,25 @@
                       class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition flex items-center justify-between group"
                     >
                       <div class="flex items-center gap-3 min-w-0">
-                        <span class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold text-xs flex items-center justify-center shrink-0">
+                        <span
+                          class="w-7 h-7 rounded-full bg-primary/10 text-primary font-bold text-xs flex items-center justify-center shrink-0"
+                        >
                           {{ surah.number }}
                         </span>
                         <div class="min-w-0">
-                          <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">{{ surah.latin }}</p>
-                          <p class="text-xs text-muted-foreground truncate">{{ surah.meaning }} • {{ surah.ayat }} ayat</p>
+                          <p
+                            class="font-bold text-sm text-foreground truncate group-hover:text-primary"
+                          >
+                            {{ surah.latin }}
+                          </p>
+                          <p class="text-xs text-muted-foreground truncate">
+                            {{ surah.meaning }} • {{ surah.ayat }} ayat
+                          </p>
                         </div>
                       </div>
-                      <span class="font-arabic text-xl font-bold text-foreground ml-2 shrink-0 dir-rtl">
+                      <span
+                        class="font-arabic text-xl font-bold text-foreground ml-2 shrink-0 dir-rtl"
+                      >
                         {{ surah.arabic }}
                       </span>
                     </div>
@@ -563,8 +765,13 @@
                 </div>
 
                 <!-- 2. Verse Results -->
-                <div v-if="searchResults.verses && searchResults.verses.length > 0" class="space-y-2.5 pt-3">
-                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+                <div
+                  v-if="searchResults.verses && searchResults.verses.length > 0"
+                  class="space-y-2.5 pt-3"
+                >
+                  <h4
+                    class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                  >
                     Ayat Al-Qur'an ({{ searchResults.verses.length }})
                   </h4>
                   <div class="space-y-2">
@@ -575,14 +782,26 @@
                       class="p-3.5 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition space-y-1.5 group"
                     >
                       <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                          QS {{ verse.surah ? verse.surah.latin : 'Surah ' + verse.chapter }}: {{ verse.verse }}
+                        <span
+                          class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full"
+                        >
+                          QS
+                          {{
+                            verse.surah
+                              ? verse.surah.latin
+                              : 'Surah ' + verse.chapter
+                          }}: {{ verse.verse }}
                         </span>
                       </div>
-                      <p class="font-quran text-lg text-foreground text-right dir-rtl font-bold leading-relaxed">
+                      <p
+                        class="font-quran text-lg text-foreground text-right dir-rtl font-bold leading-relaxed"
+                      >
                         {{ verse.text }}
+                        <QuranVerseNumber :number="verse.verse" />
                       </p>
-                      <p class="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                      <p
+                        class="text-xs text-muted-foreground line-clamp-2 leading-relaxed"
+                      >
                         {{ verse.translation }}
                       </p>
                     </div>
@@ -590,8 +809,16 @@
                 </div>
 
                 <!-- 3. Material Results -->
-                <div v-if="searchResults.materials && searchResults.materials.length > 0" class="space-y-2 pt-3">
-                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+                <div
+                  v-if="
+                    searchResults.materials &&
+                    searchResults.materials.length > 0
+                  "
+                  class="space-y-2 pt-3"
+                >
+                  <h4
+                    class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                  >
                     Materi Tadabbur ({{ searchResults.materials.length }})
                   </h4>
                   <div class="space-y-2">
@@ -602,11 +829,19 @@
                       class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                     >
                       <div class="min-w-0">
-                        <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">
+                        <p
+                          class="font-bold text-sm text-foreground truncate group-hover:text-primary"
+                        >
                           {{ material.title }}
                         </p>
-                        <p class="text-xs text-muted-foreground truncate mt-0.5">
-                          {{ material.week ? ('Pekan ' + material.week) : 'Materi Tadabbur' }}
+                        <p
+                          class="text-xs text-muted-foreground truncate mt-0.5"
+                        >
+                          {{
+                            material.week
+                              ? 'Pekan ' + material.week
+                              : 'Materi Tadabbur'
+                          }}
                         </p>
                       </div>
                       <BookOpen class="w-4 h-4 text-primary shrink-0 ml-3" />
@@ -615,8 +850,13 @@
                 </div>
 
                 <!-- 4. FAQ / Bantuan Results -->
-                <div v-if="searchResults.faqs && searchResults.faqs.length > 0" class="space-y-2 pt-3">
-                  <h4 class="text-xs font-bold tracking-wider text-primary uppercase px-1">
+                <div
+                  v-if="searchResults.faqs && searchResults.faqs.length > 0"
+                  class="space-y-2 pt-3"
+                >
+                  <h4
+                    class="text-xs font-bold tracking-wider text-primary uppercase px-1"
+                  >
                     Bantuan & FAQ ({{ searchResults.faqs.length }})
                   </h4>
                   <div class="grid grid-cols-1 gap-2">
@@ -627,13 +867,20 @@
                       class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                     >
                       <div class="min-w-0 flex-1 pr-3">
-                        <p class="font-bold text-sm text-foreground truncate group-hover:text-primary">
+                        <p
+                          class="font-bold text-sm text-foreground truncate group-hover:text-primary"
+                        >
                           {{ faq.question }}
                         </p>
-                        <p class="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                        <p
+                          class="text-xs text-muted-foreground line-clamp-1 mt-0.5"
+                        >
                           {{ faq.answer }}
                         </p>
-                        <span v-if="faq.category" class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary">
+                        <span
+                          v-if="faq.category"
+                          class="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary/10 text-primary"
+                        >
                           {{ faq.category }}
                         </span>
                       </div>
@@ -654,24 +901,40 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       @click.self="showInfaqModal = false"
     >
-      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250">
-        <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+      <div
+        class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250"
+      >
+        <div
+          class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner"
+        >
           <QrCode class="w-7 h-7 text-primary" />
         </div>
-        <h3 class="text-xl font-bold text-foreground mb-2">Infaq & Donasi KontaQ</h3>
+        <h3 class="text-xl font-bold text-foreground mb-2">
+          Infaq & Donasi KontaQ
+        </h3>
         <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
-          Salurkan infaq terbaik Anda untuk mendukung dakwah & kegiatan Komunitas Tadabbur Al-Qur'an (KontaQ).
+          Salurkan infaq terbaik Anda untuk mendukung dakwah & kegiatan
+          Komunitas Tadabbur Al-Qur'an (KontaQ).
         </p>
-        <div class="bg-muted/50 p-4 rounded-2xl border border-border mb-6 text-left space-y-2 text-sm text-foreground">
+        <div
+          class="bg-muted/50 p-4 rounded-2xl border border-border mb-6 text-left space-y-2 text-sm text-foreground"
+        >
           <div class="flex justify-between items-center">
             <span class="font-semibold">Bank Syariah Indonesia (BSI)</span>
           </div>
-          <p class="font-mono text-lg font-bold text-primary tracking-wider">777-888-9990</p>
-          <p class="text-xs text-muted-foreground">a.n. Komunitas Tadabbur Al-Qur'an</p>
+          <p class="font-mono text-lg font-bold text-primary tracking-wider">
+            777-888-9990
+          </p>
+          <p class="text-xs text-muted-foreground">
+            a.n. Komunitas Tadabbur Al-Qur'an
+          </p>
         </div>
         <div class="flex gap-2">
           <button
-            @click="showInfaqModal = false; showQrisModal = true"
+            @click="
+              showInfaqModal = false;
+              showQrisModal = true;
+            "
             class="flex-1 py-2.5 px-4 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
           >
             Scan QRIS
@@ -692,27 +955,68 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       @click.self="showQrisModal = false"
     >
-      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden">
+      <div
+        class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden"
+      >
         <!-- QRIS Brand Header -->
-        <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border">
-          <span class="font-extrabold tracking-widest text-red-600 text-xl font-mono">QRIS</span>
-          <span class="text-xs text-muted-foreground font-semibold leading-tight text-left">
+        <div
+          class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border"
+        >
+          <span
+            class="font-extrabold tracking-widest text-red-600 text-xl font-mono"
+            >QRIS</span
+          >
+          <span
+            class="text-xs text-muted-foreground font-semibold leading-tight text-left"
+          >
             NATIONAL<br />STANDARD
           </span>
         </div>
 
         <!-- Merchant Info -->
-        <h3 class="text-base font-bold text-foreground mb-0.5">Komunitas Tadabbur Al-Qur'an</h3>
+        <h3 class="text-base font-bold text-foreground mb-0.5">
+          Komunitas Tadabbur Al-Qur'an
+        </h3>
         <p class="text-xs text-primary font-semibold mb-4">KontaQ Indonesia</p>
 
         <!-- QR Code Visual Card -->
-        <div class="bg-card p-4 rounded-2xl border-2 border-border shadow-inner flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative">
-          <svg class="w-48 h-48 text-foreground" viewBox="0 0 100 100" fill="currentColor">
-            <rect x="5" y="5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="4" />
+        <div
+          class="bg-card p-4 rounded-2xl border-2 border-border shadow-inner flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative"
+        >
+          <svg
+            class="w-48 h-48 text-foreground"
+            viewBox="0 0 100 100"
+            fill="currentColor"
+          >
+            <rect
+              x="5"
+              y="5"
+              width="25"
+              height="25"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+            />
             <rect x="10" y="10" width="15" height="15" />
-            <rect x="70" y="5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="4" />
+            <rect
+              x="70"
+              y="5"
+              width="25"
+              height="25"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+            />
             <rect x="75" y="10" width="15" height="15" />
-            <rect x="5" y="70" width="25" height="25" fill="none" stroke="currentColor" stroke-width="4" />
+            <rect
+              x="5"
+              y="70"
+              width="25"
+              height="25"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="4"
+            />
             <rect x="10" y="75" width="15" height="15" />
             <rect x="35" y="5" width="8" height="8" />
             <rect x="48" y="5" width="8" height="8" />
@@ -720,7 +1024,15 @@
             <rect x="18" y="35" width="8" height="8" />
             <rect x="35" y="20" width="12" height="8" />
             <rect x="50" y="18" width="8" height="12" />
-            <rect x="35" y="35" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" />
+            <rect
+              x="35"
+              y="35"
+              width="30"
+              height="30"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            />
             <rect x="42" y="42" width="16" height="16" />
             <rect x="70" y="35" width="8" height="18" />
             <rect x="83" y="35" width="12" height="8" />
@@ -730,17 +1042,24 @@
             <rect x="70" y="70" width="12" height="12" />
             <rect x="85" y="85" width="10" height="10" />
           </svg>
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="bg-card px-2 py-0.5 rounded border border-border shadow-xs text-xs font-bold text-foreground">
+          <div
+            class="absolute inset-0 flex items-center justify-center pointer-events-none"
+          >
+            <div
+              class="bg-card px-2 py-0.5 rounded border border-border shadow-xs text-xs font-bold text-foreground"
+            >
               KontaQ
             </div>
           </div>
         </div>
 
         <!-- NMID & Instructions -->
-        <p class="text-xs font-mono text-muted-foreground mb-1">NMID: ID1023948576201</p>
+        <p class="text-xs font-mono text-muted-foreground mb-1">
+          NMID: ID1023948576201
+        </p>
         <p class="text-xs text-muted-foreground mb-5 leading-relaxed">
-          Dapat di-scan menggunakan seluruh aplikasi m-Banking & E-Wallet (BSI, BCA, Mandiri, GoPay, OVO, Dana, LinkAja, dll).
+          Dapat di-scan menggunakan seluruh aplikasi m-Banking & E-Wallet (BSI,
+          BCA, Mandiri, GoPay, OVO, Dana, LinkAja, dll).
         </p>
 
         <button
@@ -777,14 +1096,20 @@ import {
   HelpCircle,
 } from 'lucide-vue-next';
 import NotificationDrawer from '@/components/NotificationDrawer.vue';
+import QuranVerseNumber from '@/components/QuranVerseNumber.vue';
 import authStore from '@/store/auth';
 import { getUser, listAnnouncements, searchQuran } from '@/api';
 import { relativeDate, stripTags } from '@/utils';
 import defaultAvatar from '@/assets/images/default-avatar.jpg';
 
 function handleGlobalKeydown(e) {
-  const isInputTarget = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
-  if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !isInputTarget)) {
+  const isInputTarget =
+    ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) ||
+    document.activeElement?.isContentEditable;
+  if (
+    (e.key === 'k' && (e.metaKey || e.ctrlKey)) ||
+    (e.key === '/' && !isInputTarget)
+  ) {
     e.preventDefault();
     isSearchOpen.value = !isSearchOpen.value;
   }
@@ -849,7 +1174,12 @@ const searchInputRef = ref(null);
 const mobileSearchInputRef = ref(null);
 
 const isSearching = ref(false);
-const searchResults = ref({ chapters: [], verses: [], materials: [], faqs: [] });
+const searchResults = ref({
+  chapters: [],
+  verses: [],
+  materials: [],
+  faqs: [],
+});
 let searchDebounceTimer = null;
 
 watch(isSearchOpen, (open) => {
@@ -865,7 +1195,11 @@ watch(isSearchOpen, (open) => {
       }
     }
     nextTick(() => {
-      if (typeof window !== 'undefined' && window.innerWidth < 640 && mobileSearchInputRef.value) {
+      if (
+        typeof window !== 'undefined' &&
+        window.innerWidth < 640 &&
+        mobileSearchInputRef.value
+      ) {
         mobileSearchInputRef.value.focus();
       } else if (searchInputRef.value) {
         searchInputRef.value.focus();
@@ -918,7 +1252,7 @@ watch(searchQuery, (newVal) => {
       if (res && res.success && res.data) {
         searchResults.value = {
           chapters: res.data.chapters || [],
-          verses: res.data.verses ? (res.data.verses.data || []) : [],
+          verses: res.data.verses ? res.data.verses.data || [] : [],
           materials: res.data.materials || [],
           faqs: res.data.faqs || [],
         };
@@ -943,7 +1277,11 @@ const hasSearchResults = computed(() => {
 
 function setSearchPrefix(prefix) {
   searchQuery.value = prefix;
-  if (typeof window !== 'undefined' && window.innerWidth < 640 && mobileSearchInputRef.value) {
+  if (
+    typeof window !== 'undefined' &&
+    window.innerWidth < 640 &&
+    mobileSearchInputRef.value
+  ) {
     mobileSearchInputRef.value.focus();
   } else if (searchInputRef.value) {
     searchInputRef.value.focus();
@@ -996,7 +1334,11 @@ const navTabs = [
 function isTabActive(item) {
   if (!route.name) return false;
   if (item.route === 'tadabbur') {
-    return route.name === 'tadabbur' || route.name.startsWith('materials') || route.name.startsWith('quran');
+    return (
+      route.name === 'tadabbur' ||
+      route.name.startsWith('materials') ||
+      route.name.startsWith('quran')
+    );
   }
   return route.name.startsWith(item.route);
 }
