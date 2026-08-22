@@ -31,7 +31,7 @@
           >
             QS. {{ getChapterName(verse.chapter) }}: {{ verse.verse }}
           </span>
-          <span v-if="verse.juz" class="text-[11px] text-muted-foreground font-medium">
+          <span v-if="verse.juz" class="text-xs text-muted-foreground font-medium">
             Juz {{ verse.juz }}
           </span>
         </div>
@@ -147,7 +147,7 @@ function formatTranslation(text) {
   if (!text) return '';
   return text.replace(
     /(\d+)\)/g,
-    '<sup class="inline-flex items-center text-[10px] font-bold text-accent bg-accent/10 border border-accent/20 rounded-xs px-1 py-0.1 mx-0.5 select-none font-mono">[$1]</sup>'
+    '<sup class="inline-flex items-center text-xs font-bold text-accent bg-accent/10 border border-accent/20 rounded-xs px-1 py-0.1 mx-0.5 select-none font-mono">[$1]</sup>'
   );
 }
 

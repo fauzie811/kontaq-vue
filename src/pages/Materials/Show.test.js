@@ -2,19 +2,28 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount, flushPromises } from '@vue/test-utils';
 import Show from '@/pages/Materials/Show.vue';
 import * as api from '@/api';
+import { toast } from 'vue-sonner';
 
+const mockPush = vi.fn();
 vi.mock('vue-router', () => ({
   useRoute: () => ({
     params: { id: '2' },
   }),
   useRouter: () => ({
-    push: vi.fn(),
+    push: mockPush,
   }),
 }));
 
 vi.mock('@/api', () => ({
   getMyMaterial: vi.fn(),
   updateMyMaterial: vi.fn(),
+}));
+
+vi.mock('vue-sonner', () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+  },
 }));
 
 describe('Materials/Show.vue', () => {
@@ -29,6 +38,9 @@ describe('Materials/Show.vue', () => {
         id: 2,
         title: 'Tadabbur QS An-Najm: 48-49',
         content: '<p>Penjelasan materi tadabbur...</p>',
+        week: 4,
+        part_number: 1,
+        read_at: null,
         quran_verses: [
           {
             id: 4832,
@@ -47,7 +59,7 @@ describe('Materials/Show.vue', () => {
       global: {
         stubs: {
           PageHeader: true,
-          TextPlaceholder: true,
+          RouterLink: { template: '<a><slot /></a>' },
         },
       },
     });
@@ -57,11 +69,21 @@ describe('Materials/Show.vue', () => {
     // Verify material content is rendered
     expect(wrapper.html()).toContain('Penjelasan materi tadabbur...');
 
+    // Verify metadata badges
+    expect(wrapper.text()).toContain('Pekan 4');
+    expect(wrapper.text()).toContain('Bagian 1');
+    expect(wrapper.text()).toContain('Belum Dibaca');
+    expect(wrapper.text()).toContain('menit baca');
+
     // Verify related verses card is rendered
     expect(wrapper.text()).toContain('Ayat Terkait');
     expect(wrapper.text()).toContain('QS. An-Najm: 48');
     expect(wrapper.text()).toContain('وَأَنَّهُ هُوَ أَغْنَىٰ وَأَقْنَىٰ');
     expect(wrapper.text()).toContain('Wa annahū huwa agnā wa aqnā.');
+
+    // Verify finish read button exists when not read
+    const finishBtn = wrapper.find('button[type="button"]');
+    expect(finishBtn.text()).toContain('Selesai Membaca');
   });
 
   it('does not render related verses card when material has no verses', async () => {
@@ -79,7 +101,7 @@ describe('Materials/Show.vue', () => {
       global: {
         stubs: {
           PageHeader: true,
-          TextPlaceholder: true,
+          RouterLink: { template: '<a><slot /></a>' },
         },
       },
     });
@@ -89,4 +111,108 @@ describe('Materials/Show.vue', () => {
     expect(wrapper.html()).toContain('Hanya teks materi biasa.');
     expect(wrapper.text()).not.toContain('Ayat Terkait');
   });
+
+  it('renders completed banner when material has been read', async () => {
+    api.getMyMaterial.mockResolvedValue({
+      success: true,
+      data: {
+        id: 2,
+        title: 'Materi Sudah Selesai',
+        content: '<p>Konten materi selesai...</p>',
+        week: 2,
+        read_at: '2026-08-20T10:00:00.000Z',
+        quran_verses: [],
+      },
+    });
+
+    const wrapper = mount(Show, {
+      global: {
+        stubs: {
+          PageHeader: true,
+          RouterLink: { template: '<a><slot /></a>' },
+        },
+      },
+    });
+
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('Sudah Dibaca');
+    expect(wrapper.text()).toContain('Materi Ini Sudah Selesai Dibaca');
+    expect(wrapper.text()).toContain('Kembali ke Materi');
+    expect(wrapper.text()).not.toContain('Selesai Membaca');
+  });
+
+  it('calls updateMyMaterial, triggers toast, and redirects on finishRead', async () => {
+    api.getMyMaterial.mockResolvedValue({
+      success: true,
+      data: {
+        id: 2,
+        title: 'Materi Belum Selesai',
+        content: '<p>Belajar materi...</p>',
+        read_at: null,
+        quran_verses: [],
+      },
+    });
+    api.updateMyMaterial.mockResolvedValue({ success: true });
+
+    const wrapper = mount(Show, {
+      global: {
+        stubs: {
+          PageHeader: true,
+          RouterLink: { template: '<a><slot /></a>' },
+        },
+      },
+    });
+
+    await flushPromises();
+
+    const finishBtn = wrapper.findAll('button').find((b) => b.text().includes('Selesai Membaca'));
+    expect(finishBtn).toBeDefined();
+
+    await finishBtn.trigger('click');
+    await flushPromises();
+
+    expect(api.updateMyMaterial).toHaveBeenCalledWith('2');
+    expect(toast.success).toHaveBeenCalledWith('Materi berhasil diselesaikan!');
+    expect(mockPush).toHaveBeenCalledWith('/materials');
+  });
+
+  it('renders error state and handles retry button', async () => {
+    api.getMyMaterial.mockRejectedValueOnce(new Error('Koneksi internet terputus'));
+
+    const wrapper = mount(Show, {
+      global: {
+        stubs: {
+          PageHeader: true,
+          RouterLink: { template: '<a><slot /></a>' },
+        },
+      },
+    });
+
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('Gagal Memuat Materi');
+    expect(wrapper.text()).toContain('Koneksi internet terputus');
+
+    // Retry button
+    api.getMyMaterial.mockResolvedValueOnce({
+      success: true,
+      data: {
+        id: 2,
+        title: 'Materi Berhasil Dimuat',
+        content: '<p>Konten setelah retry</p>',
+        quran_verses: [],
+      },
+    });
+
+    const retryBtn = wrapper.findAll('button').find((b) => b.text().includes('Coba Lagi'));
+    expect(retryBtn).toBeDefined();
+
+    await retryBtn.trigger('click');
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('Konten setelah retry');
+    expect(wrapper.text()).not.toContain('Gagal Memuat Materi');
+  });
 });
+
