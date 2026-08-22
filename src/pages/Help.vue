@@ -19,7 +19,7 @@
         <button
           v-if="searchQuery"
           @click="searchQuery = ''"
-          class="w-5 h-5 rounded-full bg-muted hover:bg-accent text-muted-foreground flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer ml-2"
+          class="w-5 h-5 rounded-full bg-muted hover:bg-secondary text-muted-foreground flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer ml-2"
           title="Hapus kata kunci"
         >
           <X class="w-3 h-3 stroke-[2.5]" />

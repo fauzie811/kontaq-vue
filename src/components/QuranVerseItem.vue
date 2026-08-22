@@ -3,7 +3,7 @@
     :class="[
       'rounded-2xl p-4 sm:p-6 border transition-all space-y-4 shadow-xs',
       isActive
-        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
+        ? 'border-accent/60 bg-accent/5 ring-2 ring-accent/20'
         : 'bg-card text-card-foreground border-border/70 hover:border-primary/30',
     ]"
   >
@@ -37,7 +37,7 @@
                 @click="$emit('play-verse', verse)"
                 :class="[
                   active
-                    ? 'bg-accent text-accent-foreground'
+                    ? 'bg-secondary text-secondary-foreground'
                     : 'text-foreground',
                   'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                 ]"
@@ -68,7 +68,7 @@
                   @click="goToMaterial(mat)"
                   :class="[
                     active
-                      ? 'bg-accent text-accent-foreground'
+                      ? 'bg-secondary text-secondary-foreground'
                       : 'text-foreground',
                     'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                   ]"
@@ -89,7 +89,7 @@
                 @click="showFootnotes = !showFootnotes"
                 :class="[
                   active
-                    ? 'bg-accent text-accent-foreground'
+                    ? 'bg-secondary text-secondary-foreground'
                     : 'text-foreground',
                   'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                 ]"
@@ -107,7 +107,7 @@
                 @click="$emit('copy-verse', verse)"
                 :class="[
                   active
-                    ? 'bg-accent text-accent-foreground'
+                    ? 'bg-secondary text-secondary-foreground'
                     : 'text-foreground',
                   'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
                 ]"
@@ -256,7 +256,7 @@ const formattedTranslation = computed(() => {
   // Transform patterns like "1)" or "2)" into superscript badges
   return props.verse.translation.replace(
     /(\d+)\)/g,
-    '<sup class="inline-flex items-center text-[10px] font-bold text-primary bg-secondary border border-border rounded-xs px-1 py-0.1 mx-0.5 select-none font-mono">[$1]</sup>',
+    '<sup class="inline-flex items-center text-[10px] font-bold text-accent bg-accent/10 border border-accent/20 rounded-xs px-1 py-0.1 mx-0.5 select-none font-mono">[$1]</sup>',
   );
 });
 

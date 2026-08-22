@@ -7,7 +7,7 @@
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
           :key="announcement.id" :class="[
             'block px-6 py-4 transition-colors',
-            announcement.is_sticky ? 'bg-primary/10' : 'hover:bg-secondary/50',
+            announcement.is_sticky ? 'bg-accent/10 hover:bg-accent/15 border-l-4 border-accent' : 'hover:bg-secondary/50',
           ]">
           <div class="flex items-baseline justify-between gap-x-4">
             <p class="text-sm font-semibold leading-6 text-foreground">{{ announcement.title }}</p>

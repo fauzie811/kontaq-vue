@@ -1,6 +1,6 @@
 <template>
   <span
-    class="text-[#a06e50] dark:text-[#c48d68]"
+    class="text-accent select-none"
     :class="customClass"
     :title="`Ayat ${number}`"
     >{{ unicodeVerse }}</span

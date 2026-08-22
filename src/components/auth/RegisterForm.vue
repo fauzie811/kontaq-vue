@@ -151,14 +151,14 @@ const doRegister = handleSubmit(async (values) => {
                   <RadioGroup v-bind="componentField" class="grid grid-cols-2 gap-3" :disabled="isLoading">
                     <label
                       for="gender-m"
-                      class="flex items-center gap-2.5 px-3 py-2 border border-border/80 rounded-xl cursor-pointer transition-all hover:bg-accent/40 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
+                      class="flex items-center gap-2.5 px-3 py-2 border border-border/80 rounded-xl cursor-pointer transition-all hover:bg-secondary/60 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
                     >
                       <RadioGroupItem value="m" id="gender-m" />
                       <span class="text-sm font-medium">Laki-laki</span>
                     </label>
                     <label
                       for="gender-f"
-                      class="flex items-center gap-2.5 px-3 py-2 border border-border/80 rounded-xl cursor-pointer transition-all hover:bg-accent/40 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
+                      class="flex items-center gap-2.5 px-3 py-2 border border-border/80 rounded-xl cursor-pointer transition-all hover:bg-secondary/60 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
                     >
                       <RadioGroupItem value="f" id="gender-f" />
                       <span class="text-sm font-medium">Perempuan</span>

@@ -12,7 +12,7 @@
           <ul role="list" class="space-y-1">
             <li v-for="item in navigation" :key="item.name">
               <router-link :to="{ name: item.route }"
-                :class="[$route.name.startsWith(item.route) ? 'bg-primary/10 text-primary font-bold' : 'text-muted-foreground hover:text-foreground hover:bg-accent', 'group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-medium transition']">
+                :class="[$route.name.startsWith(item.route) ? 'bg-primary/10 text-primary font-bold' : 'text-muted-foreground hover:text-foreground hover:bg-secondary', 'group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-medium transition']">
                 <component :is="item.icon"
                   :class="[$route.name.startsWith(item.route) ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground', 'h-5 w-5 shrink-0']"
                   aria-hidden="true" />

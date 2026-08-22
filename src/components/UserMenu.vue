@@ -26,7 +26,7 @@
         <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
         <div v-if="item.separator" class="w-full h-px my-1 bg-border"></div>
         <router-link v-else :to="item.route"
-          :class="[active ? 'bg-accent text-accent-foreground' : 'text-foreground hover:bg-accent hover:text-accent-foreground', 'block px-4 py-2 text-sm transition font-medium']">{{ item.name
+          :class="[active ? 'bg-secondary text-secondary-foreground' : 'text-foreground hover:bg-secondary hover:text-secondary-foreground', 'block px-4 py-2 text-sm transition font-medium']">{{ item.name
           }}</router-link>
         </MenuItem>
       </MenuItems>

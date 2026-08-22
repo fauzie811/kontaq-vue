@@ -32,7 +32,7 @@
           @click="toggleExpanded"
           class="flex items-center gap-3 min-w-0 cursor-pointer flex-1 group"
         >
-          <div class="w-8 h-8 rounded-full bg-secondary text-secondary-foreground font-bold text-xs flex items-center justify-center shrink-0 group-hover:bg-accent transition">
+          <div class="w-8 h-8 rounded-full bg-accent/15 text-accent font-bold text-xs flex items-center justify-center shrink-0 border border-accent/25 group-hover:bg-accent group-hover:text-accent-foreground transition">
             {{ quranAudio.currentVerseNumber }}
           </div>
           <div class="min-w-0">

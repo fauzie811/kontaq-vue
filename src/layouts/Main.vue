@@ -50,7 +50,7 @@
               <Bell class="w-5 h-5 stroke-[2.2] text-primary" />
               <span
                 v-if="notificationList.length > 0"
-                class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-amber-500 rounded-full ring-2 ring-card animate-pulse"
+                class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-accent rounded-full ring-2 ring-card animate-pulse"
               ></span>
             </button>
 
@@ -114,7 +114,7 @@
                 <router-link
                   :to="{ name: 'profile' }"
                   @click="isUserMenuOpen = false"
-                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
                   <User class="w-4 h-4 text-primary" />
                   Profil Saya
@@ -123,7 +123,7 @@
                 <router-link
                   :to="{ name: 'forum' }"
                   @click="isUserMenuOpen = false"
-                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
                   <MessageSquare class="w-4 h-4 text-primary" />
                   Forum Ukhuwah
@@ -132,7 +132,7 @@
                 <router-link
                   :to="{ name: 'certificates' }"
                   @click="isUserMenuOpen = false"
-                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
                   <Award class="w-4 h-4 text-primary" />
                   Sertifikat Saya
@@ -141,7 +141,7 @@
                 <router-link
                   :to="{ name: 'announcements' }"
                   @click="isUserMenuOpen = false"
-                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
                   <Bell class="w-4 h-4 text-primary" />
                   Pengumuman
@@ -150,7 +150,7 @@
                 <router-link
                   :to="{ name: 'help' }"
                   @click="isUserMenuOpen = false"
-                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-accent hover:text-primary transition"
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
                   <HelpCircle class="w-4 h-4 text-primary" />
                   Pusat Bantuan / FAQ
@@ -343,7 +343,7 @@
               <button
                 v-if="searchQuery"
                 @click="searchQuery = ''"
-                class="w-5 h-5 rounded-full bg-muted hover:bg-accent text-muted-foreground flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
+                class="w-5 h-5 rounded-full bg-muted hover:bg-secondary text-muted-foreground flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
                 title="Hapus kata kunci"
               >
                 <X class="w-3 h-3 stroke-[2.5]" />
@@ -351,7 +351,7 @@
             </div>
             <button
               @click="isSearchOpen = false"
-              class="w-9 h-9 rounded-full bg-muted hover:bg-accent hover:text-accent-foreground text-muted-foreground flex items-center justify-center transition border border-border cursor-pointer shrink-0 shadow-2xs"
+              class="w-9 h-9 rounded-full bg-muted hover:bg-secondary hover:text-secondary-foreground text-muted-foreground flex items-center justify-center transition border border-border cursor-pointer shrink-0 shadow-2xs"
               title="Tutup pencarian"
             >
               <X class="w-4 h-4 stroke-[2.2]" />
@@ -367,25 +367,25 @@
             >
             <button
               @click="setSearchPrefix('# ')"
-              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer shrink-0"
             >
               # Surah
             </button>
             <button
               @click="setSearchPrefix('@ ')"
-              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer shrink-0"
             >
               @ Ayat
             </button>
             <button
               @click="setSearchPrefix('! ')"
-              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer shrink-0"
             >
               ! Tadabbur
             </button>
             <button
               @click="setSearchPrefix('? ')"
-              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer shrink-0"
+              class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer shrink-0"
             >
               ? Bantuan
             </button>
@@ -446,7 +446,7 @@
                     v-for="surah in searchResults.chapters"
                     :key="surah.number"
                     @click="selectSurah(surah)"
-                    class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition flex items-center justify-between group"
+                    class="p-3 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition flex items-center justify-between group"
                   >
                     <div class="flex items-center gap-3 min-w-0">
                       <span
@@ -489,7 +489,7 @@
                     v-for="verse in searchResults.verses"
                     :key="verse.id"
                     @click="selectVerse(verse)"
-                    class="p-3.5 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition space-y-1.5 group"
+                    class="p-3.5 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition space-y-1.5 group"
                   >
                     <div class="flex items-center justify-between">
                       <span
@@ -535,7 +535,7 @@
                     v-for="material in searchResults.materials"
                     :key="material.id"
                     @click="selectMaterial(material)"
-                    class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                    class="p-3 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                   >
                     <div class="min-w-0">
                       <p
@@ -571,7 +571,7 @@
                     v-for="faq in searchResults.faqs"
                     :key="faq.id"
                     @click="selectFaq(faq)"
-                    class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                    class="p-3 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                   >
                     <div class="min-w-0 flex-1 pr-3">
                       <p
@@ -635,7 +635,7 @@
                 <button
                   v-if="searchQuery"
                   @click="searchQuery = ''"
-                  class="w-5 h-5 rounded-full bg-muted hover:bg-accent text-muted-foreground flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
+                  class="w-5 h-5 rounded-full bg-muted hover:bg-secondary text-muted-foreground flex items-center justify-center text-xs transition-colors shrink-0 cursor-pointer"
                   title="Hapus kata kunci"
                 >
                   <X class="w-3 h-3 stroke-[2.5]" />
@@ -643,7 +643,7 @@
               </div>
               <button
                 @click="isSearchOpen = false"
-                class="w-10 h-10 rounded-full bg-muted hover:bg-accent hover:text-accent-foreground text-muted-foreground flex items-center justify-center transition border border-border cursor-pointer shrink-0 shadow-2xs"
+                class="w-10 h-10 rounded-full bg-muted hover:bg-secondary hover:text-secondary-foreground text-muted-foreground flex items-center justify-center transition border border-border cursor-pointer shrink-0 shadow-2xs"
                 title="Tutup pencarian"
               >
                 <X class="w-5 h-5 stroke-[2.2]" />
@@ -657,25 +657,25 @@
               <span class="font-medium text-muted-foreground">Pintasan:</span>
               <button
                 @click="setSearchPrefix('# ')"
-                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer"
               >
                 # Surah
               </button>
               <button
                 @click="setSearchPrefix('@ ')"
-                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer"
               >
                 @ Ayat
               </button>
               <button
                 @click="setSearchPrefix('! ')"
-                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer"
               >
                 ! Tadabbur
               </button>
               <button
                 @click="setSearchPrefix('? ')"
-                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-accent cursor-pointer"
+                class="px-2 py-0.5 bg-card rounded border border-border font-mono font-bold text-primary hover:bg-secondary cursor-pointer"
               >
                 ? Bantuan
               </button>
@@ -736,7 +736,7 @@
                       v-for="surah in searchResults.chapters"
                       :key="surah.number"
                       @click="selectSurah(surah)"
-                      class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition flex items-center justify-between group"
+                      class="p-3 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition flex items-center justify-between group"
                     >
                       <div class="flex items-center gap-3 min-w-0">
                         <span
@@ -779,7 +779,7 @@
                       v-for="verse in searchResults.verses"
                       :key="verse.id"
                       @click="selectVerse(verse)"
-                      class="p-3.5 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition space-y-1.5 group"
+                      class="p-3.5 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition space-y-1.5 group"
                     >
                       <div class="flex items-center justify-between">
                         <span
@@ -826,7 +826,7 @@
                       v-for="material in searchResults.materials"
                       :key="material.id"
                       @click="selectMaterial(material)"
-                      class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                      class="p-3 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                     >
                       <div class="min-w-0">
                         <p
@@ -864,7 +864,7 @@
                       v-for="faq in searchResults.faqs"
                       :key="faq.id"
                       @click="selectFaq(faq)"
-                      class="p-3 bg-muted/50 hover:bg-accent/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
+                      class="p-3 bg-muted/50 hover:bg-secondary/80 border border-border rounded-2xl cursor-pointer transition group flex items-center justify-between"
                     >
                       <div class="min-w-0 flex-1 pr-3">
                         <p

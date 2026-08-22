@@ -25,11 +25,11 @@
           v-for="(notif, idx) in notifications"
           :key="notif.id || idx"
           @click="onSelect(notif)"
-          class="p-3.5 hover:bg-accent/60 transition cursor-pointer flex gap-3 items-start group"
+          class="p-3.5 hover:bg-secondary/60 transition cursor-pointer flex gap-3 items-start group"
         >
           <div
             :class="[
-              notif.isSticky ? 'bg-amber-500/15 text-amber-600' : 'bg-primary/10 text-primary',
+              notif.isSticky ? 'bg-accent/15 text-accent' : 'bg-primary/10 text-primary',
               'w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-transform group-hover:scale-105'
             ]"
           >
@@ -39,7 +39,7 @@
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5 justify-between">
               <p class="font-bold text-foreground text-xs sm:text-sm truncate group-hover:text-primary transition-colors">{{ notif.title }}</p>
-              <span v-if="notif.isSticky" class="text-xs bg-amber-500/15 text-amber-600 dark:text-amber-400 font-semibold px-1.5 py-0.5 rounded shrink-0">Penting</span>
+              <span v-if="notif.isSticky" class="text-xs bg-accent/15 text-accent font-semibold px-1.5 py-0.5 rounded shrink-0">Penting</span>
             </div>
             <p class="text-xs text-muted-foreground mt-0.5 leading-snug line-clamp-2">{{ notif.desc }}</p>
             <span class="text-xs text-primary font-semibold mt-1 block">{{ notif.time }}</span>
@@ -108,7 +108,7 @@
               </span>
               <button
                 @click="emit('close')"
-                class="w-8 h-8 rounded-full bg-muted hover:bg-accent text-muted-foreground hover:text-foreground flex items-center justify-center transition cursor-pointer"
+                class="w-8 h-8 rounded-full bg-muted hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition cursor-pointer"
               >
                 <X class="w-4 h-4 stroke-[2.2]" />
               </button>
@@ -125,11 +125,11 @@
               v-for="(notif, idx) in notifications"
               :key="notif.id || idx"
               @click="onSelect(notif)"
-              class="py-3 px-2.5 hover:bg-accent/50 rounded-xl transition cursor-pointer flex gap-3 items-start my-1 group"
+              class="py-3 px-2.5 hover:bg-secondary/60 rounded-xl transition cursor-pointer flex gap-3 items-start my-1 group"
             >
               <div
                 :class="[
-                  notif.isSticky ? 'bg-amber-500/15 text-amber-600' : 'bg-primary/10 text-primary',
+                  notif.isSticky ? 'bg-accent/15 text-accent' : 'bg-primary/10 text-primary',
                   'w-9 h-9 rounded-full flex items-center justify-center shrink-0 mt-0.5'
                 ]"
               >
@@ -139,7 +139,7 @@
               <div class="min-w-0 flex-1">
                 <div class="flex items-center justify-between gap-2">
                   <p class="font-semibold text-foreground text-sm leading-snug group-hover:text-primary transition-colors">{{ notif.title }}</p>
-                  <span v-if="notif.isSticky" class="text-xs bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold px-1.5 py-0.5 rounded shrink-0">Penting</span>
+                  <span v-if="notif.isSticky" class="text-xs bg-accent/15 text-accent font-bold px-1.5 py-0.5 rounded shrink-0">Penting</span>
                 </div>
                 <p class="text-xs text-muted-foreground mt-1 leading-normal line-clamp-2">{{ notif.desc }}</p>
                 <span class="text-xs text-primary font-bold mt-1.5 block">{{ notif.time }}</span>
