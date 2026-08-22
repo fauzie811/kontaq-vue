@@ -125,17 +125,6 @@
         <span class="text-xs text-muted-foreground font-medium">
           QS {{ chapterDetails?.latin }}: {{ verse.verse }}
         </span>
-
-        <!-- Tadabbur badge button if verse has related materials -->
-        <button
-          v-if="hasMaterials"
-          @click="goToMaterial(materialsList[0])"
-          class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition cursor-pointer border border-primary/20 active:scale-95"
-          :title="materialsList[0]?.title ? `Materi: ${materialsList[0].title}` : 'Lihat Tadabbur'"
-        >
-          <BookOpen class="w-3.5 h-3.5 text-primary" />
-          <span>Tadabbur</span>
-        </button>
       </div>
     </div>
 
