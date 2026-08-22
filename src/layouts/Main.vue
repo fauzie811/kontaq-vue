@@ -156,6 +156,20 @@
                   Pusat Bantuan / FAQ
                 </router-link>
 
+                <a
+                  href="https://kontaq.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  @click="isUserMenuOpen = false"
+                  class="flex items-center justify-between px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition group"
+                >
+                  <div class="flex items-center gap-2.5">
+                    <Globe class="w-4 h-4 text-primary" />
+                    <span>Website Resmi</span>
+                  </div>
+                  <ExternalLink class="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </a>
+
                 <div class="my-1 border-t border-border"></div>
 
                 <router-link
@@ -491,6 +505,8 @@ import {
   MessageSquare,
   Award,
   HelpCircle,
+  Globe,
+  ExternalLink,
 } from 'lucide-vue-next';
 import NotificationDrawer from '@/components/NotificationDrawer.vue';
 import SearchModal from '@/components/SearchModal.vue';
