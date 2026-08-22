@@ -131,3 +131,50 @@ describe('Evaluations/Show.vue Review Mode', () => {
     expect(wrapper.text()).toContain('e.');
   });
 });
+
+describe('Evaluations/Show.vue Active Mode', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders active evaluation mode with timer and question navigator', async () => {
+    api.getMyEvaluation.mockResolvedValue({
+      success: true,
+      data: {
+        evaluation: {
+          id: 1,
+          title: 'Evaluation Active',
+          duration: 30,
+          questions: [
+            { id: 201, type: 'multiple', content: 'Soal 1', details: {} },
+            { id: 202, type: 'multiple', content: 'Soal 2', details: {} },
+          ],
+        },
+        user_evaluation: {
+          id: 1,
+          created_at: '2026-08-22T10:00:00Z',
+          finished_at: null,
+          answers: {},
+        },
+      },
+    });
+
+    const wrapper = mount(Show, {
+      global: {
+        stubs: {
+          routerLink: true,
+          PageHeader: true,
+          Countdown: true,
+          QuestionCard: true,
+        },
+      },
+    });
+
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('Sisa Waktu');
+    expect(wrapper.text()).toContain('0/2 Terjawab');
+    expect(wrapper.text()).toContain('Progress');
+    expect(wrapper.text()).toContain('Daftar Soal:');
+  });
+});

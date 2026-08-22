@@ -127,3 +127,50 @@ describe('Quizzes/Show.vue Review Mode', () => {
     expect(wrapper.text()).toContain('e.');
   });
 });
+
+describe('Quizzes/Show.vue Active Mode', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders active quiz mode with timer and question navigator', async () => {
+    api.getMyQuiz.mockResolvedValue({
+      success: true,
+      data: {
+        quiz: {
+          id: 1,
+          title: 'Quiz Active',
+          duration: 15,
+          questions: [
+            { id: 101, type: 'multiple', content: 'Soal 1', details: {} },
+            { id: 102, type: 'multiple', content: 'Soal 2', details: {} },
+          ],
+        },
+        user_quiz: {
+          id: 1,
+          created_at: '2026-08-22T10:00:00Z',
+          finished_at: null,
+          answers: {},
+        },
+      },
+    });
+
+    const wrapper = mount(Show, {
+      global: {
+        stubs: {
+          routerLink: true,
+          PageHeader: true,
+          Countdown: true,
+          QuestionCard: true,
+        },
+      },
+    });
+
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('Sisa Waktu');
+    expect(wrapper.text()).toContain('0/2 Terjawab');
+    expect(wrapper.text()).toContain('Progress');
+    expect(wrapper.text()).toContain('Daftar Soal:');
+  });
+});

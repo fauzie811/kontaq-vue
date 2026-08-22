@@ -1,15 +1,18 @@
 <template>
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-200/80 overflow-hidden mb-6">
+  <div
+    :id="'question-' + (index + 1)"
+    class="scroll-mt-24 sm:scroll-mt-28 bg-card rounded-2xl shadow-xs border border-border overflow-hidden mb-5 sm:mb-6 transition-all duration-200"
+  >
     <!-- Question Header Bar -->
-    <div class="bg-[#f0f2f1] flex items-stretch min-h-[52px] border-b border-gray-200/60">
+    <div class="bg-muted/50 flex items-stretch min-h-[52px] border-b border-border">
       <!-- Question Number Badge -->
-      <div class="bg-[#dcfce7] text-[#144227] w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
+      <div class="bg-primary/10 text-primary w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 border-r border-border/80">
         {{ index + 1 }}
       </div>
 
       <!-- Question Content -->
-      <div class="px-4 py-3 flex items-center text-gray-900 font-semibold text-base sm:text-lg flex-1 leading-snug">
-        <div class="prose max-w-none text-gray-900 font-semibold text-base sm:text-lg" v-html="question.content"></div>
+      <div class="px-4 py-3.5 sm:py-4 flex items-center text-foreground font-semibold text-base sm:text-lg flex-1 leading-snug">
+        <div class="prose dark:prose-invert max-w-none text-foreground font-semibold text-base sm:text-lg" v-html="question.content"></div>
       </div>
     </div>
 
@@ -26,16 +29,16 @@
             <div
               :class="[
                 checked
-                  ? 'bg-[#bbf7d0] text-emerald-950 font-semibold border-emerald-500 shadow-sm'
-                  : 'bg-white hover:bg-gray-50 text-gray-800 border-gray-200',
-                'flex items-center justify-center px-4 py-3.5 rounded-xl border-2 cursor-pointer transition-all duration-150 select-none text-base sm:text-lg'
+                  ? 'bg-primary/10 text-primary font-bold border-primary shadow-xs ring-1 ring-primary/30'
+                  : 'bg-card hover:bg-muted/40 text-foreground border-border',
+                'flex items-center justify-center px-4 py-3.5 sm:py-4 rounded-xl border-2 cursor-pointer transition-all duration-150 select-none text-base sm:text-lg min-h-[52px] active:scale-[0.98]'
               ]"
             >
               <!-- Custom Radio Button Circle -->
               <span
                 :class="[
-                  checked ? 'border-emerald-600 bg-emerald-600' : 'border-gray-300 bg-white',
-                  'w-5 h-5 rounded-full border flex items-center justify-center mr-3 shrink-0 transition-colors'
+                  checked ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/40 bg-card',
+                  'w-5 h-5 rounded-full border-2 flex items-center justify-center mr-2.5 shrink-0 transition-colors'
                 ]"
               >
                 <span v-if="checked" class="w-2 h-2 rounded-full bg-white"></span>
@@ -51,7 +54,7 @@
     <!-- Multiple Choice Options List -->
     <div v-else class="py-1">
       <RadioGroup :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
-        <div class="space-y-0">
+        <div class="divide-y divide-border/60">
           <RadioGroupOption
             v-for="optKey in multipleOptions"
             :key="optKey"
@@ -60,23 +63,25 @@
           >
             <div
               :class="[
-                checked ? 'bg-[#bbf7d0] text-emerald-950 font-medium' : 'hover:bg-gray-50 text-gray-800',
-                'flex items-center px-4 sm:px-6 py-3 cursor-pointer transition-colors duration-150 select-none text-base'
+                checked
+                  ? 'bg-primary/10 text-foreground font-medium'
+                  : 'hover:bg-muted/40 text-foreground',
+                'flex items-start sm:items-center px-4 sm:px-6 py-3.5 sm:py-4 cursor-pointer transition-colors duration-150 select-none text-sm sm:text-base active:bg-primary/15'
               ]"
             >
               <!-- Custom Radio Button Circle -->
               <span
                 :class="[
-                  checked ? 'border-emerald-600 bg-emerald-600' : 'border-gray-300 bg-white',
-                  'w-5 h-5 rounded-full border flex items-center justify-center mr-3.5 shrink-0 transition-colors'
+                  checked ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/40 bg-card',
+                  'w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3.5 mt-0.5 sm:mt-0 shrink-0 transition-colors'
                 ]"
               >
                 <span v-if="checked" class="w-2 h-2 rounded-full bg-white"></span>
               </span>
 
               <!-- Option Label & Text -->
-              <span class="mr-2 font-normal text-base">{{ optKey }}.</span>
-              <span class="text-base leading-relaxed">{{ getOptionText(optKey) }}</span>
+              <span class="mr-2 font-bold text-sm sm:text-base shrink-0">{{ optKey }}.</span>
+              <span class="text-sm sm:text-base leading-relaxed text-foreground flex-1">{{ getOptionText(optKey) }}</span>
             </div>
           </RadioGroupOption>
         </div>
