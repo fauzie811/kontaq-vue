@@ -19,7 +19,13 @@
 
       <!-- Footer Badge -->
       <div class="relative z-10 text-xs text-white/70 text-center">
-        &copy; Komunitas Tadabbur Al-Qur'an (KontaQ). All rights reserved.
+        &copy; Komunitas Tadabbur Al-Qur'an (KontaQ). All rights reserved. &middot;
+        <a
+          href="https://kontaq.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline underline-offset-2 hover:text-white transition-colors"
+        >kontaq.org</a>
       </div>
     </div>
 
@@ -38,7 +44,13 @@
       </div>
 
       <div class="text-xs text-center text-muted-foreground/60 pt-4 lg:hidden">
-        &copy; Komunitas Tadabbur Al-Qur'an (KontaQ)
+        &copy; Komunitas Tadabbur Al-Qur'an (KontaQ) &middot;
+        <a
+          href="https://kontaq.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline underline-offset-2 hover:text-primary transition-colors"
+        >kontaq.org</a>
       </div>
     </div>
   </main>
