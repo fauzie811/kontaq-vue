@@ -132,12 +132,24 @@
           Jika pertanyaan Anda belum tercantum di sini, silakan hubungi Musyrif kelompok atau Admin KontaQ.
         </p>
       </div>
-      <router-link
-        :to="{ name: 'forum' }"
-        class="px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs sm:text-sm font-bold rounded-full shadow-xs transition-transform hover:scale-105 active:scale-95 shrink-0 cursor-pointer"
-      >
-        Tanya di Forum Ukhuwah
-      </router-link>
+      <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap justify-center sm:justify-end">
+        <a
+          href="https://kontaq.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-4 py-2.5 bg-card hover:bg-secondary text-foreground text-xs sm:text-sm font-semibold rounded-full border border-border shadow-2xs transition-all hover:scale-105 active:scale-95 shrink-0 flex items-center gap-1.5 cursor-pointer"
+        >
+          <Globe class="w-4 h-4 text-primary" />
+          <span>Website Resmi</span>
+          <ExternalLink class="w-3 h-3 text-muted-foreground" />
+        </a>
+        <router-link
+          :to="{ name: 'forum' }"
+          class="px-5 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground text-xs sm:text-sm font-bold rounded-full shadow-xs transition-transform hover:scale-105 active:scale-95 shrink-0 cursor-pointer"
+        >
+          Tanya di Forum Ukhuwah
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -145,7 +157,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { ChevronDown, HelpCircle, Search, X } from 'lucide-vue-next';
+import { ChevronDown, HelpCircle, Search, X, Globe, ExternalLink } from 'lucide-vue-next';
 import { listFaqs } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 

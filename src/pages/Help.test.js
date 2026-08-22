@@ -103,4 +103,15 @@ describe('Help.vue', () => {
       expect(wrapper.text()).not.toContain('Apa itu KontaQ?');
     }
   });
+
+  it('renders link to official website kontaq.org in support section', async () => {
+    const wrapper = mountPage();
+    await flushPromises();
+
+    const websiteLink = wrapper.find('a[href="https://kontaq.org"]');
+    expect(websiteLink.exists()).toBe(true);
+    expect(websiteLink.attributes('target')).toBe('_blank');
+    expect(websiteLink.attributes('rel')).toContain('noopener');
+    expect(websiteLink.text()).toContain('Website Resmi');
+  });
 });
