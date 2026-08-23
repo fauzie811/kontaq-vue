@@ -120,3 +120,11 @@ export function getChapterName(chapterNumber) {
   const num = Number(chapterNumber);
   return CHAPTER_DETAILS[num]?.latin || `Surah ${num}`;
 }
+
+export function getSurahLigature(chapterNumber) {
+  if (!chapterNumber && chapterNumber !== 0) return '';
+  const num = Number(chapterNumber);
+  if (isNaN(num) || num < 1 || num > 114) return '';
+  return `surah${String(num).padStart(3, '0')}`;
+}
+
