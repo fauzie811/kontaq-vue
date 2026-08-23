@@ -83,6 +83,7 @@
   --font-times: Times New Roman, Cambria, serif;
   --font-quran: 'LPMQ Isep Misbah', serif;
   --font-arabic: 'Scheherazade New', serif;
+  --font-surah: 'Surah Names', serif;
 
   --animate-accordion-down: accordion-down var(--duration-fast) var(--ease-smooth-out);
   --animate-accordion-up: accordion-up var(--duration-fast) var(--ease-smooth-out);
@@ -270,6 +271,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Surah Names';
+  src: url('./fonts/Surah Name V4.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 button,
 input,
 textarea,
@@ -296,6 +305,14 @@ select {
   letter-spacing: normal !important;
   font-variant-ligatures: normal;
   font-feature-settings: "liga" 1, "rlig" 1, "calt" 1, "mset" 1;
+  text-rendering: optimizeLegibility;
+}
+
+.font-surah {
+  font-family: 'Surah Names', serif;
+  letter-spacing: normal !important;
+  font-variant-ligatures: normal;
+  font-feature-settings: "liga" 1, "calt" 1;
   text-rendering: optimizeLegibility;
 }
 
