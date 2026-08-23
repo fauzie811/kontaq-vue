@@ -197,9 +197,10 @@
                       {{ surah.meaning }}
                     </p>
                   </div>
-                  <span class="font-arabic text-sm font-bold text-foreground/80 shrink-0 dir-rtl">
-                    {{ surah.arabic }}
-                  </span>
+                  <SurahName
+                    :chapter="surah.number"
+                    customClass="text-2xl text-foreground/80 shrink-0"
+                  />
                 </button>
               </div>
             </div>
@@ -300,9 +301,10 @@
                       </p>
                     </div>
                   </div>
-                  <span class="font-arabic text-xl font-bold text-foreground/90 ml-2 shrink-0 dir-rtl">
-                    {{ surah.arabic }}
-                  </span>
+                  <SurahName
+                    :chapter="surah.number"
+                    customClass="text-2xl sm:text-3xl text-foreground/90 ml-2 shrink-0"
+                  />
                 </div>
               </div>
             </div>
@@ -638,9 +640,10 @@
                         {{ surah.meaning }}
                       </p>
                     </div>
-                    <span class="font-arabic text-base font-bold text-foreground/80 shrink-0 dir-rtl">
-                      {{ surah.arabic }}
-                    </span>
+                    <SurahName
+                      :chapter="surah.number"
+                      customClass="text-2xl text-foreground/80 shrink-0"
+                    />
                   </button>
                 </div>
               </div>
@@ -741,9 +744,10 @@
                         </p>
                       </div>
                     </div>
-                    <span class="font-arabic text-xl font-bold text-foreground/90 ml-2 shrink-0 dir-rtl">
-                      {{ surah.arabic }}
-                    </span>
+                    <SurahName
+                      :chapter="surah.number"
+                      customClass="text-2xl sm:text-3xl text-foreground/90 ml-2 shrink-0"
+                    />
                   </div>
                 </div>
               </div>
@@ -935,6 +939,7 @@ import {
   RotateCcw,
 } from 'lucide-vue-next';
 import QuranVerseNumber from '@/components/QuranVerseNumber.vue';
+import SurahName from '@/components/SurahName.vue';
 import { searchQuran } from '@/api';
 
 const props = defineProps({

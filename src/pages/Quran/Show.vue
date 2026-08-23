@@ -36,8 +36,8 @@
     <div v-else-if="chapterDetails">
       <!-- Surah Header Banner -->
       <div class="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm mb-8 relative overflow-hidden text-card-foreground">
-        <div class="absolute -right-8 -bottom-8 opacity-5 font-arabic text-9xl select-none pointer-events-none text-foreground">
-          {{ chapterDetails.arabic }}
+        <div class="absolute -right-8 -bottom-8 opacity-5 select-none pointer-events-none text-foreground">
+          <SurahName :chapter="chapterDetails.number" customClass="text-9xl" />
         </div>
 
         <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
@@ -57,9 +57,10 @@
             </p>
           </div>
 
-          <div class="font-arabic text-3xl sm:text-5xl font-bold text-primary drop-shadow-xs dir-rtl">
-            {{ chapterDetails.arabic }}
-          </div>
+          <SurahName
+            :chapter="chapterDetails.number"
+            customClass="text-4xl sm:text-6xl text-primary drop-shadow-xs"
+          />
         </div>
       </div>
 
@@ -133,6 +134,7 @@ import { getQuranChapterVerses } from '@/api';
 import { quranAudio } from '@/store/quranAudio';
 import QuranAudioPlayer from '@/components/QuranAudioPlayer.vue';
 import QuranVerseItem from '@/components/QuranVerseItem.vue';
+import SurahName from '@/components/SurahName.vue';
 
 const route = useRoute();
 const router = useRouter();

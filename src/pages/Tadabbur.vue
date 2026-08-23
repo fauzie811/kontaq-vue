@@ -30,10 +30,11 @@
           </div>
         </div>
 
-        <!-- Right: Arabic Calligraphy -->
-        <div class="font-arabic text-2xl sm:text-3xl font-bold text-foreground shrink-0 ml-2 group-hover:scale-105 transition-transform dir-rtl">
-          {{ surah.arabic }}
-        </div>
+        <!-- Right: Surah Name Calligraphy -->
+        <SurahName
+          :chapter="surah.number"
+          customClass="text-3xl sm:text-4xl text-foreground shrink-0 ml-2 group-hover:text-primary group-hover:scale-105 transition-all"
+        />
       </div>
     </div>
   </div>
@@ -43,6 +44,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { listQuranChapters } from '@/api';
+import SurahName from '@/components/SurahName.vue';
 
 const router = useRouter();
 const loading = ref(false);
