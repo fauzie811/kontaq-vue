@@ -238,13 +238,12 @@
 
     <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
     <footer
-      v-if="isBannerVisible"
       class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:shadow-2xl"
     >
       <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
         <span
-          class="font-bold text-secondary-foreground text-xs sm:text-base tracking-wide text-left truncate sm:whitespace-normal"
+          class="font-bold text-secondary-foreground text-xs sm:text-base tracking-wide text-left"
         >
           DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
         </span>
@@ -259,15 +258,6 @@
           </router-link>
         </div>
       </div>
-
-      <!-- Red Close X Button on top-right floating edge -->
-      <button
-        @click="isBannerVisible = false"
-        title="Tutup Banner"
-        class="absolute -top-1.5 -right-1.5 sm:-top-2 sm:-right-2 w-6 h-6 rounded-full bg-destructive hover:bg-destructive/90 text-destructive-foreground flex items-center justify-center shadow-md transition-transform hover:scale-110 cursor-pointer z-50"
-      >
-        <X class="w-3.5 h-3.5 stroke-[3]" />
-      </button>
     </footer>
 
     <!-- Mobile Bottom Navigation Bar -->
@@ -500,7 +490,6 @@ import {
   FileSpreadsheet,
   QrCode,
   Pin,
-  X,
   ChevronDown,
   MessageSquare,
   Award,
@@ -579,7 +568,6 @@ function toggleNotification() {
   }
 }
 
-const isBannerVisible = ref(true);
 const showInfaqModal = ref(false);
 const showQrisModal = ref(false);
 
