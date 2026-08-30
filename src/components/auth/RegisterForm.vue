@@ -82,10 +82,15 @@ const doRegister = handleSubmit(async (values) => {
   <div class="bg-card text-card-foreground border border-border/80 rounded-2xl shadow-xl shadow-primary/5 p-6 sm:p-8 space-y-6">
     <!-- Header -->
     <div class="flex flex-col items-center gap-2 text-center">
-      <h1 class="text-2xl sm:text-3xl font-bold text-foreground font-arabic leading-loose tracking-wide select-none">
-        بِسْمِ اللَّهِ، السَّلَامُ عَلَيْكُمْ
-      </h1>
-      <p class="text-sm text-balance text-muted-foreground">
+      <div class="space-y-1">
+        <p class="text-lg sm:text-xl font-bold text-primary font-quran leading-loose tracking-wide">
+          بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+        </p>
+        <h1 class="text-xl sm:text-2xl font-bold text-foreground font-quran leading-loose tracking-wide select-none">
+          السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
+        </h1>
+      </div>
+      <p class="text-sm text-balance text-muted-foreground mt-2">
         Silakan lengkapi formulir berikut untuk mendaftar.
       </p>
     </div>

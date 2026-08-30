@@ -1,5 +1,12 @@
 <template>
   <div class="flex flex-col items-center w-full py-2 sm:py-4 text-center">
+    <!-- Logo & Greetings (Slide 1 & 2 requirements) -->
+    <div class="mb-6 flex flex-col items-center">
+      <a href="https://kontaq.org" target="_blank" class="mb-4 transition-transform hover:scale-105 active:scale-95 inline-block">
+        <img class="h-16 sm:h-20 object-contain drop-shadow-sm" src="@/assets/logo.png" alt="KontaQ" />
+      </a>
+    </div>
+
     <!-- Main Navigation Module List -->
     <div class="w-full flex flex-col gap-2.5 sm:gap-3.5">
       <component

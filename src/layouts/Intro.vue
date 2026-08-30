@@ -55,11 +55,7 @@
     <!-- Right Side: Content Container (Slot - Scrollable on Desktop) -->
     <div
       class="flex flex-col gap-2 sm:gap-4 p-4 sm:p-6 lg:p-10 lg:col-span-5 bg-background justify-center items-center lg:h-screen lg:overflow-y-auto">
-      <div class="flex justify-center gap-2 lg:hidden mb-2 sm:mb-3">
-        <a href="/" class="flex items-center">
-          <img class="w-auto h-12 sm:h-14 object-contain" src="@/assets/logo.png" alt="Komunitas Tadabbur Al-Qur'an" />
-        </a>
-      </div>
+
       <div class="flex items-center justify-center flex-1 w-full my-auto">
         <div class="w-full max-w-md">
           <slot />

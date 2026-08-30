@@ -1,5 +1,25 @@
 <template>
-  <div>
+  <div class="space-y-6">
+    <!-- Help / Q&A Banner -->
+    <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary shrink-0">
+          <HelpCircle class="w-5 h-5" />
+        </div>
+        <div>
+          <h3 class="font-bold text-foreground text-sm sm:text-base">Butuh penjelasan atau panduan Tadabbur?</h3>
+          <p class="text-xs sm:text-sm text-muted-foreground">Kunjungi menu Bantuan untuk melihat tanya jawab (Q&A).</p>
+        </div>
+      </div>
+      <router-link 
+        :to="{ name: 'help', query: { q: 'Tadabbur' } }"
+        class="shrink-0 w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl text-xs sm:text-sm shadow-sm transition-all active:scale-95 text-center"
+      >
+        Lihat Q&A Tadabbur
+      </router-link>
+    </div>
+
+
     <!-- Loading State -->
     <div v-if="loading" class="text-center py-16">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
@@ -45,6 +65,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { listQuranChapters } from '@/api';
 import SurahName from '@/components/SurahName.vue';
+import { HelpCircle } from 'lucide-vue-next';
 
 const router = useRouter();
 const loading = ref(false);

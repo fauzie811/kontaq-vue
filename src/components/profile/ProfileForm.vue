@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
@@ -21,6 +22,7 @@ import {
   RadioGroupItem,
 } from '@/components/ui/radio-group';
 
+const router = useRouter();
 const isLoading = ref(true);
 
 const formSchema = toTypedSchema(z.object({
@@ -55,6 +57,7 @@ const doSubmit = handleSubmit(async (values) => {
     await updateProfile(values);
     getUser();
     toast.success('Profil berhasil diperbarui');
+    router.push({ name: 'home' });
   } catch (e) {
     toast.error(e);
   }
@@ -69,7 +72,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="sm:col-span-4">
         <FormField v-slot="{ componentField }" name="name">
           <FormItem>
-            <FormLabel>Nama Lengkap</FormLabel>
+            <FormLabel>Nama Lengkap <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="text" autocomplete="name" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -81,7 +84,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="sm:col-span-2">
         <FormField v-slot="{ componentField }" name="nickname">
           <FormItem>
-            <FormLabel>Panggilan</FormLabel>
+            <FormLabel>Panggilan <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="text" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -93,7 +96,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="sm:col-span-4">
         <FormField v-slot="{ componentField }" name="gender">
           <FormItem>
-            <FormLabel>Jenis Kelamin</FormLabel>
+            <FormLabel>Jenis Kelamin <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <RadioGroup v-bind="componentField" class="grid grid-cols-2 gap-2" :disabled="isLoading">
                 <div class="flex items-center">
@@ -114,7 +117,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="sm:col-span-2">
         <FormField v-slot="{ componentField }" name="age">
           <FormItem>
-            <FormLabel>Usia</FormLabel>
+            <FormLabel>Usia <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="number" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -126,7 +129,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="col-span-full">
         <FormField v-slot="{ componentField }" name="address">
           <FormItem>
-            <FormLabel>Alamat</FormLabel>
+            <FormLabel>Alamat <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="text" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -138,7 +141,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="col-span-full">
         <FormField v-slot="{ componentField }" name="occupation">
           <FormItem>
-            <FormLabel>Pekerjaan</FormLabel>
+            <FormLabel>Pekerjaan <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="text" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -150,7 +153,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="sm:col-span-3">
         <FormField v-slot="{ componentField }" name="phone">
           <FormItem>
-            <FormLabel>Nomor HP</FormLabel>
+            <FormLabel>Nomor HP <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="tel" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -162,7 +165,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="sm:col-span-3">
         <FormField v-slot="{ componentField }" name="email">
           <FormItem>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Email <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="email" autocomplete="email" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>
@@ -174,7 +177,7 @@ const doSubmit = handleSubmit(async (values) => {
       <div class="col-span-full">
         <FormField v-slot="{ componentField }" name="motivation">
           <FormItem>
-            <FormLabel>Motivasi Ikut KontaQ</FormLabel>
+            <FormLabel>Motivasi Ikut KontaQ <span class="text-destructive">*</span></FormLabel>
             <FormControl>
               <Input type="text" v-bind="componentField" required :disabled="isLoading" />
             </FormControl>

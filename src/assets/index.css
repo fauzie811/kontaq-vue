@@ -123,6 +123,14 @@
     height: 0;
   }
 }
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@theme {
+  --animate-marquee: marquee 25s linear infinite;
+}
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,

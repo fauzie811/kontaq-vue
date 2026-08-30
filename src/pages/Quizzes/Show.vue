@@ -21,6 +21,16 @@
         @back="handleBackNavigation"
       />
 
+      <!-- Running Text (Tata Tertib) -->
+      <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
+        <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
+          <span class="mr-8">Tata Tertib Kuis: Harap mengerjakan kuis dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
+          <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
+          <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
+          <span>Semoga Allah memberikan kemudahan.</span>
+        </div>
+      </div>
+
       <!-- ================================================================= -->
       <!-- 1. ACTIVE QUIZ TAKING MODE -->
       <!-- ================================================================= -->
@@ -33,7 +43,7 @@
               <Clock class="w-4 h-4 text-primary shrink-0 animate-pulse" />
               <span class="text-muted-foreground font-medium">Sisa Waktu:</span>
               <span class="font-mono font-bold text-foreground">
-                <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" />
+                <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
               </span>
             </div>
 
@@ -98,7 +108,7 @@
                 <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Sisa Waktu</h3>
               </div>
               <div class="text-3xl font-extrabold text-foreground font-mono tracking-tight">
-                <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" />
+                <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
               </div>
               <p class="text-xs text-muted-foreground">Kuis otomatis tersimpan jika waktu habis.</p>
             </div>
@@ -401,4 +411,39 @@ function getMultipleOptions(question) {
 const forceFinish = () => {
   submitAnswers();
 };
+
+let warningSoundPlayed = false;
+function playWarningSound() {
+  if (warningSoundPlayed) return;
+  warningSoundPlayed = true;
+  
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    
+    for(let i=0; i<3; i++) {
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime + (i * 0.5));
+      gainNode.gain.setValueAtTime(0.1, ctx.currentTime + (i * 0.5));
+      
+      osc.start(ctx.currentTime + (i * 0.5));
+      osc.stop(ctx.currentTime + (i * 0.5) + 0.2);
+    }
+  } catch (e) {
+    console.error('AudioContext error', e);
+  }
+}
+
+function handleTick({ remainingSeconds }) {
+  // Play sound when 1 minute (60 seconds) or less is remaining
+  if (remainingSeconds > 0 && remainingSeconds <= 60 && !warningSoundPlayed) {
+    playWarningSound();
+  }
+}
 </script>
