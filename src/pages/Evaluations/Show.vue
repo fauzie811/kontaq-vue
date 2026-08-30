@@ -22,7 +22,7 @@
       />
 
       <!-- Running Text (Tata Tertib) -->
-      <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
+      <div v-if="evaluation && userEvaluation && !userEvaluation.finished_at" class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
         <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
           <span class="mr-8">Tata Tertib Evaluasi: Harap mengerjakan evaluasi dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
           <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
