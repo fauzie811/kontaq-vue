@@ -10,7 +10,7 @@
     <div
       v-if="quranAudio.currentVerseNumber"
       :class="[
-        'fixed bottom-3 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border shadow-xl overflow-hidden transition-all duration-400 ease-in-out',
+        'fixed bottom-3 sm:bottom-24 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border shadow-xl overflow-hidden transition-all duration-400 ease-in-out',
         isExpanded ? 'rounded-2xl p-3 sm:p-4' : 'rounded-3xl p-3 sm:px-5'
       ]"
     >
