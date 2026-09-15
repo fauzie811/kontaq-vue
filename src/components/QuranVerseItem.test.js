@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import QuranVerseItem from '@/components/QuranVerseItem.vue';
+import { swAlert } from '@/utils';
 
 const mockPush = vi.fn();
 vi.mock('vue-router', () => ({
@@ -8,6 +9,7 @@ vi.mock('vue-router', () => ({
     push: mockPush,
   }),
 }));
+vi.mock('@/utils', () => ({ swAlert: vi.fn() }));
 
 describe('QuranVerseItem.vue', () => {
   const defaultVerse = {
@@ -24,7 +26,8 @@ describe('QuranVerseItem.vue', () => {
     latin: 'Al-Fatihah',
   };
 
-  it('renders verse information correctly without materials', () => {
+  it('renders verse information and alerts on Tadabbur without materials', async () => {
+    mockPush.mockClear();
     const wrapper = mount(QuranVerseItem, {
       props: {
         verse: defaultVerse,
@@ -35,7 +38,14 @@ describe('QuranVerseItem.vue', () => {
     expect(wrapper.text()).toContain('QS Al-Fatihah: 1');
     expect(wrapper.text()).toContain('Bismillāhir-raḥmānir-raḥīm');
     expect(wrapper.text()).toContain('Dengan nama Allah Yang Maha Pengasih');
-    expect(wrapper.text()).not.toContain('Tadabbur');
+
+    await wrapper.find('button[title="Opsi Ayat"]').trigger('click');
+    expect(wrapper.text()).toContain('Tadabbur');
+
+    await wrapper.find('button span.truncate').trigger('click');
+
+    expect(swAlert).toHaveBeenCalledWith(expect.objectContaining({ icon: 'warning' }));
+    expect(mockPush).not.toHaveBeenCalled();
   });
 
   it('displays Tadabbur action and button badge when verse has related materials', async () => {

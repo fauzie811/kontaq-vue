@@ -86,6 +86,20 @@
                 </button>
               </MenuItem>
             </template>
+            <MenuItem v-else v-slot="{ active }">
+              <button
+                @click="showNoMaterialAlert"
+                :class="[
+                  active
+                    ? 'bg-secondary text-secondary-foreground'
+                    : 'text-foreground',
+                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
+                ]"
+              >
+                <BookOpen class="w-4 h-4 text-primary shrink-0" />
+                <span class="truncate">Tadabbur</span>
+              </button>
+            </MenuItem>
 
             <!-- Toggle Footnote (If available) -->
             <MenuItem v-if="verse.footnotes" v-slot="{ active }">
@@ -192,6 +206,7 @@ import {
   BookOpen,
 } from 'lucide-vue-next';
 import QuranVerseNumber from '@/components/QuranVerseNumber.vue';
+import { swAlert } from '@/utils';
 
 const props = defineProps({
   verse: {
@@ -246,6 +261,14 @@ function goToMaterial(material) {
   if (material?.id && router) {
     router.push({ name: 'materials.show', params: { id: material.id } });
   }
+}
+
+function showNoMaterialAlert() {
+  swAlert({
+    icon: 'warning',
+    title: 'Materi Belum Tersedia',
+    text: 'Belum ada materi tadabbur untuk ayat ini.',
+  });
 }
 
 const formattedTranslation = computed(() => {
