@@ -50,7 +50,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="bg-card text-card-foreground border border-border/80 rounded-2xl shadow-xl shadow-primary/5 p-6 sm:p-8 space-y-6">
+  <div class="space-y-6">
     <!-- Header -->
     <div class="flex flex-col items-center gap-2 text-center">
       <h1 class="text-2xl font-bold">Lupa Password</h1>

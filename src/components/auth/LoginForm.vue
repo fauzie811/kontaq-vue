@@ -50,14 +50,15 @@ const doLogin = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="bg-card text-card-foreground border border-border/80 rounded-2xl shadow-xl shadow-primary/5 p-6 sm:p-8 space-y-6">
+  <div class="space-y-6">
     <!-- Header -->
     <div class="flex flex-col items-center gap-2 text-center">
+      <img class="w-auto h-8 sm:h-9 object-contain" src="@/assets/kontaq-icon.svg" alt="KontaQ" />
       <div class="space-y-1">
         <p class="text-lg sm:text-xl font-bold text-primary font-quran leading-loose tracking-wide">
           بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </p>
-        <h1 class="text-xl sm:text-2xl font-bold text-foreground font-quran leading-loose tracking-wide select-none">
+        <h1 class="text-xl sm:text-2xl font-bold text-primary font-quran leading-loose tracking-wide select-none">
           السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
         </h1>
       </div>
@@ -70,7 +71,7 @@ const doLogin = handleSubmit(async (values) => {
     <form @submit="doLogin" class="space-y-5">
       <FormField v-slot="{ componentField }" name="username" :validate-on-blur="!isFieldDirty">
         <FormItem>
-          <FormLabel class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">ID KontaQ</FormLabel>
+          <FormLabel class="text-sm font-semibold text-accent">ID KontaQ</FormLabel>
           <FormControl>
             <div class="relative flex items-center">
               <User class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
@@ -92,7 +93,7 @@ const doLogin = handleSubmit(async (values) => {
       <FormField v-slot="{ componentField }" name="password" :validate-on-blur="!isFieldDirty">
         <FormItem>
           <div class="flex items-center justify-between">
-            <FormLabel class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Password</FormLabel>
+            <FormLabel class="text-sm font-semibold text-accent">Password</FormLabel>
             <router-link
               to="/forgot-password"
               class="text-xs font-medium text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline"
@@ -130,8 +131,9 @@ const doLogin = handleSubmit(async (values) => {
 
       <Button
         type="submit"
+        variant="accent"
         size="lg"
-        class="w-full h-11 mt-2 font-semibold shadow-md shadow-primary/20 active:scale-[0.98] transition-all gap-2"
+        class="w-full h-11 mt-2 font-semibold shadow-md shadow-accent/20 active:scale-[0.98] transition-all gap-2"
         :disabled="isLoading"
       >
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
