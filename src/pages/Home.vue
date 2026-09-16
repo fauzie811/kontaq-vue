@@ -1,9 +1,14 @@
 <template>
   <div class="flex flex-col items-center w-full py-2 sm:py-4 text-center">
     <!-- Logo & Greetings (Slide 1 & 2 requirements) -->
-    <div class="mb-6 flex flex-col items-center">
-      <a href="https://kontaq.org" target="_blank" class="mb-4 transition-transform hover:scale-105 active:scale-95 inline-block">
-        <img class="h-16 sm:h-20 object-contain drop-shadow-sm" src="@/assets/logo.png" alt="KontaQ" />
+    <div class="mb-6 lg:mb-10 flex flex-col items-center">
+      <a
+        href="https://kontaq.org"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition-transform hover:scale-105 active:scale-95 inline-block"
+      >
+        <img class="w-auto h-12 sm:h-14 object-contain drop-shadow-sm" src="@/assets/kontaq-logo-with-text.svg" alt="KontaQ" />
       </a>
     </div>
 
@@ -141,17 +146,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import {
-  BookOpen,
-  Brain,
-  ClipboardCheck,
-  GraduationCap,
-  HeartHandshake,
-  MessageSquare,
-  ChevronRight,
-  QrCode,
-  HelpCircle,
-} from 'lucide-vue-next';
+import { ChevronRight, QrCode } from 'lucide-vue-next';
+import { FEATURES } from '@/constants/features';
 
 const router = useRouter();
 const showInfaqModal = ref(false);
@@ -161,44 +157,32 @@ const menuItems = [
   {
     title: 'Tadabbur',
     route: 'tadabbur',
-    icon: BookOpen,
-    iconBg: 'bg-emerald-100 text-emerald-700 border border-emerald-200/60',
+    icon: FEATURES.tadabbur.icon,
+    iconBg: FEATURES.tadabbur.accent,
   },
   {
     title: 'Kuis',
     route: 'quizzes',
-    icon: Brain,
-    iconBg: 'bg-amber-100 text-amber-700 border border-amber-200/60',
+    icon: FEATURES.quizzes.icon,
+    iconBg: FEATURES.quizzes.accent,
   },
   {
     title: 'Evaluasi',
     route: 'evaluations',
-    icon: ClipboardCheck,
-    iconBg: 'bg-teal-100 text-teal-700 border border-teal-200/60',
+    icon: FEATURES.evaluations.icon,
+    iconBg: FEATURES.evaluations.accent,
   },
   {
     title: 'Rapor',
     route: 'reports',
-    icon: GraduationCap,
-    iconBg: 'bg-indigo-100 text-indigo-700 border border-indigo-200/60',
-  },
-  {
-    title: 'Forum Ukhuwah',
-    route: 'forum',
-    icon: MessageSquare,
-    iconBg: 'bg-sky-100 text-sky-700 border border-sky-200/60',
+    icon: FEATURES.reports.icon,
+    iconBg: FEATURES.reports.accent,
   },
   {
     title: 'Infaq',
     route: 'infaq',
-    icon: HeartHandshake,
-    iconBg: 'bg-rose-100 text-rose-700 border border-rose-200/60',
-  },
-  {
-    title: 'Pusat Bantuan',
-    route: 'help',
-    icon: HelpCircle,
-    iconBg: 'bg-violet-100 text-violet-700 border border-violet-200/60',
+    icon: FEATURES.infaq.icon,
+    iconBg: FEATURES.infaq.accent,
   },
 ];
 

@@ -31,13 +31,7 @@
     <div class="flex flex-col justify-between p-6 sm:p-10 lg:col-span-6 xl:col-span-5 bg-background lg:h-screen lg:overflow-y-auto">
       <!-- Mobile Top Brand Identity -->
       <div class="flex flex-col items-center text-center lg:hidden mb-6">
-        <img class="w-auto h-12 sm:h-14 object-contain" src="@/assets/kontaq-logo.svg" alt="KontaQ" />
-        <p class="mt-3 text-lg sm:text-xl font-extrabold tracking-tight text-primary text-balance">
-          Komunitas Tadabbur Al-Qur&rsquo;an
-        </p>
-        <p class="mt-1 text-xs sm:text-sm font-bold tracking-wide text-accent text-balance">
-          Raih Keberkahan Hidup bersama Al-Qur&rsquo;an
-        </p>
+        <img class="w-auto h-12 sm:h-14 object-contain" src="@/assets/kontaq-logo-with-text.svg" alt="KontaQ" />
       </div>
 
       <!-- Main Slot Container -->

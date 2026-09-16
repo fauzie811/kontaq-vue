@@ -10,7 +10,7 @@
       <!-- Summary bar -->
       <div class="flex items-center gap-3 bg-card rounded-2xl border border-border p-4 shadow-xs">
         <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
-          <FileClock class="w-5 h-5" />
+          <LatePermissionIcon class="w-5 h-5" />
         </div>
         <div>
           <span class="text-xs text-muted-foreground block">Total Pengajuan</span>
@@ -47,7 +47,7 @@
             <div
               class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium"
             >
-              <component :is="permission.type === 'evaluation' ? Award : FileQuestion" class="w-3.5 h-3.5 text-muted-foreground" />
+              <component :is="permission.type === 'evaluation' ? EvaluationIcon : QuizIcon" class="w-3.5 h-3.5 text-muted-foreground" />
               <span>{{ describeItem(permission) }}</span>
             </div>
 
@@ -99,7 +99,7 @@
         <div
           class="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 shadow-inner"
         >
-          <FileClock class="w-8 h-8" />
+          <LatePermissionIcon class="w-8 h-8" />
         </div>
         <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Pengajuan</h4>
         <p class="text-sm text-muted-foreground max-w-md">
@@ -116,19 +116,21 @@
 <script setup>
 import { ref } from 'vue';
 import {
-  Award,
   CheckCircle2,
   CircleAlert,
   ClockAlert,
-  FileClock,
-  FileQuestion,
   Hourglass,
 } from 'lucide-vue-next';
 
+import { FEATURES } from '@/constants/features';
 import { listMyLatePermissions } from '@/api';
 import { dayDateTime, shortDateTime } from '@/utils';
 import PageHeader from '@/components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
+
+const LatePermissionIcon = FEATURES['late-permissions'].icon;
+const EvaluationIcon = FEATURES.evaluations.icon;
+const QuizIcon = FEATURES.quizzes.icon;
 
 const page = ref(1);
 const permissions = ref({ data: [] });

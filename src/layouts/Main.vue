@@ -14,7 +14,7 @@
             class="flex items-center gap-2 group"
           >
             <img
-              src="@/assets/logo-kontaq.png"
+              src="@/assets/kontaq-logo-with-text.svg"
               alt="KontaQ"
               class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
             />
@@ -125,7 +125,7 @@
                   @click="isUserMenuOpen = false"
                   class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
-                  <MessageSquare class="w-4 h-4 text-primary" />
+                  <ForumIcon class="w-4 h-4 text-primary" />
                   Forum Ukhuwah
                 </router-link>
 
@@ -134,7 +134,7 @@
                   @click="isUserMenuOpen = false"
                   class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
-                  <Award class="w-4 h-4 text-primary" />
+                  <CertificatesIcon class="w-4 h-4 text-primary" />
                   Sertifikat Saya
                 </router-link>
 
@@ -152,7 +152,7 @@
                   @click="isUserMenuOpen = false"
                   class="flex items-center gap-2.5 px-4 py-2 text-xs sm:text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition"
                 >
-                  <HelpCircle class="w-4 h-4 text-primary" />
+                  <HelpIcon class="w-4 h-4 text-primary" />
                   Pusat Bantuan / FAQ
                 </router-link>
 
@@ -484,19 +484,13 @@ import {
   User,
   Settings,
   LogOut,
-  BookOpen,
-  ClipboardList,
-  ClipboardCheck,
-  FileSpreadsheet,
   QrCode,
   Pin,
   ChevronDown,
-  MessageSquare,
-  Award,
-  HelpCircle,
   Globe,
   ExternalLink,
 } from 'lucide-vue-next';
+import { FEATURES } from '@/constants/features';
 import NotificationDrawer from '@/components/NotificationDrawer.vue';
 import SearchModal from '@/components/SearchModal.vue';
 import authStore from '@/store/auth';
@@ -608,11 +602,16 @@ onUnmounted(() => {
   }
 });
 
+// Feature icons rendered directly in the template (user menu).
+const ForumIcon = FEATURES.forum.icon;
+const CertificatesIcon = FEATURES.certificates.icon;
+const HelpIcon = FEATURES.help.icon;
+
 const navTabs = [
-  { name: 'Tadabbur', route: 'tadabbur', icon: BookOpen },
-  { name: 'Kuis', route: 'quizzes', icon: ClipboardList },
-  { name: 'Evaluasi', route: 'evaluations', icon: ClipboardCheck },
-  { name: 'Rapor', route: 'reports', icon: FileSpreadsheet },
+  { name: 'Tadabbur', route: 'tadabbur', icon: FEATURES.tadabbur.icon },
+  { name: 'Kuis', route: 'quizzes', icon: FEATURES.quizzes.icon },
+  { name: 'Evaluasi', route: 'evaluations', icon: FEATURES.evaluations.icon },
+  { name: 'Rapor', route: 'reports', icon: FEATURES.reports.icon },
 ];
 
 function isTabActive(item) {

@@ -12,7 +12,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card rounded-2xl border border-border p-4 shadow-xs">
         <div class="flex items-center gap-3">
           <div class="p-2.5 rounded-xl bg-primary/10 text-primary">
-            <FileQuestion class="w-5 h-5" />
+            <QuizIcon class="w-5 h-5" />
           </div>
           <div>
             <span class="text-xs text-muted-foreground block">Total Kuis</span>
@@ -183,7 +183,7 @@
       <!-- EMPTY STATE -->
       <div v-else class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground shadow-xs flex flex-col items-center">
         <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 shadow-inner">
-          <HelpCircle class="w-8 h-8" />
+          <QuizIcon class="w-8 h-8" />
         </div>
         <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Kuis</h4>
         <p class="text-sm text-muted-foreground max-w-md mb-5">
@@ -221,7 +221,6 @@ import {
   Clock,
   CheckCircle2,
   PlayCircle,
-  HelpCircle,
   Sparkles,
   BookOpen,
   Eye,
@@ -229,19 +228,21 @@ import {
   RotateCcw,
   Info,
   ArrowRight,
-  FileQuestion,
   CalendarClock,
   ClockAlert,
   CircleAlert,
   Hourglass,
   Send
 } from 'lucide-vue-next';
+import { FEATURES } from '@/constants/features';
 import { listMyQuizzes } from '@/api';
 import { swConfirm, shortDateTime } from '@/utils';
 import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import PageHeader from '../components/PageHeader.vue';
 import Pagination from '@/components/Pagination.vue';
 import WeekPicker from '@/components/WeekPicker.vue';
+
+const QuizIcon = FEATURES.quizzes.icon;
 
 const router = useRouter();
 const page = ref(1);

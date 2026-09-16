@@ -4,7 +4,7 @@
     <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-sm">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary shrink-0">
-          <HelpCircle class="w-5 h-5" />
+          <HelpIcon class="w-5 h-5" />
         </div>
         <div>
           <h3 class="font-bold text-foreground text-sm sm:text-base">Butuh penjelasan atau panduan Tadabbur?</h3>
@@ -65,7 +65,9 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { listQuranChapters } from '@/api';
 import SurahName from '@/components/SurahName.vue';
-import { HelpCircle } from 'lucide-vue-next';
+import { FEATURES } from '@/constants/features';
+
+const HelpIcon = FEATURES.help.icon;
 
 const router = useRouter();
 const loading = ref(false);
