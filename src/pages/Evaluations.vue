@@ -116,7 +116,7 @@
               v-if="evaluation.can_request_late_permission"
               type="button"
               @click.prevent="openRequestDialog(evaluation)"
-              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
             >
               <Send class="w-4 h-4" />
               <span>Ajukan Izin Telat</span>
@@ -127,7 +127,7 @@
               v-else-if="!evaluation.is_open && evaluation.late_permission_status === 'pending'"
               type="button"
               disabled
-              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
             >
               <Hourglass class="w-4 h-4" />
               <span>Menunggu Persetujuan</span>
@@ -138,7 +138,7 @@
               v-else-if="!evaluation.is_open"
               type="button"
               disabled
-              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
             >
               <Lock class="w-4 h-4" />
               <span>Belum Dibuka</span>
@@ -148,7 +148,7 @@
               v-else
               :to="{ name: 'evaluations.show', params: { id: evaluation.id } }"
               :class="[
-                'w-full font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
+                'w-full font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
                 getStatus(evaluation) === 'Selesai'
                   ? 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border'
                   : getStatus(evaluation) === 'Sedang dikerjakan'
@@ -175,7 +175,7 @@
         <button
           v-if="week"
           @click="resetWeek"
-          class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-xl transition-all cursor-pointer"
+          class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer"
         >
           <RotateCcw class="w-3.5 h-3.5" />
           <span>Tampilkan Semua Pekan</span>

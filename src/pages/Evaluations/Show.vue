@@ -64,7 +64,7 @@
                 selected[q.id]
                   ? 'bg-primary text-primary-foreground font-bold shadow-2xs'
                   : 'bg-muted text-muted-foreground hover:bg-secondary border border-border/80 font-medium',
-                'w-8 h-8 rounded-xl flex items-center justify-center text-xs shrink-0 transition-all active:scale-90 cursor-pointer'
+                'w-8 h-8 rounded-full flex items-center justify-center text-xs shrink-0 transition-all active:scale-90 cursor-pointer'
               ]"
               :title="'Lompat ke Soal ' + (idx + 1)"
             >
@@ -91,7 +91,7 @@
                 @click="confirmSubmit"
                 type="button"
                 :disabled="isSubmitting"
-                class="w-full rounded-2xl bg-primary hover:bg-primary/90 active:scale-[0.98] px-5 py-4 text-base font-bold text-primary-foreground shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-5 py-4 text-base font-bold text-primary-foreground shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <CheckCircle2 class="w-5 h-5" />
                 <span>{{ isSubmitting ? 'Mengumpulkan...' : 'Selesai & Kumpulkan Jawaban' }}</span>
@@ -143,7 +143,7 @@
                       selected[q.id]
                         ? 'bg-primary text-primary-foreground font-bold shadow-2xs'
                         : 'bg-muted text-muted-foreground hover:bg-secondary border border-border/80 font-medium',
-                      'h-9 rounded-xl flex items-center justify-center text-xs transition-all hover:scale-105 active:scale-95 cursor-pointer'
+                      'h-9 rounded-full flex items-center justify-center text-xs transition-all hover:scale-105 active:scale-95 cursor-pointer'
                     ]"
                     :title="'Lompat ke Soal ' + (idx + 1)"
                   >
@@ -157,7 +157,7 @@
                 @click="confirmSubmit"
                 type="button"
                 :disabled="isSubmitting"
-                class="w-full rounded-xl bg-primary hover:bg-primary/90 active:scale-[0.98] px-4 py-3 text-sm font-bold text-primary-foreground shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
+                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-4 py-3 text-sm font-bold text-primary-foreground shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
               >
                 <CheckCircle2 class="w-4 h-4" />
                 <span>{{ isSubmitting ? 'Mengumpulkan...' : 'Selesai & Kumpulkan' }}</span>

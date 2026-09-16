@@ -121,7 +121,7 @@
               v-if="quiz.can_request_late_permission"
               type="button"
               @click.prevent="openRequestDialog(quiz)"
-              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
             >
               <Send class="w-4 h-4" />
               <span>Ajukan Izin Telat</span>
@@ -132,7 +132,7 @@
               v-else-if="!quiz.is_open && quiz.late_permission_status === 'pending'"
               type="button"
               disabled
-              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
             >
               <Hourglass class="w-4 h-4" />
               <span>Menunggu Persetujuan</span>
@@ -143,7 +143,7 @@
               v-else-if="!quiz.is_open"
               type="button"
               disabled
-              class="w-full bg-muted text-muted-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
+              class="w-full bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
             >
               <Lock class="w-4 h-4" />
               <span>Belum Dibuka</span>
@@ -154,7 +154,7 @@
               v-else-if="quiz.material_id && !quiz.material_read"
               type="button"
               @click.prevent="showAlert(quiz.material_id)"
-              class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer border border-border"
+              class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer border border-border"
             >
               <BookOpen class="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Baca Materi Terlebih Dahulu</span>
@@ -165,7 +165,7 @@
               v-else
               :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
               :class="[
-                'w-full font-semibold rounded-xl py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
+                'w-full font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
                 getStatus(quiz) === 'Selesai'
                   ? 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border'
                   : getStatus(quiz) === 'Sedang dikerjakan'
@@ -192,7 +192,7 @@
         <button
           v-if="week"
           @click="resetWeek"
-          class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-xl transition-all cursor-pointer"
+          class="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer"
         >
           <RotateCcw class="w-3.5 h-3.5" />
           <span>Tampilkan Semua Pekan</span>

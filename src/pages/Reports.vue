@@ -49,7 +49,7 @@
       </p>
       <button
         type="button"
-        class="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-primary/10 px-4 py-2.5 text-xs font-semibold text-primary transition-all hover:bg-primary/20 active:scale-[0.98]"
+        class="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary/10 px-4 py-2.5 text-xs font-semibold text-primary transition-all hover:bg-primary/20 active:scale-[0.98]"
         @click="loadData"
       >
         <RotateCcw class="h-3.5 w-3.5" />

@@ -4,7 +4,7 @@
       class="relative inline-block text-left">
       <div>
         <MenuButton
-          class="flex items-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+          class="flex items-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
           :aria-label="menuAriaLabel">
           <InformationCircleIcon title="Izin" v-if="score === 'i'" class="w-6 h-6 text-blue-600" aria-hidden="true" />
           <SparklesIcon title="SK Baru" v-else-if="score === 'n'" class="w-6 h-6 text-warning-600" aria-hidden="true" />

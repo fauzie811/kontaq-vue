@@ -4,7 +4,7 @@
     <div class="mb-6 flex items-center justify-between">
       <button
         @click="goBack"
-        class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-2xl border border-border shadow-2xs transition-all cursor-pointer"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border shadow-2xs transition-all cursor-pointer"
       >
         <ArrowLeft class="w-4 h-4 text-primary" />
         <span>Kembali ke Daftar Surah</span>
@@ -27,7 +27,7 @@
       <p class="text-sm mb-4">{{ error }}</p>
       <button
         @click="resetAndFetch"
-        class="px-5 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold rounded-xl text-sm transition-all cursor-pointer shadow-xs"
+        class="px-5 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold rounded-full text-sm transition-all cursor-pointer shadow-xs"
       >
         Coba Lagi
       </button>
@@ -107,7 +107,7 @@
       <div v-if="hasMore && !loadingMore" class="text-center my-4">
         <button
           @click="loadNextPage"
-          class="px-6 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-sm rounded-2xl border border-border transition-all cursor-pointer"
+          class="px-6 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-sm rounded-full border border-border transition-all cursor-pointer"
         >
           Muat Lebih Banyak Ayat
         </button>

@@ -19,7 +19,7 @@
       <Menu as="div" class="relative">
         <MenuButton
           title="Opsi Ayat"
-          class="p-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground rounded-lg transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary/20"
+          class="p-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground rounded-full transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary/20"
         >
           <MoreVertical class="w-4 h-4" />
         </MenuButton>

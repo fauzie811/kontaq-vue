@@ -2,7 +2,7 @@
   <Listbox as="div" :modelValue="modelValue" @update:modelValue="value => emit('update:modelValue', value)">
     <div class="relative mt-2">
       <ListboxButton
-        class="relative w-full cursor-default rounded-xl bg-card py-2 pl-3 pr-10 text-left text-card-foreground shadow-xs border border-border focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm">
+        class="relative w-full cursor-default rounded-full bg-card py-2 pl-4 pr-10 text-left text-card-foreground shadow-xs border border-input transition-colors hover:border-foreground/40 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:text-sm">
         <span class="block truncate">{{ modelValue ? 'Juz ' + modelValue : 'Semua Juz' }}</span>
         <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
           <ChevronUpDownIcon class="w-5 h-5 text-muted-foreground" aria-hidden="true" />

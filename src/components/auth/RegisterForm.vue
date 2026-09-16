@@ -117,7 +117,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -139,7 +139,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -156,14 +156,14 @@ const doRegister = handleSubmit(async (values) => {
                   <RadioGroup v-bind="componentField" class="grid grid-cols-2 gap-3" :disabled="isLoading">
                     <label
                       for="gender-m"
-                      class="flex items-center gap-2.5 px-3 py-2 border border-border/80 rounded-xl cursor-pointer transition-all hover:bg-secondary/60 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
+                      class="flex items-center gap-2.5 px-3 py-2 border border-input rounded-xl cursor-pointer transition-all hover:bg-secondary/60 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
                     >
                       <RadioGroupItem value="m" id="gender-m" />
                       <span class="text-sm font-medium">Laki-laki</span>
                     </label>
                     <label
                       for="gender-f"
-                      class="flex items-center gap-2.5 px-3 py-2 border border-border/80 rounded-xl cursor-pointer transition-all hover:bg-secondary/60 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
+                      class="flex items-center gap-2.5 px-3 py-2 border border-input rounded-xl cursor-pointer transition-all hover:bg-secondary/60 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary/20"
                     >
                       <RadioGroupItem value="f" id="gender-f" />
                       <span class="text-sm font-medium">Perempuan</span>
@@ -188,7 +188,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -218,7 +218,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -240,7 +240,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -270,7 +270,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -293,7 +293,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -315,7 +315,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -346,13 +346,13 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 pr-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 pr-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                     <button
                       type="button"
                       @click="showPassword = !showPassword"
                       tabindex="-1"
-                      class="absolute right-3 p-1 text-muted-foreground/70 hover:text-foreground transition-colors rounded-lg focus:outline-none"
+                      class="absolute right-3 p-1 text-muted-foreground/70 hover:text-foreground transition-colors rounded-full focus:outline-none"
                     >
                       <EyeOff v-if="showPassword" class="w-3.5 h-3.5" />
                       <Eye v-else class="w-3.5 h-3.5" />
@@ -378,13 +378,13 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 pr-10 h-10 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                      class="pl-10 pr-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                     <button
                       type="button"
                       @click="showPasswordConfirmation = !showPasswordConfirmation"
                       tabindex="-1"
-                      class="absolute right-3 p-1 text-muted-foreground/70 hover:text-foreground transition-colors rounded-lg focus:outline-none"
+                      class="absolute right-3 p-1 text-muted-foreground/70 hover:text-foreground transition-colors rounded-full focus:outline-none"
                     >
                       <EyeOff v-if="showPasswordConfirmation" class="w-3.5 h-3.5" />
                       <Eye v-else class="w-3.5 h-3.5" />

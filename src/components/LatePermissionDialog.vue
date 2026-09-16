@@ -55,7 +55,7 @@
                   rows="4"
                   :disabled="isSubmitting"
                   placeholder="Jelaskan mengapa Anda tidak dapat mengerjakan tepat waktu."
-                  class="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary/30 disabled:opacity-60 resize-none"
+                  class="w-full rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground hover:border-foreground/40 focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary/30 disabled:opacity-60 resize-none"
                 ></textarea>
 
                 <p v-if="error" class="text-xs font-medium text-rose-600 dark:text-rose-400">

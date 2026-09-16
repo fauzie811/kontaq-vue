@@ -65,7 +65,7 @@
           <button
             @click="toggleExpanded"
             :title="isExpanded ? 'Kecilkan Player' : 'Perluas Player'"
-            class="p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
+            class="p-1.5 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-full transition cursor-pointer"
           >
             <ChevronDown v-if="isExpanded" class="w-5 h-5 transition-transform duration-400" />
             <ChevronUp v-else class="w-5 h-5 transition-transform duration-400" />
@@ -74,7 +74,7 @@
           <button
             @click="quranAudio.stop()"
             title="Tutup Player"
-            class="p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xl transition cursor-pointer"
+            class="p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition cursor-pointer"
           >
             <X class="w-4 h-4" />
           </button>
@@ -108,7 +108,7 @@
               <button
                 @click="cycleSpeed"
                 title="Kecepatan Pemutaran"
-                class="px-2 py-1 text-xs font-bold text-secondary-foreground hover:bg-secondary/80 bg-secondary rounded-lg border border-border transition cursor-pointer min-w-[38px] text-center"
+                class="px-2 py-1 text-xs font-bold text-secondary-foreground hover:bg-secondary/80 bg-secondary rounded-full border border-border transition cursor-pointer min-w-[38px] text-center"
               >
                 {{ quranAudio.playbackRate }}x
               </button>
@@ -117,7 +117,7 @@
               <button
                 @click="quranAudio.playPrev()"
                 title="Ayat Sebelumnya"
-                class="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
+                class="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-full transition cursor-pointer"
               >
                 <SkipBack class="w-5 h-5" />
               </button>
@@ -137,7 +137,7 @@
               <button
                 @click="quranAudio.playNext()"
                 title="Ayat Selanjutnya"
-                class="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition cursor-pointer"
+                class="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-full transition cursor-pointer"
               >
                 <SkipForward class="w-5 h-5" />
               </button>
@@ -151,7 +151,7 @@
               <select
                 :value="quranAudio.reciter.id"
                 @change="onReciterChange"
-                class="w-full text-xs bg-secondary border border-border text-secondary-foreground rounded-xl px-3 py-2 font-medium cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary truncate"
+                class="w-full text-xs bg-secondary border border-input text-secondary-foreground rounded-full px-3.5 py-2 font-medium cursor-pointer transition-colors hover:border-foreground/40 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 truncate"
               >
                 <option
                   v-for="r in RECITERS"

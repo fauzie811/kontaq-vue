@@ -74,7 +74,7 @@ const onSubmit = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 h-11 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                class="pl-10 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
             </div>
           </FormControl>

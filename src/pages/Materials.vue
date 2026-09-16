@@ -27,7 +27,7 @@
             </div>
             <div class="flex items-center flex-none gap-x-4">
               <router-link :to="{ name: 'materials.show', params: { id: material.id } }"
-                class="hidden rounded-xl bg-secondary hover:bg-secondary/80 px-3 py-1.5 text-sm font-semibold text-secondary-foreground border border-border shadow-2xs sm:block transition-colors">Lihat
+                class="hidden rounded-full bg-secondary hover:bg-secondary/80 px-3.5 py-1.5 text-sm font-semibold text-secondary-foreground border border-border shadow-2xs sm:block transition-colors">Lihat
                 materi<span class="sr-only">, {{ material.name }}</span></router-link>
             </div>
           </li>

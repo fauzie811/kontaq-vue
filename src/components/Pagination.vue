@@ -2,9 +2,9 @@
   <div v-if="meta && meta.from" class="flex items-center justify-between px-4 py-3 border-t border-border sm:px-6">
     <div class="flex justify-between flex-1 sm:hidden">
       <button :disabled="meta.current_page == 1" v-on:click="changePage(meta.current_page - 1)"
-        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">Previous</button>
+        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 rounded-full transition-colors disabled:opacity-50">Previous</button>
       <button :disabled="meta.current_page == meta.last_page" v-on:click="changePage(meta.current_page + 1)"
-        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">Next</button>
+        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 rounded-full transition-colors disabled:opacity-50">Next</button>
     </div>
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
@@ -27,15 +27,15 @@
       <div>
         <nav class="inline-flex gap-1.5 isolate" aria-label="Pagination">
           <button :disabled="meta.current_page == 1" v-on:click="changePage(meta.current_page - 1)"
-            class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">
+            class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-full transition-colors disabled:opacity-50">
             <span class="sr-only">Previous</span>
             <ChevronLeftIcon class="w-5 h-5" aria-hidden="true" />
           </button>
           <button v-for="page in pages" v-on:click="changePage(page)"
-            :class="[page == meta.current_page ? 'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-lg shadow-xs transition-colors' : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-lg transition-colors']">{{
+            :class="[page == meta.current_page ? 'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-full shadow-xs transition-colors' : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full transition-colors']">{{
               page }}</button>
           <button :disabled="meta.current_page == meta.last_page" v-on:click="changePage(meta.current_page + 1)"
-            class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-lg transition-colors disabled:opacity-50">
+            class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-full transition-colors disabled:opacity-50">
             <span class="sr-only">Next</span>
             <ChevronRightIcon class="w-5 h-5" aria-hidden="true" />
           </button>

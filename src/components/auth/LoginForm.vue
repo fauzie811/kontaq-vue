@@ -82,7 +82,7 @@ const doLogin = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 h-11 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                class="pl-10 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
             </div>
           </FormControl>
@@ -111,13 +111,13 @@ const doLogin = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 pr-11 h-11 border-border/80 focus:border-primary focus:ring-primary/20 transition-all rounded-xl"
+                class="pl-10 pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
               <button
                 type="button"
                 @click="showPassword = !showPassword"
                 tabindex="-1"
-                class="absolute right-3.5 p-1 text-muted-foreground/70 hover:text-foreground transition-colors rounded-lg focus:outline-none"
+                class="absolute right-3.5 p-1 text-muted-foreground/70 hover:text-foreground transition-colors rounded-full focus:outline-none"
                 :title="showPassword ? 'Sembunyikan password' : 'Tampilkan password'"
               >
                 <EyeOff v-if="showPassword" class="w-4 h-4" />

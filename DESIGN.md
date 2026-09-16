@@ -10,6 +10,7 @@ colors:
   muted: "#f4f4f5"
   muted-fg: "#71717a"
   border: "#e4e4e7"
+  input-border: "#8f8f99"
   destructive: "#ef4444"
 typography:
   display:
@@ -52,6 +53,7 @@ rounded:
   md: "10px"
   lg: "12px"
   xl: "16px"
+  pill: "9999px"
 spacing:
   sm: "8px"
   md: "16px"
@@ -61,17 +63,22 @@ components:
   button-primary:
     backgroundColor: "{colors.primary}"
     textColor: "#ffffff"
-    rounded: "{rounded.lg}"
+    rounded: "{rounded.pill}"
     padding: "8px 16px"
   button-secondary:
     backgroundColor: "{colors.accent}"
     textColor: "#ffffff"
-    rounded: "{rounded.lg}"
+    rounded: "{rounded.pill}"
     padding: "8px 16px"
   button-outline:
     backgroundColor: "transparent"
     textColor: "{colors.neutral-fg}"
-    rounded: "{rounded.lg}"
+    rounded: "{rounded.pill}"
+    padding: "8px 16px"
+  input:
+    backgroundColor: "{colors.card}"
+    borderColor: "{colors.input-border}"
+    rounded: "{rounded.pill}"
     padding: "8px 16px"
 ---
 
@@ -83,11 +90,12 @@ components:
 
 Kontaq embodies a serene, focused, and elevated digital sanctuary designed for Quranic study, daily reflection (tadabbur), interactive quizzes, and community engagement. The visual world balances rich natural Forest Green (`#40835c`) identity anchors with illuminating Warm Amber (`#e79b44`) accents, fostering an atmosphere of calm, spiritual clarity, and warmth.
 
-The interface prioritizes reading comfort and effortless navigation. Pure white container cards rest gracefully upon a soft off-white canvas, using refined `12px` rounded corners and tactile micro-interactions to create a modern yet respectful experience.
+The interface prioritizes reading comfort and effortless navigation. Pure white container cards rest gracefully upon a soft off-white canvas, using refined `12px` rounded corners and tactile micro-interactions to create a modern yet respectful experience. Interactive controls — buttons, chips, and input fields — are fully pill-shaped, which reads as soft and approachable and sharply separates what is *tappable* from what is merely a *surface*.
 
 **Key Characteristics:**
 - **Serene Palette**: Forest Green primary branding combined with Warm Amber accents for study progression and active highlights.
 - **Dedicated Quranic Typography**: Specialized `'LPMQ Isep Misbah'` Arabic script font paired with clean `Raleway` UI typography.
+- **Pill-Shaped Controls**: Every button, chip, and input field is fully rounded (`rounded-full`), while containers stay on the `12px`/`16px` radius scale.
 - **Tonal Layering**: Clean border definitions at rest, complemented by ambient hover shadows.
 - **Tactile Micro-Interactions**: Gentle `active:scale-[0.98]` button responses and smooth View Transitions.
 
@@ -105,11 +113,14 @@ The color palette pairs natural forest tones with warm golden amber accents, gro
 - **Off-White Canvas** (`#fafafa`): Background shade providing soft, glare-free contrast for long reading sessions.
 - **Charcoal Slate** (`#09090b`): High-contrast primary text color for ultimate legibility across light surfaces.
 - **Card Surface** (`#ffffff`): Pure white background for container cards, modal dialogs, and dropdown menus.
-- **Subtle Border** (`#e4e4e7`): Muted gray border stroke defining card boundaries and section dividers.
+- **Subtle Border** (`#e4e4e7`): Muted gray border stroke defining card boundaries and section dividers. Passive surfaces only.
+- **Control Outline** (`#8f8f99`): Distinctly darker stroke reserved for input fields, select triggers, and outline buttons, so a control's edge is unmistakable against both the canvas and card surfaces.
 - **Muted Foreground** (`#71717a`): Secondary text color for timestamps, metadata, and subtitle labels.
 
 ### Named Rules
 **The Legibility First Rule.** Quranic text and Indonesian translations must maintain crisp contrast against background surfaces; decorative color fills should never compromise readability.
+
+**The Visible Control Rule.** Interactive strokes (`--input`) are held at a minimum 3:1 contrast against the surface behind them, per WCAG 1.4.11. Passive strokes (`--border`) are free to stay whisper-light. Never dilute a control outline with an opacity modifier such as `border-input/80` — that silently drops it below threshold.
 
 ## Typography
 
@@ -147,25 +158,37 @@ Kontaq relies on flat tonal layering at rest, using crisp border strokes (`borde
 
 ## Shapes
 
-Forms and containers feature smooth `12px` (`0.75rem`) corner radiuses (`rounded-xl`), creating a warm and approachable aesthetic. Interactive elements include subtle scale feedback (`active:scale-[0.98]`).
+Two radius families carry the whole system, and the split is the primary signal of interactivity:
+
+- **Controls — pill (`rounded-full`)**: buttons, icon buttons, filter chips, tabs, pagination controls, and all single-line input fields (text inputs, select and combobox triggers, field frames).
+- **Surfaces — `12px`/`16px` (`rounded-xl` / `rounded-2xl`)**: cards, modals, drawers, popover panels, and multi-line textareas.
+
+Interactive elements include subtle scale feedback (`active:scale-[0.98]`).
+
+### Named Rules
+**The Pill-Means-Tappable Rule.** A fully rounded silhouette is reserved for interactive controls. Never pill a passive surface, and never square off a control.
 
 ## Components
 
 ### Buttons
-- **Shape:** `12px` radius (`rounded-xl`).
+- **Shape:** Pill (`rounded-full`) at every size, including icon-only buttons (which become perfect circles).
+- **Padding:** `sm` `14px`, `default` `16px`, `lg` `24px` horizontal — pills need slightly wider side padding than rectangles so the label clears the curve.
 - **Primary:** Background `#40835c`, text `#ffffff`, hover `#356e4c`, active scale `0.98`.
 - **Secondary:** Background `#e79b44`, text `#ffffff`, hover `#d48a35`, active scale `0.98`.
 - **Outline:** Background transparent, border `#e4e4e7`, text `#09090b`, hover background `#f4f4f5`.
 
 ### Cards / Containers
-- **Corner Style:** `12px` (`rounded-xl`) or `16px` (`rounded-2xl`).
+- **Corner Style:** `12px` (`rounded-xl`) or `16px` (`rounded-2xl`). Never pill-shaped.
 - **Background:** Crisp white `#ffffff`.
 - **Border:** `1px` solid `#e4e4e7`.
 - **Hover:** Smooth elevation transition (`hover:shadow-md hover:border-primary/30`).
 
 ### Inputs / Fields
-- **Style:** Background `#ffffff`, border `#e4e4e7`, `12px` radius.
+- **Style:** Background `#ffffff`, border `#8f8f99` (`border-input`, 3.2:1 on white), pill radius (`rounded-full`), `16px` horizontal padding.
+- **Hover:** Border darkens to `foreground/40`, signalling the field is live before it is focused.
 - **Focus:** Border shift to `#40835c` with `2px` focus ring (`ring-2 ring-primary/20`).
+- **Adornments:** Leading icons sit at `left-3` with the input padded to `pl-10`; trailing actions (such as a password reveal toggle) are themselves pill/circular icon buttons.
+- **Textareas:** Multi-line fields keep the `16px` (`rounded-2xl`) container radius — a pill silhouette breaks down once content wraps.
 
 ### Quran Verse Player & Cards
 - **Verse Highlight:** Active reading verse highlighted with warm amber background tint (`bg-amber-500/10 border-l-4 border-amber-500`).
@@ -175,10 +198,12 @@ Forms and containers feature smooth `12px` (`0.75rem`) corner radiuses (`rounded
 
 ### Do:
 - **Do** use `'LPMQ Isep Misbah'` with `line-height: 2em` for all Arabic Quran scripture rendering.
-- **Do** apply smooth `12px` (`rounded-xl`) radiuses for buttons, cards, and input fields.
+- **Do** apply a pill radius (`rounded-full`) to buttons, chips, and single-line input fields, and the `12px`/`16px` radius scale to cards, modals, and panels.
 - **Do** use `#40835c` for primary brand framing and `#e79b44` for interactive highlights, badges, and active states.
 
 ### Don't:
 - **Don't** compress Arabic line-heights, which clips tashkeel diacritic marks.
 - **Don't** apply harsh black drop shadows; use soft ambient shadows for interactive hover states.
+- **Don't** use `border-border` (or an opacity-reduced variant) on a form control — reach for `border-input`, which carries the accessible control-outline value.
 - **Don't** introduce competing accent colors that disrupt the serene green and warm amber palette.
+- **Don't** pill-shape textareas, cards, dropdown panels, or menu rows — the pill silhouette is reserved for controls.

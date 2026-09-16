@@ -174,7 +174,10 @@
     --destructive-foreground: 0 0% 98%;
 
     --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    /* Control outline. Kept darker than --border (which is for passive dividers
+       and card edges) so input fields clear WCAG 1.4.11's 3:1 non-text contrast
+       against both --background and --card. */
+    --input: 240 5% 58%;
     --ring: 145.1 34.4% 38.2%;
     --radius: 0.75rem;
 
@@ -236,7 +239,7 @@
     --destructive-foreground: 0 85.7% 97.3%;
 
     --border: 240 3.7% 18%;
-    --input: 240 3.7% 18%;
+    --input: 240 5% 44%;
     --ring: 145.1 42% 48%;
   }
 }

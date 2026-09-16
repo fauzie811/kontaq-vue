@@ -13,7 +13,7 @@
       </div>
       <router-link 
         :to="{ name: 'help', query: { q: 'Tadabbur' } }"
-        class="shrink-0 w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl text-xs sm:text-sm shadow-sm transition-all active:scale-95 text-center"
+        class="shrink-0 w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full text-xs sm:text-sm shadow-sm transition-all active:scale-95 text-center"
       >
         Lihat Q&A Tadabbur
       </router-link>

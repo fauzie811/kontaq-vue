@@ -50,14 +50,14 @@
         <button
           type="button"
           @click="loadData(route.params.id)"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-semibold rounded-xl text-sm transition-all cursor-pointer shadow-xs active:scale-[0.98]"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-semibold rounded-full text-sm transition-all cursor-pointer shadow-xs active:scale-[0.98]"
         >
           <RotateCw class="w-4 h-4" />
           <span>Coba Lagi</span>
         </button>
         <router-link
           to="/materials"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold rounded-xl text-sm border border-border transition-all cursor-pointer"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold rounded-full text-sm border border-border transition-all cursor-pointer"
         >
           <ArrowLeft class="w-4 h-4" />
           <span>Kembali</span>
@@ -157,7 +157,7 @@
 
         <router-link
           to="/materials"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted text-foreground font-semibold text-xs sm:text-sm rounded-xl border border-emerald-500/30 shadow-2xs transition-all cursor-pointer shrink-0"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted text-foreground font-semibold text-xs sm:text-sm rounded-full border border-emerald-500/30 shadow-2xs transition-all cursor-pointer shrink-0"
         >
           <ArrowLeft class="w-4 h-4 text-primary" />
           <span>Kembali ke Materi</span>
@@ -171,7 +171,7 @@
       >
         <router-link
           to="/materials"
-          class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-xl border border-border shadow-2xs transition-all cursor-pointer active:scale-[0.98]"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border shadow-2xs transition-all cursor-pointer active:scale-[0.98]"
         >
           <ArrowLeft class="w-4 h-4 text-primary" />
           <span>Kembali ke Daftar</span>
@@ -181,7 +181,7 @@
           @click="finishRead"
           type="button"
           :disabled="isSubmitting"
-          class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm rounded-xl shadow-xs transition-all cursor-pointer active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+          class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm rounded-full shadow-xs transition-all cursor-pointer active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <div
             v-if="isSubmitting"

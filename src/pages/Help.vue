@@ -8,7 +8,7 @@
 
     <!-- Search Box Card -->
     <div class="bg-card rounded-3xl border border-border p-4 sm:p-5 shadow-xs space-y-3">
-      <div class="relative flex items-center bg-muted/60 border border-border rounded-2xl px-4 py-3 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs">
+      <div class="relative flex items-center bg-muted/60 border border-input rounded-full px-4 py-3 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs">
         <Search class="w-5 h-5 text-primary shrink-0 mr-3" />
         <input
           v-model="searchQuery"

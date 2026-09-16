@@ -96,7 +96,7 @@
                   isCopied
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-card text-primary hover:bg-primary/10 border border-primary/30',
-                  'px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all cursor-pointer min-h-[44px]'
+                  'px-3.5 py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all cursor-pointer min-h-[44px]'
                 ]"
               >
                 <Check v-if="isCopied" class="w-4 h-4" />

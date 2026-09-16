@@ -40,7 +40,7 @@
         <!-- Search Input Header (Mobile) -->
         <div class="px-4 py-2.5 border-b border-border bg-card flex items-center gap-2 shrink-0">
           <div
-            class="flex-1 flex items-center gap-2.5 bg-muted/80 border border-border rounded-2xl px-3.5 py-2.5 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
+            class="flex-1 flex items-center gap-2.5 bg-muted/80 border border-input rounded-full px-3.5 py-2.5 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
           >
             <Search class="w-5 h-5 text-primary shrink-0" />
             <input
@@ -65,7 +65,7 @@
           </div>
           <button
             @click="emitClose"
-            class="w-10 h-10 rounded-2xl bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border shrink-0 cursor-pointer shadow-2xs active:scale-95"
+            class="w-10 h-10 rounded-full bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border shrink-0 cursor-pointer shadow-2xs active:scale-95"
             title="Tutup pencarian"
           >
             <X class="w-4 h-4 stroke-[2.2]" />
@@ -82,7 +82,7 @@
               activeFilter === 'all'
                 ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-              'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer shrink-0 active:scale-95'
+              'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 active:scale-95'
             ]"
           >
             Semua
@@ -93,7 +93,7 @@
               activeFilter === 'chapters'
                 ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-              'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
+              'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
           >
             <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'chapters' }">#</span>
@@ -105,7 +105,7 @@
               activeFilter === 'verses'
                 ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-              'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
+              'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
           >
             <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'verses' }">@</span>
@@ -117,7 +117,7 @@
               activeFilter === 'materials'
                 ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-              'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
+              'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
           >
             <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'materials' }">!</span>
@@ -129,7 +129,7 @@
               activeFilter === 'faqs'
                 ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-              'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
+              'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
           >
             <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'faqs' }">?</span>
@@ -255,7 +255,7 @@
             </div>
             <button
               @click="clearSearch"
-              class="px-3.5 py-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-xl border border-border transition shadow-2xs cursor-pointer active:scale-95 flex items-center gap-1.5"
+              class="px-3.5 py-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-full border border-border transition shadow-2xs cursor-pointer active:scale-95 flex items-center gap-1.5"
             >
               <RotateCcw class="w-3.5 h-3.5" />
               Reset Pencarian
@@ -463,7 +463,7 @@
           <!-- Search Input Header (Desktop) -->
           <div class="p-4 border-b border-border flex items-center gap-3 bg-card shrink-0">
             <div
-              class="flex-1 flex items-center gap-3 bg-muted/80 border border-border rounded-2xl px-4 py-3 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
+              class="flex-1 flex items-center gap-3 bg-muted/80 border border-input rounded-full px-4 py-3 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
             >
               <Search class="w-5 h-5 text-primary shrink-0" />
               <input
@@ -487,7 +487,7 @@
               </button>
               <button
                 @click="handleEscKey"
-                class="hidden sm:inline-flex items-center text-xs bg-card px-2 py-0.5 rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-secondary font-mono font-bold shadow-2xs select-none transition-colors cursor-pointer"
+                class="hidden sm:inline-flex items-center text-xs bg-card px-2 py-0.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-secondary font-mono font-bold shadow-2xs select-none transition-colors cursor-pointer"
                 :title="searchQuery ? 'Hapus kata kunci (ESC)' : 'Tutup pencarian (ESC)'"
               >
                 ESC
@@ -495,7 +495,7 @@
             </div>
             <button
               @click="emitClose"
-              class="w-11 h-11 rounded-2xl bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border cursor-pointer shrink-0 shadow-2xs active:scale-95"
+              class="w-11 h-11 rounded-full bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border cursor-pointer shrink-0 shadow-2xs active:scale-95"
               title="Tutup pencarian"
             >
               <X class="w-5 h-5 stroke-[2.2]" />
@@ -514,7 +514,7 @@
                   activeFilter === 'all'
                     ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-                  'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer active:scale-95'
+                  'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer active:scale-95'
                 ]"
               >
                 Semua
@@ -525,7 +525,7 @@
                   activeFilter === 'chapters'
                     ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-                  'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
+                  'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
               >
                 <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'chapters' }">#</span>
@@ -537,7 +537,7 @@
                   activeFilter === 'verses'
                     ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-                  'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
+                  'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
               >
                 <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'verses' }">@</span>
@@ -549,7 +549,7 @@
                   activeFilter === 'materials'
                     ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-                  'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
+                  'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
               >
                 <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'materials' }">!</span>
@@ -561,7 +561,7 @@
                   activeFilter === 'faqs'
                     ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
-                  'px-2.5 py-1 rounded-xl border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
+                  'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
               >
                 <span class="font-mono text-primary font-bold" :class="{ 'text-primary-foreground': activeFilter === 'faqs' }">?</span>
@@ -698,7 +698,7 @@
               </div>
               <button
                 @click="clearSearch"
-                class="px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-xl border border-border transition shadow-2xs cursor-pointer active:scale-95 flex items-center gap-1.5"
+                class="px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-full border border-border transition shadow-2xs cursor-pointer active:scale-95 flex items-center gap-1.5"
               >
                 <RotateCcw class="w-3.5 h-3.5" />
                 Reset Pencarian

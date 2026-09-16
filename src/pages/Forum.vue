@@ -17,7 +17,7 @@
             type="button"
             @click="refreshFeed"
             :disabled="isLoading || isRefreshing"
-            class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-foreground bg-card hover:bg-muted active:scale-[0.98] border border-border rounded-xl shadow-2xs transition-all cursor-pointer disabled:opacity-50"
+            class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-foreground bg-card hover:bg-muted active:scale-[0.98] border border-border rounded-full shadow-2xs transition-all cursor-pointer disabled:opacity-50"
             title="Perbarui percakapan"
           >
             <RefreshCw :class="['w-3.5 h-3.5', (isLoading || isRefreshing) ? 'animate-spin text-primary' : '']" />
@@ -64,7 +64,7 @@
                 type="button"
                 @click="isSearchOpen = !isSearchOpen"
                 :class="[
-                  'p-2 rounded-xl transition-all cursor-pointer border',
+                  'p-2 rounded-full transition-all cursor-pointer border',
                   isSearchOpen ? 'bg-primary text-primary-foreground border-primary shadow-xs' : 'bg-muted/60 text-muted-foreground hover:text-foreground border-border hover:bg-muted'
                 ]"
                 :title="isSearchOpen ? 'Tutup Pencarian' : 'Cari di percakapan'"
@@ -73,12 +73,12 @@
               </button>
 
               <!-- Compact Page Selector -->
-              <div v-if="forumPosts.last_page && forumPosts.last_page > 1" class="flex items-center bg-muted/60 rounded-xl border border-border p-0.5 text-xs font-medium">
+              <div v-if="forumPosts.last_page && forumPosts.last_page > 1" class="flex items-center bg-muted/60 rounded-full border border-border p-0.5 text-xs font-medium">
                 <button
                   type="button"
                   :disabled="page <= 1 || isLoading"
                   @click="changePage(page - 1)"
-                  class="p-1.5 text-muted-foreground hover:text-foreground rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-card transition-colors cursor-pointer"
+                  class="p-1.5 text-muted-foreground hover:text-foreground rounded-full disabled:opacity-40 disabled:cursor-not-allowed hover:bg-card transition-colors cursor-pointer"
                   title="Halaman sebelumnya"
                 >
                   <ChevronLeft class="w-4 h-4" />
@@ -90,7 +90,7 @@
                   type="button"
                   :disabled="page >= forumPosts.last_page || isLoading"
                   @click="changePage(page + 1)"
-                  class="p-1.5 text-muted-foreground hover:text-foreground rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-card transition-colors cursor-pointer"
+                  class="p-1.5 text-muted-foreground hover:text-foreground rounded-full disabled:opacity-40 disabled:cursor-not-allowed hover:bg-card transition-colors cursor-pointer"
                   title="Halaman berikutnya"
                 >
                   <ChevronRight class="w-4 h-4" />
@@ -115,7 +115,7 @@
               v-if="searchQuery"
               type="button"
               @click="searchQuery = ''"
-              class="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
+              class="p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
             >
               <X class="w-3.5 h-3.5" />
             </button>
@@ -189,7 +189,7 @@
                 v-if="searchQuery"
                 type="button"
                 @click="searchQuery = ''"
-                class="px-4 py-2 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-xl transition-all cursor-pointer"
+                class="px-4 py-2 text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-full transition-all cursor-pointer"
               >
                 Hapus Filter Pencarian
               </button>
@@ -290,7 +290,7 @@
                         <button
                           type="button"
                           @click="replyToPost(forumPost.user?.name || 'Anggota', forumPost.message)"
-                          class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer font-medium"
+                          class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer font-medium"
                           title="Balas pesan ini"
                         >
                           <Reply class="w-3.5 h-3.5" />
@@ -301,7 +301,7 @@
                         <button
                           type="button"
                           @click="copyPostContent(forumPost.id, forumPost.message)"
-                          class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer font-medium"
+                          class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-all cursor-pointer font-medium"
                           title="Salin isi pesan"
                         >
                           <Check v-if="copiedPostId === forumPost.id" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -361,7 +361,7 @@
                 <button
                   type="button"
                   @click="clearReplyContext"
-                  class="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-amber-500/20 transition-colors cursor-pointer"
+                  class="p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-amber-500/20 transition-colors cursor-pointer"
                   title="Batalkan balasan"
                 >
                   <X class="w-3.5 h-3.5" />
@@ -371,7 +371,7 @@
 
             <!-- Main Input Area Form -->
             <form @submit.prevent="sendPost" class="space-y-2.5">
-              <div class="relative rounded-2xl border border-border bg-background focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all overflow-hidden shadow-2xs">
+              <div class="relative rounded-2xl border border-input bg-background hover:border-foreground/40 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all overflow-hidden shadow-2xs">
                 
                 <!-- Tab Mode: WRITE -->
                 <div v-show="composerTab === 'write'">
@@ -410,7 +410,7 @@
                       type="button"
                       @click="insertBold"
                       title="Cetak Tebal (**teks**)"
-                      class="p-1.5 hover:bg-background hover:text-foreground rounded-lg transition-colors cursor-pointer"
+                      class="p-1.5 hover:bg-background hover:text-foreground rounded-full transition-colors cursor-pointer"
                     >
                       <Bold class="w-3.5 h-3.5" />
                     </button>
@@ -418,7 +418,7 @@
                       type="button"
                       @click="insertItalic"
                       title="Cetak Miring (*teks*)"
-                      class="p-1.5 hover:bg-background hover:text-foreground rounded-lg transition-colors cursor-pointer"
+                      class="p-1.5 hover:bg-background hover:text-foreground rounded-full transition-colors cursor-pointer"
                     >
                       <Italic class="w-3.5 h-3.5" />
                     </button>
@@ -426,7 +426,7 @@
                       type="button"
                       @click="insertQuote"
                       title="Kutipan (> kutipan)"
-                      class="p-1.5 hover:bg-background hover:text-foreground rounded-lg transition-colors cursor-pointer"
+                      class="p-1.5 hover:bg-background hover:text-foreground rounded-full transition-colors cursor-pointer"
                     >
                       <Quote class="w-3.5 h-3.5" />
                     </button>
@@ -434,7 +434,7 @@
                       type="button"
                       @click="insertArabicSnippet"
                       title="Kutipan Ayat / Hadits"
-                      class="p-1.5 hover:bg-background hover:text-foreground rounded-lg transition-colors cursor-pointer"
+                      class="p-1.5 hover:bg-background hover:text-foreground rounded-full transition-colors cursor-pointer"
                     >
                       <BookOpen class="w-3.5 h-3.5" />
                     </button>
@@ -446,7 +446,7 @@
                     <button
                       type="button"
                       @click="composerTab = composerTab === 'write' ? 'preview' : 'write'"
-                      class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-background hover:bg-muted text-muted-foreground hover:text-foreground border border-border/80 text-xs font-medium transition-all cursor-pointer"
+                      class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-background hover:bg-muted text-muted-foreground hover:text-foreground border border-border/80 text-xs font-medium transition-all cursor-pointer"
                     >
                       <component :is="composerTab === 'write' ? Eye : Edit3" class="w-3 h-3" />
                       <span>{{ composerTab === 'write' ? 'Pratinjau' : 'Tulis' }}</span>
@@ -456,7 +456,7 @@
                     <button
                       type="submit"
                       :disabled="isSubmitting || !newPost.message || !newPost.message.trim()"
-                      class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 active:scale-[0.98] rounded-xl shadow-xs transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+                      class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 active:scale-[0.98] rounded-full shadow-xs transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
                     >
                       <Loader2 v-if="isSubmitting" class="w-3.5 h-3.5 animate-spin" />
                       <Send v-else class="w-3.5 h-3.5" />
