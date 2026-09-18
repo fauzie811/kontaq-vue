@@ -158,7 +158,7 @@
     <!-- Transliteration -->
     <p
       v-if="verse.transliteration"
-      class="text-primary text-sm italic leading-relaxed font-medium"
+      class="text-primary leading-relaxed"
     >
       {{ verse.transliteration }}
     </p>

@@ -346,7 +346,6 @@ select {
 .dir-rtl {
   direction: rtl;
   unicode-bidi: isolate;
-  text-align: right;
 }
 
 .font-quran {

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-3xl pb-16">
+  <div class="max-w-4xl mx-auto pb-16">
     <!-- Header with Back Navigation -->
     <PageHeader
       class="mb-6"
@@ -86,14 +86,6 @@
           >
             <BookOpen class="w-3.5 h-3.5 text-primary" />
             <span>Bagian {{ material.part_number }}</span>
-          </span>
-
-          <!-- Reading Time Estimate -->
-          <span
-            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium text-muted-foreground bg-muted/60 border border-border/60"
-          >
-            <Clock class="w-3.5 h-3.5" />
-            <span>~{{ estimatedReadMinutes }} menit baca</span>
           </span>
         </div>
 
@@ -219,13 +211,6 @@ const isSubmitting = ref(false);
 const materialVerses = computed(() => {
   if (!material.value) return [];
   return material.value.quran_verses || material.value.quranVerses || [];
-});
-
-const estimatedReadMinutes = computed(() => {
-  if (!material.value?.content) return 1;
-  const text = stripTags(material.value.content);
-  const words = text.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 180));
 });
 
 function formatFinishedDate(dateStr) {

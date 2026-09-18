@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="verses && verses.length > 0"
-    class="max-w-3xl overflow-hidden bg-card text-card-foreground border border-border rounded-2xl mb-6"
+    class="overflow-hidden bg-card text-card-foreground border border-border rounded-2xl mb-6"
   >
     <!-- Card Header -->
     <div
@@ -18,11 +18,11 @@
     </div>
 
     <!-- Compact Verses Body -->
-    <div class="p-4 sm:p-6 divide-y divide-border/60">
+    <div class="px-4 py-2 sm:py-3 sm:px-6 divide-y divide-border/60">
       <div
         v-for="(verse, idx) in verses"
         :key="verse.id || idx"
-        :class="[idx > 0 ? 'pt-5 mt-5' : '', 'space-y-2.5']"
+        class="py-4"
       >
         <!-- Verse Meta / Badge -->
         <div class="flex items-center justify-between gap-2">
@@ -46,7 +46,7 @@
         <!-- Transliteration -->
         <p
           v-if="verse.transliteration"
-          class="text-primary text-xs sm:text-sm italic leading-relaxed font-medium"
+          class="text-primary text-xs sm:text-sm leading-relaxed"
         >
           {{ verse.transliteration }}
         </p>
@@ -59,7 +59,7 @@
         ></p>
 
         <!-- Footnotes (if available) -->
-        <div v-if="verse.footnotes" class="pt-1">
+        <div v-if="verse.footnotes" class="pt-2">
           <button
             type="button"
             @click="toggleFootnote(verse.id || idx)"

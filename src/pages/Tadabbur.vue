@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6">
+  <div class="max-w-4xl mx-auto space-y-6">
     <!-- Help / Q&A Banner -->
     <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
       <div class="flex items-center gap-3">
@@ -11,7 +11,7 @@
           <p class="text-xs sm:text-sm text-muted-foreground">Kunjungi menu Bantuan untuk melihat tanya jawab (Q&A).</p>
         </div>
       </div>
-      <router-link 
+      <router-link
         :to="{ name: 'help', query: { q: 'Tadabbur' } }"
         class="shrink-0 w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full text-xs sm:text-sm transition-all active:scale-95 text-center"
       >
@@ -41,7 +41,7 @@
           </span>
 
           <div class="min-w-0">
-            <h3 class="text-foreground font-bold text-base sm:text-lg truncate group-hover:text-primary transition-colors">
+            <h3 class="text-foreground font-medium text-base sm:text-lg truncate group-hover:text-primary transition-colors">
               {{ surah.latin }}
             </h3>
             <p class="text-muted-foreground text-xs font-medium truncate mt-0.5">

@@ -1,10 +1,10 @@
 <template>
-  <div class="max-w-4xl mx-auto pb-16">
+  <div>
     <!-- Navigation / Header Bar -->
-    <nav class="mb-6 flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
+    <nav class="mb-6 flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
       <router-link
         :to="{ name: 'home' }"
-        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+        class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
       >
         Beranda
       </router-link>
@@ -15,7 +15,7 @@
           <select
             :value="chapterNumber"
             @change="goToChapter($event.target.value)"
-            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring max-w-32 sm:max-w-none truncate pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-medium text-primary text-sm sm:text-base cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring max-w-32 sm:max-w-none truncate pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
           >
             <option v-for="(chapter, number) in CHAPTER_DETAILS" :key="number" :value="Number(number)">
               {{ chapter.latin }}
@@ -32,7 +32,7 @@
           <select
             :value="selectedVerse"
             @change="goToVerse($event.target.value)"
-            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-medium text-primary text-sm sm:text-base cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
           >
             <option v-for="n in verseCount" :key="n" :value="n">{{ n }}</option>
           </select>
@@ -45,7 +45,7 @@
 
       <router-link
         :to="{ name: 'quizzes' }"
-        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+        class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
       >
         Kuis
       </router-link>
@@ -59,7 +59,7 @@
 
     <!-- Error State -->
     <div v-else-if="error" class="bg-destructive/10 border border-destructive/30 rounded-2xl p-6 text-center text-destructive my-6">
-      <p class="font-bold text-lg mb-2">Terjadi Kesalahan</p>
+      <p class="font-medium text-lg mb-2">Terjadi Kesalahan</p>
       <p class="text-sm mb-4">{{ error }}</p>
       <button
         @click="resetAndFetch"
@@ -85,7 +85,7 @@
               <span>•</span>
               <span>{{ chapterDetails.ayat }} Ayat</span>
             </div>
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-1 text-foreground">
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-1 text-foreground">
               {{ chapterDetails.latin }}
             </h1>
             <p class="text-muted-foreground text-base sm:text-lg font-medium">
@@ -107,10 +107,10 @@
           v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
           class="px-4 py-6 sm:px-6 text-center"
         >
-          <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-foreground dir-rtl leading-relaxed">
+          <p class="font-quran text-xl sm:text-2xl lg:text-3xl text-foreground dir-rtl leading-relaxed">
               بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
           </p>
-          <p class="text-xs text-muted-foreground font-medium mt-2">
+          <p class="text-sm text-muted-foreground font-medium mt-2">
             Dengan menyebut nama Allah Yang Maha Pengasih, lagi Maha Penyayang
           </p>
         </div>

@@ -13,7 +13,7 @@
       </component>
 
       <div class="min-w-0">
-        <h2 v-if="pageTitle" class="text-2xl font-bold tracking-tight text-foreground sm:text-3xl truncate">
+        <h2 v-if="pageTitle" class="text-2xl font-medium tracking-tight text-foreground sm:text-3xl truncate">
           {{ pageTitle }}
         </h2>
         <div v-else class="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">

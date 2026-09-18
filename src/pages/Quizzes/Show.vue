@@ -1,26 +1,28 @@
 <template>
   <div class="max-w-6xl mx-auto space-y-6">
     <!-- Running Text (Tata Tertib) -->
-    <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
-      <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
-        <span class="mr-8">Tata Tertib Kuis: Harap mengerjakan kuis dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
-        <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
-        <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
-        <span>Semoga Allah memberikan kemudahan.</span>
+    <Teleport defer to="#header-marquee" :disabled="!isDesktop">
+      <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 -mx-4 px-4 sm:m-0 sm:p-0 sm:bg-transparent sm:border-0">
+        <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
+          <span class="mr-8">Tata Tertib Kuis: Harap mengerjakan kuis dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
+          <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
+          <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
+          <span>Semoga Allah memberikan kemudahan.</span>
+        </div>
       </div>
-    </div>
+    </Teleport>
 
     <!-- Navigation Bar: Beranda · Kuis [n] · Evaluasi -->
     <nav class="flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
       <router-link
         :to="{ name: 'home' }"
-        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+        class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
       >
         Beranda
       </router-link>
 
       <div class="flex items-center gap-1.5 sm:gap-4 min-w-0">
-        <span class="rounded-full bg-card font-bold text-primary text-sm sm:text-lg px-3 sm:px-5 py-1.5 sm:py-2">Kuis</span>
+        <span class="rounded-full bg-card font-medium text-primary text-sm sm:text-base px-3 sm:px-5 py-1.5 sm:py-2">Kuis</span>
 
         <label class="relative flex items-center rounded-full bg-card shrink-0">
           <span class="sr-only">Pilih kuis</span>
@@ -28,7 +30,7 @@
             :value="currentIndex + 1"
             @change="goToQuiz($event.target.value)"
             :disabled="quizList.length === 0"
-            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-medium text-primary text-sm sm:text-base cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
           >
             <option v-for="(item, idx) in quizList" :key="item.id" :value="idx + 1">{{ idx + 1 }}</option>
           </select>
@@ -41,7 +43,7 @@
 
       <router-link
         :to="{ name: 'evaluations' }"
-        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+        class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
       >
         Evaluasi
       </router-link>
@@ -57,7 +59,7 @@
     <!-- 0. LOCKED QUIZ (closed schedule, unread material, or refused)    -->
     <!-- ================================================================= -->
     <div v-else-if="lockState || blockedMessage" class="space-y-4">
-      <h2 class="text-xl sm:text-2xl font-bold text-foreground text-center">{{ currentItem?.title || 'Kuis' }}</h2>
+      <h2 class="text-lg sm:text-xl font-medium text-foreground text-center">{{ currentItem?.title || 'Kuis' }}</h2>
 
       <div class="bg-card rounded-2xl border border-border p-6 sm:p-8 text-center text-card-foreground flex flex-col items-center gap-3 max-w-xl mx-auto">
         <div class="w-14 h-14 rounded-full bg-muted text-muted-foreground flex items-center justify-center">
@@ -115,8 +117,8 @@
     <!-- ================================================================= -->
     <template v-else-if="quiz && userQuiz && !userQuiz.finished_at">
       <div class="text-center space-y-1.5">
-        <h2 class="text-xl sm:text-2xl font-bold text-foreground">{{ quiz.title }}</h2>
-        <p ref="headerTimer" class="text-base sm:text-lg font-semibold text-primary">
+        <h2 class="text-lg sm:text-xl font-medium text-foreground">{{ quiz.title }}</h2>
+        <p ref="headerTimer" class="text-sm sm:text-base font-medium text-primary">
           Sisa Waktu :
           <span class="font-mono">
             <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
@@ -279,7 +281,7 @@ import {
   Send,
 } from 'lucide-vue-next';
 import parseISO from 'date-fns/parseISO';
-import { useElementVisibility } from '@vueuse/core';
+import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
 import { swAlert, swConfirm, shortDateTime } from '@/utils';
 import { getMyQuiz, listAllMyQuizzes, updateMyQuiz } from '@/api';
@@ -288,6 +290,7 @@ import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import QuestionCard from '@/components/QuestionCard.vue';
 
 const route = useRoute();
+const isDesktop = useMediaQuery('(min-width: 640px)');
 const router = useRouter();
 
 // Dev server only: skip locks so locked quizzes can be opened.

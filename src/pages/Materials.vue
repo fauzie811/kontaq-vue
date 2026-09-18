@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="max-w-4xl mx-auto">
     <PageHeader class="mb-8" page-title="Materi Tadabbur">
     </PageHeader>
 
-    <div class="max-w-3xl">
+    <div>
       <div class="flex justify-end gap-4 mb-4">
         <PartPicker class="w-full sm:w-40" v-model="part_number" @update:modelValue="() => changePage(1)" />
         <WeekPicker show-all-option class="w-full sm:w-56" v-model="week" :weeks="availableWeeks"

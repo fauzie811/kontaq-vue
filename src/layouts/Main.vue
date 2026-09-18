@@ -26,6 +26,9 @@
           </router-link>
         </div>
 
+        <!-- Desktop header slot (e.g. quiz/evaluation running text) -->
+        <div id="header-marquee" class="hidden sm:block flex-1 min-w-0 mx-6 lg:mx-10"></div>
+
         <!-- Right Header Icons (Search, Notification, User Profile) -->
         <div class="flex items-center gap-2 sm:gap-3 ml-auto">
           <!-- Search Icon Button with keyboard shortcut badge -->
@@ -209,7 +212,7 @@
 
     <!-- Main Content Slot -->
     <main
-      class="max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full flex-1"
+      class="max-w-6xl mx-auto px-4 mt-6 sm:mt-8 w-full flex-1"
     >
       <slot />
     </main>
@@ -223,7 +226,7 @@
         <div class="max-w-6xl mx-auto flex items-center justify-between sm:justify-center gap-3 sm:gap-10">
           <!-- Banner Text -->
           <span
-            class="font-extrabold text-primary text-xs sm:text-lg lg:text-xl tracking-tight uppercase text-left"
+            class="font-medium text-primary text-xs sm:text-lg lg:text-2xl tracking-tight uppercase text-left"
           >
             DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
           </span>

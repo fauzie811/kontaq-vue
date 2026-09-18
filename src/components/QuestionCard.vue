@@ -4,15 +4,15 @@
     class="scroll-mt-24 sm:scroll-mt-28 mb-8 sm:mb-10"
   >
     <!-- Question Header Bar -->
-    <div class="bg-[#ebebeb] dark:bg-muted flex items-stretch min-h-[52px] mb-2">
+    <div class="bg-[#ebebeb] dark:bg-muted flex items-stretch">
       <!-- Question Number Badge -->
-      <div class="bg-[#d9f5e7] dark:bg-primary/15 text-primary w-12 sm:w-16 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
+      <div class="bg-[#d9f5e7] dark:bg-primary/15 text-primary w-12 sm:w-14 flex items-center justify-center font-medium sm:text-lg shrink-0">
         {{ index + 1 }}
       </div>
 
       <!-- Question Content -->
-      <div class="px-4 py-3.5 sm:py-4 flex items-center text-foreground font-medium text-base sm:text-lg flex-1 leading-snug">
-        <div class="prose dark:prose-invert max-w-none text-foreground font-medium text-base sm:text-lg" v-html="question.content"></div>
+      <div class="p-4 flex items-center text-foreground text-sm sm:text-base prose max-w-none dark:prose-invert flex-1 leading-snug">
+        <div v-html="question.content"></div>
       </div>
     </div>
 
@@ -29,9 +29,9 @@
             <div
               :class="[
                 checked
-                  ? 'bg-primary/10 text-primary font-bold border-primary ring-1 ring-primary/30'
+                  ? 'bg-primary/10 text-primary font-medium border-primary ring-1 ring-primary/30'
                   : 'bg-card hover:bg-muted/40 text-foreground border-border',
-                'flex items-center justify-center px-4 py-3.5 sm:py-4 rounded-xl border-2 cursor-pointer transition-all duration-150 select-none text-base sm:text-lg min-h-[52px] active:scale-[0.98]'
+                'flex items-center justify-center px-4 py-2 rounded-xl border-2 cursor-pointer transition-all duration-150 select-none text-sm sm:text-base min-h-[52px] active:scale-[0.98]'
               ]"
             >
               <!-- Custom Radio Button Circle -->
@@ -52,9 +52,9 @@
     </div>
 
     <!-- Multiple Choice Options List -->
-    <div v-else class="py-1">
+    <div v-else>
       <RadioGroup :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
-        <div class="space-y-1 sm:pl-12">
+        <div class="space-y-1 sm:pl-14">
           <RadioGroupOption
             v-for="optKey in multipleOptions"
             :key="optKey"
@@ -64,9 +64,9 @@
             <div
               :class="[
                 checked
-                  ? 'bg-gradient-to-r from-[#b8f0d8] to-[#e4f2f8] dark:from-primary/25 dark:to-primary/5 text-foreground font-medium'
+                  ? 'bg-gradient-to-r from-[#b8f0d8] to-[#e4f2f8] dark:from-primary/25 dark:to-primary/5 text-foreground'
                   : 'hover:bg-muted/40 text-foreground',
-                'flex items-start sm:items-center px-4 sm:px-6 py-3.5 sm:py-4 cursor-pointer transition-colors duration-150 select-none text-sm sm:text-base active:bg-primary/15'
+                'flex items-start sm:items-center px-4 py-2 cursor-pointer transition-colors duration-150 select-none text-sm sm:text-base active:bg-primary/15'
               ]"
             >
               <!-- Custom Radio Button Circle -->
@@ -80,7 +80,7 @@
               </span>
 
               <!-- Option Label & Text -->
-              <span class="mr-2 font-bold text-sm sm:text-base shrink-0">{{ optKey }}.</span>
+              <span class="mr-2 font-medium text-sm sm:text-base shrink-0">{{ optKey }}.</span>
               <span class="text-sm sm:text-base leading-relaxed text-foreground flex-1">{{ getOptionText(optKey) }}</span>
             </div>
           </RadioGroupOption>
@@ -116,4 +116,3 @@ const multipleOptions = computed(() => {
   return base;
 });
 </script>
-

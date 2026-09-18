@@ -1,14 +1,16 @@
 <template>
   <div class="max-w-6xl mx-auto space-y-6">
     <!-- Running Text (Tata Tertib) -->
-    <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
-      <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
-        <span class="mr-8">Tata Tertib Evaluasi: Harap mengerjakan evaluasi dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
-        <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
-        <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
-        <span>Semoga Allah memberikan kemudahan.</span>
+    <Teleport defer to="#header-marquee" :disabled="!isDesktop">
+      <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 -mx-4 px-4 sm:m-0 sm:p-0 sm:bg-transparent sm:border-0">
+        <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
+          <span class="mr-8">Tata Tertib Evaluasi: Harap mengerjakan evaluasi dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
+          <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
+          <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
+          <span>Semoga Allah memberikan kemudahan.</span>
+        </div>
       </div>
-    </div>
+    </Teleport>
 
     <!-- Navigation Bar: Beranda · Evaluasi [n] · Rapor -->
     <nav class="flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
@@ -270,7 +272,7 @@ import {
   Send,
 } from 'lucide-vue-next';
 import parseISO from 'date-fns/parseISO';
-import { useElementVisibility } from '@vueuse/core';
+import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
 import { swAlert, swConfirm, shortDateTime } from '@/utils';
 import { getMyEvaluation, listAllMyEvaluations, updateMyEvaluation } from '@/api';
@@ -279,6 +281,7 @@ import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import QuestionCard from '@/components/QuestionCard.vue';
 
 const route = useRoute();
+const isDesktop = useMediaQuery('(min-width: 640px)');
 const router = useRouter();
 
 // Dev server only: skip locks so locked evaluations can be opened.
