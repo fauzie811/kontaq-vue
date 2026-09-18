@@ -27,17 +27,10 @@
           <button
             @click="isSearchOpen = true"
             title="Cari Surah, ayat, tadabbur, bantuan (Ctrl+K)"
-            class="h-10 px-3 sm:px-3.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center gap-2 transition border border-border cursor-pointer active:scale-95"
+            aria-label="Cari"
+            class="w-11 h-11 rounded-full bg-secondary hover:bg-primary/10 text-primary flex items-center justify-center transition-colors cursor-pointer active:scale-95"
           >
-            <Search class="w-4.5 h-4.5 stroke-[2.2] text-primary" />
-            <span
-              class="hidden md:inline-block text-xs text-muted-foreground font-medium"
-              >Cari...</span
-            >
-            <kbd
-              class="hidden md:inline-flex items-center gap-0.5 text-xs bg-card/80 px-1.5 py-0.5 rounded border border-border text-muted-foreground font-mono font-bold"
-              >⌘K</kbd
-            >
+            <Search class="w-6 h-6 stroke-[1.6]" />
           </button>
 
           <!-- Notification Bell Button -->
@@ -45,9 +38,10 @@
             <button
               @click="toggleNotification"
               title="Notifikasi"
-              class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition border border-border relative cursor-pointer active:scale-95"
+              aria-label="Notifikasi"
+              class="relative w-11 h-11 rounded-full bg-secondary hover:bg-primary/10 text-primary flex items-center justify-center transition-colors cursor-pointer active:scale-95"
             >
-              <Bell class="w-5 h-5 stroke-[2.2] text-primary" />
+              <Bell class="w-6 h-6 stroke-[1.6]" />
               <span
                 v-if="notificationList.length > 0"
                 class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-accent rounded-full ring-2 ring-card animate-pulse"
@@ -67,22 +61,11 @@
             <button
               @click="toggleUserMenu"
               title="Menu Pengguna"
-              class="flex items-center gap-2 p-1 sm:pl-1 sm:pr-2.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition border border-border cursor-pointer active:scale-95"
+              aria-label="Menu Pengguna"
+              :aria-expanded="isUserMenuOpen"
+              class="w-11 h-11 rounded-full bg-secondary hover:bg-primary/10 text-primary flex items-center justify-center transition-colors cursor-pointer active:scale-95"
             >
-              <img
-                :src="authStore.user?.avatar_url || defaultAvatar"
-                alt="Avatar"
-                class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
-              />
-              <span
-                class="hidden sm:inline-block text-xs font-bold text-foreground max-w-[100px] truncate"
-              >
-                {{ authStore.user?.name || 'User' }}
-              </span>
-              <ChevronDown
-                class="w-3.5 h-3.5 text-muted-foreground transition-transform hidden sm:inline-block"
-                :class="{ 'rotate-180': isUserMenuOpen }"
-              />
+              <CircleUser class="w-6 h-6 stroke-[1.6]" />
             </button>
 
             <!-- User Menu Dropdown Panel -->
@@ -486,7 +469,7 @@ import {
   LogOut,
   QrCode,
   Pin,
-  ChevronDown,
+  CircleUser,
   Globe,
   ExternalLink,
 } from 'lucide-vue-next';
