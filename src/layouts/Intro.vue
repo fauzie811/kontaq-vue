@@ -20,14 +20,14 @@
 
         <!-- Quranic Verse Calligraphy with Dual-Language Line Height -->
         <div
-          class="mb-3 sm:mb-5 text-3xl sm:text-4xl lg:text-5xl font-bold text-accent font-quran leading-[2] sm:leading-[2] tracking-wide">
+          class="mb-3 sm:mb-5 text-3xl sm:text-4xl font-bold text-accent font-quran leading-[2] sm:leading-[2] tracking-wide">
           اَفَلَا يَتَدَبَّرُوْنَ الْقُرْاٰنَ
         </div>
 
         <!-- Verse Translation & Reference -->
-        <div class="space-y-1 text-foreground text-sm sm:text-base lg:text-lg max-w-md">
-          <p class="text-lg sm:text-xl lg:text-2xl font-bold leading-snug text-primary text-balance">"Maka tidakkah mereka mentadaburi Al-Qur'an?"</p>
-          <p class="text-primary font-bold text-xs sm:text-sm tracking-wider uppercase">(QS. An-Nisaa' : 82)
+        <div class="space-y-1 text-foreground text-sm sm:text-base lg:text-lg">
+          <p class="text-lg sm:text-xl font-bold text-primary">"Maka tidakkah mereka mentadaburi Al-Qur'an?"</p>
+          <p class="text-primary font-bold">(QS. An-Nisaa' : 82)
           </p>
         </div>
       </div>

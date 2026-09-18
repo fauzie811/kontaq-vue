@@ -76,7 +76,7 @@ const doRegister = handleSubmit(async (values) => {
         <p class="text-lg sm:text-xl font-bold text-primary font-quran leading-loose tracking-wide">
           بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
         </p>
-        <h1 class="text-xl sm:text-2xl font-bold text-foreground font-quran leading-loose tracking-wide select-none">
+        <h1 class="text-xl sm:text-2xl font-bold text-primary font-quran leading-loose tracking-wide select-none">
           السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
         </h1>
       </div>
@@ -382,7 +382,7 @@ const doRegister = handleSubmit(async (values) => {
         type="submit"
         variant="outline"
         size="lg"
-        class="w-full h-11 font-semibold border-accent text-amber-700 dark:text-accent hover:bg-accent/10 hover:text-amber-700 dark:hover:text-accent gap-2"
+        class="w-full h-11 mt-4 font-semibold border-primary text-accent dark:text-accent hover:bg-accent/10 hover:text-amber-700 dark:hover:text-accent gap-2"
         :disabled="isLoading"
       >
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
@@ -391,7 +391,7 @@ const doRegister = handleSubmit(async (values) => {
     </form>
 
     <!-- Footer -->
-    <div class="pt-4 border-t border-border/60 text-center text-sm text-muted-foreground">
+    <div class="text-center text-sm text-muted-foreground">
       Sudah punya akun?
       <router-link
         to="/login"
