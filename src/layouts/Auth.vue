@@ -6,11 +6,11 @@
 
       <!-- Center Brand Identity -->
       <div class="flex flex-col items-center text-center max-w-lg mx-auto py-12">
-        <img class="w-auto h-24 xl:h-28 object-contain" src="@/assets/kontaq-logo.svg" alt="KontaQ" />
+        <img class="w-auto h-18 xl:h-20 object-contain" src="@/assets/kontaq-logo.svg" alt="KontaQ" />
         <h1 class="mt-3.5 text-2xl xl:text-3xl font-medium tracking-tight text-primary text-balance">
           Komunitas Tadabbur Al-Qur&rsquo;an
         </h1>
-        <p class="mt-1 text-base xl:text-lg font-medium tracking-wide text-accent text-balance">
+        <p class="mt-1 text-sm xl:text-base font-medium tracking-wide text-accent text-balance">
           Raih Keberkahan Hidup bersama Al-Qur&rsquo;an
         </p>
       </div>

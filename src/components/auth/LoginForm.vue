@@ -61,7 +61,7 @@ const doLogin = handleSubmit(async (values) => {
           السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
         </h1>
       </div>
-      <p class="text-sm text-balance text-muted-foreground mt-2">
+      <p class="text-balance text-muted-foreground mt-2">
         Silakan login terlebih dahulu.
       </p>
     </div>
@@ -70,7 +70,7 @@ const doLogin = handleSubmit(async (values) => {
     <form @submit="doLogin" class="space-y-5">
       <FormField v-slot="{ componentField }" name="username" :validate-on-blur="!isFieldDirty">
         <FormItem>
-          <FormLabel class="text-sm font-semibold text-accent">ID KontaQ</FormLabel>
+          <FormLabel class="text-base font-semibold text-accent">ID KontaQ</FormLabel>
           <FormControl>
             <div class="relative flex items-center">
               <Input
@@ -91,7 +91,7 @@ const doLogin = handleSubmit(async (values) => {
       <FormField v-slot="{ componentField }" name="password" :validate-on-blur="!isFieldDirty">
         <FormItem>
           <div class="flex items-center justify-between">
-            <FormLabel class="text-sm font-semibold text-accent">Password</FormLabel>
+            <FormLabel class="text-base font-semibold text-accent">Password</FormLabel>
             <router-link
               to="/forgot-password"
               class="text-xs font-medium text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline"

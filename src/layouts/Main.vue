@@ -185,8 +185,9 @@
       class="hidden sm:block max-w-6xl mx-auto px-4 mt-4 sm:mt-6 w-full"
     >
       <div
-        class="bg-muted rounded-[2.5rem] px-4 py-2.5 flex items-start justify-around gap-2"
+        class="bg-muted rounded-[2.5rem] px-4 py-2.5"
       >
+          <div class="max-w-4xl mx-auto flex items-start justify-around gap-2">
         <router-link
           v-for="item in navTabs"
           :key="item.name"
@@ -204,10 +205,11 @@
           <span
             :class="[
               isTabActive(item) ? 'font-bold' : 'font-semibold',
-              'text-primary text-sm lg:text-base leading-tight tracking-wide',
+              'text-primary text-xs lg:text-sm leading-tight tracking-wide',
             ]"
           >{{ item.name }}</span>
         </router-link>
+          </div>
       </div>
     </section>
 
@@ -219,7 +221,7 @@
     </main>
 
     <!-- Fixed bottom stack: full-width infaq banner, then mobile nav -->
-    <div class="fixed bottom-0 inset-x-0 z-40 flex flex-col">
+    <div v-if="!isProfile" class="fixed bottom-0 inset-x-0 z-40 flex flex-col">
       <!-- Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
       <footer
         class="w-full bg-linear-90 from-[#E5FCF3] to-[#B1F6DA] dark:bg-secondary border-t border-primary/20 px-4 sm:px-8 py-2 sm:py-2.5"
@@ -227,7 +229,7 @@
         <div class="max-w-6xl mx-auto flex items-center justify-between sm:justify-center gap-3 sm:gap-10">
           <!-- Banner Text -->
           <span
-            class="font-medium text-primary text-xs sm:text-lg lg:text-2xl tracking-tight uppercase text-left"
+            class="font-medium text-primary text-xs sm:text-lg lg:text-xl tracking-tight uppercase text-left"
           >
             DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
           </span>

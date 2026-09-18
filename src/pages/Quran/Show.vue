@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Navigation / Header Bar -->
-    <nav class="mb-6 flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
+    <nav class="mb-6 flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-maingray px-3.5 sm:px-10 py-2 sm:py-3">
       <router-link
         :to="{ name: 'home' }"
         class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
