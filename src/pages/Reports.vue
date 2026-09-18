@@ -1,38 +1,58 @@
 <template>
-  <div>
-    <PageHeader
-      class="mb-6 sm:mb-8"
-      page-title="Rapor"
-      description="Rekap nilai kuis dan evaluasi peserta per pekan."
-    >
-      <Button v-if="reports && reports.items.length" type="button" class="gap-2" @click="shareDialog = true">
-        <ClipboardList class="w-4 h-4" />
-        <span>Rekap</span>
-      </Button>
-    </PageHeader>
+  <div class="max-w-6xl mx-auto space-y-6">
+    <!-- Navigation Bar: Beranda · Rapor [mode] [n] · Sertifikat -->
+    <nav class="flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
+      <router-link
+        :to="{ name: 'home' }"
+        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+      >
+        Beranda
+      </router-link>
 
-    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
-      <InputFrame class="w-full sm:w-64" label="Grup">
-        <p v-if="authStore.user && authStore.user.group">{{ authStore.user.group.name }}</p>
-        <TextPlaceholder v-else class="block w-32" />
-      </InputFrame>
-      <WeekPicker class="w-full sm:ml-auto sm:w-56" v-model="week" @update:modelValue="loadData" />
-    </div>
+      <div class="flex items-center gap-1.5 sm:gap-4 min-w-0">
+        <label class="relative flex items-center rounded-full bg-card min-w-0">
+          <span class="sr-only">Jenis rapor</span>
+          <select
+            :value="mode"
+            @change="changeMode($event.target.value)"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring truncate pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+          >
+            <option v-for="(label, value) in MODES" :key="value" :value="value">Rapor {{ label }}</option>
+          </select>
+          <span class="pointer-events-none absolute right-2 sm:right-4 flex flex-col items-center text-primary">
+            <ChevronUp class="w-3.5 h-3.5 sm:w-5 sm:h-5 -mb-1" />
+            <ChevronDown class="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          </span>
+        </label>
+
+        <label class="relative flex items-center rounded-full bg-card shrink-0">
+          <span class="sr-only">Pilih {{ MODES[mode] }}</span>
+          <select
+            :value="number"
+            @change="changeNumber($event.target.value)"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+          >
+            <option v-for="n in maxNumber" :key="n" :value="n">{{ n }}</option>
+          </select>
+          <span class="pointer-events-none absolute right-2 sm:right-4 flex flex-col items-center text-primary">
+            <ChevronUp class="w-3.5 h-3.5 sm:w-5 sm:h-5 -mb-1" />
+            <ChevronDown class="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          </span>
+        </label>
+      </div>
+
+      <router-link
+        :to="{ name: 'certificates' }"
+        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+      >
+        Sertifikat
+      </router-link>
+    </nav>
 
     <!-- SKELETON LOADING -->
-    <div
-      v-if="isLoading"
-      class="animate-pulse divide-y divide-border/60 overflow-hidden rounded-2xl border border-border bg-card"
-      aria-hidden="true"
-    >
-      <div class="h-11 bg-muted/60 sm:h-14"></div>
-      <div v-for="i in 6" :key="i" class="flex items-center gap-3 px-3 py-4 sm:px-4">
-        <div class="h-3.5 w-6 rounded-full bg-muted"></div>
-        <div class="h-3.5 w-32 rounded-full bg-muted sm:w-44"></div>
-        <div class="ml-auto hidden h-3.5 w-10 rounded-full bg-muted/70 sm:block"></div>
-        <div class="hidden h-3.5 w-10 rounded-full bg-muted/70 sm:block"></div>
-        <div class="hidden h-3.5 w-10 rounded-full bg-muted/70 sm:block"></div>
-      </div>
+    <div v-if="isLoading" class="animate-pulse space-y-2" aria-hidden="true">
+      <div class="h-10"></div>
+      <div v-for="i in 5" :key="i" class="h-16 bg-muted/60"></div>
     </div>
 
     <!-- ERROR STATE -->
@@ -67,174 +87,88 @@
       </div>
       <h4 class="mb-1 text-base font-bold text-foreground">Belum Ada Peserta</h4>
       <p class="max-w-md text-sm text-muted-foreground">
-        Rapor untuk <span class="font-semibold text-foreground">Pekan {{ week }}</span> belum memiliki data peserta.
+        Rapor {{ MODES[mode] }} {{ number }} belum memiliki data peserta.
       </p>
     </div>
 
     <!-- REPORT TABLE -->
-    <div v-else class="overflow-x-auto rounded-2xl border border-border bg-card">
-      <table class="min-w-full divide-y divide-border">
-        <caption class="sr-only">Rapor nilai kuis dan evaluasi peserta</caption>
-        <thead class="bg-muted">
-          <tr>
-            <th scope="col"
-              class="sticky left-0 z-10 w-10 min-w-10 bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
-              #</th>
-            <th scope="col"
-              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
-              Nama Peserta</th>
-            <th scope="col" v-for="(quiz, index) in reports.quizzes" :key="quiz.id"
-              class="whitespace-nowrap py-2.5 px-2.5 text-center text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
-              Kuis {{ index + 1 }}</th>
-            <th scope="col" v-for="(evaluation, index) in reports.evaluations" :key="evaluation.id"
-              class="whitespace-nowrap py-2.5 px-2.5 text-center text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
-              Evaluasi {{ index + 1 }}</th>
+    <div v-else class="overflow-x-auto">
+      <table class="min-w-full text-sm sm:text-base">
+        <caption class="sr-only">Rapor {{ MODES[mode] }} {{ number }}</caption>
+        <thead>
+          <tr class="text-foreground font-medium">
+            <th scope="col" class="py-3 px-3 text-left whitespace-nowrap">No.</th>
+            <th scope="col" class="py-3 px-3 text-left whitespace-nowrap">Nama Peserta</th>
+            <th v-for="(quiz, index) in reports.quizzes" :key="quiz.id" scope="col" :title="quiz.title"
+              class="py-3 px-3 text-center whitespace-nowrap">
+              {{ reports.quizzes.length === 1 ? 'Kuis' : `Kuis ${index + 1}` }}
+            </th>
+            <th v-for="(evaluation, index) in reports.evaluations" :key="evaluation.id" scope="col" :title="evaluation.title"
+              class="py-3 px-3 text-center whitespace-nowrap">
+              {{ reports.evaluations.length === 1 ? 'Evaluasi' : `Evaluasi ${index + 1}` }}
+            </th>
+            <th scope="col" class="py-3 px-3 text-center whitespace-nowrap">Total Nilai</th>
+            <th scope="col" class="py-3 px-3 text-center whitespace-nowrap">Peringkat</th>
+            <th scope="col" class="py-3 px-3 text-center whitespace-nowrap">Juz</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-border text-card-foreground">
+        <tbody class="divide-y divide-border text-foreground border-y border-border">
           <tr v-for="(item, idx) in reports.items" :key="item.id">
-            <td
-              class="sticky left-0 z-10 w-10 min-w-10 whitespace-nowrap bg-card py-2.5 px-2.5 text-xs text-muted-foreground sm:px-3 sm:py-4 sm:text-sm">
+            <td class="w-12 sm:w-16 bg-gradient-to-b from-[#b8f0d8] to-[#e4f2f8] dark:from-primary/25 dark:to-primary/5 py-4 px-3 text-center font-medium align-top">
               {{ idx + 1 }}
             </td>
-            <td
-              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-card py-2.5 px-2.5 text-xs text-muted-foreground sm:px-3 sm:py-4 sm:text-sm">
-              <p class="text-xs text-muted-foreground">{{ item.username }}</p>
-              <p class="text-xs font-medium text-foreground sm:text-sm">{{ item.name }}</p>
+            <td class="py-4 px-3 align-top whitespace-nowrap">
+              <p class="font-medium">{{ item.name }}</p>
+              <p class="text-muted-foreground">{{ item.username }}</p>
             </td>
-            <td class="whitespace-nowrap py-2.5 px-2.5 text-xs text-muted-foreground sm:px-3 sm:py-4 sm:text-sm"
-              v-for="quiz in reports.quizzes" :key="quiz.id">
-              <QuizScore :score="item.scores ? item.scores[`quiz_${quiz.id}`] : undefined"
-                @update-score="score => updateScore(item.id, `quiz_${quiz.id}`, score)" />
+            <td v-for="key in scoreKeys" :key="key" class="py-4 px-3 text-center align-top whitespace-nowrap">
+              <span :class="scoreCell(item.scores?.[key]).class">{{ scoreCell(item.scores?.[key]).text }}</span>
             </td>
-            <td class="whitespace-nowrap py-2.5 px-2.5 text-xs text-muted-foreground sm:px-3 sm:py-4 sm:text-sm"
-              v-for="evaluation in reports.evaluations" :key="evaluation.id">
-              <EvaluationScore :score="item.scores ? item.scores[`evaluation_${evaluation.id}`] : undefined" />
-            </td>
+            <td class="py-4 px-3 text-center align-top font-semibold">{{ formatNumber(item.total) }}</td>
+            <td class="py-4 px-3 text-center align-top font-bold text-primary">{{ item.rank ?? '–' }}</td>
+            <td class="py-4 px-3 text-center align-top whitespace-nowrap">{{ juzLabel }}</td>
           </tr>
         </tbody>
-        <tfoot class="bg-muted">
-          <tr>
-            <th scope="col"
-              class="sticky left-0 z-10 w-10 min-w-10 bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm"></th>
-            <th scope="col"
-              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
-              Total</th>
-            <th scope="col" v-for="quiz in reports.quizzes" :key="quiz.id"
-              class="py-2.5 px-2.5 text-center text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
-              {{ totals[`quiz_${quiz.id}`] }}</th>
-            <th scope="col" v-for="evaluation in reports.evaluations" :key="evaluation.id"
-              class="py-2.5 px-2.5 text-center text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm"></th>
-          </tr>
-        </tfoot>
       </table>
     </div>
-
-    <TransitionRoot as="template" :show="shareDialog">
-      <Dialog as="div" class="relative z-50" @close="shareDialog = false">
-        <TransitionChild as="template" enter="ease-out duration-250" enter-from="opacity-0" enter-to="opacity-100"
-          leave="ease-in duration-150" leave-from="opacity-100" leave-to="opacity-0">
-          <div class="fixed inset-0 transition-opacity bg-black/60 backdrop-blur-xs" />
-        </TransitionChild>
-
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
-            <TransitionChild as="template" enter="ease-out duration-250"
-              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-[0.96]"
-              enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-150"
-              leave-from="opacity-100 translate-y-0 sm:scale-100"
-              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-[0.96]">
-              <DialogPanel
-                class="relative w-full overflow-hidden rounded-2xl border border-border bg-card px-4 pt-5 pb-4 text-left text-card-foreground transition-all transform sm:my-8 sm:max-w-md sm:p-6">
-                <div>
-                  <div class="mt-3 sm:mt-5">
-                    <DialogTitle as="h3" class="text-base font-semibold leading-6 text-foreground">Rekap KontaQ
-                    </DialogTitle>
-                    <div
-                      class="mt-2 font-mono text-xs leading-relaxed whitespace-pre-wrap text-muted-foreground sm:text-sm"
-                      ref="shareContent">
-                      <span class="font-semibold text-foreground">REKAP KONTAQ GRUP {{ authStore.user?.group?.name ?? '-' }}</span><br />
-                      Pekan {{ week }}<br />
-                      ➖➖➖➖➖➖➖➖<br />
-                      Admin : {{ reports.items[0] ? reports.items[0].name : '-' }}<br />
-                      Asmin : {{ reports.items[1] ? reports.items[1].name : '-' }}<br />
-                      <br />
-                      Kuis wajib dikerjakan<br />
-                      <br />
-                      1 2 3 4 5 6 <br />
-                      <br />
-                      <span v-for="row in recapRows" :key="row.id">
-                        {{ row.number }}
-                        <span v-for="(token, i) in row.quizzes" :key="`q${i}`" :class="token.class">{{ token.text }}</span>
-                        <span v-for="(token, i) in row.evaluations" :key="`e${i}`" :class="token.class">{{ token.text }}</span>
-                        {{ row.name }}
-                        <br />
-                      </span>
-                      Totals: {{ reports.quizzes.map(q => totals[`quiz_${q.id}`]).join('-') }}<br />
-                      <br />
-                      ➖➖➖➖➖➖➖➖➖<br />
-                      <br />
-                      Keterangan :<br />
-                      Kholas tadabbur harian<br />
-                      Kholas Evaluasi<br />
-                      Tidak ada kabar<br />
-                      Izin / Sakit<br />
-                      Peringkat 10 besar<br />
-                      SK baru bergabung<br />
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                  <Button type="button" variant="outline" class="w-full sm:col-start-1" @click="shareDialog = false">
-                    Tutup
-                  </Button>
-                  <Button type="button" class="mt-3 w-full gap-2 sm:col-start-2 sm:mt-0" @click="copyShare">
-                    <Check v-if="copied" class="w-4 h-4" />
-                    <Copy v-else class="w-4 h-4" />
-                    <span>{{ copied ? 'Tersalin!' : 'Salin' }}</span>
-                  </Button>
-                </div>
-              </DialogPanel>
-            </TransitionChild>
-          </div>
-        </div>
-      </Dialog>
-    </TransitionRoot>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { Check, CircleAlert, ClipboardList, Copy, RotateCcw, Users } from 'lucide-vue-next';
+import { ChevronDown, ChevronUp, CircleAlert, RotateCcw, Users } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
-import { getReports, updateReport } from '@/api';
+import { getReports } from '@/api';
 import authStore from '@/store/auth';
-import { Button } from '@/components/ui/button';
-import PageHeader from '../components/PageHeader.vue';
-import WeekPicker from '@/components/WeekPicker.vue';
-import InputFrame from '@/components/forms/InputFrame.vue';
-import TextPlaceholder from '@/components/placeholders/TextPlaceholder.vue';
-import EvaluationScore from '@/components/EvaluationScore.vue';
-import QuizScore from '@/components/QuizScore.vue';
 
-const route = useRoute();
-const week = ref(1);
+const MODES = { daily: 'Harian', weekly: 'Pekanan', juz: 'Juz' };
+
+const mode = ref('weekly');
+const number = ref(authStore.user?.group?.current_week || 1);
 const reports = ref();
-const totals = ref({});
-const shareDialog = ref(false);
 const isLoading = ref(false);
 const loadError = ref(false);
 
+// The backend reports how many days/weeks/juz exist; keep the current pick selectable meanwhile.
+const maxNumber = computed(() => Math.max(reports.value?.max || 0, number.value));
+
+const scoreKeys = computed(() => [
+  ...(reports.value?.quizzes || []).map((quiz) => `quiz_${quiz.id}`),
+  ...(reports.value?.evaluations || []).map((evaluation) => `evaluation_${evaluation.id}`),
+]);
+
+const juzLabel = computed(() => {
+  const juz = reports.value?.juz || [];
+  if (juz.length === 0) return '–';
+  return juz.length === 1 ? juz[0] : `${juz[0]}–${juz[juz.length - 1]}`;
+});
+
 async function loadData() {
-  if (!week.value) return;
   isLoading.value = true;
   loadError.value = false;
   try {
-    const data = await getReports(week.value);
+    const data = await getReports({ mode: mode.value, number: number.value });
     reports.value = data.data;
-    calculateTotals();
   } catch (error) {
     reports.value = undefined;
     loadError.value = true;
@@ -245,78 +179,26 @@ async function loadData() {
 }
 loadData();
 
-const updateScore = async (userId, key, value) => {
-  const data = await updateReport({ user_id: userId, week: week.value, scores: { [key]: value } });
-  const items = reports.value.items;
-  items.forEach(i => {
-    if (i.id == userId) {
-      i.scores = {
-        ...i.scores,
-        [key]: value,
-      };
-    }
-  });
-  reports.value = {
-    ...reports.value,
-    items: [
-      ...items,
-    ],
-  };
+function changeMode(value) {
+  mode.value = value;
+  number.value = value === 'weekly' ? authStore.user?.group?.current_week || 1 : 1;
+  loadData();
 }
 
-const calculateTotals = () => {
-  let totalsTemp = {};
-  if (reports.value) {
-    reports.value.quizzes.forEach(quiz => {
-      totalsTemp[`quiz_${quiz.id}`] = 0;
-    });
-    reports.value.items.forEach(item => {
-      Object.keys(totalsTemp).forEach(q => {
-        if (item.scores != null && item.scores[q] == 100) totalsTemp[q]++;
-      });
-    });
-  }
-  totals.value = totalsTemp;
-};
-
-const quizScoreToken = (score) => {
-  if (score === null || score === undefined) return { text: 'X ', class: 'text-destructive' };
-  if (score == 'i') return { text: 'I ', class: 'text-blue-600' };
-  if (score == 'n') return { text: 'N ', class: 'text-warning-600' };
-  if (score == 100) return { text: '100 ', class: 'text-success-600' };
-  return { text: score + ' ', class: 'text-foreground' };
+function changeNumber(value) {
+  number.value = Number(value);
+  loadData();
 }
 
-const evaluationScoreToken = (score) => {
-  if (score === null || score === undefined) return { text: 'X', class: 'text-destructive' };
-  return { text: 'OK', class: 'text-success-600' };
+function scoreCell(score) {
+  if (score === null || score === undefined) return { text: '–', class: 'text-muted-foreground' };
+  if (score === 'i') return { text: 'Izin', class: 'text-blue-600 dark:text-blue-400 font-medium' };
+  if (score === 'n') return { text: 'SK Baru', class: 'text-amber-700 dark:text-amber-400 font-medium' };
+  return { text: score, class: score == 100 ? 'font-bold text-primary' : '' };
 }
 
-const recapRows = computed(() => {
-  if (!reports.value) return [];
-  return reports.value.items.map((item, idx) => ({
-    id: item.id,
-    number: `${idx + 1}`.padStart(2, '0'),
-    name: item.name,
-    quizzes: reports.value.quizzes.map(quiz =>
-      quizScoreToken(item.scores ? item.scores[`quiz_${quiz.id}`] : undefined)),
-    evaluations: reports.value.evaluations.map(evaluation =>
-      evaluationScoreToken(item.scores ? item.scores[`evaluation_${evaluation.id}`] : undefined)),
-  }));
-});
-
-const shareContent = ref();
-const copied = ref(false);
-let copiedTimer;
-const copyShare = async () => {
-  try {
-    await navigator.clipboard.writeText(shareContent.value.innerText);
-    copied.value = true;
-    toast.success('Rekap disalin ke clipboard');
-    clearTimeout(copiedTimer);
-    copiedTimer = setTimeout(() => (copied.value = false), 2000);
-  } catch (error) {
-    toast.error('Gagal menyalin rekap');
-  }
+function formatNumber(value) {
+  if (value === null || value === undefined) return '–';
+  return Number.isInteger(value) ? value : Number(value).toFixed(2);
 }
 </script>

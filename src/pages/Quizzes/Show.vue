@@ -1,295 +1,321 @@
 <template>
   <div class="max-w-6xl mx-auto space-y-6">
-    <!-- Skeleton Loading State -->
-    <div v-if="isLoading" class="space-y-6 animate-pulse">
-      <div class="h-10 w-64 bg-muted rounded-xl"></div>
-      <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
-        <div class="md:col-span-2 lg:col-span-3 space-y-4">
-          <div v-for="i in 3" :key="i" class="h-44 bg-card rounded-2xl border border-border p-6"></div>
-        </div>
-        <div class="h-60 bg-card rounded-2xl border border-border p-6 hidden md:block"></div>
+    <!-- Running Text (Tata Tertib) -->
+    <div class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
+      <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
+        <span class="mr-8">Tata Tertib Kuis: Harap mengerjakan kuis dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
+        <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
+        <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
+        <span>Semoga Allah memberikan kemudahan.</span>
       </div>
     </div>
 
-    <!-- Main Quiz Content -->
-    <div v-else-if="quiz" class="space-y-6">
-      <!-- Page Header with Back & Metadata -->
-      <PageHeader
-        :page-title="quiz.title"
-        :description="userQuiz?.finished_at ? 'Tinjauan hasil pengerjaan kuis Anda.' : `Durasi: ${quiz.duration} menit • ${quiz.questions?.length || 0} Soal`"
-        :show-back="true"
-        @back="handleBackNavigation"
-      />
+    <!-- Navigation Bar: Beranda · Kuis [n] · Evaluasi -->
+    <nav class="flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
+      <router-link
+        :to="{ name: 'home' }"
+        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+      >
+        Beranda
+      </router-link>
 
-      <!-- Running Text (Tata Tertib) -->
-      <div v-if="quiz && userQuiz && !userQuiz.finished_at" class="overflow-hidden bg-primary/10 border-y border-primary/20 py-2 sm:py-2.5 -mx-4 px-4 sm:mx-0 sm:rounded-xl">
-        <div class="whitespace-nowrap animate-marquee flex items-center text-sm font-medium text-primary">
-          <span class="mr-8">Tata Tertib Kuis: Harap mengerjakan kuis dengan jujur dan tidak melihat catatan atau Al-Qur'an kecuali untuk soal yang diperbolehkan.</span>
-          <span class="mr-8">Pastikan koneksi internet stabil sebelum memulai.</span>
-          <span class="mr-8">Sistem akan menyimpan jawaban otomatis dan mengumpulkan saat waktu habis.</span>
-          <span>Semoga Allah memberikan kemudahan.</span>
-        </div>
+      <div class="flex items-center gap-1.5 sm:gap-4 min-w-0">
+        <span class="rounded-full bg-card font-bold text-primary text-sm sm:text-lg px-3 sm:px-5 py-1.5 sm:py-2">Kuis</span>
+
+        <label class="relative flex items-center rounded-full bg-card shrink-0">
+          <span class="sr-only">Pilih kuis</span>
+          <select
+            :value="currentIndex + 1"
+            @change="goToQuiz($event.target.value)"
+            :disabled="quizList.length === 0"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+          >
+            <option v-for="(item, idx) in quizList" :key="item.id" :value="idx + 1">{{ idx + 1 }}</option>
+          </select>
+          <span class="pointer-events-none absolute right-2 sm:right-4 flex flex-col items-center text-primary">
+            <ChevronUp class="w-3.5 h-3.5 sm:w-5 sm:h-5 -mb-1" />
+            <ChevronDown class="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          </span>
+        </label>
       </div>
 
-      <!-- ================================================================= -->
-      <!-- 1. ACTIVE QUIZ TAKING MODE -->
-      <!-- ================================================================= -->
-      <template v-if="quiz && userQuiz && !userQuiz.finished_at">
-        <!-- MOBILE STICKY FLOATING TIMER & PROGRESS BAR (< md) -->
-        <div class="md:hidden sticky top-16 z-30 -mx-4 px-4 py-2 bg-card/95 backdrop-blur-md border-y border-border transition-all">
-          <div class="flex items-center justify-between gap-3 mb-2">
-            <!-- Countdown Timer Pill -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground border border-border font-medium text-xs sm:text-sm">
-              <Clock class="w-4 h-4 text-primary shrink-0 animate-pulse" />
-              <span class="text-muted-foreground font-medium">Sisa Waktu:</span>
-              <span class="font-mono font-bold text-foreground">
-                <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
-              </span>
-            </div>
+      <router-link
+        :to="{ name: 'evaluations' }"
+        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+      >
+        Evaluasi
+      </router-link>
+    </nav>
 
-            <!-- Answered Count Badge -->
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold">
-              <span>{{ answeredCount }}/{{ totalQuestions }} Terjawab</span>
-            </div>
-          </div>
+    <!-- Skeleton Loading State -->
+    <div v-if="isLoading" class="space-y-4 animate-pulse">
+      <div class="h-8 w-48 mx-auto bg-muted rounded"></div>
+      <div v-for="i in 3" :key="i" class="h-40 bg-muted/60 rounded"></div>
+    </div>
 
-          <!-- Mobile Quick Question Navigation Pills -->
-          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-            <button
-              v-for="(q, idx) in quiz.questions"
-              :key="q.id"
-              type="button"
-              @click="scrollToQuestion(idx)"
-              :class="[
-                selected[q.id]
-                  ? 'bg-primary text-primary-foreground font-bold'
-                  : 'bg-muted text-muted-foreground hover:bg-secondary border border-border/80 font-medium',
-                'w-8 h-8 rounded-full flex items-center justify-center text-xs shrink-0 transition-all active:scale-90 cursor-pointer'
-              ]"
-              :title="'Lompat ke Soal ' + (idx + 1)"
-            >
-              {{ idx + 1 }}
-            </button>
-          </div>
+    <!-- ================================================================= -->
+    <!-- 0. LOCKED QUIZ (closed schedule, unread material, or refused)    -->
+    <!-- ================================================================= -->
+    <div v-else-if="lockState || blockedMessage" class="space-y-4">
+      <h2 class="text-xl sm:text-2xl font-bold text-foreground text-center">{{ currentItem?.title || 'Kuis' }}</h2>
+
+      <div class="bg-card rounded-2xl border border-border p-6 sm:p-8 text-center text-card-foreground flex flex-col items-center gap-3 max-w-xl mx-auto">
+        <div class="w-14 h-14 rounded-full bg-muted text-muted-foreground flex items-center justify-center">
+          <component :is="lockIcon" class="w-7 h-7" />
         </div>
 
-        <!-- Layout Grid: Questions on Left, Sticky Sidebar on Right (Desktop) -->
-        <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-4 items-start">
-          <!-- Questions List -->
-          <div class="md:col-span-2 lg:col-span-3 space-y-4">
-            <QuestionCard
-              v-for="(question, index) in quiz.questions"
-              :key="question.id"
-              :question="question"
-              :index="index"
-              v-model="selected[question.id]"
-            />
+        <h3 class="text-base font-bold text-foreground">{{ lockTitle }}</h3>
 
-            <!-- Mobile Bottom Submit Button -->
-            <div class="pt-2 md:hidden">
-              <button
-                @click="confirmSubmit"
-                type="button"
-                :disabled="isSubmitting"
-                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-5 py-4 text-base font-bold text-primary-foreground transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-              >
-                <CheckCircle2 class="w-5 h-5" />
-                <span>{{ isSubmitting ? 'Mengumpulkan...' : 'Selesai & Kumpulkan Jawaban' }}</span>
-              </button>
-            </div>
-          </div>
+        <p v-if="blockedMessage" class="text-sm text-muted-foreground">{{ blockedMessage }}</p>
 
-          <!-- DESKTOP STICKY SIDEBAR (Timer, Progress & Question Navigator) -->
-          <div class="hidden md:block md:sticky md:top-20 space-y-4">
-            <!-- Timer Card -->
-            <div class="bg-card rounded-2xl border border-border p-5 text-center space-y-3">
-              <div class="flex items-center justify-center gap-2 text-muted-foreground">
-                <Clock class="w-4 h-4 text-primary" />
-                <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Sisa Waktu</h3>
-              </div>
-              <div class="text-3xl font-extrabold text-foreground font-mono tracking-tight">
-                <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
-              </div>
-              <p class="text-xs text-muted-foreground">Kuis otomatis tersimpan jika waktu habis.</p>
-            </div>
+        <p v-if="lockState === 'closed' && currentItem.opens_at" class="text-sm text-muted-foreground flex items-center gap-1.5">
+          <CalendarClock class="w-4 h-4 shrink-0" />
+          <span>{{ shortDateTime(currentItem.opens_at) }} &ndash; {{ shortDateTime(currentItem.closes_at) }}</span>
+        </p>
 
-            <!-- Progress & Question Matrix Card -->
-            <div class="bg-card rounded-2xl border border-border p-5 space-y-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Progress</span>
-                <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                  {{ answeredCount }} dari {{ totalQuestions }}
-                </span>
-              </div>
+        <!-- Late permission feedback -->
+        <p v-if="currentItem?.late_permission_status === 'pending'" class="text-sm font-medium text-amber-700 dark:text-amber-400">
+          Pengajuan izin telat Anda sedang ditinjau admin.
+        </p>
+        <p v-else-if="currentItem?.late_permission_status === 'rejected'" class="text-sm font-medium text-rose-700 dark:text-rose-400">
+          Pengajuan izin telat ditolak{{ currentItem.late_permission_review_note ? `: ${currentItem.late_permission_review_note}` : '.' }}
+        </p>
 
-              <!-- Visual Progress Bar -->
-              <div class="w-full bg-muted rounded-full h-2 overflow-hidden">
-                <div
-                  class="bg-primary h-2 rounded-full transition-all duration-300 ease-out"
-                  :style="{ width: `${progressPercentage}%` }"
-                ></div>
-              </div>
+        <button
+          v-if="lockState === 'closed' && currentItem.can_request_late_permission"
+          type="button"
+          @click="requestDialogOpen = true"
+          class="mt-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-6 text-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.98]"
+        >
+          <Send class="w-4 h-4" />
+          <span>Ajukan Izin Telat</span>
+        </button>
 
-              <!-- Question Navigator Matrix -->
-              <div class="pt-2 border-t border-border/60">
-                <span class="text-xs text-muted-foreground block mb-2.5 font-medium">Daftar Soal:</span>
-                <div class="grid grid-cols-5 gap-2">
-                  <button
-                    v-for="(q, idx) in quiz.questions"
-                    :key="q.id"
-                    type="button"
-                    @click="scrollToQuestion(idx)"
-                    :class="[
-                      selected[q.id]
-                        ? 'bg-primary text-primary-foreground font-bold'
-                        : 'bg-muted text-muted-foreground hover:bg-secondary border border-border/80 font-medium',
-                      'h-9 rounded-full flex items-center justify-center text-xs transition-all hover:scale-105 active:scale-95 cursor-pointer'
-                    ]"
-                    :title="'Lompat ke Soal ' + (idx + 1)"
-                  >
-                    {{ idx + 1 }}
-                  </button>
-                </div>
-              </div>
+        <span
+          v-else-if="lockState === 'closed' && currentItem.late_permission_status === 'pending'"
+          class="mt-2 bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-6 text-sm flex items-center justify-center gap-2 border border-border"
+        >
+          <Hourglass class="w-4 h-4" />
+          <span>Menunggu Persetujuan</span>
+        </span>
 
-              <!-- Desktop Submit Button -->
-              <button
-                @click="confirmSubmit"
-                type="button"
-                :disabled="isSubmitting"
-                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-4 py-3 text-sm font-bold text-primary-foreground transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
-              >
-                <CheckCircle2 class="w-4 h-4" />
-                <span>{{ isSubmitting ? 'Mengumpulkan...' : 'Selesai & Kumpulkan' }}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </template>
+        <router-link
+          v-else-if="lockState === 'material'"
+          :to="`/materials/${currentItem.material_id}`"
+          class="mt-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full py-2.5 px-6 text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+        >
+          <BookOpen class="w-4 h-4" />
+          <span>Baca Materi Terlebih Dahulu</span>
+        </router-link>
+      </div>
+    </div>
 
-      <!-- ================================================================= -->
-      <!-- 2. COMPLETED QUIZ REVIEW MODE -->
-      <!-- ================================================================= -->
-      <div v-if="userQuiz && userQuiz.finished_at" class="space-y-6">
-        <!-- Celebratory Score Hero Banner -->
-        <div class="bg-gradient-to-br from-primary/10 via-primary/5 to-card rounded-3xl border border-primary/20 p-6 sm:p-8 text-center relative overflow-hidden">
-          <div class="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-3">
-            <Award class="w-8 h-8 stroke-[2.2]" />
-          </div>
-          <h3 class="text-xl sm:text-2xl font-bold text-foreground mb-1.5">Jazaakumullah khayran katsiran</h3>
-          <p class="text-sm sm:text-base text-muted-foreground mb-4">Anda telah menyelesaikan kuis ini.</p>
+    <!-- ================================================================= -->
+    <!-- 1. ACTIVE QUIZ TAKING MODE -->
+    <!-- ================================================================= -->
+    <template v-else-if="quiz && userQuiz && !userQuiz.finished_at">
+      <div class="text-center space-y-1.5">
+        <h2 class="text-xl sm:text-2xl font-bold text-foreground">{{ quiz.title }}</h2>
+        <p class="text-base sm:text-lg font-semibold text-primary">
+          Sisa Waktu :
+          <span class="font-mono">
+            <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
+          </span>
+        </p>
+      </div>
 
-          <!-- Score Pill -->
-          <div class="inline-flex flex-col items-center justify-center bg-card rounded-2xl border border-border px-8 py-4">
-            <span class="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Nilai Anda</span>
-            <span class="text-4xl sm:text-5xl font-extrabold text-primary font-mono">{{ userQuiz.score }}</span>
-          </div>
-        </div>
-
-        <!-- Question Review Cards -->
-        <div class="space-y-5">
-          <h4 class="text-lg font-bold text-foreground">Pembahasan & Jawaban</h4>
-
-          <div
+      <div class="grid gap-6 md:grid-cols-4">
+        <!-- Questions List -->
+        <div class="md:col-span-3">
+          <QuestionCard
             v-for="(question, index) in quiz.questions"
             :key="question.id"
-            class="bg-card rounded-2xl border border-border overflow-hidden"
+            :question="question"
+            :index="index"
+            v-model="selected[question.id]"
+          />
+        </div>
+
+        <!-- Submit -->
+        <div class="md:self-end md:sticky md:bottom-24">
+          <button
+            @click="confirmSubmit"
+            type="button"
+            :disabled="isSubmitting"
+            class="w-full rounded-full bg-[#d9f5e7] dark:bg-secondary hover:bg-primary/15 active:scale-[0.98] px-5 py-3 text-lg font-bold text-primary transition-all cursor-pointer disabled:opacity-50"
           >
-            <!-- Question Header -->
-            <div class="bg-muted/50 flex items-stretch min-h-[52px] border-b border-border">
-              <div class="bg-primary/10 text-primary w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 border-r border-border/80">
-                {{ index + 1 }}
-              </div>
-              <div class="px-4 py-3.5 sm:py-4 flex items-center text-foreground font-semibold text-base sm:text-lg flex-1 leading-snug">
-                <div class="prose dark:prose-invert max-w-none text-foreground font-semibold text-base sm:text-lg" v-html="question.content"></div>
-              </div>
-            </div>
+            {{ isSubmitting ? 'Mengumpulkan...' : 'Selesai' }}
+          </button>
+        </div>
+      </div>
+    </template>
 
-            <!-- True/False Review (Side-by-side) -->
-            <div v-if="question.type === 'true_false'" class="p-4 sm:p-5">
-              <div class="grid grid-cols-2 gap-3 sm:gap-4">
-                <div
-                  v-for="opt in [{ key: 'true', label: 'Benar' }, { key: 'false', label: 'Salah' }]"
-                  :key="opt.key"
-                  :class="[
-                    userQuiz.answers && userQuiz.answers[question.id] === opt.key
-                      ? 'bg-primary/15 text-primary font-bold border-primary ring-1 ring-primary/30'
-                      : 'text-foreground border-border bg-card',
-                    'flex items-center justify-center px-4 py-3.5 sm:py-4 rounded-xl border-2 text-base sm:text-lg min-h-[52px]'
-                  ]"
-                >
-                  <CheckIcon
-                    class="shrink-0 w-5 h-5 mr-2"
-                    :class="[question.answer === opt.key ? 'text-primary font-bold' : 'opacity-0']"
-                  />
-                  <span>{{ opt.label }}</span>
-                </div>
-              </div>
-            </div>
+    <!-- ================================================================= -->
+    <!-- 2. COMPLETED QUIZ REVIEW MODE -->
+    <!-- ================================================================= -->
+    <div v-else-if="quiz && userQuiz && userQuiz.finished_at" class="space-y-6">
+      <h2 class="text-xl sm:text-2xl font-bold text-foreground text-center">{{ quiz.title }}</h2>
 
-            <!-- Multiple Choice Options Review List -->
-            <div v-else class="py-1 divide-y divide-border/60">
+      <!-- Celebratory Score Hero Banner -->
+      <div class="bg-gradient-to-br from-primary/10 via-primary/5 to-card rounded-3xl border border-primary/20 p-6 sm:p-8 text-center relative overflow-hidden">
+        <div class="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-3">
+          <Award class="w-8 h-8 stroke-[2.2]" />
+        </div>
+        <h3 class="text-xl sm:text-2xl font-bold text-foreground mb-1.5">Jazaakumullaah khoyran katsiiran</h3>
+        <p class="text-sm sm:text-base text-muted-foreground mb-4">Anda telah menyelesaikan kuis ini.</p>
+
+        <!-- Score Pill -->
+        <div class="inline-flex flex-col items-center justify-center bg-card rounded-2xl border border-border px-8 py-4">
+          <span class="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Nilai Anda</span>
+          <span class="text-4xl sm:text-5xl font-extrabold text-primary font-mono">{{ userQuiz.score }}</span>
+        </div>
+      </div>
+
+      <!-- Question Review Cards -->
+      <div class="space-y-5">
+        <h4 class="text-lg font-bold text-foreground">Pembahasan & Jawaban</h4>
+
+        <div
+          v-for="(question, index) in quiz.questions"
+          :key="question.id"
+          class="bg-card rounded-2xl border border-border overflow-hidden"
+        >
+          <!-- Question Header -->
+          <div class="bg-muted/50 flex items-stretch min-h-[52px] border-b border-border">
+            <div class="bg-primary/10 text-primary w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 border-r border-border/80">
+              {{ index + 1 }}
+            </div>
+            <div class="px-4 py-3.5 sm:py-4 flex items-center text-foreground font-semibold text-base sm:text-lg flex-1 leading-snug">
+              <div class="prose dark:prose-invert max-w-none text-foreground font-semibold text-base sm:text-lg" v-html="question.content"></div>
+            </div>
+          </div>
+
+          <!-- True/False Review (Side-by-side) -->
+          <div v-if="question.type === 'true_false'" class="p-4 sm:p-5">
+            <div class="grid grid-cols-2 gap-3 sm:gap-4">
               <div
-                v-for="option in getMultipleOptions(question)"
-                :key="option"
+                v-for="opt in [{ key: 'true', label: 'Benar' }, { key: 'false', label: 'Salah' }]"
+                :key="opt.key"
                 :class="[
-                  userQuiz.answers && userQuiz.answers[question.id] === option
-                    ? 'bg-primary/10 text-foreground font-semibold'
-                    : 'text-foreground',
-                  'flex items-start sm:items-center px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base'
+                  userQuiz.answers && userQuiz.answers[question.id] === opt.key
+                    ? 'bg-primary/15 text-primary font-bold border-primary ring-1 ring-primary/30'
+                    : 'text-foreground border-border bg-card',
+                  'flex items-center justify-center px-4 py-3.5 sm:py-4 rounded-xl border-2 text-base sm:text-lg min-h-[52px]'
                 ]"
               >
-                <div class="flex items-center mr-3 mt-0.5 sm:mt-0 shrink-0">
-                  <CheckIcon
-                    class="w-5 h-5"
-                    :class="[question.answer === option ? 'text-primary font-bold' : 'opacity-0']"
-                  />
-                </div>
-                <span class="mr-2 font-bold text-sm sm:text-base shrink-0">{{ option }}.</span>
-                <span class="text-sm sm:text-base leading-relaxed text-foreground flex-1">
-                  {{ question.details?.[`option_${option}`] || question.details?.[`option_${option} `] }}
-                </span>
+                <CheckIcon
+                  class="shrink-0 w-5 h-5 mr-2"
+                  :class="[question.answer === opt.key ? 'text-primary font-bold' : 'opacity-0']"
+                />
+                <span>{{ opt.label }}</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Back to Quizzes Navigation Button -->
-        <div class="pt-4 flex items-center justify-between">
-          <router-link
-            to="/quizzes"
-            class="inline-flex items-center gap-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border px-6 py-3 text-sm font-bold transition-all hover:scale-105 active:scale-95"
-          >
-            <ArrowLeft class="w-4 h-4" />
-            <span>Kembali ke Daftar Kuis</span>
-          </router-link>
+          <!-- Multiple Choice Options Review List -->
+          <div v-else class="py-1 divide-y divide-border/60">
+            <div
+              v-for="option in getMultipleOptions(question)"
+              :key="option"
+              :class="[
+                userQuiz.answers && userQuiz.answers[question.id] === option
+                  ? 'bg-primary/10 text-foreground font-semibold'
+                  : 'text-foreground',
+                'flex items-start sm:items-center px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base'
+              ]"
+            >
+              <div class="flex items-center mr-3 mt-0.5 sm:mt-0 shrink-0">
+                <CheckIcon
+                  class="w-5 h-5"
+                  :class="[question.answer === option ? 'text-primary font-bold' : 'opacity-0']"
+                />
+              </div>
+              <span class="mr-2 font-bold text-sm sm:text-base shrink-0">{{ option }}.</span>
+              <span class="text-sm sm:text-base leading-relaxed text-foreground flex-1">
+                {{ question.details?.[`option_${option}`] || question.details?.[`option_${option} `] }}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <LatePermissionDialog
+      v-model:open="requestDialogOpen"
+      type="quiz"
+      :item-id="currentItem?.id"
+      :item-label="currentItem?.title"
+      :closed-at="currentItem?.closes_at"
+      @submitted="loadData(true)"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { CheckIcon } from '@heroicons/vue/24/outline';
-import { Clock, CheckCircle2, Award, ArrowLeft } from 'lucide-vue-next';
+import {
+  Award,
+  BookOpen,
+  CalendarClock,
+  ChevronDown,
+  ChevronUp,
+  ClockAlert,
+  Hourglass,
+  Lock,
+  Send,
+} from 'lucide-vue-next';
 import parseISO from 'date-fns/parseISO';
 
-import { swAlert, swConfirm } from '@/utils';
-import { getMyQuiz, updateMyQuiz } from '@/api';
-import PageHeader from '@/components/PageHeader.vue';
+import { swAlert, swConfirm, shortDateTime } from '@/utils';
+import { getMyQuiz, listAllMyQuizzes, updateMyQuiz } from '@/api';
 import Countdown from '@/components/Countdown.vue';
+import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import QuestionCard from '@/components/QuestionCard.vue';
 
 const route = useRoute();
 const router = useRouter();
+
+// Dev server only: skip locks so locked quizzes can be opened.
+// Pairs with the backend's local-environment bypass in LearningAccess.
+const devUnlock = import.meta.env.MODE === 'development';
 
 const isLoading = ref(true);
 const isSubmitting = ref(false);
 const selected = ref({});
 const quiz = ref();
 const userQuiz = ref();
+const quizList = ref([]);
+const blockedMessage = ref(null);
+const requestDialogOpen = ref(false);
+
+const currentIndex = computed(() => quizList.value.findIndex((q) => String(q.id) === String(route.params.id)));
+const currentItem = computed(() => quizList.value[currentIndex.value]);
+
+// Checked from the list row before opening, since opening a quiz starts its timer.
+// Finished quizzes are always opened so their results stay viewable.
+const lockState = computed(() => {
+  const item = currentItem.value;
+  if (devUnlock || !item || item.finished_at) return null;
+  if (!item.is_open) return 'closed';
+  if (item.material_id && !item.material_read) return 'material';
+  return null;
+});
+
+const notYetOpen = computed(() => currentItem.value?.opens_at && new Date(currentItem.value.opens_at) > new Date());
+
+const lockTitle = computed(() => {
+  if (lockState.value === 'material') return 'Materi Belum Dibaca';
+  if (lockState.value === 'closed') return notYetOpen.value ? 'Belum Dibuka' : 'Waktu Habis';
+  return 'Kuis Tidak Dapat Dikerjakan';
+});
+
+const lockIcon = computed(() => {
+  if (lockState.value === 'material') return BookOpen;
+  if (lockState.value === 'closed' && !notYetOpen.value) return ClockAlert;
+  return Lock;
+});
 
 const totalQuestions = computed(() => quiz.value?.questions?.length || 0);
 
@@ -298,60 +324,52 @@ const answeredCount = computed(() => {
   return quiz.value.questions.filter((q) => selected.value[q.id] !== undefined && selected.value[q.id] !== '').length;
 });
 
-const progressPercentage = computed(() => {
-  if (totalQuestions.value === 0) return 0;
-  return Math.round((answeredCount.value / totalQuestions.value) * 100);
-});
-
-async function loadData() {
+async function loadData(refreshList = false) {
   isLoading.value = true;
+  blockedMessage.value = null;
+  quiz.value = null;
+  userQuiz.value = null;
+  selected.value = {};
   try {
+    if (refreshList || quizList.value.length === 0) {
+      quizList.value = await listAllMyQuizzes();
+    }
+    if (lockState.value) return;
+
     const data = await getMyQuiz(route.params.id);
 
-    // The quiz may be locked by its schedule or by an unread material
+    // The backend may still refuse (schedule or unread material)
     if (!data.success) {
-      return showBlocked(data.message);
+      blockedMessage.value = data.message || 'Kuis ini tidak dapat dikerjakan saat ini.';
+      return;
     }
 
     quiz.value = data.data.quiz;
     userQuiz.value = data.data.user_quiz;
   } catch (error) {
-    showBlocked('Terjadi kesalahan saat memuat kuis.');
+    blockedMessage.value = 'Terjadi kesalahan saat memuat kuis.';
   } finally {
     isLoading.value = false;
   }
 }
 loadData();
+watch(() => route.params.id, (id) => id && loadData());
 
-async function showBlocked(message) {
-  await swAlert({
-    icon: 'warning',
-    title: 'Mohon Maaf',
-    text: message || 'Kuis ini tidak dapat dikerjakan saat ini.',
-    buttonText: 'Kembali',
-  });
-  router.push('/quizzes');
-}
+async function goToQuiz(position) {
+  const target = quizList.value[Number(position) - 1];
+  if (!target) return;
 
-function scrollToQuestion(index) {
-  const el = document.getElementById(`question-${index + 1}`);
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-async function handleBackNavigation() {
   if (userQuiz.value && !userQuiz.value.finished_at) {
     const res = await swConfirm({
       title: 'Tinggalkan Kuis?',
-      text: 'Waktu kuis akan terus berjalan jika Anda keluar. Yakin ingin kembali ke daftar kuis?',
-      confirmButtonText: 'Ya, Keluar',
+      text: 'Waktu kuis akan terus berjalan jika Anda pindah. Yakin ingin membuka kuis lain?',
+      confirmButtonText: 'Ya, Pindah',
       cancelButtonText: 'Lanjutkan Kuis',
       icon: 'warning',
     });
     if (!res.isConfirmed) return;
   }
-  router.push('/quizzes');
+  router.push({ name: 'quizzes.show', params: { id: target.id } });
 }
 
 async function confirmSubmit() {
@@ -383,10 +401,12 @@ async function submitAnswers() {
     const data = await updateMyQuiz(route.params.id, selected.value);
 
     if (!data.success) {
-      return showBlocked(data.message);
+      blockedMessage.value = data.message || 'Kuis ini tidak dapat dikumpulkan.';
+      return;
     }
 
-    router.push('/quizzes');
+    // Reload into review mode (score + Jazaakumullaah banner)
+    await loadData(true);
   } catch (error) {
     await swAlert({
       icon: 'warning',
@@ -416,22 +436,22 @@ let warningSoundPlayed = false;
 function playWarningSound() {
   if (warningSoundPlayed) return;
   warningSoundPlayed = true;
-  
+
   try {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
     const ctx = new AudioContextClass();
-    
+
     for(let i=0; i<3; i++) {
       const osc = ctx.createOscillator();
       const gainNode = ctx.createGain();
       osc.connect(gainNode);
       gainNode.connect(ctx.destination);
-      
+
       osc.type = 'sine';
       osc.frequency.setValueAtTime(800, ctx.currentTime + (i * 0.5));
       gainNode.gain.setValueAtTime(0.1, ctx.currentTime + (i * 0.5));
-      
+
       osc.start(ctx.currentTime + (i * 0.5));
       osc.stop(ctx.currentTime + (i * 0.5) + 0.2);
     }

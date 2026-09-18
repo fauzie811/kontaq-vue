@@ -594,7 +594,7 @@ const CertificatesIcon = FEATURES.certificates.icon;
 const HelpIcon = FEATURES.help.icon;
 
 // Pages with their own navigation hide the tab menu and mobile bottom nav.
-const showMainMenu = computed(() => !['infaq', 'quran.show'].includes(route.name));
+const showMainMenu = computed(() => !['infaq', 'quran.show', 'quizzes', 'quizzes.show', 'evaluations', 'evaluations.show', 'reports'].includes(route.name));
 
 const navTabs = [
   { name: 'Tadabbur', route: 'tadabbur', icon: FEATURES.tadabbur.icon },

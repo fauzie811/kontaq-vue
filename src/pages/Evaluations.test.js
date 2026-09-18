@@ -1,132 +1,52 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mount, flushPromises } from '@vue/test-utils';
 import Evaluations from '@/pages/Evaluations.vue';
 import * as api from '@/api';
 
 vi.mock('@/api', () => ({
-  listMyEvaluations: vi.fn(),
+  listAllMyEvaluations: vi.fn(),
 }));
 
-const NOW = new Date('2026-11-10T09:00:00+07:00');
+const replace = vi.fn();
+vi.mock('vue-router', () => ({
+  useRouter: () => ({ replace }),
+}));
 
-const evaluation = (overrides = {}) => ({
-  id: 1,
-  title: 'Evaluasi Pekan 1',
-  duration: 60,
-  week: 1,
-  started_at: null,
-  finished_at: null,
-  opens_at: '2026-11-06T16:00:00+07:00',
-  closes_at: '2026-11-08T14:00:00+07:00',
-  is_open: false,
-  can_request_late_permission: true,
-  late_permission_status: null,
-  late_permission_expires_at: null,
-  late_permission_review_note: null,
-  ...overrides,
-});
+const evaluation = (id, overrides = {}) => ({ id, is_open: false, finished_at: null, ...overrides });
 
-function mountPage(rows, availableWeeks = [1, 26, 27, 86]) {
-  api.listMyEvaluations.mockResolvedValue({
-    data: { data: rows, total: rows.length, from: 1, to: rows.length, current_page: 1, last_page: 1 },
-    available_weeks: availableWeeks,
-  });
-
-  return mount(Evaluations, {
-    global: {
-      stubs: {
-        routerLink: { template: '<a><slot /></a>' },
-        PageHeader: true,
-        Pagination: true,
-        WeekPicker: {
-          props: ['modelValue', 'weeks', 'showAllOption'],
-          template: '<div data-test="week-picker" :data-weeks="JSON.stringify(weeks)"></div>',
-        },
-        LatePermissionDialog: true,
-      },
-    },
-  });
+async function mountWith(rows) {
+  api.listAllMyEvaluations.mockResolvedValue(rows);
+  const wrapper = mount(Evaluations);
+  await flushPromises();
+  return wrapper;
 }
 
-describe('Evaluations.vue schedule locking', () => {
+describe('Evaluations.vue default evaluation redirect', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers();
-    vi.setSystemTime(NOW);
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it('offers a late request once the window has closed', async () => {
-    const wrapper = mountPage([evaluation()]);
-    await flushPromises();
-
-    expect(wrapper.text()).toContain('6 Nov 2026');
-    expect(wrapper.text()).toContain('Waktu Habis');
-    expect(wrapper.text()).toContain('Ajukan Izin Telat');
-  });
-
-  it('locks an evaluation that has not opened yet without offering a request', async () => {
-    const wrapper = mountPage([
-      evaluation({
-        opens_at: '2026-11-13T16:00:00+07:00',
-        closes_at: '2026-11-15T14:00:00+07:00',
-        can_request_late_permission: false,
-      }),
+  it('opens the first open, unfinished evaluation', async () => {
+    await mountWith([
+      evaluation(1, { is_open: true, finished_at: '2026-11-01' }),
+      evaluation(2),
+      evaluation(3, { is_open: true }),
+      evaluation(4, { is_open: true }),
     ]);
-    await flushPromises();
 
-    expect(wrapper.text()).toContain('Belum Dibuka');
-    expect(wrapper.text()).not.toContain('Ajukan Izin Telat');
+    expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: 3 } });
   });
 
-  it('reports a request that is still being reviewed', async () => {
-    const wrapper = mountPage([
-      evaluation({ can_request_late_permission: false, late_permission_status: 'pending' }),
-    ]);
-    await flushPromises();
+  it('falls back to the latest quiz when none is workable', async () => {
+    await mountWith([evaluation(1), evaluation(2, { finished_at: '2026-11-01' })]);
 
-    expect(wrapper.text()).toContain('Menunggu Persetujuan');
-    expect(wrapper.text()).toContain('sedang ditinjau admin');
+    expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: 2 } });
   });
 
-  it('unlocks the evaluation once permission is approved', async () => {
-    const wrapper = mountPage([
-      evaluation({
-        is_open: true,
-        can_request_late_permission: false,
-        late_permission_status: 'approved',
-        late_permission_expires_at: '2026-11-17T17:00:00+07:00',
-      }),
-    ]);
-    await flushPromises();
+  it('shows an empty state when there are no evaluations', async () => {
+    const wrapper = await mountWith([]);
 
-    expect(wrapper.text()).toContain('Izin telat berlaku sampai 17 Nov 2026');
-    expect(wrapper.text()).toContain('Mulai Evaluasi');
-    expect(wrapper.text()).not.toContain('Waktu Habis');
-  });
-
-  it('leaves an open evaluation untouched by the lock states', async () => {
-    const wrapper = mountPage([
-      evaluation({ is_open: true, can_request_late_permission: false }),
-    ]);
-    await flushPromises();
-
-    expect(wrapper.text()).toContain('Belum dikerjakan');
-    expect(wrapper.text()).toContain('Mulai Evaluasi');
-    expect(wrapper.text()).not.toContain('Waktu Habis');
-    expect(wrapper.text()).not.toContain('Belum Dibuka');
-  });
-
-  it('passes all available weeks from the API to the WeekPicker', async () => {
-    const availableWeeks = [1, 26, 27, 86];
-    const wrapper = mountPage([evaluation()], availableWeeks);
-    await flushPromises();
-
-    const picker = wrapper.find('[data-test="week-picker"]');
-    expect(picker.exists()).toBe(true);
-    expect(picker.attributes('data-weeks')).toBe(JSON.stringify(availableWeeks));
+    expect(replace).not.toHaveBeenCalled();
+    expect(wrapper.text()).toContain('Belum Ada Evaluasi');
   });
 });

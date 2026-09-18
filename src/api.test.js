@@ -6,9 +6,10 @@ import {
   listAnnouncements,
   listMyMaterials,
   listMyQuizzes,
+  listAllMyQuizzes,
   listMyEvaluations,
+  listAllMyEvaluations,
   getReports,
-  updateReport,
   listMyLatePermissions,
   requestLatePermission,
 } from './api';
@@ -89,28 +90,13 @@ describe('API Helper Functions', () => {
   });
 
   describe('getReports', () => {
-    it('should fetch report with week payload', async () => {
+    it('should fetch report with mode and number payload', async () => {
       const mockReport = { data: { quizzes: [], items: [] } };
       axios.post.mockResolvedValueOnce({ data: mockReport });
 
-      const res = await getReports(3);
-      expect(axios.post).toHaveBeenCalledWith('me/group/report', { week: 3 });
+      const res = await getReports({ mode: 'juz', number: 3 });
+      expect(axios.post).toHaveBeenCalledWith('me/group/report', { mode: 'juz', number: 3 });
       expect(res).toEqual(mockReport);
-    });
-  });
-
-  describe('updateReport', () => {
-    it('should post update report with week and scores payload', async () => {
-      const mockResult = { message: 'Updated' };
-      axios.post.mockResolvedValueOnce({ data: mockResult });
-
-      const res = await updateReport({ user_id: 5, week: 3, scores: { quiz_1: 100 } });
-      expect(axios.post).toHaveBeenCalledWith('me/group/update-report', {
-        user_id: 5,
-        week: 3,
-        scores: { quiz_1: 100 },
-      });
-      expect(res).toEqual(mockResult);
     });
   });
 
@@ -161,6 +147,31 @@ describe('API Helper Functions', () => {
       await expect(
         requestLatePermission({ type: 'quiz', id: 1, reason: 'terlambat sekali' })
       ).rejects.toBe('Waktu pengerjaan belum berakhir.');
+    });
+  });
+
+  describe('listAllMyQuizzes', () => {
+    it('merges every page of quizzes in order', async () => {
+      axios.get
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 1 }], current_page: 1, last_page: 2 } } })
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 } } });
+
+      const res = await listAllMyQuizzes();
+      expect(axios.get).toHaveBeenCalledTimes(2);
+      expect(axios.get).toHaveBeenLastCalledWith('me/quizzes', { params: { page: 2, week: null } });
+      expect(res).toEqual([{ id: 1 }, { id: 2 }]);
+    });
+  });
+
+  describe('listAllMyEvaluations', () => {
+    it('merges every page of evaluations in order', async () => {
+      axios.get
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 1 }], current_page: 1, last_page: 2 } } })
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 } } });
+
+      const res = await listAllMyEvaluations();
+      expect(axios.get).toHaveBeenLastCalledWith('me/evaluations', { params: { page: 2, week: null } });
+      expect(res).toEqual([{ id: 1 }, { id: 2 }]);
     });
   });
 });

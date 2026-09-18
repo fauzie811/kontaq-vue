@@ -220,22 +220,9 @@ export const updateMyMaterial = async (id) => {
   }
 };
 
-export const getReports = async (week) => {
+export const getReports = async ({ mode = 'weekly', number }) => {
   try {
-    const { data } = await axios.post('me/group/report', { week });
-    return data;
-  } catch (e) {
-    throw e;
-  }
-};
-
-export const updateReport = async ({ user_id, week, scores }) => {
-  try {
-    const { data } = await axios.post('me/group/update-report', {
-      user_id,
-      week,
-      scores,
-    });
+    const { data } = await axios.post('me/group/report', { mode, number });
     return data;
   } catch (e) {
     throw e;
@@ -271,6 +258,22 @@ export const listMyQuizzes = async ({ page = 1, week = null }) => {
   }
 };
 
+// Every row across all pages, in list order (the quiz/evaluation page stepper needs them all).
+const listAllPages = async (listPage) => {
+  const all = [];
+  let page = 1;
+  let lastPage = 1;
+  do {
+    const res = await listPage({ page });
+    all.push(...(res.data?.data || []));
+    lastPage = res.data?.last_page || 1;
+    page++;
+  } while (page <= lastPage);
+  return all;
+};
+
+export const listAllMyQuizzes = () => listAllPages(listMyQuizzes);
+
 export const getMyQuiz = async (id) => {
   try {
     const { data } = await axios.get(`me/quizzes/${id}`);
@@ -299,6 +302,8 @@ export const listMyEvaluations = async ({ page = 1, week = null }) => {
     throw e;
   }
 };
+
+export const listAllMyEvaluations = () => listAllPages(listMyEvaluations);
 
 export const getMyEvaluation = async (id) => {
   try {

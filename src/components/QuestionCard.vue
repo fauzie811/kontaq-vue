@@ -1,18 +1,18 @@
 <template>
   <div
     :id="'question-' + (index + 1)"
-    class="scroll-mt-24 sm:scroll-mt-28 bg-card rounded-2xl border border-border overflow-hidden mb-5 sm:mb-6 transition-all duration-200"
+    class="scroll-mt-24 sm:scroll-mt-28 mb-8 sm:mb-10"
   >
     <!-- Question Header Bar -->
-    <div class="bg-muted/50 flex items-stretch min-h-[52px] border-b border-border">
+    <div class="bg-[#ebebeb] dark:bg-muted flex items-stretch min-h-[52px] mb-2">
       <!-- Question Number Badge -->
-      <div class="bg-primary/10 text-primary w-12 sm:w-14 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 border-r border-border/80">
+      <div class="bg-[#d9f5e7] dark:bg-primary/15 text-primary w-12 sm:w-16 flex items-center justify-center font-bold text-lg sm:text-xl shrink-0">
         {{ index + 1 }}
       </div>
 
       <!-- Question Content -->
-      <div class="px-4 py-3.5 sm:py-4 flex items-center text-foreground font-semibold text-base sm:text-lg flex-1 leading-snug">
-        <div class="prose dark:prose-invert max-w-none text-foreground font-semibold text-base sm:text-lg" v-html="question.content"></div>
+      <div class="px-4 py-3.5 sm:py-4 flex items-center text-foreground font-medium text-base sm:text-lg flex-1 leading-snug">
+        <div class="prose dark:prose-invert max-w-none text-foreground font-medium text-base sm:text-lg" v-html="question.content"></div>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
     <!-- Multiple Choice Options List -->
     <div v-else class="py-1">
       <RadioGroup :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
-        <div class="divide-y divide-border/60">
+        <div class="space-y-1 sm:pl-12">
           <RadioGroupOption
             v-for="optKey in multipleOptions"
             :key="optKey"
@@ -64,7 +64,7 @@
             <div
               :class="[
                 checked
-                  ? 'bg-primary/10 text-foreground font-medium'
+                  ? 'bg-gradient-to-r from-[#b8f0d8] to-[#e4f2f8] dark:from-primary/25 dark:to-primary/5 text-foreground font-medium'
                   : 'hover:bg-muted/40 text-foreground',
                 'flex items-start sm:items-center px-4 sm:px-6 py-3.5 sm:py-4 cursor-pointer transition-colors duration-150 select-none text-sm sm:text-base active:bg-primary/15'
               ]"
