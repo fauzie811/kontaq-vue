@@ -122,12 +122,7 @@
       />
 
       <!-- Material Content Card -->
-      <article
-        :class="[
-          'overflow-hidden bg-card text-card-foreground border border-border rounded-2xl transition-all',
-          fontClass,
-        ]"
-      >
+      <article class="overflow-hidden bg-card text-card-foreground border border-border rounded-2xl transition-all">
         <div class="px-5 py-6 sm:p-8 lg:p-10">
           <div
             class="prose prose-neutral dark:prose-invert max-w-none text-foreground/90 leading-relaxed sm:leading-loose [&_p]:mb-4 [&_p:last-child]:mb-0 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-foreground [&_h1]:mt-6 [&_h1]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-foreground [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-foreground [&_h3]:mt-5 [&_h3]:mb-2 [&_blockquote]:border-l [&_blockquote]:border-primary/60 [&_blockquote]:bg-secondary/30 [&_blockquote]:rounded-r-xl [&_blockquote]:py-2.5 [&_blockquote]:px-4 [&_blockquote]:my-4 [&_blockquote]:italic [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-3 [&_li]:mb-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-3 [&_a]:text-primary [&_a]:underline [&_a]:font-medium hover:[&_a]:text-primary/80 [&_strong]:text-foreground [&_strong]:font-semibold"
@@ -208,7 +203,6 @@ import {
   ArrowLeft,
 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
-import useLocalStorage from '@/plugins/localStorage';
 import { getMyMaterial, updateMyMaterial } from '@/api';
 import { shortDateTime, stripTags } from '@/utils';
 import PageHeader from '@/components/PageHeader.vue';
@@ -216,18 +210,11 @@ import MaterialRelatedVerses from '@/components/MaterialRelatedVerses.vue';
 
 const route = useRoute();
 const router = useRouter();
-const font = useLocalStorage('font-family', 'sans');
 
 const material = ref(null);
 const loading = ref(true);
 const error = ref(null);
 const isSubmitting = ref(false);
-
-const fontClass = computed(() => {
-  if (font.value === 'arial') return 'font-arial';
-  if (font.value === 'times') return 'font-times';
-  return 'font-sans';
-});
 
 const materialVerses = computed(() => {
   if (!material.value) return [];
