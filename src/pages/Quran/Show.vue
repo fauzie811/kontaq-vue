@@ -71,11 +71,7 @@
 
     <div v-else-if="chapterDetails">
       <!-- Surah Header Banner -->
-      <div class="bg-card border border-border rounded-2xl p-4 sm:p-6 mb-8 relative overflow-hidden text-card-foreground">
-        <div class="absolute -right-8 -bottom-8 opacity-5 select-none pointer-events-none text-foreground">
-          <SurahName :chapter="chapterDetails.number" customClass="text-9xl" />
-        </div>
-
+      <div class="p-4 sm:p-6 mb-8 relative overflow-hidden">
         <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
           <div>
             <div class="inline-flex items-center gap-2 bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs font-semibold mb-3 border border-border">
@@ -101,7 +97,7 @@
       </div>
 
       <!-- Quran Content Card: Bismillah + all verses -->
-      <div class="bg-card text-card-foreground border border-border rounded-2xl divide-y divide-border/60">
+      <div class="divide-y divide-border">
         <!-- Bismillah (Show if not Surah At-Tawbah #9) -->
         <div
           v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"

@@ -94,7 +94,7 @@ describe('MaterialRelatedVerses.vue', () => {
     });
 
     // Verify there are no actions dropdown / copy / play elements
-    expect(wrapper.text()).not.toContain('Putar Audio');
+    expect(wrapper.text()).not.toContain('Putar Ayat');
     expect(wrapper.text()).not.toContain('Salin Ayat');
     expect(wrapper.text()).not.toContain('Tadabbur');
     expect(wrapper.find('button[title="Opsi Ayat"]').exists()).toBe(false);

@@ -3,92 +3,65 @@
     :id="`verse-${verse.verse}`"
     :data-verse="verse.verse"
     :class="[
-      'px-4 py-5 sm:px-6 sm:py-6 border-l-4 transition-colors duration-300 first:rounded-t-2xl last:rounded-b-2xl',
-      isActive
-        ? 'border-l-accent/60 bg-accent/5'
-        : isTargeted
-          ? 'border-l-primary/60 bg-primary/5'
-          : 'border-l-transparent',
+      'flex items-start gap-2.5 px-4 py-5 sm:px-6 sm:py-6 transition-colors duration-300 first:rounded-t-2xl last:rounded-b-2xl',
+      isActive ? 'bg-accent/5' : isTargeted ? 'bg-primary/5' : '',
     ]"
   >
-    <!-- Verse Header -->
-    <div
-      class="flex items-center justify-start gap-2.5"
-    >
-      <!-- Actions Dropdown (3-dots) -->
-      <Menu as="div" class="relative">
-        <MenuButton
-          title="Opsi Ayat"
-          class="p-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground rounded-full transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary/20"
-        >
-          <MoreVertical class="w-4 h-4" />
-        </MenuButton>
+    <!-- Actions Dropdown (3-dots) -->
+    <Menu as="div" class="relative shrink-0">
+      <MenuButton
+        title="Opsi Ayat"
+        class="p-2 transition cursor-pointer min-w-[36px] min-h-[36px] inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary/20"
+      >
+        <MoreVertical class="w-5 h-5" />
+      </MenuButton>
 
-        <transition
-          enter-active-class="transition duration-250 ease-out"
-          enter-from-class="transform scale-[0.97] opacity-0"
-          enter-to-class="transform scale-100 opacity-100"
-          leave-active-class="transition duration-150 ease-in"
-          leave-from-class="transform scale-100 opacity-100"
-          leave-to-class="transform scale-[0.99] opacity-0"
+      <transition
+        enter-active-class="transition duration-250 ease-out"
+        enter-from-class="transform scale-[0.97] opacity-0"
+        enter-to-class="transform scale-100 opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="transform scale-100 opacity-100"
+        leave-to-class="transform scale-[0.99] opacity-0"
+      >
+        <MenuItems
+          class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-2xl bg-popover text-popover-foreground p-1.5 border border-border focus:outline-none space-y-0.5"
         >
-          <MenuItems
-            class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-2xl bg-popover text-popover-foreground p-1.5 border border-border focus:outline-none space-y-0.5"
-          >
-            <!-- Play / Pause Audio -->
-            <MenuItem v-slot="{ active }">
-              <button
-                @click="$emit('play-verse', verse)"
-                :class="[
-                  active
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'text-foreground',
-                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
-                ]"
-              >
-                <Pause
-                  v-if="isActive && isPlaying"
-                  class="w-4 h-4 text-primary fill-primary"
-                />
-                <Play
-                  v-else-if="isActive"
-                  class="w-4 h-4 text-primary fill-primary ml-0.5"
-                />
-                <Volume2 v-else class="w-4 h-4 text-muted-foreground" />
-                <span>{{
-                  isActive && isPlaying ? 'Jeda Audio' : 'Putar Audio'
-                }}</span>
-              </button>
-            </MenuItem>
+          <!-- Play / Pause Audio -->
+          <MenuItem v-slot="{ active }">
+            <button
+              @click="$emit('play-verse', verse)"
+              :class="[
+                active
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'text-foreground',
+                'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
+              ]"
+            >
+              <Pause
+                v-if="isActive && isPlaying"
+                class="w-4 h-4 text-primary fill-primary"
+              />
+              <Play
+                v-else-if="isActive"
+                class="w-4 h-4 text-primary fill-primary ml-0.5"
+              />
+              <Volume2 v-else class="w-4 h-4 text-muted-foreground" />
+              <span>{{
+                isActive && isPlaying ? 'Jeda Audio' : 'Putar Ayat'
+              }}</span>
+            </button>
+          </MenuItem>
 
-            <!-- Go to Related Material (Tadabbur) -->
-            <template v-if="hasMaterials">
-              <MenuItem
-                v-for="mat in materialsList"
-                :key="mat.id"
-                v-slot="{ active }"
-              >
-                <button
-                  @click="goToMaterial(mat)"
-                  :class="[
-                    active
-                      ? 'bg-secondary text-secondary-foreground'
-                      : 'text-foreground',
-                    'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
-                  ]"
-                >
-                  <BookOpen class="w-4 h-4 text-primary shrink-0" />
-                  <span class="truncate">{{
-                    materialsList.length > 1
-                      ? `Tadabbur: ${mat.title || ('Pekan ' + mat.week)}`
-                      : 'Tadabbur'
-                  }}</span>
-                </button>
-              </MenuItem>
-            </template>
-            <MenuItem v-else v-slot="{ active }">
+          <!-- Go to Related Material (Tadabbur) -->
+          <template v-if="hasMaterials">
+            <MenuItem
+              v-for="mat in materialsList"
+              :key="mat.id"
+              v-slot="{ active }"
+            >
               <button
-                @click="showNoMaterialAlert"
+                @click="goToMaterial(mat)"
                 :class="[
                   active
                     ? 'bg-secondary text-secondary-foreground'
@@ -97,96 +70,110 @@
                 ]"
               >
                 <BookOpen class="w-4 h-4 text-primary shrink-0" />
-                <span class="truncate">Tadabbur</span>
-              </button>
-            </MenuItem>
-
-            <!-- Toggle Footnote (If available) -->
-            <MenuItem v-if="verse.footnotes" v-slot="{ active }">
-              <button
-                @click="showFootnotes = !showFootnotes"
-                :class="[
-                  active
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'text-foreground',
-                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
-                ]"
-              >
-                <FileText class="w-4 h-4 text-primary" />
-                <span>{{
-                  showFootnotes ? 'Sembunyikan Catatan' : 'Lihat Catatan Kaki'
+                <span class="truncate">{{
+                  materialsList.length > 1
+                    ? `Tadabbur: ${mat.title || ('Pekan ' + mat.week)}`
+                    : 'Tadabbur'
                 }}</span>
               </button>
             </MenuItem>
+          </template>
+          <MenuItem v-else v-slot="{ active }">
+            <button
+              @click="showNoMaterialAlert"
+              :class="[
+                active
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'text-foreground',
+                'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
+              ]"
+            >
+              <BookOpen class="w-4 h-4 text-primary shrink-0" />
+              <span class="truncate">Tadabbur</span>
+            </button>
+          </MenuItem>
 
-            <!-- Copy Verse -->
-            <MenuItem v-slot="{ active }">
-              <button
-                @click="$emit('copy-verse', verse)"
-                :class="[
-                  active
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'text-foreground',
-                  'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
-                ]"
-              >
-                <Check v-if="isCopied" class="w-4 h-4 text-primary" />
-                <Copy v-else class="w-4 h-4 text-muted-foreground" />
-                <span>{{ isCopied ? 'Tersalin!' : 'Salin Ayat' }}</span>
-              </button>
-            </MenuItem>
-          </MenuItems>
-        </transition>
-      </Menu>
+          <!-- Toggle Footnote (If available) -->
+          <MenuItem v-if="verse.footnotes" v-slot="{ active }">
+            <button
+              @click="showFootnotes = !showFootnotes"
+              :class="[
+                active
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'text-foreground',
+                'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
+              ]"
+            >
+              <FileText class="w-4 h-4 text-primary" />
+              <span>{{
+                showFootnotes ? 'Sembunyikan Catatan' : 'Lihat Catatan Kaki'
+              }}</span>
+            </button>
+          </MenuItem>
 
-      <div class="flex items-center gap-2.5">
-        <span class="text-xs text-muted-foreground font-medium">
-          QS {{ chapterDetails?.latin }}: {{ verse.verse }}
-        </span>
+          <!-- Copy Verse -->
+          <MenuItem v-slot="{ active }">
+            <button
+              @click="$emit('copy-verse', verse)"
+              :class="[
+                active
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'text-foreground',
+                'w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-xl transition cursor-pointer',
+              ]"
+            >
+              <Check v-if="isCopied" class="w-4 h-4 text-primary" />
+              <Copy v-else class="w-4 h-4 text-muted-foreground" />
+              <span>{{ isCopied ? 'Tersalin!' : 'Salin Ayat' }}</span>
+            </button>
+          </MenuItem>
+        </MenuItems>
+      </transition>
+    </Menu>
+
+    <div class="flex-1 min-w-0">
+      <!-- Arabic Text -->
+      <div class="py-2 text-right dir-rtl">
+        <p
+          class="font-quran text-xl sm:text-2xl lg:text-3xl text-foreground leading-[2.2]"
+        >
+          {{ verse.text }}&nbsp;<QuranVerseNumber :number="verse.verse" />
+        </p>
       </div>
-    </div>
 
-    <!-- Arabic Text -->
-    <div class="py-2 text-right dir-rtl">
+      <!-- Transliteration -->
       <p
-        class="font-quran text-xl sm:text-2xl lg:text-3xl text-foreground leading-[2.2]"
+        v-if="verse.transliteration"
+        class="text-primary sm:text-lg leading-relaxed"
       >
-        {{ verse.text }}&nbsp;<QuranVerseNumber :number="verse.verse" />
+        {{ verse.transliteration }}
       </p>
-    </div>
 
-    <!-- Transliteration -->
-    <p
-      v-if="verse.transliteration"
-      class="text-primary leading-relaxed"
-    >
-      {{ verse.transliteration }}
-    </p>
+      <!-- Indonesian Translation with Formatted Footnote Markers -->
+      <p
+        class="text-foreground/90 sm:text-lg leading-relaxed"
+        v-html="formattedTranslation"
+      ></p>
 
-    <!-- Indonesian Translation with Formatted Footnote Markers -->
-    <p
-      class="text-foreground/90 text-sm sm:text-base leading-relaxed"
-      v-html="formattedTranslation"
-    ></p>
-
-    <!-- Footnotes Drawer -->
-    <div
-      v-if="verse.footnotes && showFootnotes"
-      class="bg-secondary/60 border border-border rounded-2xl p-4 text-xs text-foreground leading-relaxed space-y-1.5 transition-all mt-3"
-    >
+      <!-- Footnotes Drawer -->
       <div
-        class="flex items-center gap-1.5 font-bold text-primary text-xs mb-1"
+        v-if="verse.footnotes && showFootnotes"
+        class="bg-secondary/60 border border-border rounded-2xl p-4 text-xs text-foreground leading-relaxed space-y-1.5 transition-all mt-3"
       >
-        <FileText class="w-3.5 h-3.5 text-primary" />
-        <span>Catatan Kaki:</span>
+        <div
+          class="flex items-center gap-1.5 font-bold text-primary text-xs mb-1"
+        >
+          <FileText class="w-3.5 h-3.5 text-primary" />
+          <span>Catatan Kaki:</span>
+        </div>
+        <p
+          v-for="(line, idx) in footnoteLines"
+          :key="idx"
+          class="text-muted-foreground leading-relaxed pl-2 border-l-2 border-primary/50"
+        >
+          {{ line }}
+        </p>
       </div>
-      <p
-        v-for="(line, idx) in footnoteLines"
-        :key="idx"
-        class="text-muted-foreground leading-relaxed pl-2 border-l-2 border-primary/50"
-      >
-        {{ line }}
-      </p>
     </div>
   </div>
 </template>

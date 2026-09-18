@@ -35,7 +35,6 @@ describe('QuranVerseItem.vue', () => {
       },
     });
 
-    expect(wrapper.text()).toContain('QS Al-Fatihah: 1');
     expect(wrapper.text()).toContain('Bismillāhir-raḥmānir-raḥīm');
     expect(wrapper.text()).toContain('Dengan nama Allah Yang Maha Pengasih');
 

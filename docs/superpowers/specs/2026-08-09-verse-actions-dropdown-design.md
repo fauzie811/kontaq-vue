@@ -27,7 +27,7 @@ Currently, each verse card displays multiple individual action buttons in the he
    - Items:
      - **Putar / Jeda Audio**:
        - Icon: Dynamic (`Pause` if active and playing, `Play` if active and paused, `Volume2` if inactive).
-       - Label: "Jeda Audio" if active and playing, "Putar Audio" otherwise.
+       - Label: "Jeda Audio" if active and playing, "Putar Ayat" otherwise.
        - Triggers: `$emit('play-verse', verse)`.
      - **Catatan Kaki** (rendered only when `verse.footnotes` exists):
        - Icon: `FileText`.
@@ -44,7 +44,7 @@ Currently, each verse card displays multiple individual action buttons in the he
 1. Open any Quran surah page (e.g. `/quran/1`).
 2. Verify that each verse card header displays a 3-dots icon button instead of separate action buttons.
 3. Click the 3-dots icon button to open the dropdown menu.
-4. Test clicking **Putar Audio** / **Jeda Audio**: confirm audio plays/pauses and icon/label updates.
+4. Test clicking **Putar Ayat** / **Jeda Audio**: confirm audio plays/pauses and icon/label updates.
 5. Test clicking **Catatan Kaki** (on verses with footnotes): confirm footnote drawer toggles open/closed.
 6. Test clicking **Salin Ayat**: confirm verse text is copied to clipboard and visual feedback ("Tersalin!") displays.
 7. Verify clicking outside closes the dropdown menu cleanly.

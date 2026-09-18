@@ -72,7 +72,7 @@ Replace the action buttons block inside `<div class="flex items-center gap-1.5">
           <Pause v-if="isActive && isPlaying" class="w-4 h-4 text-emerald-600 fill-emerald-600" />
           <Play v-else-if="isActive" class="w-4 h-4 text-emerald-600 fill-emerald-600 ml-0.5" />
           <Volume2 v-else class="w-4 h-4 text-gray-500" />
-          <span>{{ isActive && isPlaying ? 'Jeda Audio' : 'Putar Audio' }}</span>
+          <span>{{ isActive && isPlaying ? 'Jeda Audio' : 'Putar Ayat' }}</span>
         </button>
       </MenuItem>
 

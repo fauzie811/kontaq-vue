@@ -140,13 +140,10 @@ describe('Quran/Show.vue', () => {
     expect(api.getQuranChapterVerses).toHaveBeenCalledWith(2, 1);
     expect(api.getQuranChapterVerses).toHaveBeenCalledWith(2, 2);
 
-    // Verify verse 25 is rendered in the list
-    expect(wrapper.text()).toContain('QS Al-Baqarah: 25');
-
     // Verify verse 25 has targeted styling or is highlighted
     const verse25El = wrapper.find('#verse-25');
     expect(verse25El.exists()).toBe(true);
-    expect(verse25El.classes()).toContain('border-l-primary/60');
+    expect(verse25El.classes()).toContain('bg-primary/5');
   });
 
   it('renders error state and handles retry button', async () => {
