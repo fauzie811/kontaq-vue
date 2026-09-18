@@ -20,20 +20,17 @@
         :is="item.route ? 'router-link' : 'button'"
         :to="getRouteLocation(item)"
         @click="!item.route && navigateMenu(item)"
-        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border-2 border-border bg-card hover:bg-secondary/50 text-foreground hover:border-primary/40 rounded-full transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring active:scale-[0.98] text-left"
+        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border border-primary bg-card hover:bg-primary/5 text-primary rounded-full transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring active:scale-[0.98] text-left"
       >
         <div class="flex items-center gap-3 sm:gap-4">
-          <!-- Color Accented Icon Container -->
-          <div :class="['w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110', item.iconBg]">
-            <component :is="item.icon" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
-          </div>
-          <span class="text-foreground font-bold text-base sm:text-lg tracking-wide group-hover:text-primary transition-colors">
+          <Sparkle class="w-6 h-6 sm:w-7 sm:h-7 shrink-0 text-accent fill-current stroke-0 transition-transform duration-200 group-hover:scale-110" />
+          <span class="text-primary font-bold text-base sm:text-lg tracking-wide">
             {{ item.title }}
           </span>
         </div>
 
         <!-- Right Chevron Indicator -->
-        <ChevronRight class="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1.5 transition-all duration-200 shrink-0 ml-2" />
+        <ChevronRight class="w-5 h-5 text-primary group-hover:translate-x-1.5 transition-all duration-200 shrink-0 ml-2" />
       </component>
     </div>
 
@@ -146,8 +143,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { ChevronRight, QrCode } from 'lucide-vue-next';
-import { FEATURES } from '@/constants/features';
+import { ChevronRight, QrCode, Sparkle } from 'lucide-vue-next';
 
 const router = useRouter();
 const showInfaqModal = ref(false);
@@ -157,32 +153,22 @@ const menuItems = [
   {
     title: 'Tadabbur',
     route: 'tadabbur',
-    icon: FEATURES.tadabbur.icon,
-    iconBg: FEATURES.tadabbur.accent,
   },
   {
     title: 'Kuis',
     route: 'quizzes',
-    icon: FEATURES.quizzes.icon,
-    iconBg: FEATURES.quizzes.accent,
   },
   {
     title: 'Evaluasi',
     route: 'evaluations',
-    icon: FEATURES.evaluations.icon,
-    iconBg: FEATURES.evaluations.accent,
   },
   {
     title: 'Rapor',
     route: 'reports',
-    icon: FEATURES.reports.icon,
-    iconBg: FEATURES.reports.accent,
   },
   {
     title: 'Infaq',
     route: 'infaq',
-    icon: FEATURES.infaq.icon,
-    iconBg: FEATURES.infaq.accent,
   },
 ];
 
