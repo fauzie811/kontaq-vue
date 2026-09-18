@@ -118,7 +118,7 @@
           <div class="pt-3 border-t border-border/40">
             <!-- Closed: offer a late-permission request -->
             <button
-              v-if="quiz.can_request_late_permission"
+              v-if="!devUnlock && quiz.can_request_late_permission"
               type="button"
               @click.prevent="openRequestDialog(quiz)"
               class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.98]"
@@ -129,7 +129,7 @@
 
             <!-- Closed, request already pending -->
             <button
-              v-else-if="!quiz.is_open && quiz.late_permission_status === 'pending'"
+              v-else-if="!devUnlock && !quiz.is_open && quiz.late_permission_status === 'pending'"
               type="button"
               disabled
               class="w-full bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
@@ -140,7 +140,7 @@
 
             <!-- Not open yet -->
             <button
-              v-else-if="!quiz.is_open"
+              v-else-if="!devUnlock && !quiz.is_open"
               type="button"
               disabled
               class="w-full bg-muted text-muted-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 border border-border cursor-not-allowed"
@@ -151,7 +151,7 @@
 
             <!-- Locked Button (Needs Material Read) -->
             <button
-              v-else-if="quiz.material_id && !quiz.material_read"
+              v-else-if="!devUnlock && quiz.material_id && !quiz.material_read"
               type="button"
               @click.prevent="showAlert(quiz.material_id)"
               class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all cursor-pointer border border-border"
@@ -248,6 +248,10 @@ const router = useRouter();
 const page = ref(1);
 const week = ref(null);
 const availableWeeks = ref([]);
+
+// Dev server only: skip list locks so locked items can be opened.
+// Pairs with the backend's local-environment bypass in LearningAccess.
+const devUnlock = import.meta.env.MODE === 'development';
 const quizzes = ref({ data: [] });
 const isLoading = ref(true);
 const requestDialogOpen = ref(false);
