@@ -108,7 +108,7 @@
     <template v-else-if="evaluation && userEvaluation && !userEvaluation.finished_at">
       <div class="text-center space-y-1.5">
         <h2 class="text-xl sm:text-2xl font-bold text-foreground">{{ evaluation.title }}</h2>
-        <p class="text-base sm:text-lg font-semibold text-primary">
+        <p ref="headerTimer" class="text-base sm:text-lg font-semibold text-primary">
           Sisa Waktu :
           <span class="font-mono">
             <Countdown :start-time="parseISO(userEvaluation.created_at)" :duration="evaluation.duration" @finished="forceFinish" @tick="handleTick" />
@@ -128,16 +128,28 @@
           />
         </div>
 
-        <!-- Submit -->
-        <div class="md:self-end md:sticky md:bottom-24">
-          <button
-            @click="confirmSubmit"
-            type="button"
-            :disabled="isSubmitting"
-            class="w-full rounded-full bg-[#d9f5e7] dark:bg-secondary hover:bg-primary/15 active:scale-[0.98] px-5 py-3 text-lg font-bold text-primary transition-all cursor-pointer disabled:opacity-50"
+        <!-- Sidebar: timer sticks once the header timer scrolls away; Submit pinned below -->
+        <div class="flex flex-col gap-6">
+          <div
+            v-show="!headerTimerVisible"
+            class="hidden md:block sticky top-24 rounded-2xl bg-[#d9f5e7] dark:bg-secondary px-5 py-4 text-center text-primary"
           >
-            {{ isSubmitting ? 'Mengumpulkan...' : 'Selesai' }}
-          </button>
+            <p class="text-sm font-semibold">Sisa Waktu</p>
+            <p class="font-mono text-2xl font-bold">
+              <Countdown :start-time="parseISO(userEvaluation.created_at)" :duration="evaluation.duration" @finished="forceFinish" @tick="handleTick" />
+            </p>
+          </div>
+
+          <div class="mt-auto md:sticky md:bottom-24">
+            <button
+              @click="confirmSubmit"
+              type="button"
+              :disabled="isSubmitting"
+              class="w-full rounded-full bg-[#d9f5e7] dark:bg-secondary hover:bg-primary/15 active:scale-[0.98] px-5 py-3 text-lg font-bold text-primary transition-all cursor-pointer disabled:opacity-50"
+            >
+              {{ isSubmitting ? 'Mengumpulkan...' : 'Selesai' }}
+            </button>
+          </div>
         </div>
       </div>
     </template>
@@ -258,6 +270,7 @@ import {
   Send,
 } from 'lucide-vue-next';
 import parseISO from 'date-fns/parseISO';
+import { useElementVisibility } from '@vueuse/core';
 
 import { swAlert, swConfirm, shortDateTime } from '@/utils';
 import { getMyEvaluation, listAllMyEvaluations, updateMyEvaluation } from '@/api';
@@ -274,6 +287,8 @@ const devUnlock = import.meta.env.MODE === 'development';
 
 const isLoading = ref(true);
 const isSubmitting = ref(false);
+const headerTimer = ref(null);
+const headerTimerVisible = useElementVisibility(headerTimer);
 const selected = ref({});
 const evaluation = ref();
 const userEvaluation = ref();
