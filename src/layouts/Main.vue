@@ -281,182 +281,6 @@
       @close="isSearchOpen = false"
       @select="handleSearchSelect"
     />
-
-    <!-- Infaq Modal -->
-    <div
-      v-if="showInfaqModal"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-      @click.self="showInfaqModal = false"
-    >
-      <div
-        class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250"
-      >
-        <div
-          class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4"
-        >
-          <QrCode class="w-7 h-7 text-primary" />
-        </div>
-        <h3 class="text-xl font-bold text-foreground mb-2">
-          Infaq & Donasi KontaQ
-        </h3>
-        <p class="text-sm text-muted-foreground mb-6 leading-relaxed">
-          Salurkan infaq terbaik Anda untuk mendukung dakwah & kegiatan
-          Komunitas Tadabbur Al-Qur'an (KontaQ).
-        </p>
-        <div
-          class="bg-muted/50 p-4 rounded-2xl border border-border mb-6 text-left space-y-2 text-sm text-foreground"
-        >
-          <div class="flex justify-between items-center">
-            <span class="font-semibold">Bank Syariah Indonesia (BSI)</span>
-          </div>
-          <p class="font-mono text-lg font-bold text-primary tracking-wider">
-            777-888-9990
-          </p>
-          <p class="text-xs text-muted-foreground">
-            a.n. Komunitas Tadabbur Al-Qur'an
-          </p>
-        </div>
-        <div class="flex gap-2">
-          <button
-            @click="
-              showInfaqModal = false;
-              showQrisModal = true;
-            "
-            class="flex-1 py-2.5 px-4 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
-          >
-            Scan QRIS
-          </button>
-          <button
-            @click="showInfaqModal = false"
-            class="flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
-          >
-            Tutup
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- QRIS Modal -->
-    <div
-      v-if="showQrisModal"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
-      @click.self="showQrisModal = false"
-    >
-      <div
-        class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden"
-      >
-        <!-- QRIS Brand Header -->
-        <div
-          class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border"
-        >
-          <span
-            class="font-extrabold tracking-widest text-red-600 text-xl font-mono"
-            >QRIS</span
-          >
-          <span
-            class="text-xs text-muted-foreground font-semibold leading-tight text-left"
-          >
-            NATIONAL<br />STANDARD
-          </span>
-        </div>
-
-        <!-- Merchant Info -->
-        <h3 class="text-base font-bold text-foreground mb-0.5">
-          Komunitas Tadabbur Al-Qur'an
-        </h3>
-        <p class="text-xs text-primary font-semibold mb-4">KontaQ Indonesia</p>
-
-        <!-- QR Code Visual Card -->
-        <div
-          class="bg-card p-4 rounded-2xl border-2 border-border flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative"
-        >
-          <svg
-            class="w-48 h-48 text-foreground"
-            viewBox="0 0 100 100"
-            fill="currentColor"
-          >
-            <rect
-              x="5"
-              y="5"
-              width="25"
-              height="25"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="4"
-            />
-            <rect x="10" y="10" width="15" height="15" />
-            <rect
-              x="70"
-              y="5"
-              width="25"
-              height="25"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="4"
-            />
-            <rect x="75" y="10" width="15" height="15" />
-            <rect
-              x="5"
-              y="70"
-              width="25"
-              height="25"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="4"
-            />
-            <rect x="10" y="75" width="15" height="15" />
-            <rect x="35" y="5" width="8" height="8" />
-            <rect x="48" y="5" width="8" height="8" />
-            <rect x="5" y="35" width="8" height="8" />
-            <rect x="18" y="35" width="8" height="8" />
-            <rect x="35" y="20" width="12" height="8" />
-            <rect x="50" y="18" width="8" height="12" />
-            <rect
-              x="35"
-              y="35"
-              width="30"
-              height="30"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-            />
-            <rect x="42" y="42" width="16" height="16" />
-            <rect x="70" y="35" width="8" height="18" />
-            <rect x="83" y="35" width="12" height="8" />
-            <rect x="70" y="58" width="25" height="8" />
-            <rect x="35" y="70" width="8" height="25" />
-            <rect x="48" y="70" width="18" height="8" />
-            <rect x="70" y="70" width="12" height="12" />
-            <rect x="85" y="85" width="10" height="10" />
-          </svg>
-          <div
-            class="absolute inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <div
-              class="bg-card px-2 py-0.5 rounded border border-border text-xs font-bold text-foreground"
-            >
-              KontaQ
-            </div>
-          </div>
-        </div>
-
-        <!-- NMID & Instructions -->
-        <p class="text-xs font-mono text-muted-foreground mb-1">
-          NMID: ID1023948576201
-        </p>
-        <p class="text-xs text-muted-foreground mb-5 leading-relaxed">
-          Dapat di-scan menggunakan seluruh aplikasi m-Banking & E-Wallet (BSI,
-          BCA, Mandiri, GoPay, OVO, Dana, LinkAja, dll).
-        </p>
-
-        <button
-          @click="showQrisModal = false"
-          class="w-full py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer"
-        >
-          Tutup
-        </button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -470,7 +294,6 @@ import {
   User,
   Settings,
   LogOut,
-  QrCode,
   Pin,
   CircleUser,
   Globe,
@@ -548,8 +371,6 @@ function toggleNotification() {
   }
 }
 
-const showInfaqModal = ref(false);
-const showQrisModal = ref(false);
 
 function handleSearchSelect() {
   isPushedState.value = false;
