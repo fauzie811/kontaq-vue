@@ -24,7 +24,7 @@
       >
         <div class="flex items-center gap-3 sm:gap-4">
           <Sparkle class="w-6 h-6 sm:w-7 sm:h-7 shrink-0 text-accent fill-current stroke-0 transition-transform duration-200 group-hover:scale-110" />
-          <span class="text-primary font-bold text-base sm:text-lg tracking-wide">
+          <span class="text-primary font-medium text-lg sm:text-xl tracking-wide">
             {{ item.title }}
           </span>
         </div>

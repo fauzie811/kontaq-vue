@@ -7,8 +7,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary-1: #9acd33;
-  --color-primary-2: #33a44b;
+  --color-primary-1: #1d8559;
+  --color-primary-2: #f49728;
+  --color-maingray: #eceded;
 
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));

@@ -7,7 +7,6 @@ import * as z from 'zod';
 import { LoaderCircle } from 'lucide-vue-next';
 import { toast } from 'vue-sonner'
 import { getUser, getProfile, updateProfile } from '@/api';
-import AvatarUpload from './AvatarUpload.vue';
 import { Button } from '@/components/ui/button';
 import {
   FormControl,
@@ -17,12 +16,25 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from '@/components/ui/radio-group';
 
 const router = useRouter();
+
+// Order follows the 2-column mockup: left/right pairs, row by row.
+const fields = [
+  { name: 'name', label: 'Nama Lengkap', type: 'text', autocomplete: 'name' },
+  { name: 'nickname', label: 'Nama Panggilan', type: 'text', autocomplete: 'nickname' },
+  { name: 'gender', label: 'Jenis Kelamin', type: 'select' },
+  { name: 'age', label: 'Usia', type: 'number' },
+  { name: 'phone', label: 'Nomor HP', type: 'tel', autocomplete: 'tel' },
+  { name: 'email', label: 'E-mail', type: 'email', autocomplete: 'email' },
+  { name: 'occupation', label: 'Pekerjaan', type: 'text' },
+  { name: 'address', label: 'Alamat', type: 'text', autocomplete: 'street-address' },
+  { name: 'motivation', label: 'Motivasi ikut KontaQ', type: 'text', full: true },
+];
+
+const boxClass = 'peer h-14 rounded-none border-0 bg-muted px-5 pt-5 pb-1 text-base text-foreground placeholder:text-transparent hover:border-0 focus:ring-2 focus:ring-primary/40';
+const labelClass = 'pointer-events-none absolute left-5 top-2 text-[11px] font-medium text-primary transition-all';
+const labelEmptyClass = 'top-1/2 -translate-y-1/2 text-base';
 const isLoading = ref(true);
 
 const formSchema = toTypedSchema(z.object({
@@ -66,130 +78,62 @@ const doSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <form @submit="doSubmit" class="space-y-6">
-    <AvatarUpload />
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-6">
-      <div class="sm:col-span-4">
-        <FormField v-slot="{ componentField }" name="name">
-          <FormItem>
-            <FormLabel>Nama Lengkap <span class="text-destructive">*</span></FormLabel>
+  <form @submit="doSubmit" novalidate>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-5 sm:gap-y-6">
+      <FormField v-for="f in fields" :key="f.name" :name="f.name" v-slot="{ componentField, value }">
+        <FormItem :class="f.full && 'md:col-span-2'">
+          <div class="relative">
             <FormControl>
-              <Input type="text" autocomplete="name" v-bind="componentField" required :disabled="isLoading" />
+              <select
+                  v-if="f.type === 'select'"
+                  :name="componentField.name"
+                  :value="value"
+                  @blur="componentField.onBlur"
+                  @change="componentField['onUpdate:modelValue']($event.target.value)"
+                  :disabled="isLoading"
+                  class="h-14 w-full appearance-none rounded-none border-0 bg-muted bg-none px-5 pt-5 pb-1 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-50 cursor-pointer"
+                  :class="!value && 'text-transparent'"
+                >
+                  <option value="" disabled hidden></option>
+                  <option value="m" class="text-foreground">Laki-laki</option>
+                  <option value="f" class="text-foreground">Perempuan</option>
+                </select>
+              <Input
+                v-else
+                v-bind="componentField"
+                :type="f.type"
+                :autocomplete="f.autocomplete"
+                placeholder=" "
+                :disabled="isLoading"
+                :class="boxClass"
+              />
             </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="sm:col-span-2">
-        <FormField v-slot="{ componentField }" name="nickname">
-          <FormItem>
-            <FormLabel>Panggilan <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="text" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="sm:col-span-4">
-        <FormField v-slot="{ componentField }" name="gender">
-          <FormItem>
-            <FormLabel>Jenis Kelamin <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <RadioGroup v-bind="componentField" class="grid grid-cols-2 gap-2" :disabled="isLoading">
-                <div class="flex items-center">
-                  <RadioGroupItem value="m" id="gender-m" />
-                  <label for="gender-m" class="ml-2">Laki-laki</label>
-                </div>
-                <div class="flex items-center">
-                  <RadioGroupItem value="f" id="gender-f" />
-                  <label for="gender-f" class="ml-2">Perempuan</label>
-                </div>
-              </RadioGroup>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="sm:col-span-2">
-        <FormField v-slot="{ componentField }" name="age">
-          <FormItem>
-            <FormLabel>Usia <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="number" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="col-span-full">
-        <FormField v-slot="{ componentField }" name="address">
-          <FormItem>
-            <FormLabel>Alamat <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="text" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="col-span-full">
-        <FormField v-slot="{ componentField }" name="occupation">
-          <FormItem>
-            <FormLabel>Pekerjaan <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="text" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="sm:col-span-3">
-        <FormField v-slot="{ componentField }" name="phone">
-          <FormItem>
-            <FormLabel>Nomor HP <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="tel" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="sm:col-span-3">
-        <FormField v-slot="{ componentField }" name="email">
-          <FormItem>
-            <FormLabel>Email <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="email" autocomplete="email" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
-
-      <div class="col-span-full">
-        <FormField v-slot="{ componentField }" name="motivation">
-          <FormItem>
-            <FormLabel>Motivasi Ikut KontaQ <span class="text-destructive">*</span></FormLabel>
-            <FormControl>
-              <Input type="text" v-bind="componentField" required :disabled="isLoading" />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </FormField>
-      </div>
+            <FormLabel
+              :class="[
+                labelClass,
+                f.type === 'select'
+                  ? !value && labelEmptyClass
+                  : 'peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-[11px]',
+              ]"
+            >
+              {{ f.label }}<span class="text-destructive">*</span>
+            </FormLabel>
+            <span
+              v-if="f.type === 'select'"
+              aria-hidden="true"
+              class="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-accent text-xs"
+            >▼</span>
+          </div>
+          <FormMessage />
+        </FormItem>
+      </FormField>
     </div>
 
-    <Button type="submit" :disabled="isLoading">
-      <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
-      Simpan Perubahan
-    </Button>
+    <div class="mt-8 flex justify-end">
+      <Button type="submit" :disabled="isLoading" class="h-11 px-8 text-base">
+        <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
+        Simpan
+      </Button>
+    </div>
   </form>
 </template>

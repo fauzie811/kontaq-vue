@@ -4,6 +4,7 @@
   >
     <!-- Top Header -->
     <header
+      v-if="!isProfile"
       class="bg-card/90 backdrop-blur-md border-b border-border sticky top-0 z-30 p-4 sm:px-8 transition-all"
     >
       <div class="max-w-6xl mx-auto flex items-center justify-between relative">
@@ -180,7 +181,7 @@
 
     <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
     <section
-      v-if="showMainMenu"
+      v-if="showMainMenu && !isProfile"
       class="hidden sm:block max-w-6xl mx-auto px-4 mt-4 sm:mt-6 w-full"
     >
       <div
@@ -212,7 +213,7 @@
 
     <!-- Main Content Slot -->
     <main
-      class="max-w-6xl mx-auto px-4 mt-6 sm:mt-8 w-full flex-1"
+      :class="[isProfile ? '' : 'mt-6 sm:mt-8', 'max-w-6xl mx-auto px-4 w-full flex-1']"
     >
       <slot />
     </main>
@@ -221,7 +222,7 @@
     <div class="fixed bottom-0 inset-x-0 z-40 flex flex-col">
       <!-- Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
       <footer
-        class="w-full bg-[#d9f5e7] dark:bg-secondary border-t border-primary/20 px-4 sm:px-8 py-2.5 sm:py-3"
+        class="w-full bg-linear-90 from-[#E5FCF3] to-[#B1F6DA] dark:bg-secondary border-t border-primary/20 px-4 sm:px-8 py-2 sm:py-2.5"
       >
         <div class="max-w-6xl mx-auto flex items-center justify-between sm:justify-center gap-3 sm:gap-10">
           <!-- Banner Text -->
@@ -235,7 +236,7 @@
           <div class="flex items-center shrink-0">
             <router-link
               :to="{ name: 'infaq' }"
-              class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 rounded-full font-bold text-xs sm:text-base transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+              class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-1.5 rounded-full font-medium text-sm sm:text-base transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
             >
               <span>Infaq</span>
             </router-link>
@@ -413,6 +414,9 @@ const HelpIcon = FEATURES.help.icon;
 
 // Pages with their own navigation hide the tab menu and mobile bottom nav.
 const showMainMenu = computed(() => !['infaq', 'quran.show', 'quizzes', 'quizzes.show', 'evaluations', 'evaluations.show', 'reports'].includes(route.name));
+
+// Profile page renders its own header (avatar, hadith, feature nav) per mockup.
+const isProfile = computed(() => route.name === 'profile');
 
 const navTabs = [
   { name: 'Tadabbur', route: 'tadabbur', image: FEATURES.tadabbur.image },

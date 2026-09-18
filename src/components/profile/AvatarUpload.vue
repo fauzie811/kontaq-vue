@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, nextTick } from 'vue';
-import { Camera, Trash2, LoaderCircle, Upload, Check, X } from 'lucide-vue-next';
+import { Pencil, Trash2, LoaderCircle, Check, X } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import authStore from '@/store/auth';
 import { uploadAvatar, deleteAvatar, getUser } from '@/api';
@@ -196,63 +196,42 @@ const handleDelete = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center sm:flex-row sm:items-center gap-6 pb-6 border-b border-border">
-    <div class="relative group shrink-0">
-      <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-primary/20 bg-secondary">
-        <img :src="userAvatar" alt="Avatar" class="w-full h-full object-cover" />
-      </div>
+  <div class="relative shrink-0">
+    <button
+      type="button"
+      @click="triggerFileInput"
+      :disabled="isUploading || isDeleting"
+      title="Ubah foto profil"
+      class="relative block w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-secondary group cursor-pointer"
+    >
+      <img :src="userAvatar" alt="Avatar" class="w-full h-full object-cover grayscale" />
+      <span class="absolute inset-x-0 bottom-0 pb-3 sm:pb-4 pt-6 flex items-center justify-center gap-1 bg-gradient-to-t from-black/50 to-transparent text-white text-xs font-light group-hover:from-black/70 transition-colors">
+        <LoaderCircle v-if="isUploading" class="w-4 h-4 animate-spin" />
+        <Pencil v-else class="w-3.5 h-3.5" />
+        edit foto
+      </span>
+    </button>
 
-      <button
-        type="button"
-        @click="triggerFileInput"
-        :disabled="isUploading || isDeleting"
-        class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-      >
-        <Camera class="w-6 h-6 mb-1" />
-        <span class="text-[10px] font-medium">Ubah</span>
-      </button>
+    <button
+      v-if="isCustomAvatar"
+      type="button"
+      @click="handleDelete"
+      :disabled="isUploading || isDeleting"
+      title="Hapus foto profil"
+      aria-label="Hapus foto profil"
+      class="absolute top-1 right-1 w-8 h-8 rounded-full bg-card border border-border text-destructive flex items-center justify-center hover:bg-destructive/10 transition-colors cursor-pointer"
+    >
+      <LoaderCircle v-if="isDeleting" class="w-4 h-4 animate-spin" />
+      <Trash2 v-else class="w-4 h-4" />
+    </button>
 
-      <input
-        ref="fileInput"
-        type="file"
-        accept="image/jpeg,image/png,image/webp"
-        class="hidden"
-        @change="onFileSelected"
-      />
-    </div>
-
-    <div class="flex flex-col gap-2 text-center sm:text-left">
-      <h3 class="text-sm font-semibold text-foreground">Foto Profil</h3>
-      <p class="text-xs text-muted-foreground max-w-xs">
-        Format JPG, PNG, atau WebP. Maksimal 2MB. Potong gambar sesuai area lingkaran.
-      </p>
-      <div class="flex items-center justify-center sm:justify-start gap-2 mt-1">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          @click="triggerFileInput"
-          :disabled="isUploading || isDeleting"
-        >
-          <LoaderCircle v-if="isUploading" class="w-4 h-4 mr-1.5 animate-spin" />
-          <Upload v-else class="w-4 h-4 mr-1.5" />
-          Pilih Foto
-        </Button>
-
-        <Button
-          v-if="isCustomAvatar"
-          type="button"
-          variant="destructive"
-          size="sm"
-          @click="handleDelete"
-          :disabled="isUploading || isDeleting"
-        >
-          <LoaderCircle v-if="isDeleting" class="w-4 h-4 mr-1.5 animate-spin" />
-          <Trash2 v-else class="w-4 h-4 mr-1.5" />
-          Hapus
-        </Button>
-      </div>
-    </div>
+    <input
+      ref="fileInput"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      class="hidden"
+      @change="onFileSelected"
+    />
 
     <!-- Square Crop Modal -->
     <div

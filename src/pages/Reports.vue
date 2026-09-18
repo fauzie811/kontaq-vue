@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-6xl mx-auto space-y-6">
     <!-- Navigation Bar: Beranda · Rapor [mode] [n] · Sertifikat -->
-    <nav class="flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
+    <nav class="flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
       <router-link
         :to="{ name: 'home' }"
-        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+        class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
       >
         Beranda
       </router-link>
@@ -15,7 +15,7 @@
           <select
             :value="mode"
             @change="changeMode($event.target.value)"
-            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring truncate pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-medium text-primary text-sm sm:text-base cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring truncate pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
           >
             <option v-for="(label, value) in MODES" :key="value" :value="value">Rapor {{ label }}</option>
           </select>
@@ -30,7 +30,7 @@
           <select
             :value="number"
             @change="changeNumber($event.target.value)"
-            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-medium text-primary text-sm sm:text-base cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
           >
             <option v-for="n in maxNumber" :key="n" :value="n">{{ n }}</option>
           </select>
@@ -43,7 +43,7 @@
 
       <router-link
         :to="{ name: 'certificates' }"
-        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+        class="font-medium text-primary text-sm sm:text-base hover:text-primary/80 transition-colors shrink-0"
       >
         Sertifikat
       </router-link>
@@ -96,37 +96,37 @@
       <table class="min-w-full text-sm sm:text-base">
         <caption class="sr-only">Rapor {{ MODES[mode] }} {{ number }}</caption>
         <thead>
-          <tr class="text-foreground font-medium">
-            <th scope="col" class="py-3 px-3 text-left whitespace-nowrap">No.</th>
-            <th scope="col" class="py-3 px-3 text-left whitespace-nowrap">Nama Peserta</th>
+          <tr class="text-foreground">
+            <th scope="col" class="py-3 px-3 font-medium text-left whitespace-nowrap">No.</th>
+            <th scope="col" class="py-3 px-3 font-medium text-left whitespace-nowrap">Nama Peserta</th>
             <th v-for="(quiz, index) in reports.quizzes" :key="quiz.id" scope="col" :title="quiz.title"
-              class="py-3 px-3 text-center whitespace-nowrap">
+              class="py-3 px-3 text-center font-medium whitespace-nowrap">
               {{ reports.quizzes.length === 1 ? 'Kuis' : `Kuis ${index + 1}` }}
             </th>
             <th v-for="(evaluation, index) in reports.evaluations" :key="evaluation.id" scope="col" :title="evaluation.title"
-              class="py-3 px-3 text-center whitespace-nowrap">
+              class="py-3 px-3 text-center font-medium whitespace-nowrap">
               {{ reports.evaluations.length === 1 ? 'Evaluasi' : `Evaluasi ${index + 1}` }}
             </th>
-            <th scope="col" class="py-3 px-3 text-center whitespace-nowrap">Total Nilai</th>
-            <th scope="col" class="py-3 px-3 text-center whitespace-nowrap">Peringkat</th>
-            <th scope="col" class="py-3 px-3 text-center whitespace-nowrap">Juz</th>
+            <th scope="col" class="py-3 px-3 text-center font-medium whitespace-nowrap">Total Nilai</th>
+            <th scope="col" class="py-3 px-3 text-center font-medium whitespace-nowrap">Peringkat</th>
+            <th scope="col" class="py-3 px-3 text-center font-medium whitespace-nowrap">Juz</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-border text-foreground border-y border-border">
           <tr v-for="(item, idx) in reports.items" :key="item.id">
-            <td class="w-12 sm:w-16 bg-gradient-to-b from-[#b8f0d8] to-[#e4f2f8] dark:from-primary/25 dark:to-primary/5 py-4 px-3 text-center font-medium align-top">
+            <td class="w-12 sm:w-16 bg-gradient-to-b from-[#b8f0d8] to-[#e4f2f8] dark:from-primary/25 dark:to-primary/5 p-3 text-center font-medium align-top">
               {{ idx + 1 }}
             </td>
-            <td class="py-4 px-3 align-top whitespace-nowrap">
+            <td class="p-3 align-top whitespace-nowrap">
               <p class="font-medium">{{ item.name }}</p>
               <p class="text-muted-foreground">{{ item.username }}</p>
             </td>
-            <td v-for="key in scoreKeys" :key="key" class="py-4 px-3 text-center align-top whitespace-nowrap">
+            <td v-for="key in scoreKeys" :key="key" class="p-3 text-center align-top whitespace-nowrap">
               <span :class="scoreCell(item.scores?.[key]).class">{{ scoreCell(item.scores?.[key]).text }}</span>
             </td>
-            <td class="py-4 px-3 text-center align-top font-semibold">{{ formatNumber(item.total) }}</td>
-            <td class="py-4 px-3 text-center align-top font-bold text-primary">{{ item.rank ?? '–' }}</td>
-            <td class="py-4 px-3 text-center align-top whitespace-nowrap">{{ juzLabel }}</td>
+            <td class="p-3 text-center align-top font-semibold">{{ formatNumber(item.total) }}</td>
+            <td class="p-3 text-center align-top font-bold text-primary">{{ item.rank ?? '–' }}</td>
+            <td class="p-3 text-center align-top whitespace-nowrap">{{ juzLabel }}</td>
           </tr>
         </tbody>
       </table>
