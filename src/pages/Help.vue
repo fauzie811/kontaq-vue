@@ -9,7 +9,6 @@
     <!-- Search Box Card -->
     <div class="bg-card rounded-3xl border border-border p-4 sm:p-5 space-y-3">
       <div class="relative flex items-center bg-muted/60 border border-input rounded-full px-4 py-3 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-        <Search class="w-5 h-5 text-primary shrink-0 mr-3" />
         <input
           v-model="searchQuery"
           type="text"
@@ -157,7 +156,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { ChevronDown, HelpCircle, Search, X, Globe, ExternalLink } from 'lucide-vue-next';
+import { ChevronDown, HelpCircle, X, Globe, ExternalLink } from 'lucide-vue-next';
 import { listFaqs } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 

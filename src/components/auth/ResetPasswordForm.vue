@@ -4,7 +4,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
-import { LoaderCircle, Lock, Eye, EyeOff, KeyRound, ArrowLeft } from 'lucide-vue-next';
+import { LoaderCircle, Eye, EyeOff, KeyRound, ArrowLeft } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import { resetPassword } from '@/api';
 import { Button } from '@/components/ui/button';
@@ -72,7 +72,6 @@ const onSubmit = handleSubmit(async (values) => {
           <FormLabel class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Password Baru</FormLabel>
           <FormControl>
             <div class="relative flex items-center">
-              <Lock class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
               <Input
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="Min. 8 karakter"
@@ -80,7 +79,7 @@ const onSubmit = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                class="pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
               <button
                 type="button"
@@ -102,7 +101,6 @@ const onSubmit = handleSubmit(async (values) => {
           <FormLabel class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Konfirmasi Password Baru</FormLabel>
           <FormControl>
             <div class="relative flex items-center">
-              <Lock class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
               <Input
                 :type="showPasswordConfirmation ? 'text' : 'password'"
                 placeholder="Ulangi password baru"
@@ -110,7 +108,7 @@ const onSubmit = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                class="pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
               <button
                 type="button"

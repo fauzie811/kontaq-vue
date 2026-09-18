@@ -183,7 +183,7 @@ Interactive elements include subtle scale feedback (`active:scale-[0.98]`).
 - **Style:** Background `#ffffff`, border `#8f8f99` (`border-input`, 3.2:1 on white), pill radius (`rounded-full`), `16px` horizontal padding.
 - **Hover:** Border darkens to `foreground/40`, signalling the field is live before it is focused.
 - **Focus:** Border shift to `#40835c` with `2px` focus ring (`ring-2 ring-primary/20`).
-- **Adornments:** Leading icons sit at `left-3` with the input padded to `pl-10`; trailing actions (such as a password reveal toggle) are themselves pill/circular icon buttons.
+- **Adornments:** No decorative icons inside input fields (no leading field icons, no search glyph); the label and placeholder carry meaning. Only functional trailing actions (such as a password reveal toggle) sit inside, as pill/circular icon buttons.
 - **Textareas:** Multi-line fields keep the `16px` (`rounded-2xl`) container radius — a pill silhouette breaks down once content wraps.
 
 ### Quran Verse Player & Cards

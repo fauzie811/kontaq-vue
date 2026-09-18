@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
-import { LoaderCircle, User, Lock, Eye, EyeOff, LogIn } from 'lucide-vue-next';
+import { LoaderCircle, Eye, EyeOff } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import { login } from '@/api';
 import { Button } from '@/components/ui/button';
@@ -74,7 +74,6 @@ const doLogin = handleSubmit(async (values) => {
           <FormLabel class="text-sm font-semibold text-accent">ID KontaQ</FormLabel>
           <FormControl>
             <div class="relative flex items-center">
-              <User class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
               <Input
                 type="text"
                 placeholder="Masukkan ID KontaQ"
@@ -82,7 +81,7 @@ const doLogin = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                class="h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
             </div>
           </FormControl>
@@ -103,7 +102,6 @@ const doLogin = handleSubmit(async (values) => {
           </div>
           <FormControl>
             <div class="relative flex items-center">
-              <Lock class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
               <Input
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="••••••••"
@@ -111,7 +109,7 @@ const doLogin = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                class="pr-11 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
               <button
                 type="button"
@@ -131,13 +129,12 @@ const doLogin = handleSubmit(async (values) => {
 
       <Button
         type="submit"
-        variant="accent"
+        variant="outline"
         size="lg"
-        class="w-full h-11 mt-2 font-semibold active:scale-[0.98] transition-all gap-2"
+        class="w-full h-11 mt-2 font-semibold border-accent text-amber-700 dark:text-accent hover:bg-accent/10 hover:text-amber-700 dark:hover:text-accent gap-2"
         :disabled="isLoading"
       >
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
-        <LogIn v-else class="w-4 h-4" />
         <span>{{ isLoading ? 'Memproses...' : 'Masuk' }}</span>
       </Button>
     </form>

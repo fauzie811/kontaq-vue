@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
-import { LoaderCircle, Mail, Send, ArrowLeft } from 'lucide-vue-next';
+import { LoaderCircle, Send, ArrowLeft } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import { forgotPassword } from '@/api';
 import { Button } from '@/components/ui/button';
@@ -66,7 +66,6 @@ const onSubmit = handleSubmit(async (values) => {
           <FormLabel class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email Terdaftar</FormLabel>
           <FormControl>
             <div class="relative flex items-center">
-              <Mail class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
               <Input
                 type="email"
                 placeholder="nama@email.com"
@@ -74,7 +73,7 @@ const onSubmit = handleSubmit(async (values) => {
                 v-bind="componentField"
                 required
                 :disabled="isLoading"
-                class="pl-10 h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                class="h-11 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
               />
             </div>
           </FormControl>

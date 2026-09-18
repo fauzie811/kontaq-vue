@@ -6,18 +6,8 @@ import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
 import {
   LoaderCircle,
-  User,
-  Tag,
-  Calendar,
-  MapPin,
-  Briefcase,
-  Phone,
-  Mail,
-  Sparkles,
-  Lock,
   Eye,
-  EyeOff,
-  UserPlus
+  EyeOff
 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import { register } from '@/api';
@@ -109,7 +99,6 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Nama Lengkap</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <User class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="text"
                       placeholder="Sesuai KTP / Identitas"
@@ -117,7 +106,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -132,14 +121,13 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Panggilan</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Tag class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="text"
                       placeholder="Nama sapaan"
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -181,14 +169,13 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Usia (Tahun)</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Calendar class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="number"
                       placeholder="Thn"
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -211,14 +198,13 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Alamat Tinggal</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <MapPin class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="text"
                       placeholder="Kota / Kabupaten tempat tinggal"
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -233,14 +219,13 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Pekerjaan / Aktivitas</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Briefcase class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="text"
                       placeholder="Contoh: Karyawan, Pelajar, Wiraswasta"
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -263,14 +248,13 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Nomor HP / WhatsApp</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Phone class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="tel"
                       placeholder="0812xxxxxxx"
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -285,7 +269,6 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Email</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Mail class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="email"
                       placeholder="alamat@email.com"
@@ -293,7 +276,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -308,14 +291,13 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Motivasi Ikut KontaQ</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Sparkles class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       type="text"
                       placeholder="Alasan bergabung dan harapan Anda"
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                   </div>
                 </FormControl>
@@ -338,7 +320,6 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Password</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Lock class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       :type="showPassword ? 'text' : 'password'"
                       placeholder="Min. 6 karakter"
@@ -346,7 +327,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 pr-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="pr-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                     <button
                       type="button"
@@ -370,7 +351,6 @@ const doRegister = handleSubmit(async (values) => {
                 <FormLabel class="text-xs font-medium text-muted-foreground">Konfirmasi Password</FormLabel>
                 <FormControl>
                   <div class="relative flex items-center">
-                    <Lock class="absolute left-3.5 w-4 h-4 text-muted-foreground/70 pointer-events-none" />
                     <Input
                       :type="showPasswordConfirmation ? 'text' : 'password'"
                       placeholder="Ulangi password"
@@ -378,7 +358,7 @@ const doRegister = handleSubmit(async (values) => {
                       v-bind="componentField"
                       required
                       :disabled="isLoading"
-                      class="pl-10 pr-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
+                      class="pr-10 h-10 focus:border-primary focus:ring-primary/20 transition-all rounded-full"
                     />
                     <button
                       type="button"
@@ -400,12 +380,12 @@ const doRegister = handleSubmit(async (values) => {
 
       <Button
         type="submit"
+        variant="outline"
         size="lg"
-        class="w-full h-11 font-semibold active:scale-[0.98] transition-all gap-2"
+        class="w-full h-11 font-semibold border-accent text-amber-700 dark:text-accent hover:bg-accent/10 hover:text-amber-700 dark:hover:text-accent gap-2"
         :disabled="isLoading"
       >
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />
-        <UserPlus v-else class="w-4 h-4" />
         <span>{{ isLoading ? 'Memproses Pendaftaran...' : 'Daftar Sekarang' }}</span>
       </Button>
     </form>
