@@ -3,11 +3,11 @@
     :id="`verse-${verse.verse}`"
     :data-verse="verse.verse"
     :class="[
-      'rounded-2xl p-4 sm:p-6 border transition-all duration-300 space-y-4 shadow-xs',
+      'rounded-2xl p-4 sm:p-6 border transition-all duration-300 space-y-4',
       isActive
         ? 'border-accent/60 bg-accent/5 ring-2 ring-accent/20'
         : isTargeted
-          ? 'border-primary/60 bg-primary/5 ring-2 ring-primary/30 shadow-md'
+          ? 'border-primary/60 bg-primary/5 ring-2 ring-primary/30'
           : 'bg-card text-card-foreground border-border/70 hover:border-primary/30',
     ]"
   >
@@ -33,7 +33,7 @@
           leave-to-class="transform scale-[0.99] opacity-0"
         >
           <MenuItems
-            class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-2xl bg-popover text-popover-foreground p-1.5 shadow-xl border border-border focus:outline-none space-y-0.5"
+            class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-2xl bg-popover text-popover-foreground p-1.5 border border-border focus:outline-none space-y-0.5"
           >
             <!-- Play / Pause Audio -->
             <MenuItem v-slot="{ active }">
@@ -172,7 +172,7 @@
     <!-- Footnotes Drawer -->
     <div
       v-if="verse.footnotes && showFootnotes"
-      class="bg-secondary/60 border border-border rounded-2xl p-4 text-xs text-foreground leading-relaxed shadow-2xs space-y-1.5 transition-all mt-3"
+      class="bg-secondary/60 border border-border rounded-2xl p-4 text-xs text-foreground leading-relaxed space-y-1.5 transition-all mt-3"
     >
       <div
         class="flex items-center gap-1.5 font-bold text-primary text-xs mb-1"

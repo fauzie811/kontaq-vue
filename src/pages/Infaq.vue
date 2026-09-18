@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-5xl mx-auto px-3 sm:px-4 py-2 sm:py-6">
     <!-- Navigation Tabs Pill Header (Desktop) -->
-    <div class="hidden sm:flex bg-secondary rounded-full p-2 items-center justify-between gap-2 shadow-inner border border-border max-w-3xl mx-auto mb-8 sm:mb-14">
+    <div class="hidden sm:flex bg-secondary rounded-full p-2 items-center justify-between gap-2 border border-border max-w-3xl mx-auto mb-8 sm:mb-14">
       <!-- Beranda Link -->
       <router-link
         :to="{ name: 'home' }"
@@ -11,7 +11,7 @@
       </router-link>
 
       <!-- Active Infaq & Shodaqoh Tab -->
-      <div class="px-6 py-2.5 sm:px-8 sm:py-3 bg-card rounded-full text-primary font-extrabold text-sm sm:text-base shadow-xs border border-border">
+      <div class="px-6 py-2.5 sm:px-8 sm:py-3 bg-card rounded-full text-primary font-extrabold text-sm sm:text-base border border-border">
         Infaq &amp; Shodaqoh
       </div>
 
@@ -19,7 +19,7 @@
       <div class="relative" ref="dropdownRef">
         <button
           @click="isDropdownOpen = !isDropdownOpen"
-          class="bg-card px-5 py-2.5 sm:px-7 sm:py-3 rounded-full text-card-foreground font-bold text-sm sm:text-base shadow-xs border border-border flex items-center gap-3 cursor-pointer hover:bg-secondary transition-colors"
+          class="bg-card px-5 py-2.5 sm:px-7 sm:py-3 rounded-full text-card-foreground font-bold text-sm sm:text-base border border-border flex items-center gap-3 cursor-pointer hover:bg-secondary transition-colors"
         >
           <span>{{ selectedCategory.label }}</span>
           <div class="flex flex-col text-foreground -space-y-1">
@@ -31,7 +31,7 @@
         <!-- Dropdown Menu Options -->
         <div
           v-if="isDropdownOpen"
-          class="absolute right-0 mt-2 w-56 bg-popover rounded-2xl shadow-xl border border-border py-2 z-50 animate-in fade-in zoom-in-[0.97] duration-250"
+          class="absolute right-0 mt-2 w-56 bg-popover rounded-2xl border border-border py-2 z-50 animate-in fade-in zoom-in-[0.97] duration-250"
         >
           <button
             v-for="cat in categories"
@@ -57,8 +57,8 @@
           @click="selectCategory(cat)"
           :class="[
             selectedCategory.id === cat.id
-              ? 'bg-primary text-primary-foreground font-bold shadow-md ring-2 ring-primary/20 px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer min-h-[44px] inline-flex items-center'
-              : 'bg-card text-card-foreground font-medium hover:bg-secondary border border-border shadow-2xs px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer min-h-[44px] inline-flex items-center'
+              ? 'bg-primary text-primary-foreground font-bold ring-2 ring-primary/20 px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer min-h-[44px] inline-flex items-center'
+              : 'bg-card text-card-foreground font-medium hover:bg-secondary border border-border px-4 py-2.5 rounded-full text-xs text-nowrap transition-all flex-shrink-0 cursor-pointer min-h-[44px] inline-flex items-center'
           ]"
         >
           {{ cat.label }}
@@ -82,10 +82,10 @@
           </p>
 
           <!-- Dedicated Bank Account Card Container -->
-          <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 space-y-3 shadow-2xs">
+          <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 space-y-3">
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg bg-primary text-primary-foreground font-black text-xs flex items-center justify-center shadow-2xs">
+                <div class="w-8 h-8 rounded-lg bg-primary text-primary-foreground font-black text-xs flex items-center justify-center">
                   BSI
                 </div>
                 <span class="font-semibold text-foreground text-sm sm:text-base">Bank Syariah Indonesia</span>
@@ -135,7 +135,7 @@
             class="inline-flex items-center gap-3 text-foreground hover:text-primary font-medium text-base sm:text-lg transition-colors group min-h-[44px] py-1"
           >
             <!-- Hand touching phone icon visual -->
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-700 dark:text-amber-300 shadow-2xs group-hover:scale-105 transition-transform">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-700 dark:text-amber-300 group-hover:scale-105 transition-transform">
               <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                 <path d="M12 18h.01" />
@@ -149,9 +149,9 @@
 
       <!-- Right Column: QRIS Display Card -->
       <div class="md:col-span-5 flex justify-center">
-        <div class="bg-card p-6 sm:p-7 rounded-3xl shadow-lg border border-border max-w-xs w-full flex flex-col items-center text-center relative overflow-hidden text-card-foreground">
+        <div class="bg-card p-6 sm:p-7 rounded-3xl border border-border max-w-xs w-full flex flex-col items-center text-center relative overflow-hidden text-card-foreground">
           <!-- QR Code Grid Graphic -->
-          <div class="w-full aspect-square bg-white p-3 border border-border rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+          <div class="w-full aspect-square bg-white p-3 border border-border rounded-2xl flex items-center justify-center mb-6">
             <svg class="w-full h-full text-gray-900" viewBox="0 0 100 100" fill="currentColor">
               <!-- Top Left Finder Pattern -->
               <rect x="6" y="6" width="24" height="24" fill="none" stroke="currentColor" stroke-width="4" />

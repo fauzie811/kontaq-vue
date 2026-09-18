@@ -4,7 +4,7 @@
     <div class="mb-6 flex items-center justify-between">
       <button
         @click="goBack"
-        class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border shadow-2xs transition-all cursor-pointer"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border transition-all cursor-pointer"
       >
         <ArrowLeft class="w-4 h-4 text-primary" />
         <span>Kembali ke Daftar Surah</span>
@@ -16,18 +16,18 @@
     </div>
 
     <!-- Initial Loading State -->
-    <div v-if="initialLoading" class="text-center py-20 bg-card text-card-foreground rounded-2xl border border-border p-6 shadow-xs">
+    <div v-if="initialLoading" class="text-center py-20 bg-card text-card-foreground rounded-2xl border border-border p-6">
       <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-primary border-t-transparent"></div>
       <p class="text-muted-foreground text-sm mt-3 font-medium">Memuat ayat-ayat surah...</p>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="bg-destructive/10 border border-destructive/30 rounded-2xl p-6 text-center text-destructive my-6 shadow-xs">
+    <div v-else-if="error" class="bg-destructive/10 border border-destructive/30 rounded-2xl p-6 text-center text-destructive my-6">
       <p class="font-bold text-lg mb-2">Terjadi Kesalahan</p>
       <p class="text-sm mb-4">{{ error }}</p>
       <button
         @click="resetAndFetch"
-        class="px-5 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold rounded-full text-sm transition-all cursor-pointer shadow-xs"
+        class="px-5 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold rounded-full text-sm transition-all cursor-pointer"
       >
         Coba Lagi
       </button>
@@ -35,7 +35,7 @@
 
     <div v-else-if="chapterDetails">
       <!-- Surah Header Banner -->
-      <div class="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm mb-8 relative overflow-hidden text-card-foreground">
+      <div class="bg-card border border-border rounded-2xl p-4 sm:p-6 mb-8 relative overflow-hidden text-card-foreground">
         <div class="absolute -right-8 -bottom-8 opacity-5 select-none pointer-events-none text-foreground">
           <SurahName :chapter="chapterDetails.number" customClass="text-9xl" />
         </div>
@@ -59,7 +59,7 @@
 
           <SurahName
             :chapter="chapterDetails.number"
-            customClass="text-4xl sm:text-6xl text-primary drop-shadow-xs"
+            customClass="text-4xl sm:text-6xl text-primary"
           />
         </div>
       </div>
@@ -67,7 +67,7 @@
       <!-- Bismillah Banner (Show if not Surah At-Tawbah #9) -->
       <div
         v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
-        class="bg-card border border-border rounded-2xl p-4 sm:p-6 text-center mb-8 shadow-2xs text-card-foreground"
+        class="bg-card border border-border rounded-2xl p-4 sm:p-6 text-center mb-8 text-card-foreground"
       >
         <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-foreground dir-rtl leading-relaxed">
             بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ

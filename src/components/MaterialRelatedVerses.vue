@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="verses && verses.length > 0"
-    class="max-w-3xl overflow-hidden bg-card text-card-foreground border border-border rounded-2xl shadow-xs mb-6"
+    class="max-w-3xl overflow-hidden bg-card text-card-foreground border border-border rounded-2xl mb-6"
   >
     <!-- Card Header -->
     <div

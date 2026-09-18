@@ -4,7 +4,7 @@
   >
     <!-- Top Header -->
     <header
-      class="bg-card/90 backdrop-blur-md border-b border-border shadow-2xs sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all"
+      class="bg-card/90 backdrop-blur-md border-b border-border sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all"
     >
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <!-- Left Brand Logo -->
@@ -27,7 +27,7 @@
           <button
             @click="isSearchOpen = true"
             title="Cari Surah, ayat, tadabbur, bantuan (Ctrl+K)"
-            class="h-10 px-3 sm:px-3.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center gap-2 transition shadow-2xs border border-border cursor-pointer active:scale-95"
+            class="h-10 px-3 sm:px-3.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center gap-2 transition border border-border cursor-pointer active:scale-95"
           >
             <Search class="w-4.5 h-4.5 stroke-[2.2] text-primary" />
             <span
@@ -35,7 +35,7 @@
               >Cari...</span
             >
             <kbd
-              class="hidden md:inline-flex items-center gap-0.5 text-xs bg-card/80 px-1.5 py-0.5 rounded border border-border text-muted-foreground font-mono font-bold shadow-2xs"
+              class="hidden md:inline-flex items-center gap-0.5 text-xs bg-card/80 px-1.5 py-0.5 rounded border border-border text-muted-foreground font-mono font-bold"
               >⌘K</kbd
             >
           </button>
@@ -45,7 +45,7 @@
             <button
               @click="toggleNotification"
               title="Notifikasi"
-              class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition shadow-2xs border border-border relative cursor-pointer active:scale-95"
+              class="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground flex items-center justify-center transition border border-border relative cursor-pointer active:scale-95"
             >
               <Bell class="w-5 h-5 stroke-[2.2] text-primary" />
               <span
@@ -67,7 +67,7 @@
             <button
               @click="toggleUserMenu"
               title="Menu Pengguna"
-              class="flex items-center gap-2 p-1 sm:pl-1 sm:pr-2.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition shadow-2xs border border-border cursor-pointer active:scale-95"
+              class="flex items-center gap-2 p-1 sm:pl-1 sm:pr-2.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition border border-border cursor-pointer active:scale-95"
             >
               <img
                 :src="authStore.user?.avatar_url || defaultAvatar"
@@ -88,7 +88,7 @@
             <!-- User Menu Dropdown Panel -->
             <div
               v-if="isUserMenuOpen"
-              class="absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
+              class="absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)] bg-card rounded-2xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
             >
               <!-- User Info Header -->
               <div
@@ -193,7 +193,7 @@
       class="hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full"
     >
       <div
-        class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 shadow-inner flex items-center justify-around gap-2 sm:gap-3 border border-border/80"
+        class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 flex items-center justify-around gap-2 sm:gap-3 border border-border/80"
       >
         <router-link
           v-for="item in navTabs"
@@ -201,7 +201,7 @@
           :to="{ name: item.route }"
           :class="[
             isTabActive(item)
-              ? 'bg-card shadow-sm border border-primary/30 text-primary font-bold'
+              ? 'bg-card border border-primary/30 text-primary font-bold'
               : 'hover:bg-card/60 text-muted-foreground hover:text-foreground font-medium',
             'flex-1 flex flex-col items-center justify-center py-2.5 px-3 rounded-2xl transition-all duration-200 group relative overflow-hidden',
           ]"
@@ -211,7 +211,7 @@
               isTabActive(item)
                 ? 'bg-primary/10 text-primary'
                 : 'bg-secondary text-muted-foreground group-hover:text-foreground',
-              'w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center mb-1.5 shadow-2xs group-hover:scale-105 transition-all duration-200',
+              'w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center mb-1.5 group-hover:scale-105 transition-all duration-200',
             ]"
           >
             <component
@@ -238,7 +238,7 @@
 
     <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
     <footer
-      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:shadow-2xl"
+      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 backdrop-blur-md transition-all duration-300"
     >
       <div class="flex items-center justify-between gap-2 sm:gap-4">
         <!-- Banner Text -->
@@ -252,7 +252,7 @@
         <div class="flex items-center shrink-0">
           <router-link
             :to="{ name: 'infaq' }"
-            class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+            class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-bold text-xs sm:text-sm transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
           >
             <span>Infaq</span>
           </router-link>
@@ -263,7 +263,7 @@
     <!-- Mobile Bottom Navigation Bar -->
     <nav
       v-if="route.name !== 'infaq'"
-      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border shadow-lg px-2 py-1.5 justify-around items-center pb-safe"
+      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border px-2 py-1.5 justify-around items-center pb-safe"
     >
       <router-link
         v-for="item in navTabs"
@@ -303,10 +303,10 @@
       @click.self="showInfaqModal = false"
     >
       <div
-        class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250"
+        class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250"
       >
         <div
-          class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner"
+          class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4"
         >
           <QrCode class="w-7 h-7 text-primary" />
         </div>
@@ -342,7 +342,7 @@
           </button>
           <button
             @click="showInfaqModal = false"
-            class="flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow transition-all duration-150 cursor-pointer text-sm"
+            class="flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
           >
             Tutup
           </button>
@@ -357,7 +357,7 @@
       @click.self="showQrisModal = false"
     >
       <div
-        class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden"
+        class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden"
       >
         <!-- QRIS Brand Header -->
         <div
@@ -382,7 +382,7 @@
 
         <!-- QR Code Visual Card -->
         <div
-          class="bg-card p-4 rounded-2xl border-2 border-border shadow-inner flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative"
+          class="bg-card p-4 rounded-2xl border-2 border-border flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative"
         >
           <svg
             class="w-48 h-48 text-foreground"
@@ -447,7 +447,7 @@
             class="absolute inset-0 flex items-center justify-center pointer-events-none"
           >
             <div
-              class="bg-card px-2 py-0.5 rounded border border-border shadow-xs text-xs font-bold text-foreground"
+              class="bg-card px-2 py-0.5 rounded border border-border text-xs font-bold text-foreground"
             >
               KontaQ
             </div>
@@ -465,7 +465,7 @@
 
         <button
           @click="showQrisModal = false"
-          class="w-full py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow transition-all duration-150 cursor-pointer"
+          class="w-full py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer"
         >
           Tutup
         </button>

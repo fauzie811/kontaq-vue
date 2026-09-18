@@ -16,7 +16,7 @@
         enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-75 ease-in"
         leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
         <MenuItems
-          class="absolute right-0 z-10 w-40 mt-2 origin-top-right rounded-xl border border-border bg-popover py-1 shadow-lg focus:outline-none">
+          class="absolute right-0 z-10 w-40 mt-2 origin-top-right rounded-xl border border-border bg-popover py-1 focus:outline-none">
           <div class="mx-1">
             <MenuItem v-if="score !== undefined && score !== null" v-slot="{ active }">
             <button @click="() => emit('update-score', null)"

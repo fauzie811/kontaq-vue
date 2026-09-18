@@ -3,7 +3,7 @@
     <!-- Desktop Dropdown (sm: breakpoint and up) -->
     <div
       v-if="isOpen"
-      class="hidden sm:block absolute right-0 mt-2.5 w-96 bg-card rounded-2xl shadow-xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
+      class="hidden sm:block absolute right-0 mt-2.5 w-96 bg-card rounded-2xl border border-border z-50 animate-in fade-in zoom-in-[0.97] duration-250 overflow-hidden"
     >
       <div class="px-4 py-3 border-b border-border flex justify-between items-center bg-muted/50">
         <h4 class="font-bold text-foreground text-xs sm:text-sm flex items-center gap-2">
@@ -84,7 +84,7 @@
       >
         <div
           v-if="isOpen"
-          class="sm:hidden fixed bottom-0 inset-x-0 bg-card rounded-t-3xl border-t border-border shadow-2xl z-50 max-h-[85vh] flex flex-col overflow-hidden"
+          class="sm:hidden fixed bottom-0 inset-x-0 bg-card rounded-t-3xl border-t border-border z-50 max-h-[85vh] flex flex-col overflow-hidden"
         >
           <!-- Grab Handle -->
           <div class="pt-3 pb-1 flex justify-center cursor-grab active:cursor-grabbing" @click="emit('close')">

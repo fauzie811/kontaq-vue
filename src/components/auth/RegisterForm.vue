@@ -401,7 +401,7 @@ const doRegister = handleSubmit(async (values) => {
       <Button
         type="submit"
         size="lg"
-        class="w-full h-11 font-semibold shadow-md shadow-primary/20 active:scale-[0.98] transition-all gap-2"
+        class="w-full h-11 font-semibold active:scale-[0.98] transition-all gap-2"
         :disabled="isLoading"
       >
         <LoaderCircle v-if="isLoading" class="w-4 h-4 animate-spin" />

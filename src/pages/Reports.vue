@@ -22,7 +22,7 @@
     <!-- SKELETON LOADING -->
     <div
       v-if="isLoading"
-      class="animate-pulse divide-y divide-border/60 overflow-hidden rounded-2xl border border-border bg-card shadow-xs"
+      class="animate-pulse divide-y divide-border/60 overflow-hidden rounded-2xl border border-border bg-card"
       aria-hidden="true"
     >
       <div class="h-11 bg-muted/60 sm:h-14"></div>
@@ -38,9 +38,9 @@
     <!-- ERROR STATE -->
     <div
       v-else-if="loadError"
-      class="flex flex-col items-center rounded-2xl border border-border bg-card p-10 text-center shadow-xs sm:p-12"
+      class="flex flex-col items-center rounded-2xl border border-border bg-card p-10 text-center sm:p-12"
     >
-      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-danger-50 text-danger-600 shadow-inner">
+      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-danger-50 text-danger-600">
         <CircleAlert class="h-8 w-8" />
       </div>
       <h4 class="mb-1 text-base font-bold text-foreground">Gagal Memuat Rapor</h4>
@@ -60,9 +60,9 @@
     <!-- EMPTY STATE -->
     <div
       v-else-if="!reports || reports.items.length === 0"
-      class="flex flex-col items-center rounded-2xl border border-border bg-card p-10 text-center shadow-xs sm:p-12"
+      class="flex flex-col items-center rounded-2xl border border-border bg-card p-10 text-center sm:p-12"
     >
-      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary shadow-inner">
+      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
         <Users class="h-8 w-8" />
       </div>
       <h4 class="mb-1 text-base font-bold text-foreground">Belum Ada Peserta</h4>
@@ -72,7 +72,7 @@
     </div>
 
     <!-- REPORT TABLE -->
-    <div v-else class="overflow-x-auto rounded-2xl border border-border bg-card shadow-xs">
+    <div v-else class="overflow-x-auto rounded-2xl border border-border bg-card">
       <table class="min-w-full divide-y divide-border">
         <caption class="sr-only">Rapor nilai kuis dan evaluasi peserta</caption>
         <thead class="bg-muted">
@@ -81,7 +81,7 @@
               class="sticky left-0 z-10 w-10 min-w-10 bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
               #</th>
             <th scope="col"
-              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground shadow-xs sm:px-3 sm:py-4 sm:text-sm">
+              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
               Nama Peserta</th>
             <th scope="col" v-for="(quiz, index) in reports.quizzes" :key="quiz.id"
               class="whitespace-nowrap py-2.5 px-2.5 text-center text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
@@ -98,7 +98,7 @@
               {{ idx + 1 }}
             </td>
             <td
-              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-card py-2.5 px-2.5 text-xs text-muted-foreground shadow-xs sm:px-3 sm:py-4 sm:text-sm">
+              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-card py-2.5 px-2.5 text-xs text-muted-foreground sm:px-3 sm:py-4 sm:text-sm">
               <p class="text-xs text-muted-foreground">{{ item.username }}</p>
               <p class="text-xs font-medium text-foreground sm:text-sm">{{ item.name }}</p>
             </td>
@@ -118,7 +118,7 @@
             <th scope="col"
               class="sticky left-0 z-10 w-10 min-w-10 bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm"></th>
             <th scope="col"
-              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground shadow-xs sm:px-3 sm:py-4 sm:text-sm">
+              class="sticky left-10 z-10 whitespace-nowrap border-r border-border bg-muted py-2.5 px-2.5 text-left text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
               Total</th>
             <th scope="col" v-for="quiz in reports.quizzes" :key="quiz.id"
               class="py-2.5 px-2.5 text-center text-xs font-semibold text-foreground sm:px-3 sm:py-4 sm:text-sm">
@@ -145,7 +145,7 @@
               leave-from="opacity-100 translate-y-0 sm:scale-100"
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-[0.96]">
               <DialogPanel
-                class="relative w-full overflow-hidden rounded-2xl border border-border bg-card px-4 pt-5 pb-4 text-left text-card-foreground shadow-xl transition-all transform sm:my-8 sm:max-w-md sm:p-6">
+                class="relative w-full overflow-hidden rounded-2xl border border-border bg-card px-4 pt-5 pb-4 text-left text-card-foreground transition-all transform sm:my-8 sm:max-w-md sm:p-6">
                 <div>
                   <div class="mt-3 sm:mt-5">
                     <DialogTitle as="h3" class="text-base font-semibold leading-6 text-foreground">Rekap KontaQ

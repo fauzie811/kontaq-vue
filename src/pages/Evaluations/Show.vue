@@ -36,10 +36,10 @@
       <!-- ================================================================= -->
       <template v-if="evaluation && userEvaluation && !userEvaluation.finished_at">
         <!-- MOBILE STICKY FLOATING TIMER & PROGRESS BAR (< md) -->
-        <div class="md:hidden sticky top-16 z-30 -mx-4 px-4 py-2 bg-card/95 backdrop-blur-md border-y border-border shadow-md transition-all">
+        <div class="md:hidden sticky top-16 z-30 -mx-4 px-4 py-2 bg-card/95 backdrop-blur-md border-y border-border transition-all">
           <div class="flex items-center justify-between gap-3 mb-2">
             <!-- Countdown Timer Pill -->
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground border border-border shadow-2xs font-medium text-xs sm:text-sm">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground border border-border font-medium text-xs sm:text-sm">
               <Clock class="w-4 h-4 text-primary shrink-0 animate-pulse" />
               <span class="text-muted-foreground font-medium">Sisa Waktu:</span>
               <span class="font-mono font-bold text-foreground">
@@ -62,7 +62,7 @@
               @click="scrollToQuestion(idx)"
               :class="[
                 selected[q.id]
-                  ? 'bg-primary text-primary-foreground font-bold shadow-2xs'
+                  ? 'bg-primary text-primary-foreground font-bold'
                   : 'bg-muted text-muted-foreground hover:bg-secondary border border-border/80 font-medium',
                 'w-8 h-8 rounded-full flex items-center justify-center text-xs shrink-0 transition-all active:scale-90 cursor-pointer'
               ]"
@@ -91,7 +91,7 @@
                 @click="confirmSubmit"
                 type="button"
                 :disabled="isSubmitting"
-                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-5 py-4 text-base font-bold text-primary-foreground shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-5 py-4 text-base font-bold text-primary-foreground transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 <CheckCircle2 class="w-5 h-5" />
                 <span>{{ isSubmitting ? 'Mengumpulkan...' : 'Selesai & Kumpulkan Jawaban' }}</span>
@@ -102,7 +102,7 @@
           <!-- DESKTOP STICKY SIDEBAR (Timer, Progress & Question Navigator) -->
           <div class="hidden md:block md:sticky md:top-20 space-y-4">
             <!-- Timer Card -->
-            <div class="bg-card rounded-2xl shadow-xs border border-border p-5 text-center space-y-3">
+            <div class="bg-card rounded-2xl border border-border p-5 text-center space-y-3">
               <div class="flex items-center justify-center gap-2 text-muted-foreground">
                 <Clock class="w-4 h-4 text-primary" />
                 <h3 class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Sisa Waktu</h3>
@@ -114,7 +114,7 @@
             </div>
 
             <!-- Progress & Question Matrix Card -->
-            <div class="bg-card rounded-2xl shadow-xs border border-border p-5 space-y-4">
+            <div class="bg-card rounded-2xl border border-border p-5 space-y-4">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Progress</span>
                 <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
@@ -141,7 +141,7 @@
                     @click="scrollToQuestion(idx)"
                     :class="[
                       selected[q.id]
-                        ? 'bg-primary text-primary-foreground font-bold shadow-2xs'
+                        ? 'bg-primary text-primary-foreground font-bold'
                         : 'bg-muted text-muted-foreground hover:bg-secondary border border-border/80 font-medium',
                       'h-9 rounded-full flex items-center justify-center text-xs transition-all hover:scale-105 active:scale-95 cursor-pointer'
                     ]"
@@ -157,7 +157,7 @@
                 @click="confirmSubmit"
                 type="button"
                 :disabled="isSubmitting"
-                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-4 py-3 text-sm font-bold text-primary-foreground shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
+                class="w-full rounded-full bg-primary hover:bg-primary/90 active:scale-[0.98] px-4 py-3 text-sm font-bold text-primary-foreground transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
               >
                 <CheckCircle2 class="w-4 h-4" />
                 <span>{{ isSubmitting ? 'Mengumpulkan...' : 'Selesai & Kumpulkan' }}</span>
@@ -172,15 +172,15 @@
       <!-- ================================================================= -->
       <div v-if="userEvaluation && userEvaluation.finished_at" class="space-y-6">
         <!-- Celebratory Score Hero Banner -->
-        <div class="bg-gradient-to-br from-primary/10 via-primary/5 to-card rounded-3xl border border-primary/20 p-6 sm:p-8 text-center shadow-xs relative overflow-hidden">
-          <div class="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-3 shadow-inner">
+        <div class="bg-gradient-to-br from-primary/10 via-primary/5 to-card rounded-3xl border border-primary/20 p-6 sm:p-8 text-center relative overflow-hidden">
+          <div class="inline-flex p-3 rounded-2xl bg-primary/10 text-primary mb-3">
             <Award class="w-8 h-8 stroke-[2.2]" />
           </div>
           <h3 class="text-xl sm:text-2xl font-bold text-foreground mb-1.5">Jazaakumullah khayran katsiran</h3>
           <p class="text-sm sm:text-base text-muted-foreground mb-4">Anda telah menyelesaikan evaluasi ini.</p>
 
           <!-- Score Pill -->
-          <div class="inline-flex flex-col items-center justify-center bg-card rounded-2xl border border-border px-8 py-4 shadow-sm">
+          <div class="inline-flex flex-col items-center justify-center bg-card rounded-2xl border border-border px-8 py-4">
             <span class="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Nilai Anda</span>
             <span class="text-4xl sm:text-5xl font-extrabold text-primary font-mono">{{ userEvaluation.score }}</span>
           </div>
@@ -193,7 +193,7 @@
           <div
             v-for="(question, index) in evaluation.questions"
             :key="question.id"
-            class="bg-card rounded-2xl shadow-xs border border-border overflow-hidden"
+            class="bg-card rounded-2xl border border-border overflow-hidden"
           >
             <!-- Question Header -->
             <div class="bg-muted/50 flex items-stretch min-h-[52px] border-b border-border">
@@ -213,7 +213,7 @@
                   :key="opt.key"
                   :class="[
                     userEvaluation.answers && userEvaluation.answers[question.id] === opt.key
-                      ? 'bg-primary/15 text-primary font-bold border-primary shadow-xs ring-1 ring-primary/30'
+                      ? 'bg-primary/15 text-primary font-bold border-primary ring-1 ring-primary/30'
                       : 'text-foreground border-border bg-card',
                     'flex items-center justify-center px-4 py-3.5 sm:py-4 rounded-xl border-2 text-base sm:text-lg min-h-[52px]'
                   ]"
@@ -258,7 +258,7 @@
         <div class="pt-4 flex items-center justify-between">
           <router-link
             to="/evaluations"
-            class="inline-flex items-center gap-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border px-6 py-3 text-sm font-bold shadow-xs transition-all hover:scale-105 active:scale-95"
+            class="inline-flex items-center gap-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border px-6 py-3 text-sm font-bold transition-all hover:scale-105 active:scale-95"
           >
             <ArrowLeft class="w-4 h-4" />
             <span>Kembali ke Daftar Evaluasi</span>

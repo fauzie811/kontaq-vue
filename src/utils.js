@@ -51,9 +51,9 @@ export const swAlert = ({
         text,
         confirmButtonText: buttonText,
         customClass: {
-            popup: 'relative! transform! overflow-hidden! rounded-3xl! bg-card! text-card-foreground! text-center! shadow-2xl! border! border-border! transition-all! sm:my-8! sm:w-full! sm:max-w-md! p-6! sm:p-8! grid-cols-none!',
+            popup: 'relative! transform! overflow-hidden! rounded-3xl! bg-card! text-card-foreground! text-center! border! border-border! transition-all! sm:my-8! sm:w-full! sm:max-w-md! p-6! sm:p-8! grid-cols-none!',
             icon:
-                'm-0! mx-auto! flex! h-14! w-14! shrink-0! items-center! justify-center! rounded-full! border-0! mb-4! shadow-inner! col-start-1! col-end-3! ' +
+                'm-0! mx-auto! flex! h-14! w-14! shrink-0! items-center! justify-center! rounded-full! border-0! mb-4! col-start-1! col-end-3! ' +
                 iconColor(icon),
             title: 'p-0! text-center! text-xl! font-bold! leading-tight! text-foreground! mb-2! col-start-1! col-end-3!',
             htmlContainer:
@@ -61,7 +61,7 @@ export const swAlert = ({
             actions:
                 'flex! flex-col! sm:flex-row-reverse! gap-2.5! w-full! p-0! bg-transparent! border-0! justify-center! mt-0! col-start-1! col-end-3!',
             confirmButton:
-                'w-full! py-2.5! px-4! bg-primary! hover:bg-primary/90! text-primary-foreground! font-bold! rounded-full! shadow-xs! transition-all! duration-150! cursor-pointer! text-sm! flex! items-center! justify-center!',
+                'w-full! py-2.5! px-4! bg-primary! hover:bg-primary/90! text-primary-foreground! font-bold! rounded-full! transition-all! duration-150! cursor-pointer! text-sm! flex! items-center! justify-center!',
         },
     });
 
@@ -82,9 +82,9 @@ export const swConfirm = ({
         cancelButtonText,
         showCancelButton: true,
         customClass: {
-            popup: 'relative! transform! overflow-hidden! rounded-3xl! bg-card! text-card-foreground! text-center! shadow-2xl! border! border-border! transition-all! sm:my-8! sm:w-full! sm:max-w-md! p-6! sm:p-8! grid-cols-none!',
+            popup: 'relative! transform! overflow-hidden! rounded-3xl! bg-card! text-card-foreground! text-center! border! border-border! transition-all! sm:my-8! sm:w-full! sm:max-w-md! p-6! sm:p-8! grid-cols-none!',
             icon:
-                'm-0! mx-auto! flex! h-14! w-14! shrink-0! items-center! justify-center! rounded-full! border-0! mb-4! shadow-inner! col-start-1! col-end-3! ' +
+                'm-0! mx-auto! flex! h-14! w-14! shrink-0! items-center! justify-center! rounded-full! border-0! mb-4! col-start-1! col-end-3! ' +
                 iconColor(icon),
             title: 'p-0! text-center! text-xl! font-bold! leading-tight! text-foreground! mb-2! col-start-1! col-end-3!',
             htmlContainer:
@@ -92,7 +92,7 @@ export const swConfirm = ({
             actions:
                 'flex! flex-col-reverse! sm:flex-row-reverse! gap-2.5! w-full! p-0! bg-transparent! border-0! justify-center! mt-0! col-start-1! col-end-3!',
             confirmButton:
-                'w-full! sm:flex-1! py-2.5! px-4! bg-primary! hover:bg-primary/90! text-primary-foreground! font-bold! rounded-full! shadow-xs! transition-all! duration-150! cursor-pointer! text-sm! flex! items-center! justify-center!',
+                'w-full! sm:flex-1! py-2.5! px-4! bg-primary! hover:bg-primary/90! text-primary-foreground! font-bold! rounded-full! transition-all! duration-150! cursor-pointer! text-sm! flex! items-center! justify-center!',
             cancelButton:
                 'w-full! sm:flex-1! py-2.5! px-4! bg-secondary! hover:bg-secondary/80! text-secondary-foreground! font-bold! rounded-full! border! border-border! transition-all! duration-150! cursor-pointer! text-sm! flex! items-center! justify-center!',
         },

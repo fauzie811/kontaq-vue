@@ -25,10 +25,10 @@
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative w-full sm:max-w-lg overflow-hidden rounded-3xl bg-card text-card-foreground border border-border p-6 sm:p-8 shadow-2xl"
+              class="relative w-full sm:max-w-lg overflow-hidden rounded-3xl bg-card text-card-foreground border border-border p-6 sm:p-8"
             >
               <div
-                class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 shadow-inner"
+                class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400"
               >
                 <ClockAlert class="h-7 w-7" />
               </div>
@@ -69,7 +69,7 @@
                   <button
                     type="submit"
                     :disabled="isSubmitting"
-                    class="w-full sm:flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-xs transition-all text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                    class="w-full sm:flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <Loader2 v-if="isSubmitting" class="h-4 w-4 animate-spin" />
                     <span>{{ isSubmitting ? 'Mengirim…' : 'Kirim Pengajuan' }}</span>

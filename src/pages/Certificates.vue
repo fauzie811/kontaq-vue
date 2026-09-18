@@ -2,7 +2,7 @@
   <div>
     <PageHeader class="mb-8" page-title="Sertifikat" />
 
-    <div class="max-w-3xl overflow-hidden bg-card rounded-2xl border border-border shadow-xs text-card-foreground">
+    <div class="max-w-3xl overflow-hidden bg-card rounded-2xl border border-border text-card-foreground">
       <div class="px-4 py-5 sm:p-6">
         <div v-if="certificate">
           <object class="w-full aspect-2/3" :data="certificate.url + '?_token=' + authStore.token"

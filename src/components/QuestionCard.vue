@@ -1,7 +1,7 @@
 <template>
   <div
     :id="'question-' + (index + 1)"
-    class="scroll-mt-24 sm:scroll-mt-28 bg-card rounded-2xl shadow-xs border border-border overflow-hidden mb-5 sm:mb-6 transition-all duration-200"
+    class="scroll-mt-24 sm:scroll-mt-28 bg-card rounded-2xl border border-border overflow-hidden mb-5 sm:mb-6 transition-all duration-200"
   >
     <!-- Question Header Bar -->
     <div class="bg-muted/50 flex items-stretch min-h-[52px] border-b border-border">
@@ -29,7 +29,7 @@
             <div
               :class="[
                 checked
-                  ? 'bg-primary/10 text-primary font-bold border-primary shadow-xs ring-1 ring-primary/30'
+                  ? 'bg-primary/10 text-primary font-bold border-primary ring-1 ring-primary/30'
                   : 'bg-card hover:bg-muted/40 text-foreground border-border',
                 'flex items-center justify-center px-4 py-3.5 sm:py-4 rounded-xl border-2 cursor-pointer transition-all duration-150 select-none text-base sm:text-lg min-h-[52px] active:scale-[0.98]'
               ]"

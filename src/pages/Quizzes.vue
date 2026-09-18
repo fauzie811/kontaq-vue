@@ -9,7 +9,7 @@
 
     <div class="max-w-5xl space-y-6">
       <!-- Top Action Bar & Category Filter -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card rounded-2xl border border-border p-4 shadow-xs">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card rounded-2xl border border-border p-4">
         <div class="flex items-center gap-3">
           <div class="p-2.5 rounded-xl bg-primary/10 text-primary">
             <QuizIcon class="w-5 h-5" />
@@ -53,7 +53,7 @@
         <div
           v-for="quiz in quizzes.data"
           :key="quiz.id"
-          class="bg-card rounded-2xl border border-border shadow-xs hover:shadow-md hover:border-primary/40 transition-all duration-200 p-5 flex flex-col justify-between group h-full text-card-foreground"
+          class="bg-card rounded-2xl border border-border hover:border-primary/40 transition-all duration-200 p-5 flex flex-col justify-between group h-full text-card-foreground"
         >
           <div>
             <!-- Card Header: Duration & Status Badge -->
@@ -121,7 +121,7 @@
               v-if="quiz.can_request_late_permission"
               type="button"
               @click.prevent="openRequestDialog(quiz)"
-              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.98]"
             >
               <Send class="w-4 h-4" />
               <span>Ajukan Izin Telat</span>
@@ -154,7 +154,7 @@
               v-else-if="quiz.material_id && !quiz.material_read"
               type="button"
               @click.prevent="showAlert(quiz.material_id)"
-              class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer border border-border"
+              class="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all cursor-pointer border border-border"
             >
               <BookOpen class="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Baca Materi Terlebih Dahulu</span>
@@ -165,7 +165,7 @@
               v-else
               :to="{ name: 'quizzes.show', params: { id: quiz.id } }"
               :class="[
-                'w-full font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
+                'w-full font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all text-center cursor-pointer active:scale-[0.98]',
                 getStatus(quiz) === 'Selesai'
                   ? 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border'
                   : getStatus(quiz) === 'Sedang dikerjakan'
@@ -181,8 +181,8 @@
       </div>
 
       <!-- EMPTY STATE -->
-      <div v-else class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground shadow-xs flex flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 shadow-inner">
+      <div v-else class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground flex flex-col items-center">
+        <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
           <QuizIcon class="w-8 h-8" />
         </div>
         <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Kuis</h4>

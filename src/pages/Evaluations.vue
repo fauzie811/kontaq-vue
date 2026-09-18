@@ -9,7 +9,7 @@
 
     <div class="max-w-5xl space-y-6">
       <!-- Top Action Bar & Category Filter -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card rounded-2xl border border-border p-4 shadow-xs">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card rounded-2xl border border-border p-4">
         <div class="flex items-center gap-3">
           <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
             <EvaluationIcon class="w-5 h-5" />
@@ -53,7 +53,7 @@
         <div
           v-for="evaluation in evaluations.data"
           :key="evaluation.id"
-          class="bg-card rounded-2xl border border-border shadow-xs hover:shadow-md hover:border-amber-500/40 transition-all duration-200 p-5 flex flex-col justify-between group h-full text-card-foreground"
+          class="bg-card rounded-2xl border border-border hover:border-amber-500/40 transition-all duration-200 p-5 flex flex-col justify-between group h-full text-card-foreground"
         >
           <div>
             <!-- Card Header: Duration & Status Badge -->
@@ -116,7 +116,7 @@
               v-if="evaluation.can_request_late_permission"
               type="button"
               @click.prevent="openRequestDialog(evaluation)"
-              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.98]"
             >
               <Send class="w-4 h-4" />
               <span>Ajukan Izin Telat</span>
@@ -148,7 +148,7 @@
               v-else
               :to="{ name: 'evaluations.show', params: { id: evaluation.id } }"
               :class="[
-                'w-full font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all shadow-xs text-center cursor-pointer active:scale-[0.98]',
+                'w-full font-semibold rounded-full py-2.5 px-4 text-sm flex items-center justify-center gap-2 transition-all text-center cursor-pointer active:scale-[0.98]',
                 getStatus(evaluation) === 'Selesai'
                   ? 'bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border'
                   : getStatus(evaluation) === 'Sedang dikerjakan'
@@ -164,8 +164,8 @@
       </div>
 
       <!-- EMPTY STATE -->
-      <div v-else class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground shadow-xs flex flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 shadow-inner">
+      <div v-else class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground flex flex-col items-center">
+        <div class="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4">
           <EvaluationIcon class="w-8 h-8" />
         </div>
         <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Evaluasi</h4>

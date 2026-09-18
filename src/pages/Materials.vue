@@ -10,7 +10,7 @@
           @update:modelValue="() => changePage(1)" />
       </div>
 
-      <div class="overflow-hidden bg-card rounded-2xl border border-border shadow-xs text-card-foreground">
+      <div class="overflow-hidden bg-card rounded-2xl border border-border text-card-foreground">
         <ul role="list" class="divide-y divide-border">
           <li v-for="material in materials.data" :key="material.id"
             class="flex items-center justify-between px-6 py-4 gap-x-6">
@@ -27,7 +27,7 @@
             </div>
             <div class="flex items-center flex-none gap-x-4">
               <router-link :to="{ name: 'materials.show', params: { id: material.id } }"
-                class="hidden rounded-full bg-secondary hover:bg-secondary/80 px-3.5 py-1.5 text-sm font-semibold text-secondary-foreground border border-border shadow-2xs sm:block transition-colors">Lihat
+                class="hidden rounded-full bg-secondary hover:bg-secondary/80 px-3.5 py-1.5 text-sm font-semibold text-secondary-foreground border border-border sm:block transition-colors">Lihat
                 materi<span class="sr-only">, {{ material.name }}</span></router-link>
             </div>
           </li>

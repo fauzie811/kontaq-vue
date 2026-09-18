@@ -198,7 +198,7 @@ const handleDelete = async () => {
 <template>
   <div class="flex flex-col items-center sm:flex-row sm:items-center gap-6 pb-6 border-b border-border">
     <div class="relative group shrink-0">
-      <div class="w-24 h-24 rounded-full overflow-hidden shadow-md ring-4 ring-primary/20 bg-secondary">
+      <div class="w-24 h-24 rounded-full overflow-hidden ring-4 ring-primary/20 bg-secondary">
         <img :src="userAvatar" alt="Avatar" class="w-full h-full object-cover" />
       </div>
 
@@ -259,7 +259,7 @@ const handleDelete = async () => {
       v-if="showCropModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
     >
-      <div class="bg-card text-card-foreground rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-border space-y-4">
+      <div class="bg-card text-card-foreground rounded-2xl p-6 max-w-sm w-full border border-border space-y-4">
         <div class="flex items-center justify-between border-b border-border pb-3">
           <h4 class="font-semibold text-foreground text-base">Atur & Potong Foto</h4>
           <button type="button" @click="cancelCrop" class="text-muted-foreground hover:text-foreground">
@@ -269,7 +269,7 @@ const handleDelete = async () => {
 
         <div class="flex justify-center">
           <div
-            class="relative w-[300px] h-[300px] overflow-hidden rounded-xl bg-gray-900 cursor-move touch-none border border-border shadow-inner"
+            class="relative w-[300px] h-[300px] overflow-hidden rounded-xl bg-gray-900 cursor-move touch-none border border-border"
             @mousedown="startDrag"
             @mousemove="doDrag"
             @mouseup="stopDrag"

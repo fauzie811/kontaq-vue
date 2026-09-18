@@ -5,7 +5,7 @@
         :is="backUrl ? 'router-link' : 'button'"
         v-if="backUrl || showBack"
         :to="backUrl"
-        class="inline-flex items-center justify-center h-10 w-10 bg-secondary hover:bg-secondary/90 text-primary rounded-full transition-all flex-shrink-0 border border-border shadow-2xs hover:scale-105 active:scale-95 cursor-pointer"
+        class="inline-flex items-center justify-center h-10 w-10 bg-secondary hover:bg-secondary/90 text-primary rounded-full transition-all flex-shrink-0 border border-border hover:scale-105 active:scale-95 cursor-pointer"
         @click="!backUrl && $emit('back')"
         title="Kembali"
       >

@@ -2,7 +2,7 @@
   <div>
     <PageHeader class="mb-8" page-title="Pengumuman" />
 
-    <div class="max-w-3xl overflow-hidden bg-card rounded-2xl border border-border shadow-xs text-card-foreground">
+    <div class="max-w-3xl overflow-hidden bg-card rounded-2xl border border-border text-card-foreground">
       <div role="list" class="divide-y divide-border">
         <router-link :to="'/announcements/' + announcement.id" v-for="announcement in announcements.data"
           :key="announcement.id" :class="[

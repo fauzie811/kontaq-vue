@@ -27,7 +27,7 @@
     >
       <div
         v-if="isOpen"
-        class="sm:hidden fixed bottom-0 inset-x-0 bg-card rounded-t-3xl border-t border-border shadow-2xl z-50 max-h-[92vh] flex flex-col overflow-hidden"
+        class="sm:hidden fixed bottom-0 inset-x-0 bg-card rounded-t-3xl border-t border-border z-50 max-h-[92vh] flex flex-col overflow-hidden"
       >
         <!-- Grab Handle -->
         <div
@@ -40,7 +40,7 @@
         <!-- Search Input Header (Mobile) -->
         <div class="px-4 py-2.5 border-b border-border bg-card flex items-center gap-2 shrink-0">
           <div
-            class="flex-1 flex items-center gap-2.5 bg-muted/80 border border-input rounded-full px-3.5 py-2.5 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
+            class="flex-1 flex items-center gap-2.5 bg-muted/80 border border-input rounded-full px-3.5 py-2.5 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all"
           >
             <Search class="w-5 h-5 text-primary shrink-0" />
             <input
@@ -48,7 +48,7 @@
               v-model="searchQuery"
               type="text"
               placeholder="Cari Surah, ayat, materi, bantuan..."
-              class="w-full text-base border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-foreground placeholder:text-muted-foreground bg-transparent font-medium p-0"
+              class="w-full text-base border-0 border-none outline-none focus:outline-none focus:ring-0 text-foreground placeholder:text-muted-foreground bg-transparent font-medium p-0"
               @keydown.esc.prevent.stop="handleEscKey"
               @keydown.down.prevent="navigateDown"
               @keydown.up.prevent="navigateUp"
@@ -65,7 +65,7 @@
           </div>
           <button
             @click="emitClose"
-            class="w-10 h-10 rounded-full bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border shrink-0 cursor-pointer shadow-2xs active:scale-95"
+            class="w-10 h-10 rounded-full bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border shrink-0 cursor-pointer active:scale-95"
             title="Tutup pencarian"
           >
             <X class="w-4 h-4 stroke-[2.2]" />
@@ -80,7 +80,7 @@
             @click="setFilter('')"
             :class="[
               activeFilter === 'all'
-                ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                ? 'bg-primary text-primary-foreground border-primary font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
               'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 active:scale-95'
             ]"
@@ -91,7 +91,7 @@
             @click="setFilter('# ')"
             :class="[
               activeFilter === 'chapters'
-                ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                ? 'bg-primary text-primary-foreground border-primary font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
               'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
@@ -103,7 +103,7 @@
             @click="setFilter('@ ')"
             :class="[
               activeFilter === 'verses'
-                ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                ? 'bg-primary text-primary-foreground border-primary font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
               'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
@@ -115,7 +115,7 @@
             @click="setFilter('! ')"
             :class="[
               activeFilter === 'materials'
-                ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                ? 'bg-primary text-primary-foreground border-primary font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
               'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
@@ -127,7 +127,7 @@
             @click="setFilter('? ')"
             :class="[
               activeFilter === 'faqs'
-                ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                ? 'bg-primary text-primary-foreground border-primary font-bold'
                 : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
               'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer shrink-0 flex items-center gap-1 active:scale-95'
             ]"
@@ -255,7 +255,7 @@
             </div>
             <button
               @click="clearSearch"
-              class="px-3.5 py-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-full border border-border transition shadow-2xs cursor-pointer active:scale-95 flex items-center gap-1.5"
+              class="px-3.5 py-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-full border border-border transition cursor-pointer active:scale-95 flex items-center gap-1.5"
             >
               <RotateCcw class="w-3.5 h-3.5" />
               Reset Pencarian
@@ -458,12 +458,12 @@
         class="hidden sm:flex fixed inset-0 z-50 items-start justify-center pt-16 sm:pt-20 px-4 pointer-events-none"
       >
         <div
-          class="bg-card rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-border flex flex-col max-h-[82vh] pointer-events-auto backdrop-blur-xl"
+          class="bg-card rounded-3xl w-full max-w-2xl overflow-hidden border border-border flex flex-col max-h-[82vh] pointer-events-auto backdrop-blur-xl"
         >
           <!-- Search Input Header (Desktop) -->
           <div class="p-4 border-b border-border flex items-center gap-3 bg-card shrink-0">
             <div
-              class="flex-1 flex items-center gap-3 bg-muted/80 border border-input rounded-full px-4 py-3 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-2xs"
+              class="flex-1 flex items-center gap-3 bg-muted/80 border border-input rounded-full px-4 py-3 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all"
             >
               <Search class="w-5 h-5 text-primary shrink-0" />
               <input
@@ -471,7 +471,7 @@
                 v-model="searchQuery"
                 type="text"
                 placeholder="Cari Surah, ayat, materi tadabbur, bantuan (# surah, @ ayat)..."
-                class="w-full text-base sm:text-lg border-0 border-none outline-none focus:outline-none focus:ring-0 shadow-none text-foreground placeholder:text-muted-foreground bg-transparent font-medium p-0"
+                class="w-full text-base sm:text-lg border-0 border-none outline-none focus:outline-none focus:ring-0 text-foreground placeholder:text-muted-foreground bg-transparent font-medium p-0"
                 @keydown.esc.prevent.stop="handleEscKey"
                 @keydown.down.prevent="navigateDown"
                 @keydown.up.prevent="navigateUp"
@@ -487,7 +487,7 @@
               </button>
               <button
                 @click="handleEscKey"
-                class="hidden sm:inline-flex items-center text-xs bg-card px-2 py-0.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-secondary font-mono font-bold shadow-2xs select-none transition-colors cursor-pointer"
+                class="hidden sm:inline-flex items-center text-xs bg-card px-2 py-0.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-secondary font-mono font-bold select-none transition-colors cursor-pointer"
                 :title="searchQuery ? 'Hapus kata kunci (ESC)' : 'Tutup pencarian (ESC)'"
               >
                 ESC
@@ -495,7 +495,7 @@
             </div>
             <button
               @click="emitClose"
-              class="w-11 h-11 rounded-full bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border cursor-pointer shrink-0 shadow-2xs active:scale-95"
+              class="w-11 h-11 rounded-full bg-muted/80 hover:bg-secondary text-muted-foreground hover:text-foreground flex items-center justify-center transition-colors border border-border cursor-pointer shrink-0 active:scale-95"
               title="Tutup pencarian"
             >
               <X class="w-5 h-5 stroke-[2.2]" />
@@ -512,7 +512,7 @@
                 @click="setFilter('')"
                 :class="[
                   activeFilter === 'all'
-                    ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                    ? 'bg-primary text-primary-foreground border-primary font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
                   'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer active:scale-95'
                 ]"
@@ -523,7 +523,7 @@
                 @click="setFilter('# ')"
                 :class="[
                   activeFilter === 'chapters'
-                    ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                    ? 'bg-primary text-primary-foreground border-primary font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
                   'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
@@ -535,7 +535,7 @@
                 @click="setFilter('@ ')"
                 :class="[
                   activeFilter === 'verses'
-                    ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                    ? 'bg-primary text-primary-foreground border-primary font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
                   'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
@@ -547,7 +547,7 @@
                 @click="setFilter('! ')"
                 :class="[
                   activeFilter === 'materials'
-                    ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                    ? 'bg-primary text-primary-foreground border-primary font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
                   'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
@@ -559,7 +559,7 @@
                 @click="setFilter('? ')"
                 :class="[
                   activeFilter === 'faqs'
-                    ? 'bg-primary text-primary-foreground border-primary shadow-xs font-bold'
+                    ? 'bg-primary text-primary-foreground border-primary font-bold'
                     : 'bg-card text-muted-foreground hover:text-foreground hover:bg-secondary border-border font-medium',
                   'px-2.5 py-1 rounded-full border text-xs transition-all cursor-pointer flex items-center gap-1 active:scale-95'
                 ]"
@@ -625,7 +625,7 @@
                     v-for="surah in popularSurahs"
                     :key="surah.number"
                     @click="handleSelectSurah(surah)"
-                    class="p-3 bg-muted/40 hover:bg-secondary/70 border border-border hover:border-primary/40 rounded-2xl text-left transition-all group flex items-center justify-between cursor-pointer active:scale-[0.98] shadow-2xs hover:shadow-sm"
+                    class="p-3 bg-muted/40 hover:bg-secondary/70 border border-border hover:border-primary/40 rounded-2xl text-left transition-all group flex items-center justify-between cursor-pointer active:scale-[0.98]"
                   >
                     <div class="min-w-0 pr-2">
                       <div class="flex items-center gap-2">
@@ -662,7 +662,7 @@
                     class="p-3 bg-muted/30 hover:bg-secondary/60 border border-border/80 hover:border-primary/40 rounded-2xl flex items-center justify-between cursor-pointer transition-all group"
                   >
                     <div class="flex items-center gap-3 min-w-0">
-                      <span class="w-8 h-8 rounded-xl bg-card border border-border font-mono font-bold text-sm text-primary flex items-center justify-center shrink-0 group-hover:border-primary/50 shadow-2xs">
+                      <span class="w-8 h-8 rounded-xl bg-card border border-border font-mono font-bold text-sm text-primary flex items-center justify-center shrink-0 group-hover:border-primary/50">
                         {{ guide.prefix }}
                       </span>
                       <div class="min-w-0">
@@ -685,7 +685,7 @@
               v-else-if="!hasSearchResults"
               class="py-14 px-4 text-center flex flex-col items-center justify-center space-y-3.5"
             >
-              <div class="w-14 h-14 rounded-3xl bg-muted/80 border border-border flex items-center justify-center text-muted-foreground shadow-inner">
+              <div class="w-14 h-14 rounded-3xl bg-muted/80 border border-border flex items-center justify-center text-muted-foreground">
                 <SearchX class="w-7 h-7 text-muted-foreground" />
               </div>
               <div class="space-y-1.5 max-w-sm">
@@ -698,7 +698,7 @@
               </div>
               <button
                 @click="clearSearch"
-                class="px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-full border border-border transition shadow-2xs cursor-pointer active:scale-95 flex items-center gap-1.5"
+                class="px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs rounded-full border border-border transition cursor-pointer active:scale-95 flex items-center gap-1.5"
               >
                 <RotateCcw class="w-3.5 h-3.5" />
                 Reset Pencarian
@@ -726,7 +726,7 @@
                     @click="handleSelectSurah(surah)"
                     :class="[
                       isItemSelected(`surah-${surah.number}`)
-                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20 shadow-xs'
+                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20'
                         : 'bg-muted/40 hover:bg-secondary/70 border-border',
                       'p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between group active:scale-[0.98]'
                     ]"
@@ -771,7 +771,7 @@
                     @click="handleSelectVerse(verse)"
                     :class="[
                       isItemSelected(`verse-${verse.id || `${verse.chapter}-${verse.verse}`}`)
-                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20 shadow-xs'
+                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20'
                         : 'bg-muted/40 hover:bg-secondary/70 border-border',
                     'p-4 rounded-2xl border cursor-pointer transition-all space-y-2.5 group active:scale-[0.98]'
                     ]"
@@ -815,7 +815,7 @@
                     @click="handleSelectMaterial(material)"
                     :class="[
                       isItemSelected(`material-${material.id}`)
-                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20 shadow-xs'
+                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20'
                         : 'bg-muted/40 hover:bg-secondary/70 border-border',
                       'p-3.5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between group active:scale-[0.98]'
                     ]"
@@ -857,7 +857,7 @@
                     @click="handleSelectFaq(faq)"
                     :class="[
                       isItemSelected(`faq-${faq.id}`)
-                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20 shadow-xs'
+                        ? 'bg-secondary/90 border-primary/50 ring-2 ring-primary/20'
                         : 'bg-muted/40 hover:bg-secondary/70 border-border',
                       'p-4 rounded-2xl border cursor-pointer transition-all flex items-start justify-between group active:scale-[0.98]'
                     ]"
@@ -891,16 +891,16 @@
           >
             <div class="flex items-center gap-4">
               <span class="flex items-center gap-1.5">
-                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground shadow-2xs">↑</kbd>
-                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground shadow-2xs">↓</kbd>
+                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground">↑</kbd>
+                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground">↓</kbd>
                 <span>Navigasi</span>
               </span>
               <span class="flex items-center gap-1.5">
-                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground shadow-2xs">↵</kbd>
+                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground">↵</kbd>
                 <span>Pilih</span>
               </span>
               <span class="flex items-center gap-1.5">
-                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground shadow-2xs">ESC</kbd>
+                <kbd class="px-1.5 py-0.5 bg-card rounded border border-border font-mono text-xs font-semibold text-foreground">ESC</kbd>
                 <span>{{ searchQuery ? 'Hapus' : 'Tutup' }}</span>
               </span>
             </div>

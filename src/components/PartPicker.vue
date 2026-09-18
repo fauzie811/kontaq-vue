@@ -2,7 +2,7 @@
   <Listbox as="div" :modelValue="modelValue" @update:modelValue="value => emit('update:modelValue', value)">
     <div class="relative mt-2">
       <ListboxButton
-        class="relative w-full cursor-default rounded-full bg-card py-2 pl-4 pr-10 text-left text-card-foreground shadow-xs border border-input transition-colors hover:border-foreground/40 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:text-sm">
+        class="relative w-full cursor-default rounded-full bg-card py-2 pl-4 pr-10 text-left text-card-foreground border border-input transition-colors hover:border-foreground/40 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 sm:text-sm">
         <span class="block truncate">{{ modelValue ? 'Juz ' + modelValue : 'Semua Juz' }}</span>
         <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
           <ChevronUpDownIcon class="w-5 h-5 text-muted-foreground" aria-hidden="true" />
@@ -12,7 +12,7 @@
       <transition leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100"
         leave-to-class="opacity-0">
         <ListboxOptions
-          class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-popover border border-border rounded-xl shadow-lg max-h-60 focus:outline-none sm:text-sm">
+          class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-popover border border-border rounded-xl max-h-60 focus:outline-none sm:text-sm">
           <ListboxOption as="template" :value="null" v-slot="{ active, selected }">
             <li
               :class="[selected || active ? 'bg-primary text-primary-foreground' : 'text-popover-foreground hover:bg-secondary hover:text-secondary-foreground', 'relative cursor-default select-none py-2 pl-3 pr-9 mx-1 my-0.5 rounded-lg transition-colors']">

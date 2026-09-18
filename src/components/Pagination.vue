@@ -32,7 +32,7 @@
             <ChevronLeftIcon class="w-5 h-5" aria-hidden="true" />
           </button>
           <button v-for="page in pages" v-on:click="changePage(page)"
-            :class="[page == meta.current_page ? 'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-full shadow-xs transition-colors' : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full transition-colors']">{{
+            :class="[page == meta.current_page ? 'relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground rounded-full transition-colors': 'relative inline-flex items-center px-4 py-2 text-sm font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full transition-colors']">{{
               page }}</button>
           <button :disabled="meta.current_page == meta.last_page" v-on:click="changePage(meta.current_page + 1)"
             class="relative inline-flex items-center px-2.5 py-2 text-muted-foreground bg-secondary hover:bg-secondary/80 rounded-full transition-colors disabled:opacity-50">

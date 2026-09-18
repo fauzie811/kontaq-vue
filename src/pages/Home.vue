@@ -8,7 +8,7 @@
         rel="noopener noreferrer"
         class="transition-transform hover:scale-105 active:scale-95 inline-block"
       >
-        <img class="w-auto h-12 sm:h-14 object-contain drop-shadow-sm" src="@/assets/kontaq-logo-with-text.svg" alt="KontaQ" />
+        <img class="w-auto h-12 sm:h-14 object-contain" src="@/assets/kontaq-logo-with-text.svg" alt="KontaQ" />
       </a>
     </div>
 
@@ -20,11 +20,11 @@
         :is="item.route ? 'router-link' : 'button'"
         :to="getRouteLocation(item)"
         @click="!item.route && navigateMenu(item)"
-        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border-2 border-border bg-card hover:bg-secondary/50 text-foreground hover:border-primary/40 rounded-full shadow-xs transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring active:scale-[0.98] text-left"
+        class="group flex items-center justify-between w-full px-4 py-2.5 sm:px-6 sm:py-3.5 border-2 border-border bg-card hover:bg-secondary/50 text-foreground hover:border-primary/40 rounded-full transition-all duration-200 cursor-pointer outline-none focus:ring-2 focus:ring-ring active:scale-[0.98] text-left"
       >
         <div class="flex items-center gap-3 sm:gap-4">
           <!-- Color Accented Icon Container -->
-          <div :class="['w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 shadow-xs transition-transform duration-200 group-hover:scale-110', item.iconBg]">
+          <div :class="['w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110', item.iconBg]">
             <component :is="item.icon" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
           </div>
           <span class="text-foreground font-bold text-base sm:text-lg tracking-wide group-hover:text-primary transition-colors">
@@ -43,8 +43,8 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       @click.self="showInfaqModal = false"
     >
-      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250">
-        <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-md w-full text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250">
+        <div class="w-14 h-14 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
           <QrCode class="w-7 h-7 text-primary" />
         </div>
         <h3 class="text-xl font-bold text-foreground mb-2">Infaq & Donasi KontaQ</h3>
@@ -67,7 +67,7 @@
           </button>
           <button
             @click="showInfaqModal = false"
-            class="flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-xs transition-all duration-150 cursor-pointer text-sm"
+            class="flex-1 py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer text-sm"
           >
             Tutup
           </button>
@@ -81,7 +81,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       @click.self="showQrisModal = false"
     >
-      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden">
+      <div class="bg-card rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center border border-border animate-in fade-in zoom-in-[0.96] duration-250 relative overflow-hidden">
         <!-- QRIS Brand Header -->
         <div class="flex items-center justify-center gap-2 mb-4 pb-3 border-b border-border">
           <span class="font-extrabold tracking-widest text-red-600 text-xl font-mono">QRIS</span>
@@ -95,7 +95,7 @@
         <p class="text-xs text-primary font-semibold mb-4">KontaQ Indonesia</p>
 
         <!-- QR Code Visual Card -->
-        <div class="bg-white p-4 rounded-2xl border-2 border-border shadow-inner flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative">
+        <div class="bg-white p-4 rounded-2xl border-2 border-border flex flex-col items-center justify-center mx-auto mb-4 w-56 h-56 relative">
           <svg class="w-48 h-48 text-gray-900" viewBox="0 0 100 100" fill="currentColor">
             <rect x="5" y="5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="4" />
             <rect x="10" y="10" width="15" height="15" />
@@ -120,7 +120,7 @@
             <rect x="85" y="85" width="10" height="10" />
           </svg>
           <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="bg-white px-2 py-0.5 rounded border border-gray-300 shadow-xs text-xs font-bold text-gray-800">
+            <div class="bg-white px-2 py-0.5 rounded border border-gray-300 text-xs font-bold text-gray-800">
               KontaQ
             </div>
           </div>
@@ -134,7 +134,7 @@
 
         <button
           @click="showQrisModal = false"
-          class="w-full py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full shadow-xs transition-all duration-150 cursor-pointer"
+          class="w-full py-2.5 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full transition-all duration-150 cursor-pointer"
         >
           Tutup
         </button>

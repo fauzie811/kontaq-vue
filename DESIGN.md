@@ -96,7 +96,7 @@ The interface prioritizes reading comfort and effortless navigation. Pure white 
 - **Serene Palette**: Forest Green primary branding combined with Warm Amber accents for study progression and active highlights.
 - **Dedicated Quranic Typography**: Specialized `'LPMQ Isep Misbah'` Arabic script font paired with clean `Raleway` UI typography.
 - **Pill-Shaped Controls**: Every button, chip, and input field is fully rounded (`rounded-full`), while containers stay on the `12px`/`16px` radius scale.
-- **Tonal Layering**: Clean border definitions at rest, complemented by ambient hover shadows.
+- **Tonal Layering**: Flat surfaces separated by clean border strokes and background tone; no shadows.
 - **Tactile Micro-Interactions**: Gentle `active:scale-[0.98]` button responses and smooth View Transitions.
 
 ## Colors
@@ -147,14 +147,10 @@ The grid model centers content within a responsive `max-w-7xl` container with re
 
 ## Elevation & Depth
 
-Kontaq relies on flat tonal layering at rest, using crisp border strokes (`border-border`) and background color contrasts to separate content sections. Shadows are ambient and state-driven.
-
-### Shadow Vocabulary
-- **Subtle Elevation** (`box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05)`): Default subtle shadow applied to primary buttons and active cards.
-- **Hover Elevation** (`box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)`): Interactive hover depth on cards and clickable elements.
+Kontaq is fully flat. Surfaces separate through crisp border strokes (`border-border`, `border-input` on controls) and background tone (`bg-card` over `bg-background`, `bg-muted`/`bg-secondary` tints). Modals sit on a dimmed scrim, not a shadow.
 
 ### Named Rules
-**The State-Gated Shadow Rule.** Surfaces remain flat at rest. Ambient drop shadows appear exclusively in response to user interaction (hover, focus, or modal overlay).
+**The No-Shadow Rule.** No `box-shadow`, `drop-shadow`, inset shadow, or text shadow on any surface, at rest or on interaction. Hover and active states change border color, background tint, or ring (`ring-*` stays for focus visibility) — never elevation. Text over imagery gets its contrast from a solid or gradient overlay.
 
 ## Shapes
 
@@ -181,7 +177,7 @@ Interactive elements include subtle scale feedback (`active:scale-[0.98]`).
 - **Corner Style:** `12px` (`rounded-xl`) or `16px` (`rounded-2xl`). Never pill-shaped.
 - **Background:** Crisp white `#ffffff`.
 - **Border:** `1px` solid `#e4e4e7`.
-- **Hover:** Smooth elevation transition (`hover:shadow-md hover:border-primary/30`).
+- **Hover:** Border/tint transition (`hover:border-primary/30`, background tint).
 
 ### Inputs / Fields
 - **Style:** Background `#ffffff`, border `#8f8f99` (`border-input`, 3.2:1 on white), pill radius (`rounded-full`), `16px` horizontal padding.
@@ -203,7 +199,7 @@ Interactive elements include subtle scale feedback (`active:scale-[0.98]`).
 
 ### Don't:
 - **Don't** compress Arabic line-heights, which clips tashkeel diacritic marks.
-- **Don't** apply harsh black drop shadows; use soft ambient shadows for interactive hover states.
+- **Don't** add shadows of any kind; separate surfaces with borders and background tone.
 - **Don't** use `border-border` (or an opacity-reduced variant) on a form control — reach for `border-input`, which carries the accessible control-outline value.
 - **Don't** introduce competing accent colors that disrupt the serene green and warm amber palette.
 - **Don't** pill-shape textareas, cards, dropdown panels, or menu rows — the pill silhouette is reserved for controls.

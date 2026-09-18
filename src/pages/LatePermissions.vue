@@ -8,7 +8,7 @@
 
     <div class="max-w-4xl space-y-6">
       <!-- Summary bar -->
-      <div class="flex items-center gap-3 bg-card rounded-2xl border border-border p-4 shadow-xs">
+      <div class="flex items-center gap-3 bg-card rounded-2xl border border-border p-4">
         <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
           <LatePermissionIcon class="w-5 h-5" />
         </div>
@@ -41,7 +41,7 @@
         <div
           v-for="permission in permissions.data"
           :key="permission.id"
-          class="bg-card rounded-2xl border border-border shadow-xs p-5 text-card-foreground"
+          class="bg-card rounded-2xl border border-border p-5 text-card-foreground"
         >
           <div class="flex items-center justify-between gap-2 mb-3.5">
             <div
@@ -94,10 +94,10 @@
       <!-- EMPTY -->
       <div
         v-else
-        class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground shadow-xs flex flex-col items-center"
+        class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground flex flex-col items-center"
       >
         <div
-          class="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 shadow-inner"
+          class="w-16 h-16 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4"
         >
           <LatePermissionIcon class="w-8 h-8" />
         </div>

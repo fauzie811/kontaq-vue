@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Help / Q&A Banner -->
-    <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-sm">
+    <div class="bg-primary/5 border border-primary/20 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary shrink-0">
           <HelpIcon class="w-5 h-5" />
@@ -13,7 +13,7 @@
       </div>
       <router-link 
         :to="{ name: 'help', query: { q: 'Tadabbur' } }"
-        class="shrink-0 w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full text-xs sm:text-sm shadow-sm transition-all active:scale-95 text-center"
+        class="shrink-0 w-full sm:w-auto px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full text-xs sm:text-sm transition-all active:scale-95 text-center"
       >
         Lihat Q&A Tadabbur
       </router-link>
@@ -32,7 +32,7 @@
         v-for="surah in surahs"
         :key="surah.number"
         @click="openSurah(surah)"
-        class="bg-card rounded-3xl p-4 sm:p-5 border border-border shadow-xs hover:shadow-md hover:border-primary/50 transition-all cursor-pointer flex items-center justify-between group text-card-foreground"
+        class="bg-card rounded-3xl p-4 sm:p-5 border border-border hover:border-primary/50 transition-all cursor-pointer flex items-center justify-between group text-card-foreground"
       >
         <!-- Left: Surah Number & Titles -->
         <div class="flex items-center gap-3.5 min-w-0">

@@ -18,7 +18,7 @@
       </div>
 
       <!-- Verses Skeleton Card -->
-      <div class="bg-card border border-border rounded-2xl p-6 shadow-xs space-y-4">
+      <div class="bg-card border border-border rounded-2xl p-6 space-y-4">
         <div class="flex justify-between items-center pb-3 border-b border-border/60">
           <div class="h-4 w-28 bg-muted rounded animate-pulse"></div>
           <div class="h-4 w-32 bg-muted rounded animate-pulse"></div>
@@ -29,7 +29,7 @@
       </div>
 
       <!-- Content Skeleton Card -->
-      <div class="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
+      <div class="bg-card border border-border rounded-2xl p-6 sm:p-8 space-y-4">
         <div class="h-4 w-full bg-muted rounded animate-pulse"></div>
         <div class="h-4 w-11/12 bg-muted rounded animate-pulse"></div>
         <div class="h-4 w-4/5 bg-muted rounded animate-pulse"></div>
@@ -41,7 +41,7 @@
     <!-- Error State -->
     <div
       v-else-if="error"
-      class="bg-destructive/10 border border-destructive/30 rounded-2xl p-6 text-center text-destructive my-6 shadow-xs space-y-3"
+      class="bg-destructive/10 border border-destructive/30 rounded-2xl p-6 text-center text-destructive my-6 space-y-3"
     >
       <AlertCircle class="w-8 h-8 mx-auto text-destructive" />
       <p class="font-bold text-base sm:text-lg">Gagal Memuat Materi</p>
@@ -50,7 +50,7 @@
         <button
           type="button"
           @click="loadData(route.params.id)"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-semibold rounded-full text-sm transition-all cursor-pointer shadow-xs active:scale-[0.98]"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground font-semibold rounded-full text-sm transition-all cursor-pointer active:scale-[0.98]"
         >
           <RotateCw class="w-4 h-4" />
           <span>Coba Lagi</span>
@@ -124,7 +124,7 @@
       <!-- Material Content Card -->
       <article
         :class="[
-          'overflow-hidden bg-card text-card-foreground border border-border rounded-2xl shadow-xs transition-all',
+          'overflow-hidden bg-card text-card-foreground border border-border rounded-2xl transition-all',
           fontClass,
         ]"
       >
@@ -139,7 +139,7 @@
       <!-- Completion Banner (when already read) -->
       <div
         v-if="material.read_at"
-        class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs"
+        class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-900 dark:text-emerald-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
       >
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
@@ -157,7 +157,7 @@
 
         <router-link
           to="/materials"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted text-foreground font-semibold text-xs sm:text-sm rounded-full border border-emerald-500/30 shadow-2xs transition-all cursor-pointer shrink-0"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-card hover:bg-muted text-foreground font-semibold text-xs sm:text-sm rounded-full border border-emerald-500/30 transition-all cursor-pointer shrink-0"
         >
           <ArrowLeft class="w-4 h-4 text-primary" />
           <span>Kembali ke Materi</span>
@@ -171,7 +171,7 @@
       >
         <router-link
           to="/materials"
-          class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border shadow-2xs transition-all cursor-pointer active:scale-[0.98]"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border transition-all cursor-pointer active:scale-[0.98]"
         >
           <ArrowLeft class="w-4 h-4 text-primary" />
           <span>Kembali ke Daftar</span>
@@ -181,7 +181,7 @@
           @click="finishRead"
           type="button"
           :disabled="isSubmitting"
-          class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm rounded-full shadow-xs transition-all cursor-pointer active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+          class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm rounded-full transition-all cursor-pointer active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <div
             v-if="isSubmitting"

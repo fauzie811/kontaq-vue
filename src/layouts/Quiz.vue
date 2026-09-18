@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-full bg-gray-100">
     <div
-      class="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-gray-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
+      class="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-gray-200 shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
       <img class="w-auto h-10 object-contain" src="@/assets/kontaq-logo.svg" alt="Komunitas Tadabbur Al-Qur'an" />
 
       <div class="flex self-stretch flex-1 gap-x-4 lg:gap-x-6">

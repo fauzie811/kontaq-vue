@@ -10,7 +10,7 @@
     <div
       v-if="quranAudio.currentVerseNumber"
       :class="[
-        'fixed bottom-3 sm:bottom-24 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border shadow-xl overflow-hidden transition-all duration-400 ease-in-out',
+        'fixed bottom-3 sm:bottom-24 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 bg-card/95 text-card-foreground backdrop-blur-md border border-border overflow-hidden transition-all duration-400 ease-in-out',
         isExpanded ? 'rounded-2xl p-3 sm:p-4' : 'rounded-3xl p-3 sm:px-5'
       ]"
     >
@@ -54,7 +54,7 @@
             <button
               @click="quranAudio.togglePlayPause()"
               title="Putar / Jeda"
-              class="p-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer shadow-xs flex items-center justify-center w-8 h-8 shrink-0"
+              class="p-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer flex items-center justify-center w-8 h-8 shrink-0"
             >
               <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-4 w-4 border-2 border-primary-foreground border-t-transparent"></div>
               <Pause v-else-if="quranAudio.isPlaying" class="w-4 h-4 fill-primary-foreground text-primary-foreground" />
@@ -126,7 +126,7 @@
               <button
                 @click="quranAudio.togglePlayPause()"
                 title="Putar / Jeda"
-                class="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer shadow-md flex items-center justify-center w-11 h-11"
+                class="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full transition cursor-pointer flex items-center justify-center w-11 h-11"
               >
                 <div v-if="quranAudio.isBuffering" class="animate-spin rounded-full h-5 w-5 border-2 border-primary-foreground border-t-transparent"></div>
                 <Pause v-else-if="quranAudio.isPlaying" class="w-5 h-5 fill-primary-foreground text-primary-foreground" />

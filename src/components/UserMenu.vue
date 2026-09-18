@@ -22,7 +22,7 @@
       enter-to-class="transform scale-100 opacity-100" leave-active-class="transition duration-150 ease-in"
       leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-[0.99] opacity-0">
       <MenuItems
-        class="absolute right-0 z-10 mt-2.5 w-44 origin-top-right rounded-2xl bg-card py-2 shadow-xl border border-border focus:outline-none">
+        class="absolute right-0 z-10 mt-2.5 w-44 origin-top-right rounded-2xl bg-card py-2 border border-border focus:outline-none">
         <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
         <div v-if="item.separator" class="w-full h-px my-1 bg-border"></div>
         <a v-else-if="item.href" :href="item.href" target="_blank" rel="noopener noreferrer"

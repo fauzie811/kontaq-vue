@@ -17,7 +17,7 @@
             type="button"
             @click="refreshFeed"
             :disabled="isLoading || isRefreshing"
-            class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-foreground bg-card hover:bg-muted active:scale-[0.98] border border-border rounded-full shadow-2xs transition-all cursor-pointer disabled:opacity-50"
+            class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-foreground bg-card hover:bg-muted active:scale-[0.98] border border-border rounded-full transition-all cursor-pointer disabled:opacity-50"
             title="Perbarui percakapan"
           >
             <RefreshCw :class="['w-3.5 h-3.5', (isLoading || isRefreshing) ? 'animate-spin text-primary' : '']" />
@@ -32,7 +32,7 @@
       <!-- Chat Interface Main Area (lg:col-span-8 xl:col-span-9) -->
       <div class="lg:col-span-8 xl:col-span-9 flex flex-col">
         <!-- Chat Box Window Container -->
-        <div class="bg-card rounded-2xl border border-border shadow-xs flex flex-col h-[750px] max-h-[85vh] overflow-hidden transition-all">
+        <div class="bg-card rounded-2xl border border-border flex flex-col h-[750px] max-h-[85vh] overflow-hidden transition-all">
           
           <!-- Chat Window Top Navigation Bar -->
           <div class="px-4 py-3.5 sm:px-6 bg-card border-b border-border/80 flex items-center justify-between gap-3 shrink-0">
@@ -65,7 +65,7 @@
                 @click="isSearchOpen = !isSearchOpen"
                 :class="[
                   'p-2 rounded-full transition-all cursor-pointer border',
-                  isSearchOpen ? 'bg-primary text-primary-foreground border-primary shadow-xs' : 'bg-muted/60 text-muted-foreground hover:text-foreground border-border hover:bg-muted'
+                  isSearchOpen ? 'bg-primary text-primary-foreground border-primary ': 'bg-muted/60 text-muted-foreground hover:text-foreground border-border hover:bg-muted'
                 ]"
                 :title="isSearchOpen ? 'Tutup Pencarian' : 'Cari di percakapan'"
               >
@@ -174,7 +174,7 @@
               v-else-if="filteredGroupedPosts.length === 0"
               class="flex flex-col items-center justify-center h-full min-h-[320px] text-center p-6"
             >
-              <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4 ring-1 ring-primary/20 shadow-inner">
+              <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4 ring-1 ring-primary/20">
                 <MessageSquareDashed class="w-8 h-8" />
               </div>
               <h3 class="text-base font-bold text-foreground mb-1">
@@ -204,7 +204,7 @@
               >
                 <!-- Sticky Date Divider Pill -->
                 <div class="flex items-center justify-center my-4 sticky top-0 z-10">
-                  <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-muted/90 dark:bg-muted/80 backdrop-blur-xs text-muted-foreground border border-border/80 shadow-2xs">
+                  <span class="px-3.5 py-1 rounded-full text-xs font-semibold bg-muted/90 dark:bg-muted/80 backdrop-blur-xs text-muted-foreground border border-border/80">
                     {{ group.dateLabel }}
                   </span>
                 </div>
@@ -267,7 +267,7 @@
                     <!-- Chat Bubble Card -->
                     <div
                       :class="[
-                        'rounded-2xl p-3.5 sm:p-4 text-sm leading-relaxed transition-all shadow-2xs relative',
+                        'rounded-2xl p-3.5 sm:p-4 text-sm leading-relaxed transition-all relative',
                         isCurrentUser(forumPost.user)
                           ? 'bg-primary/10 border border-primary/25 dark:bg-primary/20 dark:border-primary/40 text-foreground rounded-tr-xs'
                           : 'bg-card border border-border text-foreground rounded-tl-xs hover:border-primary/30'
@@ -328,7 +328,7 @@
                 v-if="showScrollToBottom"
                 type="button"
                 @click="scrollToBottom(true)"
-                class="sticky bottom-3 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold shadow-md hover:bg-primary/90 active:scale-95 transition-all cursor-pointer"
+                class="sticky bottom-3 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 active:scale-95 transition-all cursor-pointer"
               >
                 <ArrowDown class="w-3.5 h-3.5" />
                 <span>Pesan Terbaru</span>
@@ -371,7 +371,7 @@
 
             <!-- Main Input Area Form -->
             <form @submit.prevent="sendPost" class="space-y-2.5">
-              <div class="relative rounded-2xl border border-input bg-background hover:border-foreground/40 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all overflow-hidden shadow-2xs">
+              <div class="relative rounded-2xl border border-input bg-background hover:border-foreground/40 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all overflow-hidden">
                 
                 <!-- Tab Mode: WRITE -->
                 <div v-show="composerTab === 'write'">
@@ -456,7 +456,7 @@
                     <button
                       type="submit"
                       :disabled="isSubmitting || !newPost.message || !newPost.message.trim()"
-                      class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 active:scale-[0.98] rounded-full shadow-xs transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+                      class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-primary hover:bg-primary/90 active:scale-[0.98] rounded-full transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
                     >
                       <Loader2 v-if="isSubmitting" class="w-3.5 h-3.5 animate-spin" />
                       <Send v-else class="w-3.5 h-3.5" />
@@ -483,7 +483,7 @@
       <!-- Sidebar Column (lg:col-span-4 xl:col-span-3 space-y-5) -->
       <div class="lg:col-span-4 xl:col-span-3 space-y-5">
         <!-- Logged-in User Profile Card -->
-        <div v-if="authStore.user" class="bg-card rounded-2xl border border-border shadow-xs p-5 text-card-foreground">
+        <div v-if="authStore.user" class="bg-card rounded-2xl border border-border p-5 text-card-foreground">
           <div class="flex items-center gap-3.5">
             <img
               class="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20 shrink-0"
@@ -508,7 +508,7 @@
         </div>
 
         <!-- Community Adab Guidelines Card -->
-        <div class="bg-card rounded-2xl border border-border shadow-xs p-5 text-card-foreground">
+        <div class="bg-card rounded-2xl border border-border p-5 text-card-foreground">
           <div class="flex items-center gap-2.5 pb-3 mb-3.5 border-b border-border">
             <div class="p-2 rounded-xl bg-primary/10 text-primary">
               <ShieldCheck class="w-5 h-5" />
@@ -536,7 +536,7 @@
         </div>
 
         <!-- Quick Tips & Shortcuts Card -->
-        <div class="bg-card rounded-2xl border border-border shadow-xs p-5 text-card-foreground">
+        <div class="bg-card rounded-2xl border border-border p-5 text-card-foreground">
           <div class="flex items-center gap-2 pb-3 mb-3 border-b border-border">
             <Info class="w-4 h-4 text-primary" />
             <h4 class="text-xs font-bold text-foreground uppercase tracking-wider">Tips Format Chat</h4>
