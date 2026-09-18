@@ -219,58 +219,61 @@
       <slot />
     </main>
 
-    <!-- Floating Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
-    <footer
-      class="fixed bottom-20 sm:bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-4xl bg-secondary border border-primary/20 rounded-full px-5 sm:px-8 py-2.5 sm:py-3 backdrop-blur-md transition-all duration-300"
-    >
-      <div class="flex items-center justify-between gap-2 sm:gap-4">
-        <!-- Banner Text -->
-        <span
-          class="font-bold text-secondary-foreground text-xs sm:text-base tracking-wide text-left"
-        >
-          DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
-        </span>
-
-        <!-- Infaq Button -->
-        <div class="flex items-center shrink-0">
-          <router-link
-            :to="{ name: 'infaq' }"
-            class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-bold text-xs sm:text-sm transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
-          >
-            <span>Infaq</span>
-          </router-link>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Mobile Bottom Navigation Bar -->
-    <nav
-      v-if="route.name !== 'infaq'"
-      class="flex sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border px-2 py-1.5 justify-around items-center pb-safe"
-    >
-      <router-link
-        v-for="item in navTabs"
-        :key="item.name"
-        :to="{ name: item.route }"
-        :class="[
-          isTabActive(item)
-            ? 'text-primary bg-primary/10 font-bold rounded-2xl'
-            : 'text-muted-foreground hover:text-foreground font-medium',
-          'flex-1 flex flex-col items-center justify-center py-1.5 px-1 transition text-center active:scale-95',
-        ]"
+    <!-- Fixed bottom stack: full-width infaq banner, then mobile nav -->
+    <div class="fixed bottom-0 inset-x-0 z-40 flex flex-col">
+      <!-- Mint Green Banner (DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN) -->
+      <footer
+        class="w-full bg-[#d9f5e7] dark:bg-secondary border-t border-primary/20 px-4 sm:px-8 py-2.5 sm:py-3"
       >
-        <component
-          :is="item.icon"
+        <div class="max-w-6xl mx-auto flex items-center justify-between sm:justify-center gap-3 sm:gap-10">
+          <!-- Banner Text -->
+          <span
+            class="font-extrabold text-primary text-xs sm:text-lg lg:text-xl tracking-tight uppercase text-left"
+          >
+            DUKUNG PROGRAM TADABBUR 1 HARI 1 HALAMAN
+          </span>
+
+          <!-- Infaq Button -->
+          <div class="flex items-center shrink-0">
+            <router-link
+              :to="{ name: 'infaq' }"
+              class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 rounded-full font-bold text-xs sm:text-base transition-all hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+            >
+              <span>Infaq</span>
+            </router-link>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav
+        v-if="route.name !== 'infaq'"
+        class="flex sm:hidden bg-card/95 backdrop-blur-md border-t border-border px-2 py-1.5 justify-around items-center pb-safe"
+      >
+        <router-link
+          v-for="item in navTabs"
+          :key="item.name"
+          :to="{ name: item.route }"
           :class="[
             isTabActive(item)
-              ? 'text-primary scale-110'
-              : 'text-muted-foreground',
-            'w-5 h-5 transition-transform mb-0.5',
+              ? 'text-primary bg-primary/10 font-bold rounded-2xl'
+              : 'text-muted-foreground hover:text-foreground font-medium',
+            'flex-1 flex flex-col items-center justify-center py-1.5 px-1 transition text-center active:scale-95',
           ]"
-        />
-        <span class="text-xs leading-tight">{{ item.name }}</span>
-      </router-link>
-    </nav>
+        >
+          <component
+            :is="item.icon"
+            :class="[
+              isTabActive(item)
+                ? 'text-primary scale-110'
+                : 'text-muted-foreground',
+              'w-5 h-5 transition-transform mb-0.5',
+            ]"
+          />
+          <span class="text-xs leading-tight">{{ item.name }}</span>
+        </router-link>
+      </nav>
+    </div>
 
     <!-- Search Modal Popup & Mobile Bottom Sheet -->
     <SearchModal
