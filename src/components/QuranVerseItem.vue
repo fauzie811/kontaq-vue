@@ -3,17 +3,17 @@
     :id="`verse-${verse.verse}`"
     :data-verse="verse.verse"
     :class="[
-      'rounded-2xl p-4 sm:p-6 border transition-all duration-300 space-y-4',
+      'px-4 py-5 sm:px-6 sm:py-6 border-l-4 transition-colors duration-300 first:rounded-t-2xl last:rounded-b-2xl',
       isActive
-        ? 'border-accent/60 bg-accent/5 ring-2 ring-accent/20'
+        ? 'border-l-accent/60 bg-accent/5'
         : isTargeted
-          ? 'border-primary/60 bg-primary/5 ring-2 ring-primary/30'
-          : 'bg-card text-card-foreground border-border/70 hover:border-primary/30',
+          ? 'border-l-primary/60 bg-primary/5'
+          : 'border-l-transparent',
     ]"
   >
     <!-- Verse Header -->
     <div
-      class="flex items-center justify-start gap-2.5 border-b border-border/60 pb-3"
+      class="flex items-center justify-start gap-2.5"
     >
       <!-- Actions Dropdown (3-dots) -->
       <Menu as="div" class="relative">

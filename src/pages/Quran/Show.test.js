@@ -146,7 +146,7 @@ describe('Quran/Show.vue', () => {
     // Verify verse 25 has targeted styling or is highlighted
     const verse25El = wrapper.find('#verse-25');
     expect(verse25El.exists()).toBe(true);
-    expect(verse25El.classes()).toContain('border-primary/60');
+    expect(verse25El.classes()).toContain('border-l-primary/60');
   });
 
   it('renders error state and handles retry button', async () => {

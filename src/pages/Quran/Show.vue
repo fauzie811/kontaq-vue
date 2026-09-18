@@ -1,19 +1,55 @@
 <template>
   <div class="max-w-4xl mx-auto pb-16">
     <!-- Navigation / Header Bar -->
-    <div class="mb-6 flex items-center justify-between">
-      <button
-        @click="goBack"
-        class="inline-flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-sm rounded-full border border-border transition-all cursor-pointer"
+    <nav class="mb-6 flex items-center justify-between gap-1.5 sm:gap-2 rounded-full bg-[#ebebeb] dark:bg-muted px-3.5 sm:px-10 py-2 sm:py-3">
+      <router-link
+        :to="{ name: 'home' }"
+        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
       >
-        <ArrowLeft class="w-4 h-4 text-primary" />
-        <span>Kembali ke Daftar Surah</span>
-      </button>
+        Beranda
+      </router-link>
 
-      <div v-if="chapterDetails" class="text-xs text-muted-foreground font-medium">
-        Surah ke-{{ chapterDetails.number }} dari 114
+      <div class="flex items-center gap-1.5 sm:gap-4 min-w-0">
+        <label class="relative flex items-center rounded-full bg-card min-w-0">
+          <span class="sr-only">Pilih surah</span>
+          <select
+            :value="chapterNumber"
+            @change="goToChapter($event.target.value)"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring max-w-32 sm:max-w-none truncate pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+          >
+            <option v-for="(chapter, number) in CHAPTER_DETAILS" :key="number" :value="Number(number)">
+              {{ chapter.latin }}
+            </option>
+          </select>
+          <span class="pointer-events-none absolute right-2 sm:right-4 flex flex-col items-center text-primary">
+            <ChevronUp class="w-3.5 h-3.5 sm:w-5 sm:h-5 -mb-1" />
+            <ChevronDown class="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          </span>
+        </label>
+
+        <label class="relative flex items-center rounded-full bg-card shrink-0">
+          <span class="sr-only">Pilih ayat</span>
+          <select
+            :value="selectedVerse"
+            @change="goToVerse($event.target.value)"
+            class="appearance-none bg-transparent bg-none border-0 rounded-full font-bold text-primary text-sm sm:text-lg cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
+          >
+            <option v-for="n in verseCount" :key="n" :value="n">{{ n }}</option>
+          </select>
+          <span class="pointer-events-none absolute right-2 sm:right-4 flex flex-col items-center text-primary">
+            <ChevronUp class="w-3.5 h-3.5 sm:w-5 sm:h-5 -mb-1" />
+            <ChevronDown class="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          </span>
+        </label>
       </div>
-    </div>
+
+      <router-link
+        :to="{ name: 'quizzes' }"
+        class="font-bold text-primary text-sm sm:text-lg hover:text-primary/80 transition-colors shrink-0"
+      >
+        Kuis
+      </router-link>
+    </nav>
 
     <!-- Initial Loading State -->
     <div v-if="initialLoading" class="text-center py-20 bg-card text-card-foreground rounded-2xl border border-border p-6">
@@ -64,21 +100,22 @@
         </div>
       </div>
 
-      <!-- Bismillah Banner (Show if not Surah At-Tawbah #9) -->
-      <div
-        v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
-        class="bg-card border border-border rounded-2xl p-4 sm:p-6 text-center mb-8 text-card-foreground"
-      >
-        <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-foreground dir-rtl leading-relaxed">
-            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-        </p>
-        <p class="text-xs text-muted-foreground font-medium mt-2">
-          Dengan menyebut nama Allah Yang Maha Pengasih, lagi Maha Penyayang
-        </p>
-      </div>
+      <!-- Quran Content Card: Bismillah + all verses -->
+      <div class="bg-card text-card-foreground border border-border rounded-2xl divide-y divide-border/60">
+        <!-- Bismillah (Show if not Surah At-Tawbah #9) -->
+        <div
+          v-if="chapterDetails.number !== 9 && chapterDetails.number !== 1"
+          class="px-4 py-6 sm:px-6 text-center"
+        >
+          <p class="font-quran text-lg sm:text-2xl lg:text-3xl text-foreground dir-rtl leading-relaxed">
+              بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+          </p>
+          <p class="text-xs text-muted-foreground font-medium mt-2">
+            Dengan menyebut nama Allah Yang Maha Pengasih, lagi Maha Penyayang
+          </p>
+        </div>
 
-      <!-- Verses List -->
-      <div class="space-y-6">
+        <!-- Verses -->
         <QuranVerseItem
           v-for="verse in verses"
           :key="verse.id"
@@ -129,7 +166,8 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ArrowLeft } from 'lucide-vue-next';
+import { ChevronDown, ChevronUp } from 'lucide-vue-next';
+import { CHAPTER_DETAILS } from '@/constants/quran';
 import { getQuranChapterVerses } from '@/api';
 import { quranAudio } from '@/store/quranAudio';
 import QuranAudioPlayer from '@/components/QuranAudioPlayer.vue';
@@ -407,8 +445,23 @@ watch(sentinelRef, (el) => {
   }
 });
 
-function goBack() {
-  router.push({ name: 'tadabbur' });
+const verseCount = computed(() => CHAPTER_DETAILS[chapterNumber.value]?.ayat || chapterDetails.value?.ayat || 1);
+const selectedVerse = ref(targetVerseNumber.value || 1);
+watch(targetVerseNumber, (v) => { selectedVerse.value = v || 1; });
+
+function goToChapter(number) {
+  router.push({ name: 'quran.show', params: { chapter: number } });
+}
+
+function goToVerse(number) {
+  const verse = parseInt(number, 10);
+  selectedVerse.value = verse;
+  // Same verse as the URL won't retrigger the targetVerseNumber watcher, so scroll directly.
+  if (verse === targetVerseNumber.value) {
+    scrollToVerse(verse, true);
+    return;
+  }
+  router.replace({ query: { ...route.query, verse } });
 }
 
 function copyVerse(verse) {

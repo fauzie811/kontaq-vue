@@ -172,7 +172,7 @@
 
     <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
     <section
-      v-if="route.name !== 'infaq'"
+      v-if="showMainMenu"
       class="hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full"
     >
       <div
@@ -247,7 +247,7 @@
 
       <!-- Mobile Bottom Navigation Bar -->
       <nav
-        v-if="route.name !== 'infaq'"
+        v-if="showMainMenu"
         class="flex sm:hidden bg-card/95 backdrop-blur-md border-t border-border px-2 py-1.5 justify-around items-center pb-safe"
       >
         <router-link
@@ -592,6 +592,9 @@ onUnmounted(() => {
 const ForumIcon = FEATURES.forum.icon;
 const CertificatesIcon = FEATURES.certificates.icon;
 const HelpIcon = FEATURES.help.icon;
+
+// Pages with their own navigation hide the tab menu and mobile bottom nav.
+const showMainMenu = computed(() => !['infaq', 'quran.show'].includes(route.name));
 
 const navTabs = [
   { name: 'Tadabbur', route: 'tadabbur', icon: FEATURES.tadabbur.icon },
