@@ -162,7 +162,7 @@
     --secondary: 145.1 25% 95%;
     --secondary-foreground: 145.1 35% 20%;
 
-    --muted: 240 4.8% 95.9%;
+    --muted: 240 4.8% 94%;
     --muted-foreground: 240 3.8% 46.1%;
 
     --accent: 32 77.3% 58.6%;
@@ -381,5 +381,3 @@ select {
   font-size: 1.5rem;
   line-height: 2em !important;
 }
-
-

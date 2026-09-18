@@ -4,11 +4,16 @@
   >
     <!-- Top Header -->
     <header
-      class="bg-card/90 backdrop-blur-md border-b border-border sticky top-0 z-30 px-4 py-2.5 sm:px-8 transition-all"
+      class="bg-card/90 backdrop-blur-md border-b border-border sticky top-0 z-30 p-4 sm:px-8 transition-all"
     >
-      <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <!-- Left Brand Logo -->
-        <div class="flex items-center gap-3">
+      <div class="max-w-6xl mx-auto flex items-center justify-between relative">
+        <!-- Brand Logo (centered on desktop for the tadabbur page, per mockup) -->
+        <div
+          :class="[
+            route.name === 'tadabbur' ? 'sm:absolute sm:left-1/2 sm:-translate-x-1/2' : '',
+            'flex items-center gap-3',
+          ]"
+        >
           <router-link
             :to="{ name: 'home' }"
             class="flex items-center gap-2 group"
@@ -16,13 +21,13 @@
             <img
               src="@/assets/kontaq-logo-with-text.svg"
               alt="KontaQ"
-              class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
+              class="h-11 w-auto object-contain transition-transform group-hover:scale-105"
             />
           </router-link>
         </div>
 
         <!-- Right Header Icons (Search, Notification, User Profile) -->
-        <div class="flex items-center gap-2 sm:gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 ml-auto">
           <!-- Search Icon Button with keyboard shortcut badge -->
           <button
             @click="isSearchOpen = true"
@@ -173,48 +178,38 @@
     <!-- Navigation Tabs Pill Container (Desktop / Tablet) -->
     <section
       v-if="showMainMenu"
-      class="hidden sm:block max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full"
+      class="hidden sm:block max-w-6xl mx-auto px-4 mt-4 sm:mt-6 w-full"
     >
       <div
-        class="bg-muted/80 backdrop-blur-sm rounded-3xl p-2.5 sm:p-3 flex items-center justify-around gap-2 sm:gap-3 border border-border/80"
+        class="bg-muted rounded-[2.5rem] px-4 py-2.5 flex items-start justify-around gap-2"
       >
         <router-link
           v-for="item in navTabs"
           :key="item.name"
           :to="{ name: item.route }"
-          :class="[
-            isTabActive(item)
-              ? 'bg-card border border-primary/30 text-primary font-bold'
-              : 'hover:bg-card/60 text-muted-foreground hover:text-foreground font-medium',
-            'flex-1 flex flex-col items-center justify-center py-2.5 px-3 rounded-2xl transition-all duration-200 group relative overflow-hidden',
-          ]"
+          class="flex-1 flex flex-col items-center gap-2 group"
         >
-          <div
+          <img
+            :src="item.image"
+            alt=""
             :class="[
-              isTabActive(item)
-                ? 'bg-primary/10 text-primary'
-                : 'bg-secondary text-muted-foreground group-hover:text-foreground',
-              'w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center mb-1.5 group-hover:scale-105 transition-all duration-200',
+              isTabActive(item) ? 'ring-4 ring-primary/30' : '',
+              'w-12 h-12 lg:w-14 lg:h-14 rounded-full transition-transform duration-200 group-hover:scale-105',
             ]"
-          >
-            <component
-              :is="item.icon"
-              class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.2] text-primary"
-            />
-          </div>
-          <span class="text-xs sm:text-sm tracking-wide">{{ item.name }}</span>
-          <!-- Active Tab Indicator Dot -->
-          <div
-            v-if="isTabActive(item)"
-            class="w-1.5 h-1.5 bg-primary rounded-full mt-1 animate-in zoom-in duration-200"
-          ></div>
+          />
+          <span
+            :class="[
+              isTabActive(item) ? 'font-bold' : 'font-semibold',
+              'text-primary text-sm lg:text-base leading-tight tracking-wide',
+            ]"
+          >{{ item.name }}</span>
         </router-link>
       </div>
     </section>
 
     <!-- Main Content Slot -->
     <main
-      class="max-w-6xl mx-auto px-4 mt-8 sm:mt-10 w-full flex-1"
+      class="max-w-4xl mx-auto px-4 mt-6 sm:mt-8 w-full flex-1"
     >
       <slot />
     </main>
@@ -261,13 +256,12 @@
             'flex-1 flex flex-col items-center justify-center py-1.5 px-1 transition text-center active:scale-95',
           ]"
         >
-          <component
-            :is="item.icon"
+          <img
+            :src="item.image"
+            alt=""
             :class="[
-              isTabActive(item)
-                ? 'text-primary scale-110'
-                : 'text-muted-foreground',
-              'w-5 h-5 transition-transform mb-0.5',
+              isTabActive(item) ? 'scale-110' : '',
+              'w-7 h-7 rounded-full transition-transform mb-0.5',
             ]"
           />
           <span class="text-xs leading-tight">{{ item.name }}</span>
@@ -418,10 +412,10 @@ const HelpIcon = FEATURES.help.icon;
 const showMainMenu = computed(() => !['infaq', 'quran.show', 'quizzes', 'quizzes.show', 'evaluations', 'evaluations.show', 'reports'].includes(route.name));
 
 const navTabs = [
-  { name: 'Tadabbur', route: 'tadabbur', icon: FEATURES.tadabbur.icon },
-  { name: 'Kuis', route: 'quizzes', icon: FEATURES.quizzes.icon },
-  { name: 'Evaluasi', route: 'evaluations', icon: FEATURES.evaluations.icon },
-  { name: 'Rapor', route: 'reports', icon: FEATURES.reports.icon },
+  { name: 'Tadabbur', route: 'tadabbur', image: FEATURES.tadabbur.image },
+  { name: 'Kuis', route: 'quizzes', image: FEATURES.quizzes.image },
+  { name: 'Evaluasi', route: 'evaluations', image: FEATURES.evaluations.image },
+  { name: 'Rapor', route: 'reports', image: FEATURES.reports.image },
 ];
 
 function isTabActive(item) {
