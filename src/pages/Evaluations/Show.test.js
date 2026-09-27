@@ -298,8 +298,8 @@ describe('Evaluations/Show.vue on the bare /evaluations route', () => {
     expect(api.listAllMyEvaluations).toHaveBeenCalledTimes(1);
   });
 
-  it('falls back to the latest evaluation when none is workable', async () => {
-    await mountWith([row(1), row(2, { finished_at: '2026-11-01' })]);
+  it('falls back to the newest (first-listed) evaluation when none is workable', async () => {
+    await mountWith([row(2), row(1, { finished_at: '2026-11-01' })]);
 
     expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: '2' } });
   });

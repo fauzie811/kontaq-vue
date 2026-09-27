@@ -316,8 +316,8 @@ describe('Quizzes/Show.vue on the bare /quizzes route', () => {
     expect(api.listAllMyQuizzes).toHaveBeenCalledTimes(1);
   });
 
-  it('falls back to the latest quiz when none is workable', async () => {
-    await mountWith([row(1), row(2, { finished_at: '2026-11-01' })]);
+  it('falls back to the newest (first-listed) quiz when none is workable', async () => {
+    await mountWith([row(2), row(1, { finished_at: '2026-11-01' })]);
 
     expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '2' } });
   });

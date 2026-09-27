@@ -313,10 +313,10 @@ const evaluationList = ref([]);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-// The bare /evaluations route shares this page: it opens the first open, unfinished evaluation, else the latest one.
+// The bare /evaluations route shares this page: it opens the first open, unfinished evaluation, else the newest (list is newest first).
 const evaluationId = computed(() => {
   if (route.params.id) return String(route.params.id);
-  const target = evaluationList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? evaluationList.value.at(-1);
+  const target = evaluationList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? evaluationList.value[0];
   return target && String(target.id);
 });
 const currentIndex = computed(() => evaluationList.value.findIndex((q) => String(q.id) === evaluationId.value));

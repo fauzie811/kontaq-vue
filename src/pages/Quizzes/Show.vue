@@ -322,10 +322,10 @@ const quizList = ref([]);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-// The bare /quizzes route shares this page: it opens the first open, unfinished quiz, else the latest one.
+// The bare /quizzes route shares this page: it opens the first open, unfinished quiz, else the newest (list is newest first).
 const quizId = computed(() => {
   if (route.params.id) return String(route.params.id);
-  const target = quizList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? quizList.value.at(-1);
+  const target = quizList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? quizList.value[0];
   return target && String(target.id);
 });
 const currentIndex = computed(() => quizList.value.findIndex((q) => String(q.id) === quizId.value));
