@@ -87,7 +87,7 @@ const routes = [
   },
   {
     path: '/quizzes',
-    component: () => import('./pages/Quizzes.vue'),
+    component: () => import('./pages/Quizzes/Show.vue'),
     name: 'quizzes',
     meta: { needsAuth: true, layout: MainLayout },
   },
@@ -99,7 +99,7 @@ const routes = [
   },
   {
     path: '/evaluations',
-    component: () => import('./pages/Evaluations.vue'),
+    component: () => import('./pages/Evaluations/Show.vue'),
     name: 'evaluations',
     meta: { needsAuth: true, layout: MainLayout },
   },

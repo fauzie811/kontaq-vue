@@ -247,10 +247,10 @@ export const getAnnouncement = async (id) => {
   }
 };
 
-export const listMyQuizzes = async ({ page = 1, week = null }) => {
+export const listMyQuizzes = async ({ page = 1, week = null, perPage }) => {
   try {
     const { data } = await axios.get('me/quizzes', {
-      params: { page, week },
+      params: { page, week, per_page: perPage },
     });
     return data;
   } catch (e) {
@@ -264,7 +264,7 @@ const listAllPages = async (listPage) => {
   let page = 1;
   let lastPage = 1;
   do {
-    const res = await listPage({ page });
+    const res = await listPage({ page, perPage: 500 }); // the backend's per_page cap: one request in practice
     all.push(...(res.data?.data || []));
     lastPage = res.data?.last_page || 1;
     page++;
@@ -292,10 +292,10 @@ export const updateMyQuiz = async (id, answers) => {
   }
 };
 
-export const listMyEvaluations = async ({ page = 1, week = null }) => {
+export const listMyEvaluations = async ({ page = 1, week = null, perPage }) => {
   try {
     const { data } = await axios.get('me/evaluations', {
-      params: { page, week },
+      params: { page, week, per_page: perPage },
     });
     return data;
   } catch (e) {

@@ -158,7 +158,7 @@ describe('API Helper Functions', () => {
 
       const res = await listAllMyQuizzes();
       expect(axios.get).toHaveBeenCalledTimes(2);
-      expect(axios.get).toHaveBeenLastCalledWith('me/quizzes', { params: { page: 2, week: null } });
+      expect(axios.get).toHaveBeenLastCalledWith('me/quizzes', { params: { page: 2, week: null, per_page: 500 } });
       expect(res).toEqual([{ id: 1 }, { id: 2 }]);
     });
   });
@@ -170,7 +170,7 @@ describe('API Helper Functions', () => {
         .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 } } });
 
       const res = await listAllMyEvaluations();
-      expect(axios.get).toHaveBeenLastCalledWith('me/evaluations', { params: { page: 2, week: null } });
+      expect(axios.get).toHaveBeenLastCalledWith('me/evaluations', { params: { page: 2, week: null, per_page: 500 } });
       expect(res).toEqual([{ id: 1 }, { id: 2 }]);
     });
   });

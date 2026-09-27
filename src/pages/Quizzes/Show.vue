@@ -121,7 +121,7 @@
         <p ref="headerTimer" class="text-sm sm:text-base font-medium text-primary">
           Sisa Waktu :
           <span class="font-mono">
-            <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
+            <Countdown :start-time="startedAt" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
           </span>
         </p>
       </div>
@@ -146,7 +146,7 @@
           >
             <p class="text-sm font-semibold">Sisa Waktu</p>
             <p class="font-mono text-2xl font-bold">
-              <Countdown :start-time="parseISO(userQuiz.created_at)" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
+              <Countdown :start-time="startedAt" :duration="quiz.duration" @finished="forceFinish" @tick="handleTick" />
             </p>
           </div>
 
@@ -254,6 +254,17 @@
       </div>
     </div>
 
+    <!-- ================================================================= -->
+    <!-- 3. NOTHING TO SHOW -->
+    <!-- ================================================================= -->
+    <div v-else-if="!quizId" class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground flex flex-col items-center">
+      <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
+        <QuizIcon class="w-8 h-8" />
+      </div>
+      <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Kuis</h4>
+      <p class="text-sm text-muted-foreground max-w-md">Kuis belum tersedia saat ini.</p>
+    </div>
+
     <LatePermissionDialog
       v-model:open="requestDialogOpen"
       type="quiz"
@@ -284,10 +295,13 @@ import parseISO from 'date-fns/parseISO';
 import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
 import { swAlert, swConfirm, shortDateTime } from '@/utils';
+import { FEATURES } from '@/constants/features';
 import { getMyQuiz, listAllMyQuizzes, updateMyQuiz } from '@/api';
 import Countdown from '@/components/Countdown.vue';
 import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import QuestionCard from '@/components/QuestionCard.vue';
+
+const QuizIcon = FEATURES.quizzes.icon;
 
 const route = useRoute();
 const isDesktop = useMediaQuery('(min-width: 640px)');
@@ -308,7 +322,13 @@ const quizList = ref([]);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-const currentIndex = computed(() => quizList.value.findIndex((q) => String(q.id) === String(route.params.id)));
+// The bare /quizzes route shares this page: it opens the first open, unfinished quiz, else the latest one.
+const quizId = computed(() => {
+  if (route.params.id) return String(route.params.id);
+  const target = quizList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? quizList.value.at(-1);
+  return target && String(target.id);
+});
+const currentIndex = computed(() => quizList.value.findIndex((q) => String(q.id) === quizId.value));
 const currentItem = computed(() => quizList.value[currentIndex.value]);
 
 // Checked from the list row before opening, since opening a quiz starts its timer.
@@ -335,6 +355,8 @@ const lockIcon = computed(() => {
   return Lock;
 });
 
+const startedAt = computed(() => userQuiz.value && parseISO(userQuiz.value.created_at));
+
 const totalQuestions = computed(() => quiz.value?.questions?.length || 0);
 
 const answeredCount = computed(() => {
@@ -352,9 +374,12 @@ async function loadData(refreshList = false) {
     if (refreshList || quizList.value.length === 0) {
       quizList.value = await listAllMyQuizzes();
     }
+    if (!quizId.value) return;
+    // Same component on both routes, so this only fills in the URL; nothing reloads.
+    if (!route.params.id) router.replace({ name: 'quizzes.show', params: { id: quizId.value } });
     if (lockState.value) return;
 
-    const data = await getMyQuiz(route.params.id);
+    const data = await getMyQuiz(quizId.value);
 
     // The backend may still refuse (schedule or unread material)
     if (!data.success) {
@@ -371,7 +396,7 @@ async function loadData(refreshList = false) {
   }
 }
 loadData();
-watch(() => route.params.id, (id) => id && loadData());
+watch(quizId, (id, oldId) => id && oldId && loadData());
 
 async function goToQuiz(position) {
   const target = quizList.value[Number(position) - 1];
@@ -416,15 +441,17 @@ async function submitAnswers() {
   isSubmitting.value = true;
 
   try {
-    const data = await updateMyQuiz(route.params.id, selected.value);
+    const data = await updateMyQuiz(quizId.value, selected.value);
 
     if (!data.success) {
       blockedMessage.value = data.message || 'Kuis ini tidak dapat dikumpulkan.';
       return;
     }
 
-    // Reload into review mode (score + Jazaakumullaah banner)
-    await loadData(true);
+    // The response already holds the scored attempt: switch to review mode without refetching.
+    quiz.value = data.data.quiz;
+    userQuiz.value = data.data.user_quiz;
+    if (currentItem.value) currentItem.value.finished_at = userQuiz.value.finished_at;
   } catch (error) {
     await swAlert({
       icon: 'warning',

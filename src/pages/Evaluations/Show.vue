@@ -113,7 +113,7 @@
         <p ref="headerTimer" class="text-sm sm:text-base font-semibold text-primary">
           Sisa Waktu :
           <span class="font-mono">
-            <Countdown :start-time="parseISO(userEvaluation.created_at)" :duration="evaluation.duration" @finished="forceFinish" @tick="handleTick" />
+            <Countdown :start-time="startedAt" :duration="evaluation.duration" @finished="forceFinish" @tick="handleTick" />
           </span>
         </p>
       </div>
@@ -138,7 +138,7 @@
           >
             <p class="text-sm font-semibold">Sisa Waktu</p>
             <p class="font-mono text-2xl font-bold">
-              <Countdown :start-time="parseISO(userEvaluation.created_at)" :duration="evaluation.duration" @finished="forceFinish" @tick="handleTick" />
+              <Countdown :start-time="startedAt" :duration="evaluation.duration" @finished="forceFinish" @tick="handleTick" />
             </p>
           </div>
 
@@ -246,6 +246,17 @@
       </div>
     </div>
 
+    <!-- ================================================================= -->
+    <!-- 3. NOTHING TO SHOW -->
+    <!-- ================================================================= -->
+    <div v-else-if="!evaluationId" class="bg-card rounded-2xl border border-border p-10 sm:p-12 text-center text-card-foreground flex flex-col items-center">
+      <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
+        <EvaluationIcon class="w-8 h-8" />
+      </div>
+      <h4 class="text-base font-bold text-foreground mb-1">Belum Ada Evaluasi</h4>
+      <p class="text-sm text-muted-foreground max-w-md">Evaluasi belum tersedia saat ini.</p>
+    </div>
+
     <LatePermissionDialog
       v-model:open="requestDialogOpen"
       type="evaluation"
@@ -275,10 +286,13 @@ import parseISO from 'date-fns/parseISO';
 import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
 import { swAlert, swConfirm, shortDateTime } from '@/utils';
+import { FEATURES } from '@/constants/features';
 import { getMyEvaluation, listAllMyEvaluations, updateMyEvaluation } from '@/api';
 import Countdown from '@/components/Countdown.vue';
 import LatePermissionDialog from '@/components/LatePermissionDialog.vue';
 import QuestionCard from '@/components/QuestionCard.vue';
+
+const EvaluationIcon = FEATURES.evaluations.icon;
 
 const route = useRoute();
 const isDesktop = useMediaQuery('(min-width: 640px)');
@@ -299,7 +313,13 @@ const evaluationList = ref([]);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-const currentIndex = computed(() => evaluationList.value.findIndex((q) => String(q.id) === String(route.params.id)));
+// The bare /evaluations route shares this page: it opens the first open, unfinished evaluation, else the latest one.
+const evaluationId = computed(() => {
+  if (route.params.id) return String(route.params.id);
+  const target = evaluationList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? evaluationList.value.at(-1);
+  return target && String(target.id);
+});
+const currentIndex = computed(() => evaluationList.value.findIndex((q) => String(q.id) === evaluationId.value));
 const currentItem = computed(() => evaluationList.value[currentIndex.value]);
 
 // Checked from the list row before opening, since opening a evaluation starts its timer.
@@ -323,6 +343,8 @@ const lockIcon = computed(() => {
   return Lock;
 });
 
+const startedAt = computed(() => userEvaluation.value && parseISO(userEvaluation.value.created_at));
+
 const totalQuestions = computed(() => evaluation.value?.questions?.length || 0);
 
 const answeredCount = computed(() => {
@@ -340,9 +362,12 @@ async function loadData(refreshList = false) {
     if (refreshList || evaluationList.value.length === 0) {
       evaluationList.value = await listAllMyEvaluations();
     }
+    if (!evaluationId.value) return;
+    // Same component on both routes, so this only fills in the URL; nothing reloads.
+    if (!route.params.id) router.replace({ name: 'evaluations.show', params: { id: evaluationId.value } });
     if (lockState.value) return;
 
-    const data = await getMyEvaluation(route.params.id);
+    const data = await getMyEvaluation(evaluationId.value);
 
     // The backend may still refuse (schedule or unfinished quizzes)
     if (!data.success) {
@@ -359,7 +384,7 @@ async function loadData(refreshList = false) {
   }
 }
 loadData();
-watch(() => route.params.id, (id) => id && loadData());
+watch(evaluationId, (id, oldId) => id && oldId && loadData());
 
 async function goToEvaluation(position) {
   const target = evaluationList.value[Number(position) - 1];
@@ -404,15 +429,17 @@ async function submitAnswers() {
   isSubmitting.value = true;
 
   try {
-    const data = await updateMyEvaluation(route.params.id, selected.value);
+    const data = await updateMyEvaluation(evaluationId.value, selected.value);
 
     if (!data.success) {
       blockedMessage.value = data.message || 'Evaluasi ini tidak dapat dikumpulkan.';
       return;
     }
 
-    // Reload into review mode (score + Jazaakumullaah banner)
-    await loadData(true);
+    // The response already holds the scored attempt: switch to review mode without refetching.
+    evaluation.value = data.data.evaluation;
+    userEvaluation.value = data.data.user_evaluation;
+    if (currentItem.value) currentItem.value.finished_at = userEvaluation.value.finished_at;
   } catch (error) {
     await swAlert({
       icon: 'warning',

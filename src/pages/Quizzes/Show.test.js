@@ -3,13 +3,13 @@ import { mount, flushPromises } from '@vue/test-utils';
 import Show from '@/pages/Quizzes/Show.vue';
 import * as api from '@/api';
 
+const { route, replace } = vi.hoisted(() => ({ route: { params: { id: '1' } }, replace: vi.fn() }));
 vi.mock('vue-router', () => ({
-  useRoute: () => ({
-    params: { id: '1' },
-  }),
+  useRoute: () => route,
   useRouter: () => ({
     push: vi.fn(),
     back: vi.fn(),
+    replace,
   }),
 }));
 
@@ -283,5 +283,50 @@ describe('Quizzes/Show.vue Locked Quiz', () => {
     const wrapper = await mountLocked(item({ is_open: true, can_request_late_permission: false }));
 
     expect(wrapper.text()).toContain('Kuis ditutup.');
+  });
+});
+
+describe('Quizzes/Show.vue on the bare /quizzes route', () => {
+  const row = (id, overrides = {}) => ({ id, is_open: false, finished_at: null, ...overrides });
+
+  async function mountWith(rows) {
+    api.listAllMyQuizzes.mockResolvedValue(rows);
+    api.getMyQuiz.mockResolvedValue({ success: false, message: 'x' });
+    const wrapper = mount(Show, {
+      global: { stubs: { routerLink: true, LatePermissionDialog: true, Countdown: true, QuestionCard: true } },
+    });
+    await flushPromises();
+    return wrapper;
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    route.params = {};
+  });
+
+  afterEach(() => {
+    route.params = { id: '1' };
+  });
+
+  it('opens the first open, unfinished quiz with a single list fetch', async () => {
+    await mountWith([row(1, { is_open: true, finished_at: '2026-11-01' }), row(2), row(3, { is_open: true }), row(4, { is_open: true })]);
+
+    expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '3' } });
+    expect(api.getMyQuiz).toHaveBeenCalledWith('3');
+    expect(api.listAllMyQuizzes).toHaveBeenCalledTimes(1);
+  });
+
+  it('falls back to the latest quiz when none is workable', async () => {
+    await mountWith([row(1), row(2, { finished_at: '2026-11-01' })]);
+
+    expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '2' } });
+  });
+
+  it('shows an empty state when there are no quizzes', async () => {
+    const wrapper = await mountWith([]);
+
+    expect(replace).not.toHaveBeenCalled();
+    expect(api.getMyQuiz).not.toHaveBeenCalled();
+    expect(wrapper.text()).toContain('Belum Ada Kuis');
   });
 });

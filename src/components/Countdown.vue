@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onBeforeUnmount, watch } from 'vue';
 import addMinutes from 'date-fns/addMinutes';
 
 const props = defineProps({
@@ -93,10 +93,6 @@ watch(
   },
   { immediate: true }
 );
-
-onMounted(() => {
-  startTimer();
-});
 
 onBeforeUnmount(() => {
   if (interval) {
