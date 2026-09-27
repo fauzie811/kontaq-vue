@@ -6,6 +6,28 @@
       description="Temukan jawaban cepat atas pertanyaan yang sering diajukan seputar program dan fitur KontaQ."
     />
 
+    <!-- Admin Centre WhatsApp Contact -->
+    <div
+      v-if="adminWhatsapp"
+      class="bg-card rounded-3xl border border-border p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left"
+    >
+      <div class="space-y-0.5">
+        <h4 class="text-sm sm:text-base font-bold text-foreground">Admin Centre KontaQ</h4>
+        <p class="text-xs sm:text-sm text-muted-foreground">
+          Hubungi admin via WhatsApp jika mengalami kendala atau masalah saat menggunakan e-learning.
+        </p>
+      </div>
+      <a
+        :href="`https://wa.me/${adminWhatsapp}`"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-4 py-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white text-xs sm:text-sm font-bold rounded-full transition-transform hover:scale-105 active:scale-95 shrink-0 flex items-center gap-1.5 cursor-pointer"
+      >
+        <MessageCircle class="w-4 h-4" />
+        <span>{{ adminWhatsappLabel }}</span>
+      </a>
+    </div>
+
     <!-- Search Box Card -->
     <div class="bg-card rounded-3xl border border-border p-4 sm:p-5 space-y-3">
       <div class="relative flex items-center bg-muted/60 border border-input rounded-full px-4 py-3 hover:border-foreground/40 focus-within:bg-card focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
@@ -128,20 +150,10 @@
       <div class="space-y-1">
         <h4 class="text-base font-bold text-foreground">Masih butuh bantuan lain?</h4>
         <p class="text-xs sm:text-sm text-muted-foreground">
-          Jika pertanyaan Anda belum tercantum di sini atau Anda mengalami kendala saat menggunakan e-learning, silakan hubungi Musyrif kelompok atau Admin Centre KontaQ.
+          Jika pertanyaan Anda belum tercantum di sini, silakan hubungi Admin Centre KontaQ.
         </p>
       </div>
       <div class="flex items-center gap-2.5 flex-wrap justify-center sm:justify-end">
-        <a
-          v-if="adminWhatsapp"
-          :href="`https://wa.me/${adminWhatsapp}`"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-4 py-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white text-xs sm:text-sm font-bold rounded-full transition-transform hover:scale-105 active:scale-95 shrink-0 flex items-center gap-1.5 cursor-pointer"
-        >
-          <MessageCircle class="w-4 h-4" />
-          <span>WhatsApp Admin: {{ adminWhatsappLabel }}</span>
-        </a>
         <a
           href="https://kontaq.org"
           target="_blank"
