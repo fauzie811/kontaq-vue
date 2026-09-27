@@ -35,10 +35,11 @@ const mockFaqs = [
   },
 ];
 
-function mountPage(faqs = mockFaqs) {
+function mountPage(faqs = mockFaqs, extra = {}) {
   api.listFaqs.mockResolvedValue({
     success: true,
     data: faqs,
+    ...extra,
   });
 
   return mount(Help, {
@@ -113,5 +114,21 @@ describe('Help.vue', () => {
     expect(websiteLink.attributes('target')).toBe('_blank');
     expect(websiteLink.attributes('rel')).toContain('noopener');
     expect(websiteLink.text()).toContain('Website Resmi');
+  });
+
+  it('links to the Admin Centre WhatsApp number when one is configured', async () => {
+    const wrapper = mountPage(mockFaqs, { admin_whatsapp: '6285345147157' });
+    await flushPromises();
+
+    const link = wrapper.find('a[href="https://wa.me/6285345147157"]');
+    expect(link.exists()).toBe(true);
+    expect(link.text()).toContain('0853-4514-7157');
+  });
+
+  it('hides the WhatsApp link when no number is configured', async () => {
+    const wrapper = mountPage();
+    await flushPromises();
+
+    expect(wrapper.find('a[href^="https://wa.me/"]').exists()).toBe(false);
   });
 });

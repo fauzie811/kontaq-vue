@@ -128,10 +128,20 @@
       <div class="space-y-1">
         <h4 class="text-base font-bold text-foreground">Masih butuh bantuan lain?</h4>
         <p class="text-xs sm:text-sm text-muted-foreground">
-          Jika pertanyaan Anda belum tercantum di sini, silakan hubungi Musyrif kelompok atau Admin KontaQ.
+          Jika pertanyaan Anda belum tercantum di sini atau Anda mengalami kendala saat menggunakan e-learning, silakan hubungi Musyrif kelompok atau Admin Centre KontaQ.
         </p>
       </div>
-      <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap justify-center sm:justify-end">
+      <div class="flex items-center gap-2.5 flex-wrap justify-center sm:justify-end">
+        <a
+          v-if="adminWhatsapp"
+          :href="`https://wa.me/${adminWhatsapp}`"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-4 py-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white text-xs sm:text-sm font-bold rounded-full transition-transform hover:scale-105 active:scale-95 shrink-0 flex items-center gap-1.5 cursor-pointer"
+        >
+          <MessageCircle class="w-4 h-4" />
+          <span>WhatsApp Admin: {{ adminWhatsappLabel }}</span>
+        </a>
         <a
           href="https://kontaq.org"
           target="_blank"
@@ -156,7 +166,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { ChevronDown, HelpCircle, X, Globe, ExternalLink } from 'lucide-vue-next';
+import { ChevronDown, HelpCircle, X, Globe, ExternalLink, MessageCircle } from 'lucide-vue-next';
 import { listFaqs } from '@/api';
 import PageHeader from '@/components/PageHeader.vue';
 
@@ -166,6 +176,11 @@ const faqs = ref([]);
 const searchQuery = ref('');
 const selectedCategory = ref('Semua');
 const expandedIds = ref([]);
+// Set by admins in the panel's Pengaturan page, stored as 62xxxxxxxxxx.
+const adminWhatsapp = ref(null);
+const adminWhatsappLabel = computed(() =>
+  adminWhatsapp.value?.replace(/^62/, '0').replace(/^(\d{4})(\d{4})(\d+)$/, '$1-$2-$3'),
+);
 
 const defaultFaqs = [
   {
@@ -258,6 +273,7 @@ async function loadFaqs() {
   isLoading.value = true;
   try {
     const res = await listFaqs();
+    adminWhatsapp.value = res?.admin_whatsapp || null;
     if (res && res.success && res.data && res.data.length > 0) {
       faqs.value = res.data;
     } else {
