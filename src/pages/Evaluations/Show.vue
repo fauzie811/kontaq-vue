@@ -32,7 +32,7 @@
             :disabled="evaluationList.length === 0"
             class="appearance-none bg-transparent bg-none border-0 rounded-full font-medium text-primary text-sm sm:text-base cursor-pointer focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-ring pl-3 sm:pl-5 pr-7 sm:pr-12 py-1.5 sm:py-2"
           >
-            <option v-for="(item, idx) in evaluationList" :key="item.id" :value="idx + 1">{{ idx + 1 }}</option>
+            <option v-for="(item, idx) in evaluationList" :key="item.id" :value="idx + 1">{{ item.title || (idx + 1) }}</option>
           </select>
           <span class="pointer-events-none absolute right-2 sm:right-4 flex flex-col items-center text-primary">
             <ChevronUp class="w-3.5 h-3.5 sm:w-5 sm:h-5 -mb-1" />

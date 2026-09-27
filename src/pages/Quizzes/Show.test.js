@@ -178,7 +178,7 @@ describe('Quizzes/Show.vue Active Mode', () => {
     expect(wrapper.text()).toContain('Quiz Active');
     expect(wrapper.text()).toContain('Sisa Waktu');
     expect(wrapper.text()).toContain('Selesai');
-    expect(wrapper.findAll('option').map((o) => o.text())).toEqual(['1', '2']);
+    expect(wrapper.findAll('option').map((o) => o.text())).toEqual(['Quiz Active', 'Quiz Next']);
     expect(wrapper.find('select').element.value).toBe('1');
   });
 });
