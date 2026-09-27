@@ -188,7 +188,6 @@ import { useRoute, useRouter } from 'vue-router';
 import {
   Calendar,
   BookOpen,
-  Clock,
   CheckCircle2,
   AlertCircle,
   RotateCw,
@@ -196,7 +195,7 @@ import {
 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 import { getMyMaterial, updateMyMaterial } from '@/api';
-import { shortDateTime, stripTags } from '@/utils';
+import { shortDateTime } from '@/utils';
 import PageHeader from '@/components/PageHeader.vue';
 import MaterialRelatedVerses from '@/components/MaterialRelatedVerses.vue';
 

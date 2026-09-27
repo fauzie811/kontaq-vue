@@ -73,7 +73,6 @@ describe('Materials/Show.vue', () => {
     expect(wrapper.text()).toContain('Pekan 4');
     expect(wrapper.text()).toContain('Bagian 1');
     expect(wrapper.text()).toContain('Belum Dibaca');
-    expect(wrapper.text()).toContain('menit baca');
 
     // Verify related verses card is rendered
     expect(wrapper.text()).toContain('Ayat Terkait');
