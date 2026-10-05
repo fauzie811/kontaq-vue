@@ -22,7 +22,7 @@ vi.mock('@/api', () => ({
 describe('Quizzes/Show.vue Review Mode', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    api.listAllMyQuizzes.mockResolvedValue([]);
+    api.listAllMyQuizzes.mockResolvedValue({ items: [] });
   });
 
   it('renders 4 options (a-d) when option_e is not present in completed quiz review', async () => {
@@ -133,14 +133,16 @@ describe('Quizzes/Show.vue Review Mode', () => {
 describe('Quizzes/Show.vue Active Mode', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    api.listAllMyQuizzes.mockResolvedValue([]);
+    api.listAllMyQuizzes.mockResolvedValue({ items: [] });
   });
 
   it('renders active quiz mode with timer, stepper and submit button', async () => {
-    api.listAllMyQuizzes.mockResolvedValue([
-      { id: 1, title: 'Quiz Active', is_open: true },
-      { id: 2, title: 'Quiz Next', is_open: true },
-    ]);
+    api.listAllMyQuizzes.mockResolvedValue({
+      items: [
+        { id: 1, title: 'Quiz Active', is_open: true },
+        { id: 2, title: 'Quiz Next', is_open: true },
+      ],
+    });
     api.getMyQuiz.mockResolvedValue({
       success: true,
       data: {
@@ -202,7 +204,7 @@ describe('Quizzes/Show.vue Locked Quiz', () => {
   });
 
   async function mountLocked(row) {
-    api.listAllMyQuizzes.mockResolvedValue([row]);
+    api.listAllMyQuizzes.mockResolvedValue({ items: [row] });
     const wrapper = mount(Show, {
       global: {
         stubs: {
@@ -289,8 +291,8 @@ describe('Quizzes/Show.vue Locked Quiz', () => {
 describe('Quizzes/Show.vue on the bare /quizzes route', () => {
   const row = (id, overrides = {}) => ({ id, is_open: false, finished_at: null, ...overrides });
 
-  async function mountWith(rows) {
-    api.listAllMyQuizzes.mockResolvedValue(rows);
+  async function mountWith(rows, currentId = null) {
+    api.listAllMyQuizzes.mockResolvedValue({ items: rows, currentId });
     api.getMyQuiz.mockResolvedValue({ success: false, message: 'x' });
     const wrapper = mount(Show, {
       global: { stubs: { routerLink: true, LatePermissionDialog: true, Countdown: true, QuestionCard: true } },
@@ -308,49 +310,15 @@ describe('Quizzes/Show.vue on the bare /quizzes route', () => {
     route.params = { id: '1' };
   });
 
-  describe('with a schedule', () => {
-    // Pekan 2 opens Sunday 2026-11-08; each quiz runs 16:00 on its day to 15:59:59 the next.
-    const day = (id, date, overrides = {}) =>
-      row(id, { opens_at: `${date}T16:00:00+07:00`, closes_at: new Date(new Date(`${date}T16:00:00+07:00`).getTime() + 86399000).toISOString(), ...overrides });
-    // Newest first, like the API.
-    const rows = () => [
-      day(7, '2026-11-09'),
-      day(6, '2026-11-08'),
-      day(5, '2026-11-05', { finished_at: '2026-11-05T17:00:00+07:00' }),
-      day(4, '2026-11-04', { is_open: true }), // late permission granted
-      row(3, { is_open: true }), // unscheduled legacy quiz
-    ];
+  it('opens the quiz the backend picks as current, with a single list fetch', async () => {
+    await mountWith([row(3), row(2, { finished_at: '2026-11-01' }), row(1, { is_open: true })], 2);
 
-    afterEach(() => vi.useRealTimers());
-
-    async function mountAt(now) {
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date(now));
-      return mountWith(rows());
-    }
-
-    it("opens today's quiz even when it is already finished, with a single list fetch", async () => {
-      await mountAt('2026-11-06T09:00:00+07:00');
-
-      expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '5' } });
-      expect(api.listAllMyQuizzes).toHaveBeenCalledTimes(1);
-    });
-
-    it('opens the next quiz when it opens sooner than the last one closed', async () => {
-      await mountAt('2026-11-08T09:00:00+07:00');
-
-      expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '6' } });
-    });
-
-    it('opens the quiz that just closed when it is nearer than the next one', async () => {
-      await mountAt('2026-11-06T17:00:00+07:00');
-
-      expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '5' } });
-      expect(api.getMyQuiz).toHaveBeenCalledWith('5');
-    });
+    expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '2' } });
+    expect(api.getMyQuiz).toHaveBeenCalledWith('2');
+    expect(api.listAllMyQuizzes).toHaveBeenCalledTimes(1);
   });
 
-  it('falls back to the newest (first-listed) quiz when nothing is scheduled', async () => {
+  it('falls back to the newest (first-listed) quiz when the backend picks none', async () => {
     await mountWith([row(2), row(1, { is_open: true })]);
 
     expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '2' } });

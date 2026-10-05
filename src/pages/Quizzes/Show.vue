@@ -294,7 +294,7 @@ import {
 import parseISO from 'date-fns/parseISO';
 import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
-import { nearestScheduled, swAlert, swConfirm, shortDateTime } from '@/utils';
+import { swAlert, swConfirm, shortDateTime } from '@/utils';
 import { FEATURES } from '@/constants/features';
 import { getMyQuiz, listAllMyQuizzes, updateMyQuiz } from '@/api';
 import Countdown from '@/components/Countdown.vue';
@@ -319,14 +319,14 @@ const selected = ref({});
 const quiz = ref();
 const userQuiz = ref();
 const quizList = ref([]);
+const currentQuizId = ref(null);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-// The bare /quizzes route shares this page: it opens today's quiz, else the one scheduled nearest to now, else the newest.
+// The bare /quizzes route shares this page: it opens the quiz the backend picks as current, else the newest.
 const quizId = computed(() => {
-  if (route.params.id) return String(route.params.id);
-  const target = nearestScheduled(quizList.value);
-  return target && String(target.id);
+  const id = route.params.id ?? currentQuizId.value ?? quizList.value[0]?.id;
+  return id && String(id);
 });
 const currentIndex = computed(() => quizList.value.findIndex((q) => String(q.id) === quizId.value));
 const currentItem = computed(() => quizList.value[currentIndex.value]);
@@ -372,7 +372,9 @@ async function loadData(refreshList = false) {
   selected.value = {};
   try {
     if (refreshList || quizList.value.length === 0) {
-      quizList.value = await listAllMyQuizzes();
+      const res = await listAllMyQuizzes();
+      quizList.value = res.items;
+      currentQuizId.value = res.currentId;
     }
     if (!quizId.value) return;
     // Same component on both routes, so this only fills in the URL; nothing reloads.

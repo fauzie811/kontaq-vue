@@ -258,18 +258,21 @@ export const listMyQuizzes = async ({ page = 1, week = null, perPage }) => {
   }
 };
 
-// Every row across all pages, in list order (the quiz/evaluation page stepper needs them all).
+// Every row across all pages, in list order (the quiz/evaluation page stepper needs them all),
+// plus the id the backend picks for the bare route to open.
 const listAllPages = async (listPage) => {
-  const all = [];
+  const items = [];
+  let currentId = null;
   let page = 1;
   let lastPage = 1;
   do {
     const res = await listPage({ page, perPage: 500 }); // the backend's per_page cap: one request in practice
-    all.push(...(res.data?.data || []));
+    items.push(...(res.data?.data || []));
+    currentId = res.current_id ?? null;
     lastPage = res.data?.last_page || 1;
     page++;
   } while (page <= lastPage);
-  return all;
+  return { items, currentId };
 };
 
 export const listAllMyQuizzes = () => listAllPages(listMyQuizzes);

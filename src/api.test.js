@@ -153,25 +153,25 @@ describe('API Helper Functions', () => {
   describe('listAllMyQuizzes', () => {
     it('merges every page of quizzes in order', async () => {
       axios.get
-        .mockResolvedValueOnce({ data: { data: { data: [{ id: 1 }], current_page: 1, last_page: 2 } } })
-        .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 } } });
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 1 }], current_page: 1, last_page: 2 }, current_id: 7 } })
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 }, current_id: 7 } });
 
       const res = await listAllMyQuizzes();
       expect(axios.get).toHaveBeenCalledTimes(2);
       expect(axios.get).toHaveBeenLastCalledWith('me/quizzes', { params: { page: 2, week: null, per_page: 500 } });
-      expect(res).toEqual([{ id: 1 }, { id: 2 }]);
+      expect(res).toEqual({ items: [{ id: 1 }, { id: 2 }], currentId: 7 });
     });
   });
 
   describe('listAllMyEvaluations', () => {
     it('merges every page of evaluations in order', async () => {
       axios.get
-        .mockResolvedValueOnce({ data: { data: { data: [{ id: 1 }], current_page: 1, last_page: 2 } } })
-        .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 } } });
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 1 }], current_page: 1, last_page: 2 }, current_id: 7 } })
+        .mockResolvedValueOnce({ data: { data: { data: [{ id: 2 }], current_page: 2, last_page: 2 }, current_id: 7 } });
 
       const res = await listAllMyEvaluations();
       expect(axios.get).toHaveBeenLastCalledWith('me/evaluations', { params: { page: 2, week: null, per_page: 500 } });
-      expect(res).toEqual([{ id: 1 }, { id: 2 }]);
+      expect(res).toEqual({ items: [{ id: 1 }, { id: 2 }], currentId: 7 });
     });
   });
 });

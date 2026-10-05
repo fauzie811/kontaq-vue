@@ -285,7 +285,7 @@ import {
 import parseISO from 'date-fns/parseISO';
 import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
-import { nearestScheduled, swAlert, swConfirm, shortDateTime } from '@/utils';
+import { swAlert, swConfirm, shortDateTime } from '@/utils';
 import { FEATURES } from '@/constants/features';
 import { getMyEvaluation, listAllMyEvaluations, updateMyEvaluation } from '@/api';
 import Countdown from '@/components/Countdown.vue';
@@ -310,14 +310,14 @@ const selected = ref({});
 const evaluation = ref();
 const userEvaluation = ref();
 const evaluationList = ref([]);
+const currentEvaluationId = ref(null);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-// The bare /evaluations route shares this page: it opens this week's evaluation, else the one scheduled nearest to now, else the newest.
+// The bare /evaluations route shares this page: it opens the evaluation the backend picks as current, else the newest.
 const evaluationId = computed(() => {
-  if (route.params.id) return String(route.params.id);
-  const target = nearestScheduled(evaluationList.value);
-  return target && String(target.id);
+  const id = route.params.id ?? currentEvaluationId.value ?? evaluationList.value[0]?.id;
+  return id && String(id);
 });
 const currentIndex = computed(() => evaluationList.value.findIndex((q) => String(q.id) === evaluationId.value));
 const currentItem = computed(() => evaluationList.value[currentIndex.value]);
@@ -360,7 +360,9 @@ async function loadData(refreshList = false) {
   selected.value = {};
   try {
     if (refreshList || evaluationList.value.length === 0) {
-      evaluationList.value = await listAllMyEvaluations();
+      const res = await listAllMyEvaluations();
+      evaluationList.value = res.items;
+      currentEvaluationId.value = res.currentId;
     }
     if (!evaluationId.value) return;
     // Same component on both routes, so this only fills in the URL; nothing reloads.
