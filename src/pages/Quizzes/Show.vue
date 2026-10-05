@@ -294,7 +294,7 @@ import {
 import parseISO from 'date-fns/parseISO';
 import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
-import { swAlert, swConfirm, shortDateTime } from '@/utils';
+import { nearestScheduled, swAlert, swConfirm, shortDateTime } from '@/utils';
 import { FEATURES } from '@/constants/features';
 import { getMyQuiz, listAllMyQuizzes, updateMyQuiz } from '@/api';
 import Countdown from '@/components/Countdown.vue';
@@ -322,10 +322,10 @@ const quizList = ref([]);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-// The bare /quizzes route shares this page: it opens the first open, unfinished quiz, else the newest (list is newest first).
+// The bare /quizzes route shares this page: it opens today's quiz, else the one scheduled nearest to now, else the newest.
 const quizId = computed(() => {
   if (route.params.id) return String(route.params.id);
-  const target = quizList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? quizList.value[0];
+  const target = nearestScheduled(quizList.value);
   return target && String(target.id);
 });
 const currentIndex = computed(() => quizList.value.findIndex((q) => String(q.id) === quizId.value));

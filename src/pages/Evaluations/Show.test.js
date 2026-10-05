@@ -290,16 +290,45 @@ describe('Evaluations/Show.vue on the bare /evaluations route', () => {
     route.params = { id: '1' };
   });
 
-  it('opens the first open, unfinished evaluation with a single list fetch', async () => {
-    await mountWith([row(1, { is_open: true, finished_at: '2026-11-01' }), row(2), row(3, { is_open: true }), row(4, { is_open: true })]);
+  describe('with a schedule', () => {
+    // Each evaluation runs Friday 16:00 to Sunday 14:00 (WIB). Newest first, like the API.
+    const rows = () => [
+      row(2, { opens_at: '2026-11-13T16:00:00+07:00', closes_at: '2026-11-15T14:00:00+07:00' }),
+      row(1, { opens_at: '2026-11-06T16:00:00+07:00', closes_at: '2026-11-08T14:00:00+07:00', finished_at: '2026-11-07T10:00:00+07:00' }),
+      row(3, { is_open: true }), // unscheduled legacy evaluation
+    ];
 
-    expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: '3' } });
-    expect(api.getMyEvaluation).toHaveBeenCalledWith('3');
-    expect(api.listAllMyEvaluations).toHaveBeenCalledTimes(1);
+    afterEach(() => vi.useRealTimers());
+
+    async function mountAt(now) {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date(now));
+      return mountWith(rows());
+    }
+
+    it("opens this week's evaluation even when it is already finished, with a single list fetch", async () => {
+      await mountAt('2026-11-07T20:00:00+07:00');
+
+      expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: '1' } });
+      expect(api.listAllMyEvaluations).toHaveBeenCalledTimes(1);
+    });
+
+    it('opens the one that closed most recently when it is nearer than the next', async () => {
+      await mountAt('2026-11-10T09:00:00+07:00');
+
+      expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: '1' } });
+    });
+
+    it('opens the next one when it opens sooner than the last one closed', async () => {
+      await mountAt('2026-11-12T09:00:00+07:00');
+
+      expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: '2' } });
+      expect(api.getMyEvaluation).not.toHaveBeenCalled(); // still locked: opening would start its timer
+    });
   });
 
-  it('falls back to the newest (first-listed) evaluation when none is workable', async () => {
-    await mountWith([row(2), row(1, { finished_at: '2026-11-01' })]);
+  it('falls back to the newest (first-listed) evaluation when nothing is scheduled', async () => {
+    await mountWith([row(2), row(1, { is_open: true })]);
 
     expect(replace).toHaveBeenCalledWith({ name: 'evaluations.show', params: { id: '2' } });
   });

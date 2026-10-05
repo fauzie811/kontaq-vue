@@ -18,6 +18,17 @@ export const dayDateTime = (date) =>
 
 export const stripTags = (text) => text.replace(/(<([^>]+)>)/gi, '');
 
+// How far `now` is from an item's schedule window: 0 while open, Infinity when unscheduled.
+const windowDistance = (item, now) =>
+    item.opens_at && item.closes_at
+        ? Math.max(new Date(item.opens_at) - now, now - new Date(item.closes_at), 0)
+        : Infinity;
+
+// The quiz/evaluation open right now, else the one scheduled nearest to now, else the first row
+// (ties keep the earlier row, and lists come newest first).
+export const nearestScheduled = (items, now = Date.now()) =>
+    items.reduce((best, item) => (windowDistance(item, now) < windowDistance(best, now) ? item : best), items[0]);
+
 const icons = (name) =>
     ({
         success: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">

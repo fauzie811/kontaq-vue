@@ -285,7 +285,7 @@ import {
 import parseISO from 'date-fns/parseISO';
 import { useElementVisibility, useMediaQuery } from '@vueuse/core';
 
-import { swAlert, swConfirm, shortDateTime } from '@/utils';
+import { nearestScheduled, swAlert, swConfirm, shortDateTime } from '@/utils';
 import { FEATURES } from '@/constants/features';
 import { getMyEvaluation, listAllMyEvaluations, updateMyEvaluation } from '@/api';
 import Countdown from '@/components/Countdown.vue';
@@ -313,10 +313,10 @@ const evaluationList = ref([]);
 const blockedMessage = ref(null);
 const requestDialogOpen = ref(false);
 
-// The bare /evaluations route shares this page: it opens the first open, unfinished evaluation, else the newest (list is newest first).
+// The bare /evaluations route shares this page: it opens this week's evaluation, else the one scheduled nearest to now, else the newest.
 const evaluationId = computed(() => {
   if (route.params.id) return String(route.params.id);
-  const target = evaluationList.value.find((q) => (devUnlock || q.is_open) && !q.finished_at) ?? evaluationList.value[0];
+  const target = nearestScheduled(evaluationList.value);
   return target && String(target.id);
 });
 const currentIndex = computed(() => evaluationList.value.findIndex((q) => String(q.id) === evaluationId.value));

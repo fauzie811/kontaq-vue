@@ -308,16 +308,50 @@ describe('Quizzes/Show.vue on the bare /quizzes route', () => {
     route.params = { id: '1' };
   });
 
-  it('opens the first open, unfinished quiz with a single list fetch', async () => {
-    await mountWith([row(1, { is_open: true, finished_at: '2026-11-01' }), row(2), row(3, { is_open: true }), row(4, { is_open: true })]);
+  describe('with a schedule', () => {
+    // Pekan 2 opens Sunday 2026-11-08; each quiz runs 16:00 on its day to 15:59:59 the next.
+    const day = (id, date, overrides = {}) =>
+      row(id, { opens_at: `${date}T16:00:00+07:00`, closes_at: new Date(new Date(`${date}T16:00:00+07:00`).getTime() + 86399000).toISOString(), ...overrides });
+    // Newest first, like the API.
+    const rows = () => [
+      day(7, '2026-11-09'),
+      day(6, '2026-11-08'),
+      day(5, '2026-11-05', { finished_at: '2026-11-05T17:00:00+07:00' }),
+      day(4, '2026-11-04', { is_open: true }), // late permission granted
+      row(3, { is_open: true }), // unscheduled legacy quiz
+    ];
 
-    expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '3' } });
-    expect(api.getMyQuiz).toHaveBeenCalledWith('3');
-    expect(api.listAllMyQuizzes).toHaveBeenCalledTimes(1);
+    afterEach(() => vi.useRealTimers());
+
+    async function mountAt(now) {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date(now));
+      return mountWith(rows());
+    }
+
+    it("opens today's quiz even when it is already finished, with a single list fetch", async () => {
+      await mountAt('2026-11-06T09:00:00+07:00');
+
+      expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '5' } });
+      expect(api.listAllMyQuizzes).toHaveBeenCalledTimes(1);
+    });
+
+    it('opens the next quiz when it opens sooner than the last one closed', async () => {
+      await mountAt('2026-11-08T09:00:00+07:00');
+
+      expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '6' } });
+    });
+
+    it('opens the quiz that just closed when it is nearer than the next one', async () => {
+      await mountAt('2026-11-06T17:00:00+07:00');
+
+      expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '5' } });
+      expect(api.getMyQuiz).toHaveBeenCalledWith('5');
+    });
   });
 
-  it('falls back to the newest (first-listed) quiz when none is workable', async () => {
-    await mountWith([row(2), row(1, { finished_at: '2026-11-01' })]);
+  it('falls back to the newest (first-listed) quiz when nothing is scheduled', async () => {
+    await mountWith([row(2), row(1, { is_open: true })]);
 
     expect(replace).toHaveBeenCalledWith({ name: 'quizzes.show', params: { id: '2' } });
   });
