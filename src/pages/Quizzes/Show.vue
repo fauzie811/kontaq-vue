@@ -467,12 +467,10 @@ async function submitAnswers() {
 }
 
 function getMultipleOptions(question) {
-  const base = ['a', 'b', 'c', 'd'];
-  const optionE = question?.details?.option_e || question?.details?.['option_e '];
-  if (optionE && String(optionE).trim() !== '') {
-    base.push('e');
-  }
-  return base;
+  return ['a', 'b', 'c', 'd', 'e'].filter((option) => {
+    const text = question?.details?.[`option_${option}`] || question?.details?.[`option_${option} `];
+    return text && String(text).trim() !== '';
+  });
 }
 
 const forceFinish = () => {

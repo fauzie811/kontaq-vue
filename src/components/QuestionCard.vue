@@ -107,12 +107,5 @@ function getOptionText(key) {
   return props.question.details[`option_${key}`] || props.question.details[`option_${key} `] || '';
 }
 
-const multipleOptions = computed(() => {
-  const base = ['a', 'b', 'c', 'd'];
-  const optionE = getOptionText('e');
-  if (optionE && optionE.trim() !== '') {
-    base.push('e');
-  }
-  return base;
-});
+const multipleOptions = computed(() => ['a', 'b', 'c', 'd', 'e'].filter((key) => String(getOptionText(key)).trim() !== ''));
 </script>

@@ -27,6 +27,24 @@ describe('QuestionCard.vue', () => {
     expect(wrapper.text()).toContain('a.');
   });
 
+  it('skips empty options for questions with fewer than four choices', () => {
+    const wrapper = mount(QuestionCard, {
+      props: {
+        index: 0,
+        question: {
+          id: 3,
+          type: 'multiple',
+          content: '<p>Tiga pilihan?</p>',
+          details: { option_a: 'Satu', option_b: 'Dua', option_c: 'Tiga' },
+        },
+        modelValue: '',
+      },
+    });
+
+    expect(wrapper.text()).toContain('c.');
+    expect(wrapper.text()).not.toContain('d.');
+  });
+
   it('renders side-by-side Benar and Salah options for true_false questions', async () => {
     const wrapper = mount(QuestionCard, {
       props: {
